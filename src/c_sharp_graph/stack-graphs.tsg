@@ -60,6 +60,7 @@ attribute fqdn_edge = edge => precedence = 10
   node @comp_unit.def
   attr (@comp_unit.def) type = "pop_symbol", symbol = FILE_PATH, source_node = @comp_unit, is_definition, syntax_type = "comp_unit"
   edge  SOURCE_TYPE_NODE -> @comp_unit.def
+  edge ROOT_NODE -> SOURCE_TYPE_NODE
 }
 
 (compilation_unit
@@ -81,13 +82,10 @@ attribute fqdn_edge = edge => precedence = 10
     (qualified_name) @namespace
   ]
 ) @decl {
-  node namespace_def
   node @decl.def
   node @decl.lexical_scope
 
   attr (@decl.def) type = "pop_symbol", symbol = (source-text @namespace), source_node = @decl, is_definition, syntax_type = "namespace_declaration"
-  attr (namespace_def) pop_symbol = "."
-  edge @decl.def -> namespace_def
 }
 
 (class_declaration
@@ -95,11 +93,8 @@ attribute fqdn_edge = edge => precedence = 10
 ) @class_declaration {
   node @class_declaration.def
   node @class_declaration.lexical_scope
-  node class_def
 
   attr (@class_declaration.def) type = "pop_symbol", symbol = (source-text @classname), source_node = @class_declaration, is_definition, syntax_type = "class_def"
-  attr (class_def) pop_symbol = "."
-  edge @class_declaration.def -> class_def
 }
 
 ;; use this pattern to connect all the definitions in a namespace to the namespace.
@@ -120,6 +115,7 @@ attribute fqdn_edge = edge => precedence = 10
     (field_declaration)? @field_declaration
     (class_declaration)? @nested_class_declaration
     (constructor_declaration)? @constructor_declaration
+    (property_declaration)? @property_declaration
   )
 ) @class_declaration {
   if some @method_declaration {
@@ -141,6 +137,11 @@ attribute fqdn_edge = edge => precedence = 10
     edge @class_declaration.def -> @constructor_declaration.def
     edge @constructor_declaration.def -> @class_declaration.def
     attr (@constructor_declaration.def -> @class_declaration.def) fqdn_edge
+  }
+  if some @property_declaration {
+    edge @class_declaration.def -> @property_declaration.def
+    edge @property_declaration.def -> @class_declaration.def
+    attr (@property_declaration.def -> @class_declaration.def) fqdn_edge
   }
 }
 
@@ -212,33 +213,30 @@ attribute fqdn_edge = edge => precedence = 10
   }
 }
 
-[
-  (variable_declaration)
-  (variable_declarator)
-] @decl {
-  node @decl.def
+(property_declaration
+    name: (identifier) @id
+) @prop_decl {
+    node @prop_decl.def
+    attr (@prop_decl.def) type = "pop_symbol", symbol = (source-text @id), source_node = @prop_decl, is_definition, syntax_type = "field_name"
 }
 
 (variable_declaration
-  type: (_)? @type
-  (variable_declarator
-    name: (identifier)? @name
-    (_)? @child
-  ) @declartor
-) @declaration {
-  edge @declaration.def -> @declartor.def 
-  
-  if some @type {
-    edge @declaration.def -> @type.def
-  }
-
-  if some @name {
-    attr (@declaration.def) type = "pop_symbol", symbol = (source-text @name), source_node = @declaration, syntax_type = "local_var"
-  }
-  
-  if some @child {
-    edge @declartor.def -> @child.def
-  }
+    ; TODO: may need to handle more of these
+    type: (_) @type
+    (variable_declarator
+        name: (identifier) @name
+        (_)? @child
+    )
+) @var_decl {
+    node @var_decl.def
+    node var_type
+    attr (@var_decl.def) type = "pop_symbol", symbol = (source-text @name), source_node = @var_decl, is_definition, syntax_type = "local_var"
+    attr (var_type) type = "push_symbol", symbol = (source-text @type), source_node = @var_decl, is_reference
+    edge @var_decl.def -> var_type
+    
+    if some @child {
+        edge @var_decl.def -> @child.def
+    }
 }
 
 ;; Handle Statements and blocsk
@@ -540,7 +538,8 @@ attribute fqdn_edge = edge => precedence = 10
   ])
 ) @alias_qualified_name {
   node @alias_qualified_name.def
-  attr (@alias_qualified_name.def) type = "push_symbol", symbol = (source-text @id), source_node = @alias_qualified_name, is_reference
+  attr (@alias_qualified_name.def) type = "push_symbol", symbol = (source-text @id), source_node = @alias_qualified_name
+;is_reference
 
   if some @alias_name {
     node @alias_name.ref
@@ -603,7 +602,8 @@ attribute fqdn_edge = edge => precedence = 10
   (identifier) @id
 ) @calling_convention {
   node @calling_convention.def
-  attr (@calling_convention.def) type = "push_symbol", symbol = (source-text @id), source_node = @calling_convention, is_reference
+  attr (@calling_convention.def) type = "push_symbol", symbol = (source-text @id), source_node = @calling_convention 
+; is_reference
 }
 
 (function_pointer_parameter
@@ -797,7 +797,7 @@ attribute fqdn_edge = edge => precedence = 10
 ) @mem_expr {
   ; Note that the symbol becomes the symbol that is being used to access '.' the thing being accessed. 
   ; This is to make matching on the node easier in teh symbol matches.
-  attr (@mem_expr.def) type = "push_symbol", symbol = (format "{}.{}" (source-text @expr) (source-text @name)), source_node = @mem_expr, is_reference
+  attr (@mem_expr.def) type = "push_symbol", symbol = (format "{}.{}" (source-text @expr) (source-text @name)), source_node = @mem_expr, is_reference 
 }
 
 (unary_expression

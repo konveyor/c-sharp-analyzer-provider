@@ -14,6 +14,7 @@ use tracing::{debug, error, info, trace};
 use url::Url;
 
 use crate::c_sharp_graph::{
+    field_query::FieldSymbolsGetter,
     loader::SourceType,
     method_query::MethodSymbolsGetter,
     namespace_query::NamespaceSymbolsGetter,
@@ -24,17 +25,6 @@ pub trait Query {
     fn query(self, query: String) -> anyhow::Result<Vec<ResultNode>, Error>;
 }
 
-pub enum QueryType<'graph> {
-    All {
-        graph: &'graph StackGraph,
-        source_type: &'graph SourceType,
-    },
-    Method {
-        graph: &'graph StackGraph,
-        source_type: &'graph SourceType,
-    },
-}
-
 #[derive(Debug)]
 pub enum SyntaxType {
     Import,
@@ -42,9 +32,11 @@ pub enum SyntaxType {
     NamespaceDeclaration,
     ClassDef,
     MethodName,
+    FieldName,
     LocalVar,
     Argument,
     Name,
+    MemberAccess,
 }
 
 impl SyntaxType {
@@ -55,9 +47,11 @@ impl SyntaxType {
             "namespace_declaration" => Self::NamespaceDeclaration,
             "class_def" => Self::ClassDef,
             "method_name" => Self::MethodName,
+            "field_name" => Self::FieldName,
             "local_var" => Self::LocalVar,
             "argument" => Self::Argument,
             "name" => Self::Name,
+            "member_access" => Self::MemberAccess,
             // Name is the least used thing, and I want to have a default for this.
             &_ => Self::Name,
         }
@@ -69,6 +63,7 @@ pub(crate) struct Fqdn {
     pub(crate) namespace: Option<String>,
     pub(crate) class: Option<String>,
     pub(crate) method: Option<String>,
+    pub(crate) field: Option<String>,
 }
 
 pub(crate) fn get_fqdn(node: Handle<Node>, graph: &StackGraph) -> Option<Fqdn> {
@@ -76,6 +71,7 @@ pub(crate) fn get_fqdn(node: Handle<Node>, graph: &StackGraph) -> Option<Fqdn> {
         namespace: None,
         class: None,
         method: None,
+        field: None,
     };
     // traverse upwards based on the FQDN edge
     // Once there is no FQDN edge, return
@@ -107,6 +103,10 @@ pub(crate) fn get_fqdn(node: Handle<Node>, graph: &StackGraph) -> Option<Fqdn> {
                 fqdn.class = Some(symbol);
                 Some(fqdn)
             }
+            SyntaxType::FieldName => {
+                fqdn.field = Some(symbol);
+                Some(fqdn)
+            }
             _ => None,
         },
         Some(e) => match get_fqdn(e.sink, graph) {
@@ -133,10 +133,32 @@ pub(crate) fn get_fqdn(node: Handle<Node>, graph: &StackGraph) -> Option<Fqdn> {
                     );
                     Some(f)
                 }
+                SyntaxType::FieldName => {
+                    f.field = f.field.map_or_else(
+                        || Some(symbol.clone()),
+                        |field| Some(format!("{}.{}", field, symbol.clone())),
+                    );
+                    Some(f)
+                }
                 _ => None,
             },
         },
     }
+}
+
+pub enum QueryType<'graph> {
+    All {
+        graph: &'graph StackGraph,
+        source_type: &'graph SourceType,
+    },
+    Method {
+        graph: &'graph StackGraph,
+        source_type: &'graph SourceType,
+    },
+    Field {
+        graph: &'graph StackGraph,
+        source_type: &'graph SourceType,
+    },
 }
 
 impl Query for QueryType<'_> {
@@ -156,6 +178,14 @@ impl Query for QueryType<'_> {
                     graph,
                     source_type,
                     _matcher_getter: MethodSymbolsGetter {},
+                };
+                q.query(query)
+            }
+            QueryType::Field { graph, source_type } => {
+                let q = Querier {
+                    graph,
+                    source_type,
+                    _matcher_getter: FieldSymbolsGetter {},
                 };
                 q.query(query)
             }
@@ -259,86 +289,242 @@ impl<'a, T: GetMatcher> Querier<'a, T> {
             }
             traverse_nodes.push(edge.sink);
             let child_node = &self.graph[edge.sink];
-            match child_node.symbol() {
-                None => continue,
-                Some(symbol_handle) => {
-                    let symbol = &self.graph[symbol_handle];
-                    if symbol_matcher.match_symbol(symbol.to_string()) {
-                        let debug_node =
-                            self.graph.node_debug_info(edge.sink).map_or(vec![], |d| {
-                                d.iter()
-                                    .map(|e| {
-                                        let k = self.graph[e.key].to_string();
-                                        let v = self.graph[e.value].to_string();
-                                        (k, v)
-                                    })
-                                    .collect()
-                            });
+            let symbol = match child_node.symbol() {
+                None => {
+                    continue;
+                }
+                Some(handle) => &self.graph[handle],
+            };
+            if child_node.is_reference() {
+                let full_symbol = self.get_type_with_symbol(edge.sink, symbol);
+                if full_symbol.is_none() {
+                    continue;
+                }
+                let full_symbol = full_symbol.unwrap();
+                debug!("found FQDN: {:?}", &full_symbol);
+                if !symbol_matcher.match_fqdn(&full_symbol) {
+                    continue;
+                }
+            } else if !symbol_matcher.match_symbol(symbol.to_string()) {
+                continue;
+            }
+            let debug_node = self.graph.node_debug_info(edge.sink).map_or(vec![], |d| {
+                d.iter()
+                    .map(|e| {
+                        let k = self.graph[e.key].to_string();
+                        let v = self.graph[e.value].to_string();
+                        (k, v)
+                    })
+                    .collect()
+            });
 
-                        let edge_debug = self.graph.edge_debug_info(edge.source, edge.sink).map_or(
-                            vec![],
-                            |d| {
-                                d.iter()
-                                    .map(|e| {
-                                        let k = self.graph[e.key].to_string();
-                                        let v = self.graph[e.value].to_string();
-                                        (k, v)
-                                    })
-                                    .collect()
-                            },
-                        );
+            let edge_debug =
+                self.graph
+                    .edge_debug_info(edge.source, edge.sink)
+                    .map_or(vec![], |d| {
+                        d.iter()
+                            .map(|e| {
+                                let k = self.graph[e.key].to_string();
+                                let v = self.graph[e.value].to_string();
+                                (k, v)
+                            })
+                            .collect()
+                    });
 
-                        let code_location: Location;
-                        let line_number: usize;
-                        match self.graph.source_info(edge.sink) {
-                            None => {
-                                continue;
-                            }
-                            Some(source_info) => {
-                                line_number = source_info.span.start.line;
-                                code_location = Location {
-                                    start_position: Position {
-                                        line: source_info.span.start.line,
-                                        character: source_info.span.start.column.utf8_offset,
-                                    },
-                                    end_position: Position {
-                                        line: source_info.span.end.line,
-                                        character: source_info.span.end.column.utf8_offset,
-                                    },
-                                };
-                                // source info is containing line is never saved or restored to the
-                                // database.
-                                //match source_info.containing_line.into_option() {
-                                //   None => (),
-                                //  Some(string_handle) => {
-                                //     line = Some(self.db[string_handle].to_string());
-                                //}
-                                //}
-                            }
-                        }
-                        let var: BTreeMap<String, Value> =
-                            BTreeMap::from([("file".to_string(), Value::from(file_uri.clone()))]);
-                        //if let Some(line) = line {
-                        //   var.insert("line".to_string(), Value::from(line.trim()));
-                        //}
-                        trace!(
-                            "found result for node: {:?} and edge: {:?}",
-                            debug_node,
-                            edge_debug
-                        );
-                        results.push(ResultNode {
-                            file_uri: file_uri.clone(),
-                            line_number,
-                            code_location,
-                            variables: var,
-                        });
+            let code_location: Location;
+            let line_number: usize;
+            match self.graph.source_info(edge.sink) {
+                None => {
+                    continue;
+                }
+                Some(source_info) => {
+                    if source_info.span.start.as_point() == source_info.span.end.as_point() {
+                        continue;
                     }
+                    line_number = source_info.span.start.line;
+                    code_location = Location {
+                        start_position: Position {
+                            line: source_info.span.start.line,
+                            character: source_info.span.start.column.utf8_offset,
+                        },
+                        end_position: Position {
+                            line: source_info.span.end.line,
+                            character: source_info.span.end.column.utf8_offset,
+                        },
+                    };
+                    // source info is containing line is never saved or restored to the
+                    // database.
+                    //match source_info.containing_line.into_option() {
+                    //   None => (),
+                    //  Some(string_handle) => {
+                    //     line = Some(self.db[string_handle].to_string());
+                    //}
+                    //}
                 }
             }
+            let var: BTreeMap<String, Value> =
+                BTreeMap::from([("file".to_string(), Value::from(file_uri.clone()))]);
+            //if let Some(line) = line {
+            //   var.insert("line".to_string(), Value::from(line.trim()));
+            //}
+            trace!(
+                "found result for node: {:?} and edge: {:?}",
+                debug_node,
+                edge_debug
+            );
+            results.push(ResultNode {
+                file_uri: file_uri.clone(),
+                line_number,
+                code_location,
+                variables: var,
+            });
         }
         for n in traverse_nodes {
             self.traverse_node_search(n, symbol_matcher, results, file_uri.clone());
         }
+    }
+
+    // Note: This function will only work, on the memeber_access_expresssion
+    fn get_type_with_symbol(&self, node: Handle<Node>, symbol: &str) -> Option<Fqdn> {
+        let parts: Vec<&str> = symbol.split(".").collect();
+        if parts.len() != 2 {
+            return None;
+        }
+        let accessed_part = parts
+            .last()
+            .expect("unable to get method part for symbol")
+            .to_string();
+        let accessor = parts
+            .first()
+            .expect("unable to get class part for symbol")
+            .to_string();
+
+        // Find the symbol that matches the accessor
+        let get_symbol_handle_for_accessor = self
+            .graph
+            .iter_symbols()
+            .find(|s| accessor == self.graph[*s])?;
+        // Find the node that is the defintion of the symbol.
+        let nodes_for_defines_symbol: Vec<Handle<Node>> = self
+            .graph
+            .iter_nodes()
+            .filter(|f| {
+                let n = &self.graph[*f];
+                if !n.is_definition() {
+                    return false;
+                }
+                let s = n.symbol();
+                if s.is_none() {
+                    return false;
+                }
+
+                s.unwrap() == get_symbol_handle_for_accessor
+            })
+            .collect();
+
+        debug!(
+            "looking for correct definition for {}-{}",
+            accessor, accessed_part
+        );
+        let access_node = &self.graph[node];
+        for definition_node in nodes_for_defines_symbol {
+            let source_info = &self.graph.source_info(definition_node);
+            if source_info.is_none() {
+                continue;
+            }
+            let syntax_type = source_info.unwrap().syntax_type;
+            if syntax_type.is_none() {
+                debug!(
+                    "no syntax_type for node: {}",
+                    definition_node.display(self.graph)
+                );
+                continue;
+            }
+            let syntax_type = syntax_type.into_option().unwrap();
+            let syntax_type = &self.graph[syntax_type];
+
+            let fqdn = match SyntaxType::get(syntax_type) {
+                SyntaxType::ClassDef => {
+                    let found_edge = self.graph.outgoing_edges(definition_node).find(|e| {
+                        let sink = &self.graph[e.sink];
+                        trace!("testing sink: {}", sink.display(self.graph));
+                        match sink.symbol() {
+                            Some(sym) => self.graph[sym] == accessed_part,
+                            None => false,
+                        }
+                    })?;
+                    get_fqdn(found_edge.sink, self.graph)
+                }
+                SyntaxType::FieldName | SyntaxType::MethodName => {
+                    get_fqdn(definition_node, self.graph)
+                }
+                SyntaxType::LocalVar => {
+                    self.get_local_var_type_fqdn(
+                        definition_node,
+                        &accessed_part,
+                        access_node.file()?,
+                    )
+                    // When the symbol is defined by a local variable
+                    // then we need to find the local var type.
+                }
+                _ => None,
+            };
+            debug!(
+                "found: {:?} for node: {}",
+                fqdn,
+                definition_node.display(self.graph)
+            );
+            if fqdn.is_some() {
+                return fqdn;
+            }
+        }
+        None
+    }
+
+    fn get_local_var_type_fqdn(
+        &self,
+        definition_node: Handle<Node>,
+        accessed_part_symbol: &str,
+        file: Handle<File>,
+    ) -> Option<Fqdn> {
+        let def_node = &self.graph[definition_node];
+        if !def_node.is_in_file(file) {
+            return None;
+        }
+        let type_ref_node = self.graph.outgoing_edges(definition_node).find_map(|e| {
+            let edge_node = &self.graph[e.sink];
+            if edge_node.is_reference() {
+                Some(edge_node)
+            } else {
+                None
+            }
+        })?;
+        let ref_symbol = type_ref_node.symbol()?;
+        debug!(
+            "searching for defintion for type_ref_node: {}",
+            type_ref_node.display(self.graph)
+        );
+        let defined_node = self.graph.iter_nodes().find_map(|x| {
+            let node = &self.graph[x];
+            if node.symbol().is_none() || node.symbol().unwrap() != ref_symbol {
+                return None;
+            }
+            debug!(
+                "found defined node, checking edges for symbols that match the accessed_part: {}",
+                node.display(self.graph)
+            );
+            // Determine if it has any accessable parts that are the accessed_part
+            let found_edge = self.graph.outgoing_edges(x).find(|e| {
+                let sink = &self.graph[e.sink];
+                trace!("testing sink: {}", sink.display(self.graph));
+                match sink.symbol() {
+                    Some(sym) => &self.graph[sym] == accessed_part_symbol,
+                    None => false,
+                }
+            })?;
+            Some(found_edge.sink)
+        })?;
+        get_fqdn(defined_node, self.graph)
     }
 }
 
@@ -429,6 +615,7 @@ pub(crate) trait GetMatcher {
 
 pub(crate) trait SymbolMatcher {
     fn match_symbol(&self, symbol: String) -> bool;
+    fn match_fqdn(&self, fqdn: &Fqdn) -> bool;
 }
 
 #[derive(Debug)]

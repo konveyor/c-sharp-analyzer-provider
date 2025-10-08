@@ -6,7 +6,7 @@ use stack_graphs::{
     graph::{Node, StackGraph},
 };
 
-use crate::c_sharp_graph::query::{GetMatcher, Search, SymbolMatcher, SyntaxType};
+use crate::c_sharp_graph::query::{Fqdn, GetMatcher, Search, SymbolMatcher, SyntaxType};
 
 pub(crate) struct NamespaceSymbolsGetter {}
 
@@ -65,6 +65,9 @@ impl NamespaceSymbols {
 impl SymbolMatcher for NamespaceSymbols {
     fn match_symbol(&self, symbol: String) -> bool {
         self.symbol_in_namespace(symbol)
+    }
+    fn match_fqdn(&self, _fqdn: &Fqdn) -> bool {
+        false
     }
 }
 
