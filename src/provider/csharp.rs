@@ -26,6 +26,7 @@ enum Locations {
     #[default]
     All,
     Method,
+    Field,
 }
 
 #[derive(ToSchema, Deserialize, Debug)]
@@ -200,6 +201,10 @@ impl ProviderService for CSharpProvider {
                 source_type: &source_type,
             },
             Locations::Method => QueryType::Method {
+                graph,
+                source_type: &source_type,
+            },
+            Locations::Field => QueryType::Field {
                 graph,
                 source_type: &source_type,
             },
