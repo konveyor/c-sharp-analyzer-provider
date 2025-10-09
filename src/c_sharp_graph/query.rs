@@ -36,7 +36,6 @@ pub enum SyntaxType {
     LocalVar,
     Argument,
     Name,
-    MemberAccess,
 }
 
 impl SyntaxType {
@@ -51,7 +50,6 @@ impl SyntaxType {
             "local_var" => Self::LocalVar,
             "argument" => Self::Argument,
             "name" => Self::Name,
-            "member_access" => Self::MemberAccess,
             // Name is the least used thing, and I want to have a default for this.
             &_ => Self::Name,
         }
