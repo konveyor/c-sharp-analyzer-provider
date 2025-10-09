@@ -14,6 +14,7 @@ use tracing::{debug, error, info, trace};
 use url::Url;
 
 use crate::c_sharp_graph::{
+    class_query::ClassSymbolsGetter,
     field_query::FieldSymbolsGetter,
     loader::SourceType,
     method_query::MethodSymbolsGetter,
@@ -157,6 +158,10 @@ pub enum QueryType<'graph> {
         graph: &'graph StackGraph,
         source_type: &'graph SourceType,
     },
+    Class {
+        graph: &'graph StackGraph,
+        source_type: &'graph SourceType,
+    },
 }
 
 impl Query for QueryType<'_> {
@@ -184,6 +189,14 @@ impl Query for QueryType<'_> {
                     graph,
                     source_type,
                     _matcher_getter: FieldSymbolsGetter {},
+                };
+                q.query(query)
+            }
+            QueryType::Class { graph, source_type } => {
+                let q = Querier {
+                    graph,
+                    source_type,
+                    _matcher_getter: ClassSymbolsGetter {},
                 };
                 q.query(query)
             }

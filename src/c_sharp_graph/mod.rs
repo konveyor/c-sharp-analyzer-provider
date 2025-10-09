@@ -1,3 +1,4 @@
+mod class_query;
 mod field_query;
 pub mod language_config;
 pub mod loader;
