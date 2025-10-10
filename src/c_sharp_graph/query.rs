@@ -286,28 +286,41 @@ impl<'a, T: GetMatcher> Querier<'a, T> {
         }
     }
 
-    pub(crate) fn traverse_node_search(
+    pub(crate) fn search_nodes(
         &self,
-        node: Handle<Node>,
+        file: Handle<File>,
         symbol_matcher: &T::Matcher,
+        searchable_nodes: &HashSet<Handle<Node>>,
         results: &mut Vec<ResultNode>,
         file_uri: String,
     ) {
-        let mut traverse_nodes: Vec<Handle<Node>> = vec![];
-        for edge in self.graph.outgoing_edges(node) {
-            if edge.precedence == 10 {
+        let mut searchable_nodes = searchable_nodes.clone();
+        searchable_nodes.extend(self.graph.nodes_for_file(file));
+        debug!("searchable nodes: {:?}", searchable_nodes.len());
+        let mut used_nodes: HashSet<Handle<Node>> = HashSet::new();
+        for node_handle in self.graph.nodes_for_file(file) {
+            if used_nodes.contains(&node_handle) {
                 continue;
             }
-            traverse_nodes.push(edge.sink);
-            let child_node = &self.graph[edge.sink];
-            let symbol = match child_node.symbol() {
+            let node = &self.graph[node_handle];
+            let symbol = match node.symbol() {
                 None => {
+                    used_nodes.insert(node_handle);
                     continue;
                 }
                 Some(handle) => &self.graph[handle],
             };
-            if child_node.is_reference() {
-                let full_symbol = self.get_type_with_symbol(edge.sink, symbol);
+
+            let source_info = match self.graph.source_info(node_handle) {
+                Some(s) => s,
+                None => {
+                    used_nodes.insert(node_handle);
+                    continue;
+                }
+            };
+
+            if node.is_reference() {
+                let full_symbol = self.get_type_with_symbol(node_handle, symbol, &searchable_nodes);
                 if full_symbol.is_none() {
                     continue;
                 }
@@ -319,7 +332,7 @@ impl<'a, T: GetMatcher> Querier<'a, T> {
             } else if !symbol_matcher.match_symbol(symbol.to_string()) {
                 continue;
             }
-            let debug_node = self.graph.node_debug_info(edge.sink).map_or(vec![], |d| {
+            let debug_node = self.graph.node_debug_info(node_handle).map_or(vec![], |d| {
                 d.iter()
                     .map(|e| {
                         let k = self.graph[e.key].to_string();
@@ -329,60 +342,20 @@ impl<'a, T: GetMatcher> Querier<'a, T> {
                     .collect()
             });
 
-            let edge_debug =
-                self.graph
-                    .edge_debug_info(edge.source, edge.sink)
-                    .map_or(vec![], |d| {
-                        d.iter()
-                            .map(|e| {
-                                let k = self.graph[e.key].to_string();
-                                let v = self.graph[e.value].to_string();
-                                (k, v)
-                            })
-                            .collect()
-                    });
-
-            let code_location: Location;
-            let line_number: usize;
-            match self.graph.source_info(edge.sink) {
-                None => {
-                    continue;
-                }
-                Some(source_info) => {
-                    if source_info.span.start.as_point() == source_info.span.end.as_point() {
-                        continue;
-                    }
-                    line_number = source_info.span.start.line;
-                    code_location = Location {
-                        start_position: Position {
-                            line: source_info.span.start.line,
-                            character: source_info.span.start.column.utf8_offset,
-                        },
-                        end_position: Position {
-                            line: source_info.span.end.line,
-                            character: source_info.span.end.column.utf8_offset,
-                        },
-                    };
-                    // source info is containing line is never saved or restored to the
-                    // database.
-                    //match source_info.containing_line.into_option() {
-                    //   None => (),
-                    //  Some(string_handle) => {
-                    //     line = Some(self.db[string_handle].to_string());
-                    //}
-                    //}
-                }
-            }
+            let line_number = source_info.span.start.line;
+            let code_location = Location {
+                start_position: Position {
+                    line: source_info.span.start.line,
+                    character: source_info.span.start.column.utf8_offset,
+                },
+                end_position: Position {
+                    line: source_info.span.end.line,
+                    character: source_info.span.end.column.utf8_offset,
+                },
+            };
             let var: BTreeMap<String, Value> =
                 BTreeMap::from([("file".to_string(), Value::from(file_uri.clone()))]);
-            //if let Some(line) = line {
-            //   var.insert("line".to_string(), Value::from(line.trim()));
-            //}
-            trace!(
-                "found result for node: {:?} and edge: {:?}",
-                debug_node,
-                edge_debug
-            );
+            trace!("found result for node: {:?}", debug_node,);
             results.push(ResultNode {
                 file_uri: file_uri.clone(),
                 line_number,
@@ -390,13 +363,15 @@ impl<'a, T: GetMatcher> Querier<'a, T> {
                 variables: var,
             });
         }
-        for n in traverse_nodes {
-            self.traverse_node_search(n, symbol_matcher, results, file_uri.clone());
-        }
     }
 
     // Note: This function will only work, on the memeber_access_expresssion
-    fn get_type_with_symbol(&self, node: Handle<Node>, symbol: &str) -> Option<Fqdn> {
+    fn get_type_with_symbol(
+        &self,
+        node: Handle<Node>,
+        symbol: &str,
+        searchable_nodes: &HashSet<Handle<Node>>,
+    ) -> Option<Fqdn> {
         let parts: Vec<&str> = symbol.split(".").collect();
         if parts.len() != 2 {
             return None;
@@ -416,11 +391,10 @@ impl<'a, T: GetMatcher> Querier<'a, T> {
             .iter_symbols()
             .find(|s| accessor == self.graph[*s])?;
         // Find the node that is the defintion of the symbol.
-        let nodes_for_defines_symbol: Vec<Handle<Node>> = self
-            .graph
-            .iter_nodes()
+        let nodes_for_defines_symbol: Vec<&Handle<Node>> = searchable_nodes
+            .iter()
             .filter(|f| {
-                let n = &self.graph[*f];
+                let n = &self.graph[**f];
                 if !n.is_definition() {
                     return false;
                 }
@@ -439,7 +413,7 @@ impl<'a, T: GetMatcher> Querier<'a, T> {
         );
         let access_node = &self.graph[node];
         for definition_node in nodes_for_defines_symbol {
-            let source_info = &self.graph.source_info(definition_node);
+            let source_info = &self.graph.source_info(*definition_node);
             if source_info.is_none() {
                 continue;
             }
@@ -456,7 +430,7 @@ impl<'a, T: GetMatcher> Querier<'a, T> {
 
             let fqdn = match SyntaxType::get(syntax_type) {
                 SyntaxType::ClassDef => {
-                    let found_edge = self.graph.outgoing_edges(definition_node).find(|e| {
+                    let found_edge = self.graph.outgoing_edges(*definition_node).find(|e| {
                         let sink = &self.graph[e.sink];
                         trace!("testing sink: {}", sink.display(self.graph));
                         match sink.symbol() {
@@ -467,13 +441,14 @@ impl<'a, T: GetMatcher> Querier<'a, T> {
                     get_fqdn(found_edge.sink, self.graph)
                 }
                 SyntaxType::FieldName | SyntaxType::MethodName => {
-                    get_fqdn(definition_node, self.graph)
+                    get_fqdn(*definition_node, self.graph)
                 }
                 SyntaxType::LocalVar => {
                     self.get_local_var_type_fqdn(
-                        definition_node,
+                        *definition_node,
                         &accessed_part,
                         access_node.file()?,
+                        &searchable_nodes,
                     )
                     // When the symbol is defined by a local variable
                     // then we need to find the local var type.
@@ -497,6 +472,7 @@ impl<'a, T: GetMatcher> Querier<'a, T> {
         definition_node: Handle<Node>,
         accessed_part_symbol: &str,
         file: Handle<File>,
+        searchable_nodes: &HashSet<Handle<Node>>,
     ) -> Option<Fqdn> {
         let def_node = &self.graph[definition_node];
         if !def_node.is_in_file(file) {
@@ -515,8 +491,8 @@ impl<'a, T: GetMatcher> Querier<'a, T> {
             "searching for defintion for type_ref_node: {}",
             type_ref_node.display(self.graph)
         );
-        let defined_node = self.graph.iter_nodes().find_map(|x| {
-            let node = &self.graph[x];
+        let defined_node = searchable_nodes.iter().find_map(|x| {
+            let node = &self.graph[*x];
             if node.symbol().is_none() || node.symbol().unwrap() != ref_symbol {
                 return None;
             }
@@ -525,7 +501,7 @@ impl<'a, T: GetMatcher> Querier<'a, T> {
                 node.display(self.graph)
             );
             // Determine if it has any accessable parts that are the accessed_part
-            let found_edge = self.graph.outgoing_edges(x).find(|e| {
+            let found_edge = self.graph.outgoing_edges(*x).find(|e| {
                 let sink = &self.graph[e.sink];
                 trace!("testing sink: {}", sink.display(self.graph));
                 match sink.symbol() {
@@ -548,6 +524,23 @@ impl<'graph, T: GetMatcher> Query for Querier<'graph, T> {
         let mut results: Vec<ResultNode> = vec![];
 
         let starting_nodes = self.get_starting_nodes(&search);
+
+        // Get all the definition_node_handles to be searched.
+        let mut searchable_nodes: HashSet<Handle<Node>> = HashSet::new();
+        for definition_root_node in &starting_nodes.definition_root_nodes {
+            let root_node = &self.graph[*definition_root_node];
+            let def_nodes = self
+                .graph
+                .nodes_for_file(root_node.file().unwrap())
+                .filter(|n| {
+                    let def_node = &self.graph[*n];
+                    if def_node.is_definition() {
+                        return true;
+                    }
+                    false
+                });
+            searchable_nodes.extend(def_nodes);
+        }
 
         // Now that we have the all the nodes we need to build the reference symbols to match the *
         let symbol_matcher =
@@ -601,10 +594,10 @@ impl<'graph, T: GetMatcher> Query for Querier<'graph, T> {
                 break;
             }
             let file_uri = file_url.unwrap().as_str().to_string();
-            trace!("searching for matches in file: {}", f.name());
-            self.traverse_node_search(
-                *comp_unit_node_handle,
+            self.search_nodes(
+                *file,
                 &symbol_matcher,
+                &searchable_nodes,
                 &mut results,
                 file_uri,
             );

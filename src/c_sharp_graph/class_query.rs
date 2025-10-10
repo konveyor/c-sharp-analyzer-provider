@@ -72,7 +72,6 @@ impl ClassSymbols {
     ) {
         let mut child_edges: Vec<Handle<Node>> = vec![];
         for edge in graph.outgoing_edges(node) {
-            debug!("edge precedence during search: {}", edge.precedence);
             if edge.precedence == 10 {
                 continue;
             }

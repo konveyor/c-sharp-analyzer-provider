@@ -52,8 +52,13 @@ attribute fqdn_edge = edge => precedence = 10
     (qualified_name) @name
   ]) @using {
   node @using.def
+  node using_namespace_ref
+  node scope
+  attr (scope) is_exported
   
   attr (@using.def) type = "pop_symbol", symbol = (source-text @name), source_node = @using, is_definition, syntax_type = "import"
+  attr (using_namespace_ref) type = "push_scoped_symbol", symbol = (source-text @name), source_node = @using, is_reference, scope = scope
+  edge @using.def -> using_namespace_ref
 }
 
 (compilation_unit) @comp_unit {

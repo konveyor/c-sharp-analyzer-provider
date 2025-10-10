@@ -40,6 +40,7 @@ impl FieldSymbols {
     ) -> anyhow::Result<FieldSymbols, Error> {
         let mut fields: HashMap<Fqdn, Handle<Node>> = HashMap::new();
 
+        debug!("searching fields in {} root_nodes", nodes.len());
         for node_handle in nodes {
             //Get all the edges
             Self::traverse_node(graph, node_handle, search, &mut fields)
@@ -70,7 +71,6 @@ impl FieldSymbols {
     ) {
         let mut child_edges: Vec<Handle<Node>> = vec![];
         for edge in graph.outgoing_edges(node) {
-            debug!("edge precedence during search: {}", edge.precedence);
             if edge.precedence == 10 {
                 continue;
             }

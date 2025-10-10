@@ -1,6 +1,6 @@
 [
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs",
     "codeLocation": {
       "startPosition": {
         "line": 10,
@@ -13,11 +13,11 @@
     },
     "LineNumber": "10",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs",
     "codeLocation": {
       "startPosition": {
         "line": 12,
@@ -30,11 +30,11 @@
     },
     "LineNumber": "12",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs",
     "codeLocation": {
       "startPosition": {
         "line": 5,
@@ -47,11 +47,11 @@
     },
     "LineNumber": "5",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs",
     "codeLocation": {
       "startPosition": {
         "line": 8,
@@ -64,11 +64,11 @@
     },
     "LineNumber": "8",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs",
     "codeLocation": {
       "startPosition": {
         "line": 5,
@@ -81,11 +81,11 @@
     },
     "LineNumber": "5",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs",
     "codeLocation": {
       "startPosition": {
         "line": 7,
@@ -98,11 +98,11 @@
     },
     "LineNumber": "7",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
     "codeLocation": {
       "startPosition": {
         "line": 11,
@@ -115,11 +115,11 @@
     },
     "LineNumber": "11",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
     "codeLocation": {
       "startPosition": {
         "line": 9,
@@ -132,11 +132,11 @@
     },
     "LineNumber": "9",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
     "codeLocation": {
       "startPosition": {
         "line": 7,
@@ -149,11 +149,11 @@
     },
     "LineNumber": "7",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
     "codeLocation": {
       "startPosition": {
         "line": 9,
@@ -166,11 +166,11 @@
     },
     "LineNumber": "9",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
     "codeLocation": {
       "startPosition": {
         "line": 22,
@@ -183,11 +183,11 @@
     },
     "LineNumber": "22",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
     "codeLocation": {
       "startPosition": {
         "line": 32,
@@ -200,11 +200,11 @@
     },
     "LineNumber": "32",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
     "codeLocation": {
       "startPosition": {
         "line": 361,
@@ -217,11 +217,11 @@
     },
     "LineNumber": "361",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
     "codeLocation": {
       "startPosition": {
         "line": 62,
@@ -234,11 +234,11 @@
     },
     "LineNumber": "62",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
     "codeLocation": {
       "startPosition": {
         "line": 71,
@@ -251,11 +251,11 @@
     },
     "LineNumber": "71",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
     "codeLocation": {
       "startPosition": {
         "line": 153,
@@ -268,11 +268,11 @@
     },
     "LineNumber": "153",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
     "codeLocation": {
       "startPosition": {
         "line": 43,
@@ -285,11 +285,11 @@
     },
     "LineNumber": "43",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
     "codeLocation": {
       "startPosition": {
         "line": 58,
@@ -302,11 +302,11 @@
     },
     "LineNumber": "58",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
     "codeLocation": {
       "startPosition": {
         "line": 8
@@ -318,11 +318,11 @@
     },
     "LineNumber": "8",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
     "codeLocation": {
       "startPosition": {
         "line": 15,
@@ -335,11 +335,11 @@
     },
     "LineNumber": "15",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
     "codeLocation": {
       "startPosition": {
         "line": 105,
@@ -352,11 +352,11 @@
     },
     "LineNumber": "105",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
     "codeLocation": {
       "startPosition": {
         "line": 22,
@@ -369,11 +369,11 @@
     },
     "LineNumber": "22",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
     "codeLocation": {
       "startPosition": {
         "line": 17,
@@ -386,11 +386,11 @@
     },
     "LineNumber": "17",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
     "codeLocation": {
       "startPosition": {
         "line": 15,
@@ -403,11 +403,11 @@
     },
     "LineNumber": "15",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
     "codeLocation": {
       "startPosition": {
         "line": 17,
@@ -420,11 +420,11 @@
     },
     "LineNumber": "17",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Helpers/StringExtensions.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Helpers/StringExtensions.cs",
     "codeLocation": {
       "startPosition": {
         "line": 4,
@@ -437,11 +437,11 @@
     },
     "LineNumber": "4",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Helpers/StringExtensions.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Helpers/StringExtensions.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
     "codeLocation": {
       "startPosition": {
         "line": 11,
@@ -454,11 +454,11 @@
     },
     "LineNumber": "11",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
     "codeLocation": {
       "startPosition": {
         "line": 26,
@@ -471,11 +471,11 @@
     },
     "LineNumber": "26",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
     "codeLocation": {
       "startPosition": {
         "line": 28,
@@ -488,11 +488,11 @@
     },
     "LineNumber": "28",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
     "codeLocation": {
       "startPosition": {
         "line": 9,
@@ -505,11 +505,11 @@
     },
     "LineNumber": "9",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
     "codeLocation": {
       "startPosition": {
         "line": 63,
@@ -522,11 +522,11 @@
     },
     "LineNumber": "63",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs"
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
     "codeLocation": {
       "startPosition": {
         "line": 78,
@@ -539,7 +539,24 @@
     },
     "LineNumber": "78",
     "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs"
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs"
+    }
+  },
+  {
+    "fileURI": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 81,
+        "character": 15
+      },
+      "endPosition": {
+        "line": 81,
+        "character": 21
+      }
+    },
+    "LineNumber": "81",
+    "variables": {
+      "file": "file:///Users/shurley/repos/personal/c-sharp-analyzer-provider-cli/testdata/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs"
     }
   }
 ]
