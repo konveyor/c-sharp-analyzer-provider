@@ -168,5 +168,22 @@
     "variables": {
       "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs"
     }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 81,
+        "character": 15
+      },
+      "endPosition": {
+        "line": 81,
+        "character": 21
+      }
+    },
+    "LineNumber": "81",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs"
+    }
   }
 ]

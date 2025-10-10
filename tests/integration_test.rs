@@ -1,4 +1,5 @@
 use std::path::absolute;
+use std::time::Instant;
 use std::{fs::File, path::PathBuf, str::FromStr};
 
 use prost_types::value::Kind::StringValue;
@@ -57,6 +58,7 @@ async fn integration_tests() {
         }
         println!("testing demo: {:?}", entry.path());
 
+        let start_time = Instant::now();
         let requst_file = File::open(&request_file).unwrap();
 
         let request: TestEvaluateRequest = serde_yml::from_reader(requst_file).unwrap();
@@ -107,5 +109,6 @@ async fn integration_tests() {
                 }
             }
         }
+        println!("finished: {:?} in {:?}", entry.path(), start_time.elapsed())
     }
 }

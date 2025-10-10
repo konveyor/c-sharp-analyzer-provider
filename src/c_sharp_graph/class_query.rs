@@ -9,10 +9,10 @@ use tracing::{debug, trace};
 
 use crate::c_sharp_graph::query::{get_fqdn, Fqdn, GetMatcher, Search, SymbolMatcher, SyntaxType};
 
-pub(crate) struct FieldSymbolsGetter {}
+pub(crate) struct ClassSymbolsGetter {}
 
-impl GetMatcher for FieldSymbolsGetter {
-    type Matcher = FieldSymbols;
+impl GetMatcher for ClassSymbolsGetter {
+    type Matcher = ClassSymbols;
 
     fn get_matcher(
         stack_graphs: &StackGraph,
@@ -23,51 +23,52 @@ impl GetMatcher for FieldSymbolsGetter {
         Self: std::marker::Sized,
     {
         debug!("getting FieldSymbols matcher");
-        FieldSymbols::new(stack_graphs, definition_root_nodes, search)
+        ClassSymbols::new(stack_graphs, definition_root_nodes, search)
     }
 }
 
-pub(crate) struct FieldSymbols {
-    fields: HashMap<Fqdn, Handle<Node>>,
+pub(crate) struct ClassSymbols {
+    classes: HashMap<Fqdn, Handle<Node>>,
 }
 
 // Create exposed methods for NamesapceSymbols
-impl FieldSymbols {
+impl ClassSymbols {
     pub(crate) fn new(
         graph: &StackGraph,
         nodes: Vec<Handle<Node>>,
         search: &Search,
-    ) -> anyhow::Result<FieldSymbols, Error> {
-        let mut fields: HashMap<Fqdn, Handle<Node>> = HashMap::new();
+    ) -> anyhow::Result<ClassSymbols, Error> {
+        let mut classes: HashMap<Fqdn, Handle<Node>> = HashMap::new();
 
-        debug!("searching fields in {} root_nodes", nodes.len());
         for node_handle in nodes {
             //Get all the edges
-            Self::traverse_node(graph, node_handle, search, &mut fields)
+            Self::traverse_node(graph, node_handle, search, &mut classes)
         }
 
-        debug!("field nodes found: {:?}", fields);
+        debug!("class nodes found: {:?}", classes);
 
-        Ok(FieldSymbols { fields })
+        Ok(ClassSymbols { classes })
     }
 }
 
-impl SymbolMatcher for FieldSymbols {
+impl SymbolMatcher for ClassSymbols {
     fn match_symbol(&self, symbol: String) -> bool {
         self.symbol_in_namespace(symbol)
     }
     fn match_fqdn(&self, fqdn: &Fqdn) -> bool {
-        self.fields.contains_key(fqdn)
+        self.classes
+            .keys()
+            .any(|f| f.namespace == fqdn.namespace && f.class == fqdn.class)
     }
 }
 
 // Private methods for NamespaceSymbols
-impl FieldSymbols {
+impl ClassSymbols {
     fn traverse_node(
         graph: &StackGraph,
         node: Handle<Node>,
         search: &Search,
-        fields: &mut HashMap<Fqdn, Handle<Node>>,
+        classes: &mut HashMap<Fqdn, Handle<Node>>,
     ) {
         let mut child_edges: Vec<Handle<Node>> = vec![];
         for edge in graph.outgoing_edges(node) {
@@ -89,10 +90,10 @@ impl FieldSymbols {
                 Some(source_info) => match source_info.syntax_type.into_option() {
                     None => continue,
                     Some(syntax_type) => {
-                        if let SyntaxType::FieldName = SyntaxType::get(&graph[syntax_type]) {
+                        if let SyntaxType::ClassDef = SyntaxType::get(&graph[syntax_type]) {
                             let fqdn_name = get_fqdn(edge.sink, graph)
                                 .expect("We should always get a FQDN for methods");
-                            fields.insert(fqdn_name, node);
+                            classes.insert(fqdn_name, node);
                         } else {
                             trace!(
                                 "got node: {:?}, symbol: {} not matching syntax_type: {}",
@@ -106,7 +107,7 @@ impl FieldSymbols {
             }
         }
         for child_edge in child_edges {
-            Self::traverse_node(graph, child_edge, search, fields);
+            Self::traverse_node(graph, child_edge, search, classes);
         }
     }
 
@@ -117,31 +118,9 @@ impl FieldSymbols {
     // TODO: Consider scoped things for this(??)
     // TODO: Consider a edge from the var to the class symbol
     fn symbol_in_namespace(&self, symbol: String) -> bool {
-        let parts: Vec<&str> = symbol.split(".").collect();
-        if parts.len() != 2 {
-            return false;
-        }
-        let field_part = parts
-            .last()
-            .expect("unable to get method part for symbol")
-            .to_string();
-        let class_part = parts
-            .first()
-            .expect("unable to get class part for symbol")
-            .to_string();
-        self.fields.keys().any(|fqdn| {
-            let field = fqdn.method.clone().unwrap_or("".to_string());
+        self.classes.keys().any(|fqdn| {
             let class = fqdn.class.clone().unwrap_or("".to_string());
-            if field == field_part {
-                trace!(
-                    "here: {:?}.{:?} -- {:?} ",
-                    class_part.clone(),
-                    field_part.clone(),
-                    fqdn
-                );
-                return true;
-            }
-            field == field_part && class == class_part
+            class == symbol
         })
     }
 }
