@@ -71,7 +71,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .unwrap();
 
     if args.port.is_some() {
-        let s = format!("[::1]:{}", args.port.unwrap());
+        let s = format!("[::]:{}", args.port.unwrap());
         info!("Using gRPC over HTTP/2 on port {}", s);
 
         let addr = s.parse()?;
