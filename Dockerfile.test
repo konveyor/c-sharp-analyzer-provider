@@ -1,0 +1,24 @@
+from fullstorydev/grpcurl:latest as grpcurl
+
+from registry.access.redhat.com/ubi9/ubi
+
+# Install .NET SDK for dotnet tools and netcat for health checks
+RUN dnf install -y rust-toolset unzip dotnet-sdk-8.0 dotnet-runtime-8.0 nmap-ncat less
+
+RUN curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v30.2/protoc-30.2-linux-x86_64.zip &&\
+    unzip protoc-30.2-linux-x86_64.zip -d $HOME/protoc
+
+RUN ln -s $HOME/protoc/bin/protoc /usr/local/bin/
+
+COPY --from=grpcurl /bin/grpcurl /usr/local/bin/grpcurl
+
+WORKDIR /csharp-provider
+COPY . /csharp-provider/
+
+RUN PROTOC=$HOME/protoc/bin/protoc cargo build
+
+# Install required .NET tools
+RUN dotnet tool install --global Paket
+RUN dotnet tool install --global ilspycmd
+
+ENTRYPOINT ["make", "run-demo-container"]
