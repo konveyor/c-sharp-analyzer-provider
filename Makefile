@@ -1,3 +1,8 @@
+# Container runtime (podman by default, can be overridden with docker)
+CONTAINER_RUNTIME ?= podman
+
+.PHONY: download_proto build_grpc run build-image run-grpc-init-http run-grpc-ref-http wait-for-server reset-nerd-dinner-demo reset-demo-apps reset-demo-output run-demo run-demo-github run-integration-tests container-build-test container-run-test container-test
+
 download_proto:
 	curl -L -o src/build/proto/provider.proto https://raw.githubusercontent.com/konveyor/analyzer-lsp/refs/heads/main/provider/internal/grpc/library.proto
 
@@ -8,10 +13,10 @@ run:
 	cargo run  -- --port 9000 --name c-sharp --db-path testing.db
 
 build-image:
-	docker build -f dotnet-base-provider.Dockerfile .
+	$(CONTAINER_RUNTIME) build -f dotnet-base-provider.Dockerfile -t quay.io/kovneyor/c-sharp-external-provider .
 
 run-grpc-init-http:
-	grpcurl -max-time 1000 -plaintext -d '{"analysisMode": "source-only", "location": "$(PWD)/testdata/nerd-dinner", "providerSpecificConfig": {"ilspy_cmd": "${HOME}/.dotnet/tools/ilspycmd", "paket_cmd": "${HOME}/.dotnet/tools/paket"}}' localhost:9000 provider.ProviderService.Init
+	grpcurl -max-time 1000 -plaintext -d "{\"analysisMode\": \"source-only\", \"location\": \"$(PWD)/testdata/nerd-dinner\", \"providerSpecificConfig\": {\"ilspy_cmd\": \"$$HOME/.dotnet/tools/ilspycmd\", \"paket_cmd\": \"$$HOME/.dotnet/tools/paket\"}}" localhost:9000 provider.ProviderService.Init
 
 run-grpc-ref-http:
 	grpcurl -max-msg-sz 10485760 -max-time 30 -plaintext -d '{"cap": "referenced", "conditionInfo": "{\"referenced\": {\"pattern\": \"System.Web.Mvc.*\"}}" }' -connect-timeout 5000.000000 localhost:9000 provider.ProviderService.Evaluate > output.yaml
@@ -49,14 +54,29 @@ run-demo: reset-demo-apps build_grpc
 	$(MAKE) reset-demo-apps
 
 run-demo-github: reset-demo-apps build_grpc
-	RUST_LOG=c_sharp_analyzer_provider_cli=DEBUG,INFO target/debug/c-sharp-analyzer-provider-cli --port 9000 --name c-sharp &> demo.log
-	$(MAKE) wait-for-server;
-	$(MAKE) run-grpc-init-http;
-	$(MAKE) run-integration-tests;
-	$(MAKE) reset-demo-apps;
+	RUST_LOG=c_sharp_analyzer_provider_cli=DEBUG,INFO target/debug/c-sharp-analyzer-provider-cli --port 9000 --name c-sharp &> demo.log & \
+	export SERVER_PID=$$!; \
+	$(MAKE) wait-for-server; \
+	$(MAKE) run-grpc-init-http; \
+	$(MAKE) run-integration-tests; \
+	kill $$SERVER_PID || true; \
+	$(MAKE) reset-demo-apps
 
+run-demo-container: build_grpc
+	RUST_LOG=c_sharp_analyzer_provider_cli=DEBUG,INFO target/debug/c-sharp-analyzer-provider-cli --port 9000 --name c-sharp &> demo.log & \
+	export SERVER_PID=$$!; \
+	$(MAKE) wait-for-server; \
+	$(MAKE) run-grpc-init-http; \
+	$(MAKE) run-integration-tests; \
 
 run-integration-tests:
 	cargo test -- --nocapture
 
+# Container-based integration testing (uses CONTAINER_RUNTIME variable)
+container-build-test:
+	$(CONTAINER_RUNTIME) build -f Dockerfile.test -t c-sharp-provider-test:latest .
 
+container-run-test:
+	$(CONTAINER_RUNTIME) run --rm c-sharp-provider-test:latest
+
+container-test: container-build-test container-run-test
