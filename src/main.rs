@@ -6,7 +6,10 @@ mod provider;
 use std::{
     env::temp_dir,
     path::PathBuf,
-    sync::atomic::{AtomicUsize, Ordering},
+    sync::{
+        atomic::{AtomicUsize, Ordering},
+        Arc,
+    },
 };
 
 use clap::{command, Parser};
@@ -17,7 +20,10 @@ use tracing_log::LogTracer;
 use tracing_subscriber::EnvFilter;
 
 use crate::analyzer_service::proto;
-use crate::analyzer_service::provider_service_server::ProviderServiceServer;
+use crate::analyzer_service::{
+    provider_code_location_service_server::ProviderCodeLocationServiceServer,
+    provider_service_server::ProviderServiceServer,
+};
 use crate::provider::CSharpProvider;
 
 #[derive(Parser)]
@@ -37,6 +43,8 @@ struct Args {
     verbosity: clap_verbosity_flag::Verbosity,
     #[arg(long)]
     db_path: Option<PathBuf>,
+    #[arg(long)]
+    context_lines: Option<usize>,
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -61,24 +69,30 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .enable_all()
         .build()?;
 
-    let provider = CSharpProvider::new(
-        args.db_path
-            .map_or(temp_dir().join("c_sharp_provider.db"), |x| x),
-    );
+    let db_path = args
+        .db_path
+        .map_or(temp_dir().join("c_sharp_provider.db"), |x| x);
+    let provider = Arc::new(CSharpProvider::new(
+        db_path,
+        args.context_lines.unwrap_or(10),
+    ));
     let service = tonic_reflection::server::Builder::configure()
         .register_encoded_file_descriptor_set(proto::FILE_DESCRIPTOR_SET)
         .build_v1alpha()
         .unwrap();
 
     if args.port.is_some() {
-        let s = format!("[::1]:{}", args.port.unwrap());
+        let s = format!("[::]:{}", args.port.unwrap());
         info!("Using gRPC over HTTP/2 on port {}", s);
 
         let addr = s.parse()?;
 
         rt.block_on(async {
             let _ = Server::builder()
-                .add_service(ProviderServiceServer::new(provider))
+                .add_service(ProviderServiceServer::from_arc(provider.clone()))
+                .add_service(ProviderCodeLocationServiceServer::from_arc(
+                    provider.clone(),
+                ))
                 .add_service(service)
                 .serve(addr)
                 .with_current_subscriber()
@@ -90,16 +104,23 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         {
             debug!("Running on Unix-like OS");
 
-            use tokio::net::UnixListener;
-            use tokio_stream::wrappers::UnixListenerStream;
-            use tracing::debug;
-
-            let uds = UnixListener::bind(args.socket.unwrap())?;
-            let uds_stream = UnixListenerStream::new(uds);
-
             rt.block_on(async {
+                use tokio::net::UnixListener;
+                use tokio_stream::wrappers::UnixListenerStream;
+
+                let uds = UnixListener::bind(args.socket.unwrap());
+                if let Err(err) = uds {
+                    use tracing_log::log::error;
+
+                    error!("unable to get listener: {err}");
+                    return;
+                }
+                let uds_stream = UnixListenerStream::new(uds.unwrap());
                 let _ = Server::builder()
-                    .add_service(ProviderServiceServer::new(provider))
+                    .add_service(ProviderServiceServer::from_arc(provider.clone()))
+                    .add_service(ProviderCodeLocationServiceServer::from_arc(
+                        provider.clone(),
+                    ))
                     .add_service(service)
                     .serve_with_incoming(uds_stream)
                     .with_current_subscriber()
@@ -112,7 +133,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             use crate::pipe_stream::get_named_pipe_connection_stream;
             rt.block_on(async {
                 let _ = Server::builder()
-                    .add_service(ProviderServiceServer::new(provider))
+                    .add_service(ProviderServiceServer::from_arc(provider.clone()))
+                    .add_service(ProviderCodeLocationServiceServer::from_arc(
+                        provider.clone(),
+                    ))
                     .add_service(service)
                     .serve_with_incoming(get_named_pipe_connection_stream(args.socket.unwrap()))
                     .with_current_subscriber()

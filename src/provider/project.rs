@@ -7,6 +7,7 @@ use std::{
 
 use anyhow::{anyhow, Error};
 use prost_types::{Struct, Value};
+use serde::Deserialize;
 use stack_graphs::{
     graph::StackGraph, serde::StackGraph as serialize_stack_graph, stitching::ForwardCandidates,
     storage::SQLiteReader, NoCancellation,
@@ -29,7 +30,7 @@ pub struct Project {
     pub tools: Tools,
 }
 
-#[derive(Eq, PartialEq, Debug)]
+#[derive(Eq, PartialEq, Debug, Deserialize)]
 pub enum AnalysisMode {
     Full,
     SourceOnly,

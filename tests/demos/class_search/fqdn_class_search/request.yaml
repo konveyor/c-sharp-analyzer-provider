@@ -1,4 +1,4 @@
 cap: "referenced"
 id: 5
 condition_info: |
-  {"referenced": {"pattern": "WebMatrix.WebData.WebSecurity", "location": "class"}}
+  {"referenced": {"pattern": "WebMatrix.WebData.WebSecurity", "location": "CLASS"}}

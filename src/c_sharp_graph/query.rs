@@ -217,7 +217,7 @@ pub(crate) struct StartingNodes {
     file_to_compunit_handle: HashMap<Handle<File>, Handle<Node>>,
 }
 
-impl<'a, T: GetMatcher> Querier<'a, T> {
+impl<T: GetMatcher> Querier<'_, T> {
     pub(crate) fn get_search(&self, query: String) -> anyhow::Result<Search, Error> {
         Search::create_search(query)
     }
@@ -448,7 +448,7 @@ impl<'a, T: GetMatcher> Querier<'a, T> {
                         *definition_node,
                         &accessed_part,
                         access_node.file()?,
-                        &searchable_nodes,
+                        searchable_nodes,
                     )
                     // When the symbol is defined by a local variable
                     // then we need to find the local var type.
@@ -515,7 +515,7 @@ impl<'a, T: GetMatcher> Querier<'a, T> {
     }
 }
 
-impl<'graph, T: GetMatcher> Query for Querier<'graph, T> {
+impl<T: GetMatcher> Query for Querier<'_, T> {
     fn query(self, query: String) -> anyhow::Result<Vec<ResultNode>, Error> {
         let search: Search = self.get_search(query)?;
 

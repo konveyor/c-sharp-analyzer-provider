@@ -18,6 +18,10 @@ pub struct Config {
     pub provider_specific_config: ::core::option::Option<::prost_types::Struct>,
     #[prost(message, optional, tag = "6")]
     pub proxy: ::core::option::Option<Proxy>,
+    #[prost(string, tag = "7")]
+    pub language_server_pipe: ::prost::alloc::string::String,
+    #[prost(bool, tag = "8")]
+    pub initialized: bool,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct InitResponse {
