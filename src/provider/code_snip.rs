@@ -1,7 +1,6 @@
 use std::{
     fs::File,
     io::{BufRead, BufReader},
-    path::Path,
 };
 
 use crate::{
@@ -12,7 +11,7 @@ use crate::{
     provider::CSharpProvider,
 };
 use tonic::{async_trait, Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use url::Url;
 
 #[async_trait]
@@ -24,9 +23,7 @@ impl ProviderCodeLocationService for CSharpProvider {
         info!("request: {:#?}", request);
         let code_snip_request = request.into_inner();
         if code_snip_request.code_location.is_none() {
-            return Err(Status::invalid_argument(
-                "no code location infromation sent",
-            ));
+            return Err(Status::invalid_argument("no code location sent"));
         }
         let code_location = code_snip_request.code_location.unwrap();
         if code_location.start_position.is_none() {
@@ -37,7 +34,7 @@ impl ProviderCodeLocationService for CSharpProvider {
         let start_position = code_location.start_position.unwrap();
         if code_location.end_position.is_none() {
             return Err(Status::invalid_argument(
-                "no code location start position sent",
+                "no code location end position sent",
             ));
         }
         let end_position = code_location.end_position.unwrap();
@@ -59,16 +56,16 @@ impl ProviderCodeLocationService for CSharpProvider {
             )));
         }
 
-        let file_path = Path::new(file_uri.path());
-        if let Err(e) = file_path.try_exists() {
-            error!("unable to find file: {}", e);
+        let file_path = file_uri.to_file_path();
+        if file_path.is_err() {
             return Err(Status::invalid_argument(format!(
                 "could not find file requested: {:?}",
                 &file_path
             )));
         }
+        let file_path = file_path.unwrap();
 
-        let file = File::open(file_path);
+        let file = File::open(&file_path);
         if file.is_err() {
             return Err(Status::invalid_argument(format!(
                 "could not find file requested: {:?}",
@@ -93,7 +90,7 @@ impl ProviderCodeLocationService for CSharpProvider {
                     "".to_string()
                 } else {
                     let s = s.unwrap();
-                    format!("{} {}", skip_lines + index, s)
+                    format!("{} {}\n", skip_lines + index, s)
                 }
             })
             .collect();

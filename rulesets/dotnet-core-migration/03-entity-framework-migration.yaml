@@ -128,28 +128,3 @@
       location: ALL
       pattern: System\.Data\.Entity
 
-- category: mandatory
-  customVariables: []
-  description: Entity Framework connection string constructor not supported in EF Core
-  effort: 3
-  labels:
-  - konveyor.io/source=dotnet
-  - konveyor.io/target=dotnet-core
-  links:
-  - title: Connection strings in EF Core
-    url: https://learn.microsoft.com/en-us/ef/core/miscellaneous/connection-strings
-  message: |
-    The DbContext constructor pattern "name=ConnectionStringName" is not supported in EF Core.
-    Connection strings are configured differently.
-
-    Migration actions:
-    - Move connection strings from Web.config to appsettings.json
-    - Configure connection string in Startup.ConfigureServices using AddDbContext
-    - Use options pattern: services.AddDbContext<MyContext>(options => options.UseSqlServer(connectionString))
-    - Or override OnConfiguring in DbContext to specify connection string
-    - Use IConfiguration to access connection strings
-  ruleID: dotnet-core-ef-connection-01
-  when:
-    csharp.referenced:
-      location: ALL
-      pattern: ":\\s*base\\(\"name="

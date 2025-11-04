@@ -31,7 +31,6 @@ pub struct Project {
 }
 
 #[derive(Eq, PartialEq, Debug, Deserialize)]
-#[serde(rename_all = "lowercase")]
 pub enum AnalysisMode {
     Full,
     SourceOnly,
