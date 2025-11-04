@@ -5,7 +5,8 @@
         "analysisMode": "source-only",
         "location": "testdata/nerd-dinner",
         "providerSpecificConfig": {
-            "ilspy_cmd": '~/.dotnet/tools/ilspycmd'
-            "paket_cmd": '!/.dotnet/tools/paket'
+            "ilspy_cmd": "~/.dotnet/tools/ilspycmd",
+            "paket_cmd": "~/.dotnet/tools/paket"
+        }
     }
 ]
