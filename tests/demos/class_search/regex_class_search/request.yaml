@@ -1,4 +1,4 @@
 cap: "referenced"
 id: 5
 condition_info: |
-  {"referenced": {"pattern": "DotNetOpenAuth.AspNet.Authentication*", "location": "class"}}
+  {"referenced": {"pattern": "DotNetOpenAuth.AspNet.Authentication*", "location": "CLASS"}}

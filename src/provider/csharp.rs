@@ -21,7 +21,7 @@ use crate::{
 };
 
 #[derive(Clone, ToSchema, Deserialize, Default, Debug)]
-#[serde(rename_all = "lowercase")]
+#[serde(rename_all = "UPPERCASE")]
 enum Locations {
     #[default]
     All,
@@ -48,14 +48,16 @@ pub struct CSharpProvider {
     pub db_path: PathBuf,
     pub config: Arc<Mutex<Option<Config>>>,
     pub project: Arc<Mutex<Option<Arc<Project>>>>,
+    pub context_lines: usize,
 }
 
 impl CSharpProvider {
-    pub fn new(db_path: PathBuf) -> CSharpProvider {
+    pub fn new(db_path: PathBuf, context_lines: usize) -> CSharpProvider {
         CSharpProvider {
             db_path,
             config: Arc::new(Mutex::new(None)),
             project: Arc::new(Mutex::new(None)),
+            context_lines,
         }
     }
 }

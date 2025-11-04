@@ -1,3 +1,4 @@
+mod code_snip;
 mod csharp;
 mod dependency_resolution;
 mod project;

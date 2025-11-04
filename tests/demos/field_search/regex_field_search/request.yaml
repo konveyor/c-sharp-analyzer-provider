@@ -1,4 +1,4 @@
 cap: "referenced"
 id: 5
 condition_info: |
-  {"referenced": {"pattern": "DotNetOpenAuth.AspNet.AuthenticationResult.Provider*", "location": "field"}}
+  {"referenced": {"pattern": "DotNetOpenAuth.AspNet.AuthenticationResult.Provider*", "location": "FIELD"}}
