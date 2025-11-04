@@ -11,7 +11,6 @@ use crate::{
     },
     provider::CSharpProvider,
 };
-use http::Uri;
 use tonic::{async_trait, Request, Response, Status};
 use tracing::{error, info};
 use url::Url;
