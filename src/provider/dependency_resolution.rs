@@ -6,7 +6,7 @@ use std::process::Command;
 use std::sync::Arc;
 use std::sync::Mutex;
 
-use anyhow::{anyhow, Error};
+use anyhow::{anyhow, Error, Ok, Result};
 use fs_extra::dir::get_size;
 use stack_graphs::graph::StackGraph;
 use stack_graphs::partial::PartialPath;
@@ -20,10 +20,15 @@ use tokio::fs::{self, File};
 use tokio::io::{AsyncBufReadExt, BufReader};
 use tokio::task::JoinSet;
 use tracing::{debug, error, info, trace};
+use tree_sitter_stack_graphs::loader::FileAnalyzers;
 
+use crate::c_sharp_graph::dependency_xml_analyzer::DepXMLFileAnalyzer;
+use crate::c_sharp_graph::language_config::SourceNodeLanguageConfiguration;
 use crate::c_sharp_graph::loader::add_dir_to_graph;
+use crate::c_sharp_graph::loader::AsyncInitializeGraph;
 use crate::c_sharp_graph::loader::SourceType;
 use crate::provider::project::Tools;
+use crate::provider::AnalysisMode;
 use crate::provider::Project;
 
 const REFERNCE_ASSEMBLIES_NAME: &str = "Microsoft.NETFramework.ReferenceAssemblies";
@@ -33,6 +38,7 @@ pub struct Dependencies {
     pub name: String,
     #[allow(dead_code)]
     pub version: String,
+    pub highest_restriction: String,
     pub decompiled_size: Mutex<Option<u64>>,
     pub decompiled_location: Arc<Mutex<HashSet<PathBuf>>>,
 }
@@ -201,6 +207,48 @@ impl Dependencies {
 
         Ok(decompile_out_name)
     }
+
+    pub async fn get_xml_files(&self) -> Result<Vec<PathBuf>, Error> {
+        let dep_package_dir = self.location.to_owned();
+        if !dep_package_dir.is_dir() || !dep_package_dir.exists() {
+            return Err(anyhow!("invalid package path: {:?}", dep_package_dir));
+        }
+        let mut entries = fs::read_dir(dep_package_dir).await?;
+        let mut paket_cache_file: Option<PathBuf> = None;
+        while let Some(entry) = entries.next_entry().await? {
+            // Find the paket_installmodel.cache file to read
+            // and find the .dll's
+            if entry.file_name().to_string_lossy() == "paket-installmodel.cache" {
+                paket_cache_file = Some(entry.path());
+                break;
+            }
+        }
+        let to_decompile_locations = match paket_cache_file {
+            Some(cache_file) => {
+                // read_cache_file to get the path to the last found dll
+                // this is an aproximation of what we want and eventually
+                // we will need to understand the packet.dependencies file
+                self.read_packet_cache_file(cache_file, self.highest_restriction.clone())
+                    .await?
+            }
+            None => {
+                debug!("did not find a cache file for dep: {:?}", self);
+                return Err(anyhow!("did not find a cache file for dep: {:?}", self));
+            }
+        };
+        if to_decompile_locations.is_empty() {
+            trace!("no dll's found for dependnecy: {:?}", self);
+            return Ok(vec![]);
+        }
+        let new_locations = to_decompile_locations
+            .into_iter()
+            .map(|mut loc| {
+                loc.set_extension("xml");
+                loc
+            })
+            .collect();
+        Ok(new_locations)
+    }
 }
 
 impl Project {
@@ -233,46 +281,204 @@ impl Project {
             reference_assembly_path, highest_restriction
         );
         let mut set = JoinSet::new();
-        for d in deps {
-            let reference_assmblies = reference_assembly_path.clone();
-            let restriction = highest_restriction.clone();
-            let tools = self.tools.clone();
-            set.spawn(async move {
-                let decomp = d.decompile(reference_assmblies, restriction, &tools).await;
-                if let Err(e) = decomp {
-                    error!("could not decompile - {:?}", e);
-                }
-                d
-            });
-        }
-        // reset deps, as all the deps should be moved into the threads.
-        let mut deps = vec![];
-        while let Some(res) = set.join_next().await {
-            match res {
-                Ok(d) => {
-                    deps.push(d);
-                }
-                Err(e) => {
-                    return Err(Error::new(e));
+        if self.analysis_mode == AnalysisMode::Full {
+            for d in deps {
+                let reference_assmblies = reference_assembly_path.clone();
+                let restriction = highest_restriction.clone();
+                let tools = self.tools.clone();
+                set.spawn(async move {
+                    let decomp = d.decompile(reference_assmblies, restriction, &tools).await;
+                    if let Err(e) = decomp {
+                        error!("could not decompile - {:?}", e);
+                    }
+                    d
+                });
+            }
+            // reset deps, as all the deps should be moved into the threads.
+            let mut deps = vec![];
+            while let Some(res) = set.join_next().await {
+                match res {
+                    std::result::Result::Ok(d) => {
+                        deps.push(d);
+                    }
+                    Err(e) => {
+                        return Err(Error::new(e));
+                    }
                 }
             }
+            deps.sort_by(|x, y| {
+                y.decompiled_size
+                    .lock()
+                    .unwrap()
+                    .cmp(&x.decompiled_size.lock().unwrap())
+            });
+            let mut d = self.dependencies.lock().await;
+            *d = Some(deps);
+        } else {
+            let mut d = self.dependencies.lock().await;
+            *d = Some(deps);
         }
-        deps.sort_by(|x, y| {
-            y.decompiled_size
-                .lock()
-                .unwrap()
-                .cmp(&x.decompiled_size.lock().unwrap())
-        });
-        let mut d = self.dependencies.lock().await;
-        *d = Some(deps);
-
         Ok(())
     }
 
     pub async fn load_to_database(&self) -> Result<(), Error> {
+        let set = if self.analysis_mode == AnalysisMode::Full {
+            self.load_to_database_full_analysis().await?
+        } else {
+            self.load_to_database_source_only().await?
+        };
+        for res in set.join_all().await {
+            let (init_graph, dep_name) = match res {
+                std::result::Result::Ok((i, dep_name)) => (i, dep_name),
+                Err(e) => {
+                    return Err(anyhow!(
+                        "unable to get graph, project may not have been initialized: {}",
+                        e
+                    ));
+                }
+            };
+            info!(
+                "loaded {} files for dep: {:?} into database",
+                init_graph.files_loaded, dep_name
+            );
+        }
+        let mut graph_guard = self
+            .graph
+            .lock()
+            .expect("project may not have been initialized");
+        info!("adding all dependency and source to graph");
+        let mut db_reader = SQLiteReader::open(&self.db_path)?;
+        db_reader.load_graphs_for_file_or_directory(&self.location, &NoCancellation)?;
+        // Once you read the data back from the DB, you will not get the source information
+        // This is not currently stored in the database
+        // There may be a way to re-attach this but for now we will relay code-snipper.
+        let (read_graph, partials, databse) = db_reader.get();
+        let read_graph = read_graph.to_serializable();
+        let mut new_graph = StackGraph::new();
+        read_graph.load_into(&mut new_graph)?;
+        debug!(
+            "new graph: {:?}",
+            databse.to_serializable(&new_graph, partials)
+        );
+        let _ = graph_guard.insert(new_graph);
+        Ok(())
+    }
+
+    async fn load_to_database_source_only(
+        &self,
+    ) -> Result<JoinSet<Result<(AsyncInitializeGraph, String), Error>>, Error> {
         let shared_deps = Arc::clone(&self.dependencies);
         let mut x = shared_deps.lock().await;
         let mut set = JoinSet::new();
+
+        if let Some(ref mut vec) = *x {
+            // For each dependnecy in the list we will try and load the decompiled files
+            // Into the stack graph database.
+            for d in vec {
+                // Look up the location of the xml file.
+                let xml_files = d.get_xml_files().await?;
+                for file in xml_files {
+                    if !file.exists() {
+                        // Fallback to decompile.
+                        error!("unable to find xml file: {:?}", file);
+                        continue;
+                    }
+                    // Use new type of loader, to handle this.
+                    let db_path = self.db_path.clone();
+                    let dep_name = d.name.clone();
+                    set.spawn(async move {
+                        info!(
+                            "indexing dep: {} with xml file: {:?} into a graph",
+                            &dep_name, &file
+                        );
+                        let mut graph = StackGraph::new();
+                        // We need to make sure that the symols for source type are the first
+                        // symbols, so that they match what is in the builtins.
+                        let (_, dep_source_type_node) =
+                            SourceType::load_symbols_into_graph(&mut graph);
+                        // remove mutability
+                        let graph = graph;
+                        let mut source_lc = SourceNodeLanguageConfiguration::new(
+                            &tree_sitter_stack_graphs::NoCancellation,
+                        )?;
+                        let file_name = file.file_name();
+                        if file_name.is_none() {
+                            return Err(anyhow!("unable to handle file"));
+                        }
+                        let file_name = file_name.unwrap().to_string_lossy();
+                        let file_name = file_name.to_string();
+                        source_lc.language_config.special_files =
+                            FileAnalyzers::new().with(file_name, DepXMLFileAnalyzer {});
+                        let mut graph = add_dir_to_graph(
+                            &file,
+                            &source_lc.dependnecy_type_node_info,
+                            &source_lc.language_config,
+                            graph,
+                        )?;
+                        let root_node = graph.stack_graph.iter_nodes().find(|n| {
+                            let node = &graph.stack_graph[*n];
+                            node.is_root()
+                        });
+                        if root_node.is_none() {
+                            error!("unable to find root node");
+                        }
+                        let root_node = root_node.unwrap();
+                        let dep_source_type_node = graph.stack_graph.iter_nodes().find(|n| {
+                            let node = &graph.stack_graph[*n];
+                            let symbol = node.symbol();
+                            symbol.is_some()
+                                && symbol.unwrap() == dep_source_type_node.get_symbol_handle()
+                        });
+                        let dep_source_type_node = dep_source_type_node.unwrap();
+                        graph
+                            .stack_graph
+                            .add_edge(root_node, dep_source_type_node, 0);
+
+                        let mut db: SQLiteWriter = SQLiteWriter::open(db_path)?;
+                        for (file_path, tag) in graph.file_to_tag.clone() {
+                            let file_str = file_path.to_string_lossy();
+                            let file_handle = graph
+                                .stack_graph
+                                .get_file(&file_str)
+                                .ok_or(anyhow!("unable to get file"))?;
+                            let mut partials = PartialPaths::new();
+                            let mut paths: Vec<PartialPath> = vec![];
+                            let stats =
+                                ForwardPartialPathStitcher::find_minimal_partial_path_set_in_file(
+                                    &graph.stack_graph,
+                                    &mut partials,
+                                    file_handle,
+                                    StitcherConfig::default().with_collect_stats(true),
+                                    &NoCancellation,
+                                    |_, _, p| paths.push(p.clone()),
+                                )?;
+                            db.store_result_for_file(
+                                &graph.stack_graph,
+                                file_handle,
+                                &tag,
+                                &mut partials,
+                                &paths,
+                            )?;
+                            trace!("stats for stitiching: {:?} - paths: {}", stats, paths.len(),);
+                        }
+                        info!(
+                            "stats for dependency: {:?}, files indexed {:?}",
+                            dep_name, graph.files_loaded,
+                        );
+                        Ok((graph, dep_name))
+                    });
+                }
+            }
+        }
+        Ok(set)
+    }
+
+    async fn load_to_database_full_analysis(
+        &self,
+    ) -> Result<JoinSet<Result<(AsyncInitializeGraph, String), Error>>, Error> {
+        let shared_deps = Arc::clone(&self.dependencies);
+        let mut x = shared_deps.lock().await;
+        let mut set: JoinSet<Result<(AsyncInitializeGraph, String), Error>> = JoinSet::new();
         if let Some(ref mut vec) = *x {
             // For each dependnecy in the list we will try and load the decompiled files
             // Into the stack graph database.
@@ -349,43 +555,7 @@ impl Project {
                 }
             }
         }
-        for res in set.join_all().await {
-            let (init_graph, dep_name) = match res {
-                Ok((i, dep_name)) => (i, dep_name),
-                Err(e) => {
-                    return Err(anyhow!(
-                        "unable to get graph, project may not have been initialized: {}",
-                        e
-                    ));
-                }
-            };
-            info!(
-                "loaded {} files for dep: {:?} into database",
-                init_graph.files_loaded, dep_name
-            );
-        }
-
-        let mut graph_guard = self
-            .graph
-            .lock()
-            .expect("project may not have been initialized");
-        info!("adding all dependency and source to graph");
-        let mut db_reader = SQLiteReader::open(&self.db_path)?;
-        db_reader.load_graphs_for_file_or_directory(&self.location, &NoCancellation)?;
-        // Once you read the data back from the DB, you will not get the source information
-        // This is not currently stored in the database
-        // There may be a way to re-attach this but for now we will relay code-snipper.
-        let (read_graph, partials, databse) = db_reader.get();
-        let read_graph = read_graph.to_serializable();
-        let mut new_graph = StackGraph::new();
-        read_graph.load_into(&mut new_graph)?;
-        debug!(
-            "new graph: {:?}",
-            databse.to_serializable(&new_graph, partials)
-        );
-        let _ = graph_guard.insert(new_graph);
-
-        Ok(())
+        Ok(set)
     }
 
     async fn read_packet_dependency_file(
@@ -435,6 +605,7 @@ impl Project {
                     version: version.to_string(),
                     decompiled_location: Arc::new(Mutex::new(HashSet::new())),
                     decompiled_size: Mutex::new(None),
+                    highest_restriction: "".to_string(),
                 };
                 deps.push(dep);
             }
@@ -450,6 +621,14 @@ impl Project {
             }
         }
         drop(lines);
+
+        let deps = deps
+            .into_iter()
+            .map(|mut d| {
+                d.highest_restriction = smallest_framework.clone();
+                d
+            })
+            .collect();
 
         // Now we we have the framework, we need to get the reference_assmblies
         let base_name = format!("{}.{}", REFERNCE_ASSEMBLIES_NAME, smallest_framework);

@@ -407,9 +407,10 @@ impl<T: GetMatcher> Querier<'_, T> {
             })
             .collect();
 
-        debug!(
+        trace!(
             "looking for correct definition for {}-{}",
-            accessor, accessed_part
+            accessor,
+            accessed_part
         );
         let access_node = &self.graph[node];
         for definition_node in nodes_for_defines_symbol {
@@ -487,7 +488,7 @@ impl<T: GetMatcher> Querier<'_, T> {
             }
         })?;
         let ref_symbol = type_ref_node.symbol()?;
-        debug!(
+        trace!(
             "searching for defintion for type_ref_node: {}",
             type_ref_node.display(self.graph)
         );
@@ -496,7 +497,7 @@ impl<T: GetMatcher> Querier<'_, T> {
             if node.symbol().is_none() || node.symbol().unwrap() != ref_symbol {
                 return None;
             }
-            debug!(
+            trace!(
                 "found defined node, checking edges for symbols that match the accessed_part: {}",
                 node.display(self.graph)
             );
