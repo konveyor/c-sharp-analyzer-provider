@@ -1,5 +1,22 @@
 [
   {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 9,
+        "character": 8
+      },
+      "endPosition": {
+        "line": 16,
+        "character": 9
+      }
+    },
+    "LineNumber": "9",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs"
+    }
+  },
+  {
     "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
     "codeLocation": {
       "startPosition": {
@@ -12,6 +29,40 @@
       }
     },
     "LineNumber": "361",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 62,
+        "character": 8
+      },
+      "endPosition": {
+        "line": 66,
+        "character": 9
+      }
+    },
+    "LineNumber": "62",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 71,
+        "character": 8
+      },
+      "endPosition": {
+        "line": 93,
+        "character": 9
+      }
+    },
+    "LineNumber": "71",
     "variables": {
       "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs"
     }
@@ -68,6 +119,23 @@
     }
   },
   {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 15,
+        "character": 8
+      },
+      "endPosition": {
+        "line": 20,
+        "character": 9
+      }
+    },
+    "LineNumber": "15",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs"
+    }
+  },
+  {
     "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
     "codeLocation": {
       "startPosition": {
@@ -80,6 +148,23 @@
       }
     },
     "LineNumber": "105",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 22,
+        "character": 8
+      },
+      "endPosition": {
+        "line": 22,
+        "character": 39
+      }
+    },
+    "LineNumber": "22",
     "variables": {
       "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs"
     }
@@ -99,6 +184,23 @@
     "LineNumber": "17",
     "variables": {
       "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Helpers/StringExtensions.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 4,
+        "character": 4
+      },
+      "endPosition": {
+        "line": 31,
+        "character": 5
+      }
+    },
+    "LineNumber": "4",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Helpers/StringExtensions.cs"
     }
   },
   {

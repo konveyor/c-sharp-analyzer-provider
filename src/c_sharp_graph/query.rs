@@ -26,7 +26,7 @@ pub trait Query {
     fn query(self, query: String) -> anyhow::Result<Vec<ResultNode>, Error>;
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum SyntaxType {
     Import,
     CompUnit,
@@ -53,6 +53,19 @@ impl SyntaxType {
             "name" => Self::Name,
             // Name is the least used thing, and I want to have a default for this.
             &_ => Self::Name,
+        }
+    }
+    pub(crate) fn to_string(&self) -> &str {
+        match self {
+            Self::Import => "import",
+            Self::CompUnit => "comp_unit",
+            Self::NamespaceDeclaration => "namespace_declaration",
+            Self::ClassDef => "class_def",
+            Self::MethodName => "method_name",
+            Self::FieldName => "field_name",
+            Self::LocalVar => "local_var",
+            Self::Argument => "argument",
+            Self::Name => "name",
         }
     }
 }
@@ -247,17 +260,25 @@ impl<T: GetMatcher> Querier<'_, T> {
             if symbol_option.is_none() {
                 // If the node doesn't have a symbol to look at, then we should continue and it
                 // only used to tie together other nodes.
+                //
+                debug!("node no symbol: {}", node.display(self.graph));
                 continue;
             }
             let symbol = &self.graph[node.symbol().unwrap()];
             let source_info = self.graph.source_info(node_handle);
             if source_info.is_none() {
+                debug!("node no source_info: {}", node.display(self.graph));
                 continue;
             }
             match source_info.unwrap().syntax_type.into_option() {
                 None => continue,
                 Some(handle) => {
                     let syntax_type = SyntaxType::get(&self.graph[handle]);
+                    debug!(
+                        "node for syntax_type: {} -- syntax_type: {:?}",
+                        node.display(self.graph),
+                        syntax_type
+                    );
                     match syntax_type {
                         SyntaxType::CompUnit => {
                             file_to_compunit_handle.insert(file_handle, node_handle);
