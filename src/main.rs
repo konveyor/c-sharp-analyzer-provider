@@ -17,7 +17,7 @@ use tokio::runtime;
 use tonic::transport::Server;
 use tracing::{debug, info, instrument::WithSubscriber};
 use tracing_log::LogTracer;
-use tracing_subscriber::EnvFilter;
+use tracing_subscriber::{fmt, layer::SubscriberExt, EnvFilter};
 
 use crate::analyzer_service::proto;
 use crate::analyzer_service::{
@@ -51,14 +51,38 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
 
     let filter = EnvFilter::from_default_env();
-    // construct a subscriber that prints formatted traces to stdout
     LogTracer::init_with_filter(tracing_log::log::LevelFilter::Trace)?;
-    let subscriber = tracing_subscriber::FmtSubscriber::builder()
-        .with_env_filter(filter)
-        .with_thread_names(true)
-        .finish();
-    // use that subscriber to process traces emitted after this point
-    tracing::subscriber::set_global_default(subscriber)?;
+
+    // Configure logging based on whether a log file is specified
+    if let Some(log_file_path) = &args.log_file {
+        // Create file appender
+        let file_appender = tracing_appender::rolling::never(
+            std::path::Path::new(log_file_path)
+                .parent()
+                .unwrap_or_else(|| std::path::Path::new(".")),
+            std::path::Path::new(log_file_path)
+                .file_name()
+                .unwrap_or_else(|| std::ffi::OsStr::new("output.log")),
+        );
+        let (non_blocking, _guard) = tracing_appender::non_blocking(file_appender);
+
+        // Initialize with file output
+        let subscriber = tracing_subscriber::registry()
+            .with(filter)
+            .with(fmt::layer().with_writer(non_blocking).with_thread_names(true));
+
+        tracing::subscriber::set_global_default(subscriber)?;
+
+        // Keep the guard alive for the duration of the program
+        std::mem::forget(_guard);
+    } else {
+        // Initialize with stdout output (default behavior)
+        let subscriber = tracing_subscriber::registry()
+            .with(filter)
+            .with(fmt::layer().with_thread_names(true));
+
+        tracing::subscriber::set_global_default(subscriber)?;
+    }
     let rt = runtime::Builder::new_multi_thread()
         .thread_name_fn(|| {
             static ATOMIC_ID: AtomicUsize = AtomicUsize::new(0);
