@@ -1,5 +1,7 @@
 /target
 output.yaml
+e2e/konveyor-analyzer
+e2e/konveyor-analyzer.exe
 
 
 # Added by cargo

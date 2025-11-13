@@ -1,0 +1,17 @@
+[
+  {
+    "name": "csharp",
+    "binaryPath": "/Users/shurley/repos/tree-sitter-testing/c-sharp-analyzer-provider-cli/target/debug/c-sharp-analyzer-provider-cli",
+    "useSocket": true,
+    "initConfig": [
+      {
+        "analysisMode": "source-only",
+        "location": "/Users/shurley/repos/tree-sitter-testing/c-sharp-analyzer-provider-cli/testdata/nerd-dinner",
+        "providerSpecificConfig": {
+          "ilspy_cmd": "/Users/shurley/.dotnet/tools/ilspycmd",
+          "paket_cmd": "/Users/shurley/.dotnet/tools/paket"
+        }
+      }
+    ]
+  }
+]
