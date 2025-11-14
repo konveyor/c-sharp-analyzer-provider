@@ -1,4 +1,5 @@
 mod class_query;
+pub mod dependency_xml_analyzer;
 mod field_query;
 pub mod language_config;
 pub mod loader;

@@ -13,7 +13,7 @@ use stack_graphs::{
     partial::{PartialPath, PartialPaths},
     storage::SQLiteWriter,
 };
-use tracing::{debug, error, trace};
+use tracing::{debug, error, info, trace};
 use tree_sitter_stack_graphs::{
     loader::{FileReader, LanguageConfiguration},
     NoCancellation, Variables, FILE_PATH_VAR, ROOT_PATH_VAR,
@@ -188,14 +188,8 @@ fn load_graph_for_file(
     source_type: &SourceType,
 ) -> Result<Option<(Handle<File>, String)>, Error> {
     let mut file_reader = FileReader::new();
-    trace!("loading file: {:?}", entry);
+    debug!("loading file: {:?}", entry);
     let entry_parent = entry.parent().expect("parent path should be available");
-
-    if !language_config.matches_file(&entry, &mut file_reader)? {
-        return Ok(None);
-    }
-    let source = file_reader.get(&entry)?;
-    let tag: String = sha1(source);
 
     let mut globals = Variables::new();
     globals
@@ -212,6 +206,21 @@ fn load_graph_for_file(
         )
         .expect("failed to add root path variable");
 
+    let file_name = entry.file_name();
+    if file_name.is_none() {
+        return Ok(None);
+    }
+    let file_name = file_name.unwrap().to_string_lossy().to_string();
+    let analyzer_bulder = language_config.special_files.get(&file_name);
+    let matches_file = language_config.matches_file(&entry, &mut file_reader)?;
+
+    if analyzer_bulder.is_none() && !matches_file {
+        return Ok(None);
+    }
+
+    let source = file_reader.get(&entry)?;
+    let tag: String = sha1(source);
+
     let file = match stack_graph.add_file(&entry.to_str().unwrap()) {
         Ok(x) => x,
         Err(_) => {
@@ -225,20 +234,36 @@ fn load_graph_for_file(
             return Err(anyhow!(e));
         }
     };
-    let mut builder = language_config
-        .sgl
-        .builder_into_stack_graph(stack_graph, file, source);
-    let graph_node = builder.inject_node(source_type_node_id);
-    globals
-        .add(SOURCE_TYPE_NODE.into(), graph_node.into())
-        .expect("adding source type node");
 
-    let build_result = builder.build(&globals, &NoCancellation);
-    if let Err(e) = build_result {
-        error!("unable to build graph for {:?}: {:?}", entry, e);
-        return Err(anyhow!("unable to build graph"));
+    if analyzer_bulder.is_some() {
+        info!("trying to build with xml analyzer");
+        let analyzer_bulder = analyzer_bulder.unwrap();
+        analyzer_bulder.build_stack_graph_into(
+            stack_graph,
+            file,
+            &entry,
+            source,
+            &mut Box::new(::std::iter::empty()),
+            &HashMap::new(),
+            &NoCancellation,
+        )?;
+        Ok(Some((file, tag)))
+    } else {
+        let mut builder = language_config
+            .sgl
+            .builder_into_stack_graph(stack_graph, file, source);
+        let graph_node = builder.inject_node(source_type_node_id);
+        globals
+            .add(SOURCE_TYPE_NODE.into(), graph_node.into())
+            .expect("adding source type node");
+
+        let build_result = builder.build(&globals, &NoCancellation);
+        if let Err(e) = build_result {
+            error!("unable to build graph for {:?}: {:?}", entry, e);
+            return Err(anyhow!("unable to build graph"));
+        }
+        Ok(Some((file, tag)))
     }
-    Ok(Some((file, tag)))
 }
 
 pub fn init_stack_graph(

@@ -306,22 +306,6 @@
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-    "codeLocation": {
-      "startPosition": {
-        "line": 8
-      },
-      "endPosition": {
-        "line": 8,
-        "character": 16
-      }
-    },
-    "LineNumber": "8",
-    "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs"
-    }
-  },
-  {
     "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
     "codeLocation": {
       "startPosition": {
