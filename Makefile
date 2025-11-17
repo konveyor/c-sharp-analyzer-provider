@@ -4,6 +4,10 @@ CONTAINER_RUNTIME ?= podman
 # Branch to download konveyor-analyzer from (defaults to main)
 KONVEYOR_BRANCH ?= main
 
+TAG ?= latest
+IMAGE ?= c-sharp-provider:${TAG}
+IMG_ANALYZER ?= quay.io/konveyor/analyzer-lsp:$(TAG)
+
 .PHONY: download_proto build_grpc run build-image run-grpc-init-http run-grpc-ref-http wait-for-server reset-nerd-dinner-demo reset-demo-apps reset-demo-output run-demo run-demo-github run-integration-tests container-build-test container-run-test container-test get-konveyor-analyzer update-provider-settings run-tests verify-output
 
 download_proto:
@@ -16,7 +20,7 @@ run:
 	cargo run  -- --port 9000 --name c-sharp --db-path testing.db
 
 build-image:
-	$(CONTAINER_RUNTIME) build -f dotnet-base-provider.Dockerfile -t quay.io/kovneyor/c-sharp-external-provider .
+	$(CONTAINER_RUNTIME) build -f Dockerfile -t ${IMAGE} .
 
 run-grpc-init-http:
 	grpcurl -max-time 1000 -plaintext -d "{\"analysisMode\": \"source-only\", \"location\": \"$(PWD)/testdata/nerd-dinner\", \"providerSpecificConfig\": {\"ilspy_cmd\": \"$$HOME/.dotnet/tools/ilspycmd\", \"paket_cmd\": \"$$HOME/.dotnet/tools/paket\"}}" localhost:9000 provider.ProviderService.Init
@@ -84,7 +88,7 @@ container-run-test:
 
 container-test: container-build-test container-run-test
 
-get-konveyor-analyzer:
+get-konveyor-analyzer-local:
 	@if [ -f "e2e-tests/konveyor-analyzer" ]; then \
 		echo "konveyor-analyzer already exists in e2e-tests/"; \
 	elif command -v konveyor-analyzer >/dev/null 2>&1; then \
@@ -132,7 +136,7 @@ get-konveyor-analyzer:
 		fi; \
 	fi
 
-update-provider-settings:
+update-provider-settings-local:
 	@echo "Updating provider_settings.json with current paths..."
 	@if ! command -v jq >/dev/null 2>&1; then \
 		echo "Error: 'jq' is required to update provider settings. Please install it."; \
@@ -152,7 +156,7 @@ update-provider-settings:
 	mv e2e-tests/provider_settings.json.tmp e2e-tests/provider_settings.json
 	@echo "Updated provider_settings.json"
 
-run-tests: update-provider-settings
+run-test-local: update-provider-settings
 	@echo "Running konveyor-analyzer with rulesets..."
 	@ANALYZER_BIN=""; \
 	if [ -f "e2e-tests/konveyor-analyzer" ]; then \
@@ -187,4 +191,25 @@ verify-output:
 		exit 1; \
 	fi
 
-run-e2e-test: get-konveyor-analyzer run-tests verify-output
+run-c-sharp-pod:
+	podman volume create test-data
+	podman run --rm -v test-data:/target$(MOUNT_OPT) -v $(PWD)/testdata:/src/$(MOUNT_OPT) --entrypoint=cp alpine -a /src/. /target/
+	podman pod create --name=analyzer-c-sharp
+	podman run --pod analyzer-c-sharp --name c-sharp -d -v test-data:/analyzer-lsp/examples$(MOUNT_OPT) ${IMAGE} --port 14652
+
+stop-c-sharp-pod:
+	podman pod kill analyzer-c-sharp || true
+	podman pod rm analyzer-c-sharp || true
+	podman volume rm test-data || true
+
+run-demo-c-sharp-pod:
+	podman run --entrypoint /usr/local/bin/konveyor-analyzer --pod=analyzer-c-sharp\
+		-v test-data:/analyzer-lsp/examples$(MOUNT_OPT) \
+		-v $(PWD)/e2e-tests/demo-output.yaml:/analyzer-lsp/output.yaml:Z \
+		-v $(PWD)/e2e-tests/provider_settings.json:/analyzer-lsp/provider_settings.json:Z \
+		-v $(PWD)/rulesets:/analyzer-lsp/rules:Z \
+		$(IMG_ANALYZER) \
+		--output-file=/analyzer-lsp/output.yaml \
+		--rules=/analyzer-lsp/rules \
+		--provider-settings=/analyzer-lsp/provider_settings.json
+

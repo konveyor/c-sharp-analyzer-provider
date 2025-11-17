@@ -8,7 +8,7 @@ RUN curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v30.2
 WORKDIR /csharp-provider
 COPY . /csharp-provider/
 
-RUN PROTOC=$HOME/protoc/bin/protoc cargo build
+RUN --mount=type=cache,id=cagohome,uid=1001,gid=0,mode=0777,target=/root/.cargo PROTOC=$HOME/protoc/bin/protoc cargo build
 
 FROM registry.access.redhat.com/ubi9/ubi
 
@@ -16,6 +16,7 @@ RUN dnf install -y dotnet-sdk-8.0 dotnet-runtime-8.0
 
 RUN dotnet tool install --global Paket
 RUN dotnet tool install --global ilspycmd
+ENV RUST_LOG=c_sharp_analyzer_provider_cli=DEBUG,INFO
 
 COPY --from=builder /csharp-provider/target/debug/c-sharp-analyzer-provider-cli /usr/local/bin/c-sharp-provider
-ENTRYPOINT ["/usr/local/bin/c-sharp-provider", "--port", "9000", "--name", "c-sharp"]
+ENTRYPOINT ["/usr/local/bin/c-sharp-provider", "--name", "c-sharp"]

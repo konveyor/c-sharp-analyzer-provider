@@ -1,1 +1,51 @@
-[]
+- name: dotnet-core-migration
+  description: |
+    Ruleset for migrating ASP.NET MVC applications to ASP.NET Core / .NET Core.
+
+    This ruleset identifies incompatible APIs, frameworks, and patterns that need to be
+    updated when migrating from .NET Framework to .NET Core/.NET 5+.
+
+    The rules are organized into the following categories:
+    - Web Framework Migration (System.Web to ASP.NET Core)
+    - Authentication and Security Migration
+    - Entity Framework to EF Core Migration
+    - Configuration and State Management Migration
+    - Runtime and Utility Class Migration
+  unmatched:
+  - dotnet-core-antiforgery-01
+  - dotnet-core-appdomain-01
+  - dotnet-core-appdomain-createdomain-01
+  - dotnet-core-appdomain-unload-01
+  - dotnet-core-area-registration-01
+  - dotnet-core-assembly-codebase-01
+  - dotnet-core-binaryformatter-01
+  - dotnet-core-cas-01
+  - dotnet-core-childaction-01
+  - dotnet-core-delegate-begininvoke-01
+  - dotnet-core-dotnetopenauth-01
+  - dotnet-core-ef-dbcontext-01
+  - dotnet-core-ef-dbset-01
+  - dotnet-core-ef-initializer-01
+  - dotnet-core-ef-lazy-loading-01
+  - dotnet-core-ef-spatial-01
+  - dotnet-core-forms-auth-01
+  - dotnet-core-httpapplication-01
+  - dotnet-core-httpcontext-current-01
+  - dotnet-core-httpruntime-01
+  - dotnet-core-machinekey-01
+  - dotnet-core-membership-01
+  - dotnet-core-modelbinder-01
+  - dotnet-core-mvc-controller-01
+  - dotnet-core-oauth-01
+  - dotnet-core-optimization-01
+  - dotnet-core-reflection-only-01
+  - dotnet-core-remoting-01
+  - dotnet-core-routing-01
+  - dotnet-core-server-mappath-01
+  - dotnet-core-system-web-01
+  - dotnet-core-thread-abort-01
+  - dotnet-core-transactionscope-01
+  - dotnet-core-wcf-01
+  - dotnet-core-webapi-controller-01
+  - dotnet-core-webforms-01
+  - dotnet-core-websecurity-01

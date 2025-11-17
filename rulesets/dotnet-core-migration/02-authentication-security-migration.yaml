@@ -26,7 +26,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: WebMatrix\.WebData\.WebSecurity
+      pattern: WebMatrix.WebData.WebSecurity
 
 - category: mandatory
   customVariables: []
@@ -58,7 +58,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: Microsoft\.Web\.WebPages\.OAuth\.OAuthWebSecurity
+      pattern: Microsoft.Web.WebPages.OAuth.OAuthWebSecurity
 
 - category: mandatory
   customVariables: []
@@ -83,7 +83,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: System\.Web\.Security\.Membership
+      pattern: System.Web.Security.Membership
 
 - category: mandatory
   customVariables: []
@@ -109,7 +109,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: System\.Web\.Security\.FormsAuthentication
+      pattern: System.Web.Security.FormsAuthentication
 
 - category: mandatory
   customVariables: []
@@ -134,7 +134,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: DotNetOpenAuth
+      pattern: "*.DotNetOpenAuth.*"
 
 - category: mandatory
   customVariables: []
@@ -159,7 +159,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: System\.Transactions\.TransactionScope
+      pattern: System.Transactions.TransactionScope
 
 - category: optional
   customVariables: []
@@ -183,7 +183,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: ValidateAntiForgeryToken
+      pattern: "*.ValidateAntiForgeryToken.*"
 
 - category: mandatory
   customVariables: []
@@ -217,4 +217,4 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: MachineKey
+      pattern: "*.MachineKey.*"
