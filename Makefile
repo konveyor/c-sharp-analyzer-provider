@@ -187,4 +187,4 @@ verify-output:
 		exit 1; \
 	fi
 
-run-e2e-demo: get-konveyor-analyzer run-tests verify-output
+run-e2e-test: get-konveyor-analyzer run-tests verify-output
