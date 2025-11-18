@@ -8,12 +8,12 @@ TAG ?= latest
 IMAGE ?= c-sharp-provider:${TAG}
 IMG_ANALYZER ?= quay.io/konveyor/analyzer-lsp:$(TAG)
 
-.PHONY: download_proto build_grpc run build-image run-grpc-init-http run-grpc-ref-http wait-for-server reset-nerd-dinner-demo reset-demo-apps reset-demo-output run-demo run-demo-github run-integration-tests container-build-test container-run-test container-test get-konveyor-analyzer update-provider-settings run-tests verify-output
+.PHONY: download_proto build run build-image run-grpc-init-http run-grpc-ref-http wait-for-server reset-nerd-dinner-demo reset-demo-apps reset-demo-output run-demo run-demo-github run-integration-tests get-konveyor-analyzer-local update-provider-settings-local run-test-local verify-output run-analyzer-integration-local run-c-sharp-pod stop-c-sharp-pod run-demo-c-sharp-pod run-analyzer-integration
 
 download_proto:
 	curl -L -o src/build/proto/provider.proto https://raw.githubusercontent.com/konveyor/analyzer-lsp/refs/heads/main/provider/internal/grpc/library.proto
 
-build_grpc:
+build:
 	cargo build
 
 run:
@@ -22,6 +22,7 @@ run:
 build-image:
 	$(CONTAINER_RUNTIME) build -f Dockerfile -t ${IMAGE} .
 
+### Local GRPC testing
 run-grpc-init-http:
 	grpcurl -max-time 1000 -plaintext -d "{\"analysisMode\": \"source-only\", \"location\": \"$(PWD)/testdata/nerd-dinner\", \"providerSpecificConfig\": {\"ilspy_cmd\": \"$$HOME/.dotnet/tools/ilspycmd\", \"paket_cmd\": \"$$HOME/.dotnet/tools/paket\"}}" localhost:9000 provider.ProviderService.Init
 
@@ -69,25 +70,11 @@ run-demo-github: reset-demo-apps build_grpc
 	kill $$SERVER_PID || true; \
 	$(MAKE) reset-demo-apps
 
-run-demo-container: build_grpc
-	RUST_LOG=c_sharp_analyzer_provider_cli=DEBUG,INFO target/debug/c-sharp-analyzer-provider-cli --port 9000 --name c-sharp &> demo.log & \
-	export SERVER_PID=$$!; \
-	$(MAKE) wait-for-server; \
-	$(MAKE) run-grpc-init-http; \
-	$(MAKE) run-integration-tests; \
-
 run-integration-tests:
 	cargo test -- --nocapture
 
-# Container-based integration testing (uses CONTAINER_RUNTIME variable)
-container-build-test:
-	$(CONTAINER_RUNTIME) build -f Dockerfile.test -t c-sharp-provider-test:latest .
 
-container-run-test:
-	$(CONTAINER_RUNTIME) run --rm c-sharp-provider-test:latest
-
-container-test: container-build-test container-run-test
-
+## Running analyzer integration test locally.
 get-konveyor-analyzer-local:
 	@if [ -f "e2e-tests/konveyor-analyzer" ]; then \
 		echo "konveyor-analyzer already exists in e2e-tests/"; \
@@ -191,6 +178,9 @@ verify-output:
 		exit 1; \
 	fi
 
+run-analyzer-integration-local: get-konveyor-analyzer run-test-local verify-output 
+
+## Running analyzer integration test as you would in CI.
 run-c-sharp-pod:
 	podman volume create test-data
 	podman run --rm -v test-data:/target$(MOUNT_OPT) -v $(PWD)/testdata:/src/$(MOUNT_OPT) --entrypoint=cp alpine -a /src/. /target/
@@ -207,9 +197,10 @@ run-demo-c-sharp-pod:
 		-v test-data:/analyzer-lsp/examples$(MOUNT_OPT) \
 		-v $(PWD)/e2e-tests/demo-output.yaml:/analyzer-lsp/output.yaml:Z \
 		-v $(PWD)/e2e-tests/provider_settings.json:/analyzer-lsp/provider_settings.json:Z \
-		-v $(PWD)/rulesets:/analyzer-lsp/rules:Z \
+		-v $(PWD)/rulesets/:/analyzer-lsp/rules:Z \
 		$(IMG_ANALYZER) \
 		--output-file=/analyzer-lsp/output.yaml \
 		--rules=/analyzer-lsp/rules \
 		--provider-settings=/analyzer-lsp/provider_settings.json
 
+run-analyzer-integration: run-c-sharp-pod run-demo-c-sharp-pod stop-c-sharp-pod

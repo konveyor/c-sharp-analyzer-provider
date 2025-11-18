@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::collections::HashSet;
 use std::iter::DoubleEndedIterator;
 use std::iter::Extend;
 use std::path::Path;
@@ -14,6 +13,7 @@ use stack_graphs::graph::StackGraph;
 use tracing::debug;
 use tracing::error;
 use tracing::info;
+use tracing::trace;
 use tree_sitter_stack_graphs::BuildError;
 use tree_sitter_stack_graphs::CancellationFlag;
 use tree_sitter_stack_graphs::FileAnalyzer;
@@ -45,13 +45,12 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
         path: &Path,
         source: &str,
         _all_paths: &mut dyn Iterator<Item = &'a Path>,
-        globals: &HashMap<String, String>,
+        _globals: &HashMap<String, String>,
         _cancellation_flag: &dyn CancellationFlag,
     ) -> Result<(), tree_sitter_stack_graphs::BuildError> {
         let mut reader = Reader::from_str(source);
 
         reader.config_mut().trim_text(true);
-        info!("globals {:#?}", globals);
 
         let mut inter_node_info: Vec<NodeInfo> = vec![];
         let mut inter_edge_info: Vec<EdgeInfo> = vec![];
@@ -77,7 +76,7 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                         let member_name = String::from_utf8_lossy(&member_name.value).to_string();
                         let parts: Vec<&str> = member_name.split(":").collect();
                         if parts.len() != 2 {
-                            info!("unable to get correct parts: {}", &member_name);
+                            debug!("unable to get correct parts: {}", &member_name);
                             continue;
                         }
                         let (nodes, mut edges) =
@@ -403,7 +402,7 @@ impl DepXMLFileAnalyzer {
                     let x = x.nth(0);
                     new_name = x.unwrap();
                 }
-                debug!("method new string to deal with: {}", new_name);
+                trace!("method new string to deal with: {}", new_name);
                 let mut parts = new_name.split('.');
                 let mut nodes: Vec<NodeInfo> = vec![];
                 let mut edges: Vec<EdgeInfo> = vec![];

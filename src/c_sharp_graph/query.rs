@@ -1,5 +1,6 @@
 use std::{
     collections::{BTreeMap, HashMap, HashSet},
+    path::{self, Path},
     vec,
 };
 
@@ -261,7 +262,7 @@ impl<T: GetMatcher> Querier<'_, T> {
                 // If the node doesn't have a symbol to look at, then we should continue and it
                 // only used to tie together other nodes.
                 //
-                debug!("node no symbol: {}", node.display(self.graph));
+                trace!("node no symbol: {}", node.display(self.graph));
                 continue;
             }
             let symbol = &self.graph[node.symbol().unwrap()];
@@ -274,7 +275,7 @@ impl<T: GetMatcher> Querier<'_, T> {
                 None => continue,
                 Some(handle) => {
                     let syntax_type = SyntaxType::get(&self.graph[handle]);
-                    debug!(
+                    trace!(
                         "node for syntax_type: {} -- syntax_type: {:?}",
                         node.display(self.graph),
                         syntax_type
@@ -317,7 +318,11 @@ impl<T: GetMatcher> Querier<'_, T> {
     ) {
         let mut searchable_nodes = searchable_nodes.clone();
         searchable_nodes.extend(self.graph.nodes_for_file(file));
-        debug!("searchable nodes: {:?}", searchable_nodes.len());
+        debug!(
+            "searchable nodes: {:?} for file: {}",
+            searchable_nodes.len(),
+            &file_uri
+        );
         let mut used_nodes: HashSet<Handle<Node>> = HashSet::new();
         for node_handle in self.graph.nodes_for_file(file) {
             if used_nodes.contains(&node_handle) {
@@ -346,7 +351,7 @@ impl<T: GetMatcher> Querier<'_, T> {
                     continue;
                 }
                 let full_symbol = full_symbol.unwrap();
-                debug!("found FQDN: {:?}", &full_symbol);
+                trace!("found FQDN: {:?}", &full_symbol);
                 if !symbol_matcher.match_fqdn(&full_symbol) {
                     continue;
                 }
@@ -441,7 +446,7 @@ impl<T: GetMatcher> Querier<'_, T> {
             }
             let syntax_type = source_info.unwrap().syntax_type;
             if syntax_type.is_none() {
-                debug!(
+                trace!(
                     "no syntax_type for node: {}",
                     definition_node.display(self.graph)
                 );
@@ -477,7 +482,7 @@ impl<T: GetMatcher> Querier<'_, T> {
                 }
                 _ => None,
             };
-            debug!(
+            trace!(
                 "found: {:?} for node: {}",
                 fqdn,
                 definition_node.display(self.graph)
@@ -572,6 +577,7 @@ impl<T: GetMatcher> Query for Querier<'_, T> {
             SourceType::Source { symbol_handle } => (true, Some(symbol_handle)),
             _ => (false, None),
         };
+
         for file in starting_nodes.referenced_files.iter() {
             let comp_unit_node_handle = match starting_nodes.file_to_compunit_handle.get(file) {
                 Some(x) => x,
@@ -611,7 +617,12 @@ impl<T: GetMatcher> Query for Querier<'_, T> {
                 continue;
             }
             let f = &self.graph[*file];
-            let file_url = Url::from_file_path(f.name());
+            let mut file_str = f.name().to_string();
+            let file_path = Path::new(f.name());
+            if !file_path.is_absolute() {
+                file_str = format!("/{}", file_str).clone();
+            }
+            let file_url = Url::from_file_path(file_str);
             if file_url.is_err() {
                 break;
             }

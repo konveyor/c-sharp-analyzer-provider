@@ -43,6 +43,7 @@ impl NamespaceSymbols {
         let mut class_methods: HashMap<String, Handle<Node>> = HashMap::new();
 
         for node_handle in nodes {
+            //Starting nodes
             //Get all the edges
             Self::traverse_node(
                 graph,

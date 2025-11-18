@@ -5,7 +5,6 @@ use std::sync::Arc;
 use anyhow::Error;
 use stack_graphs::graph::NodeID;
 use stack_graphs::graph::StackGraph;
-use tracing::debug;
 use tree_sitter_graph::Variables;
 use tree_sitter_stack_graphs::loader::FileAnalyzers;
 use tree_sitter_stack_graphs::loader::LanguageConfiguration;
@@ -41,7 +40,6 @@ impl SourceNodeLanguageConfiguration {
     pub fn new(
         cancellation_flag: &dyn CancellationFlag,
     ) -> Result<SourceNodeLanguageConfiguration, Error> {
-        debug!("here get language config");
         let sgl = StackGraphLanguage::from_source(
             tree_sitter_c_sharp::LANGUAGE.into(),
             STACK_GRAPHS_TSG_PATH.into(),
@@ -55,10 +53,6 @@ impl SourceNodeLanguageConfiguration {
         let mut builtins = StackGraph::new();
         let (source_type_node_info, dependnecy_type_node_info) =
             SourceType::load_symbols_into_graph(&mut builtins);
-        debug!(
-            "HERE: SOURCE_TYPE_SOURCE: {:?} --- SOURCE_TYPE_DEP: {:?}",
-            source_type_node_info, dependnecy_type_node_info
-        );
         let mut builtins_globals = Variables::new();
 
         Loader::load_globals_from_config_str(STACK_GRAPHS_BUILTINS_CONFIG, &mut builtins_globals)?;
@@ -96,7 +90,6 @@ impl SourceNodeLanguageConfiguration {
             sgl.builder_into_stack_graph(&mut builtins, file, STACK_GRAPHS_BUILTINS_SOURCE);
         let graph_node =
             builder.inject_node(NodeID::new_in_file(file, source_type_node_id.local_id()));
-        debug!("graph_node_ref: {}", graph_node);
         match builtins_globals.get(&SOURCE_TYPE_NODE.into()) {
             Some(_) => {
                 builtins_globals.remove(&SOURCE_TYPE_NODE.into());
