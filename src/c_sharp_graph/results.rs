@@ -8,7 +8,7 @@ use crate::analyzer_service::{
     IncidentContext, Location as ProtoLocation, Position as ProtoPosition,
 };
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, PartialEq, Eq)]
 pub struct ResultNode {
     #[serde(rename = "fileURI")]
     pub file_uri: String,
@@ -17,6 +17,32 @@ pub struct ResultNode {
     pub variables: BTreeMap<std::string::String, serde_json::Value>,
     #[serde(rename = "codeLocation")]
     pub code_location: Location,
+}
+
+impl PartialOrd for ResultNode {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
+impl Ord for ResultNode {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        // Sort by file_uri first, then line_number, then code_location, then syntax_type
+        self.file_uri
+            .cmp(&other.file_uri)
+            .then_with(|| self.line_number.cmp(&other.line_number))
+            .then_with(|| self.code_location.cmp(&other.code_location))
+            .then_with(|| {
+                // Compare syntax_type from variables if present
+                let self_syntax_type = self.variables.get("syntax_type")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or("");
+                let other_syntax_type = other.variables.get("syntax_type")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or("");
+                self_syntax_type.cmp(other_syntax_type)
+            })
+    }
 }
 
 fn string_to_usize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
@@ -61,14 +87,14 @@ fn serde_json_to_prost(json: serde_json::Value) -> prost_types::Value {
     }
 }
 
-impl From<ResultNode> for IncidentContext {
-    fn from(val: ResultNode) -> Self {
+impl From<&ResultNode> for IncidentContext {
+    fn from(val: &ResultNode) -> Self {
         let x = serde_json_to_prost(json!(val.variables.clone()));
         if let Some(prost_types::value::Kind::StructValue(x)) = x.kind {
             IncidentContext {
                 file_uri: val.file_uri.clone(),
                 effort: None,
-                code_location: Some(val.code_location.into()),
+                code_location: Some(val.code_location.clone().into()),
                 line_number: Some(val.line_number as i64),
                 variables: Some(x),
                 links: vec![],
@@ -78,7 +104,7 @@ impl From<ResultNode> for IncidentContext {
             IncidentContext {
                 file_uri: val.file_uri.clone(),
                 effort: None,
-                code_location: Some(val.code_location.into()),
+                code_location: Some(val.code_location.clone().into()),
                 line_number: Some(val.line_number as i64),
                 variables: None,
                 links: vec![],
@@ -88,7 +114,7 @@ impl From<ResultNode> for IncidentContext {
     }
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Position {
     pub line: usize,
     #[serde(default)]
@@ -104,7 +130,7 @@ impl From<Position> for ProtoPosition {
     }
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Location {
     #[serde(rename = "startPosition")]
     pub start_position: Position,

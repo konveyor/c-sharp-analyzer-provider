@@ -75,7 +75,7 @@ async fn integration_tests() {
         let expected_output: Vec<IncidentContext> = expected_output
             .iter()
             .map(|rn| {
-                let mut x: IncidentContext = (*rn).clone().into();
+                let mut x: IncidentContext = rn.into();
                 if x.file_uri.contains("<REPLACE_ME>") {
                     x.file_uri = x.file_uri.replace("<REPLACE_ME>", &base);
                     let mut var = x.variables.clone().unwrap();

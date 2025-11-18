@@ -19,7 +19,7 @@ RUN dnf install -y dotnet-sdk-8.0 dotnet-runtime-8.0
 
 RUN dotnet tool install --global Paket
 RUN dotnet tool install --global ilspycmd
-ENV RUST_LOG=c_sharp_analyzer_provider_cli=DEBUG,INFO
+ENV RUST_LOG=INFO,c_sharp_analyzer_provider_cli=DEBUG,
 
 COPY --from=builder /csharp-provider/target/debug/c-sharp-analyzer-provider-cli /usr/local/bin/c-sharp-provider
 ENTRYPOINT ["/usr/local/bin/c-sharp-provider", "--name", "c-sharp"]

@@ -8,7 +8,7 @@ TAG ?= latest
 IMAGE ?= c-sharp-provider:${TAG}
 IMG_ANALYZER ?= quay.io/konveyor/analyzer-lsp:$(TAG)
 
-.PHONY: download_proto build run build-image run-grpc-init-http run-grpc-ref-http wait-for-server reset-nerd-dinner-demo reset-demo-apps reset-demo-output run-demo run-demo-github run-integration-tests get-konveyor-analyzer-local update-provider-settings-local run-test-local verify-output run-analyzer-integration-local run-c-sharp-pod stop-c-sharp-pod run-demo-c-sharp-pod run-analyzer-integration
+.PHONY: download_proto build run build-image run-grpc-init-http run-grpc-ref-http wait-for-server reset-nerd-dinner-demo reset-demo-apps reset-demo-output run-demo run-demo-github run-integration-tests get-konveyor-analyzer-local update-provider-settings-local run-test-local verify-output verify-e2e-results run-analyzer-integration-local run-c-sharp-pod stop-c-sharp-pod run-demo-c-sharp-pod run-analyzer-integration
 
 download_proto:
 	curl -L -o src/build/proto/provider.proto https://raw.githubusercontent.com/konveyor/analyzer-lsp/refs/heads/main/provider/internal/grpc/library.proto
@@ -52,7 +52,7 @@ reset-demo-output:
 		mv demo-output.yaml.bak demo-output.yaml; \
 	fi
 
-run-demo: reset-demo-apps build_grpc
+run-demo: reset-demo-apps build
 	export SERVER_PID=$$(./scripts/run-demo.sh); \
 	echo $${SERVER_PID}; \
 	$(MAKE) wait-for-server; \
@@ -61,7 +61,7 @@ run-demo: reset-demo-apps build_grpc
 	kill $${SERVER_PID}; \
 	$(MAKE) reset-demo-apps
 
-run-demo-github: reset-demo-apps build_grpc
+run-demo-github: reset-demo-apps build
 	RUST_LOG=c_sharp_analyzer_provider_cli=DEBUG,INFO target/debug/c-sharp-analyzer-provider-cli --port 9000 --name c-sharp &> demo.log & \
 	export SERVER_PID=$$!; \
 	$(MAKE) wait-for-server; \
@@ -143,7 +143,7 @@ update-provider-settings-local:
 	mv e2e-tests/provider_settings.json.tmp e2e-tests/provider_settings.json
 	@echo "Updated provider_settings.json"
 
-run-test-local: update-provider-settings
+run-test-local: update-provider-settings-local
 	@echo "Running konveyor-analyzer with rulesets..."
 	@ANALYZER_BIN=""; \
 	if [ -f "e2e-tests/konveyor-analyzer" ]; then \
@@ -178,27 +178,52 @@ verify-output:
 		exit 1; \
 	fi
 
-run-analyzer-integration-local: get-konveyor-analyzer run-test-local verify-output 
+verify-e2e-results:
+	@echo "Verifying e2e results with sorted incidents..."
+	@if [ ! -f "e2e-tests/demo-output.yaml" ]; then \
+		echo "Error: demo-output.yaml not found."; \
+		exit 1; \
+	fi
+	@if ! command -v yq >/dev/null 2>&1; then \
+		echo "Error: 'yq' is required to sort YAML. Please install it from https://github.com/mikefarah/yq"; \
+		exit 1; \
+	fi
+	@echo "Sorting incidents in both files..."
+	@git show HEAD:e2e-tests/demo-output.yaml | yq eval '.[] | .violations |= (map(.incidents |= sort_by(.uri, .lineNumber, .message)))' > /tmp/demo-head-sorted.yaml
+	@yq eval '.[] | .violations |= (map(.incidents |= sort_by(.uri, .lineNumber, .message)))' e2e-tests/demo-output.yaml > /tmp/demo-current-sorted.yaml
+	@if diff -u /tmp/demo-head-sorted.yaml /tmp/demo-current-sorted.yaml > /dev/null 2>&1; then \
+		echo "✓ Output matches (after sorting)! Changes are only ordering differences."; \
+		rm -f /tmp/demo-head-sorted.yaml /tmp/demo-current-sorted.yaml; \
+	else \
+		echo "✗ Output differs from HEAD (even after sorting):"; \
+		diff -u /tmp/demo-head-sorted.yaml /tmp/demo-current-sorted.yaml || true; \
+		echo ""; \
+		echo "Sorted files saved to /tmp/demo-head-sorted.yaml and /tmp/demo-current-sorted.yaml for inspection"; \
+		exit 1; \
+	fi
+
+run-analyzer-integration-local: get-konveyor-analyzer-local run-test-local verify-output 
 
 ## Running analyzer integration test as you would in CI.
 run-c-sharp-pod:
-	podman volume create test-data
-	podman run --rm -v test-data:/target$(MOUNT_OPT) -v $(PWD)/testdata:/src/$(MOUNT_OPT) --entrypoint=cp alpine -a /src/. /target/
-	podman pod create --name=analyzer-c-sharp
-	podman run --pod analyzer-c-sharp --name c-sharp -d -v test-data:/analyzer-lsp/examples$(MOUNT_OPT) ${IMAGE} --port 14652
+	$(CONTAINER_RUNTIME) volume create test-data
+	$(CONTAINER_RUNTIME) run --rm -v test-data:/target$(MOUNT_OPT) -v $(PWD)/testdata:/src/$(MOUNT_OPT) --entrypoint=cp alpine -a /src/. /target/
+	$(CONTAINER_RUNTIME) pod create --name=analyzer-c-sharp
+	$(CONTAINER_RUNTIME) run --pod analyzer-c-sharp --name c-sharp -d -v test-data:/analyzer-lsp/examples$(MOUNT_OPT) ${IMAGE} --port 14652
 
 stop-c-sharp-pod:
-	podman pod kill analyzer-c-sharp || true
-	podman pod rm analyzer-c-sharp || true
-	podman volume rm test-data || true
+	$(CONTAINER_RUNTIME) pod kill analyzer-c-sharp || true
+	$(CONTAINER_RUNTIME) pod rm analyzer-c-sharp || true
+	$(CONTAINER_RUNTIME) volume rm test-data || true
 
 run-demo-c-sharp-pod:
-	podman run --entrypoint /usr/local/bin/konveyor-analyzer --pod=analyzer-c-sharp\
+	$(CONTAINER_RUNTIME) run --entrypoint /usr/local/bin/konveyor-analyzer --pod=analyzer-c-sharp\
 		-v test-data:/analyzer-lsp/examples$(MOUNT_OPT) \
 		-v $(PWD)/e2e-tests/demo-output.yaml:/analyzer-lsp/output.yaml:Z \
 		-v $(PWD)/e2e-tests/provider_settings.json:/analyzer-lsp/provider_settings.json:Z \
 		-v $(PWD)/rulesets/:/analyzer-lsp/rules:Z \
 		$(IMG_ANALYZER) \
+		--verbose=100 \
 		--output-file=/analyzer-lsp/output.yaml \
 		--rules=/analyzer-lsp/rules \
 		--provider-settings=/analyzer-lsp/provider_settings.json

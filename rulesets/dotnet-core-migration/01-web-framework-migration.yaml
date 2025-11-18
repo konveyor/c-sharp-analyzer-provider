@@ -22,7 +22,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: System.Web.*
+      pattern: System.Web.Mvc.*
 
 - category: mandatory
   customVariables: []
@@ -49,29 +49,29 @@
       location: ALL
       pattern: System.Web.HttpApplication.*
 
-- category: mandatory
-  customVariables: []
-  description: System.Web.Mvc.Controller must be replaced with ASP.NET Core MVC controller
-  effort: 3
-  labels:
-  - konveyor.io/source=dotnet
-  - konveyor.io/target=dotnet-core
-  links:
-  - title: Migrate controllers to ASP.NET Core
-    url: https://learn.microsoft.com/en-us/aspnet/core/migration/mvc/controllers
-  message: |
-    System.Web.Mvc.Controller is replaced by Microsoft.AspNetCore.Mvc.Controller in ASP.NET Core.
-
-    Migration actions:
-    - Change using statement from System.Web.Mvc to Microsoft.AspNetCore.Mvc
-    - Review controller action return types (ActionResult patterns remain similar)
-    - Update routing attributes if using attribute routing
-    - Review filter attributes (some have changed)
-  ruleID: dotnet-core-mvc-controller-01
-  when:
-    csharp.referenced:
-      location: CLASS
-      pattern: System.Web.Mvc.Controller.*
+#- category: mandatory
+#  customVariables: []
+#  description: System.Web.Mvc.Controller must be replaced with ASP.NET Core MVC controller
+#  effort: 3
+#  labels:
+#  - konveyor.io/source=dotnet
+#  - konveyor.io/target=dotnet-core
+#  links:
+#  - title: Migrate controllers to ASP.NET Core
+#    url: https://learn.microsoft.com/en-us/aspnet/core/migration/mvc/controllers
+#  message: |
+#    System.Web.Mvc.Controller is replaced by Microsoft.AspNetCore.Mvc.Controller in ASP.NET Core.
+#
+#    Migration actions:
+#    - Change using statement from System.Web.Mvc to Microsoft.AspNetCore.Mvc
+#    - Review controller action return types (ActionResult patterns remain similar)
+#    - Update routing attributes if using attribute routing
+#    - Review filter attributes (some have changed)
+#  ruleID: dotnet-core-mvc-controller-01
+#  when:
+#    csharp.referenced:
+#      location: CLASS
+#      pattern: System.Web.Mvc.Controller.*
 
 - category: mandatory
   customVariables: []

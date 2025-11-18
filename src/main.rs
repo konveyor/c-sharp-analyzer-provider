@@ -10,6 +10,7 @@ use std::{
         atomic::{AtomicUsize, Ordering},
         Arc,
     },
+    time::Duration,
 };
 
 use clap::{command, Parser};
@@ -67,9 +68,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let (non_blocking, _guard) = tracing_appender::non_blocking(file_appender);
 
         // Initialize with file output
-        let subscriber = tracing_subscriber::registry()
-            .with(filter)
-            .with(fmt::layer().with_writer(non_blocking).with_thread_names(true));
+        let subscriber = tracing_subscriber::registry().with(filter).with(
+            fmt::layer()
+                .with_writer(non_blocking)
+                .with_thread_names(true),
+        );
 
         tracing::subscriber::set_global_default(subscriber)?;
 
@@ -89,7 +92,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             let id = ATOMIC_ID.fetch_add(1, Ordering::SeqCst);
             format!("worker-{}", id)
         })
-        .worker_threads(6)
+        .worker_threads(32)
         .enable_all()
         .build()?;
 
@@ -113,6 +116,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         rt.block_on(async {
             let _ = Server::builder()
+                .http2_max_pending_accept_reset_streams(Some(30))
                 .add_service(ProviderServiceServer::from_arc(provider.clone()))
                 .add_service(ProviderCodeLocationServiceServer::from_arc(
                     provider.clone(),
@@ -141,6 +145,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
                 let uds_stream = UnixListenerStream::new(uds.unwrap());
                 let _ = Server::builder()
+                    .http2_keepalive_timeout(Some(Duration::new(20, 0)))
+                    .http2_keepalive_interval(Some(Duration::new(7200, 0)))
+                    .tcp_keepalive(Some(Duration::new(7200, 0)))
                     .add_service(ProviderServiceServer::from_arc(provider.clone()))
                     .add_service(ProviderCodeLocationServiceServer::from_arc(
                         provider.clone(),
@@ -157,6 +164,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             use crate::pipe_stream::get_named_pipe_connection_stream;
             rt.block_on(async {
                 let _ = Server::builder()
+                    .http2_keepalive_timeout(Some(Duration::new(20, 0)))
+                    .http2_keepalive_interval(Some(Duration::new(7200, 0)))
+                    .tcp_keepalive(Some(Duration::new(7200, 0)))
                     .add_service(ProviderServiceServer::from_arc(provider.clone()))
                     .add_service(ProviderCodeLocationServiceServer::from_arc(
                         provider.clone(),

@@ -1,60 +1,60 @@
-- category: mandatory
-  customVariables: []
-  description: System.EnterpriseServices (COM+) is not supported in .NET Core
-  effort: 10
-  labels:
-  - konveyor.io/source=dotnet
-  - konveyor.io/target=dotnet-core
-  links:
-  - title: .NET Framework technologies unavailable on .NET Core
-    url: https://learn.microsoft.com/en-us/dotnet/core/porting/net-framework-tech-unavailable
-  message: |
-    System.EnterpriseServices (COM+) is not available in .NET Core and has no direct replacement.
-    This namespace provided enterprise-level service configuration including transactions, object pooling, and role-based security.
+#- category: mandatory
+#  customVariables: []
+#  description: System.EnterpriseServices (COM+) is not supported in .NET Core
+#  effort: 10
+#  labels:
+#  - konveyor.io/source=dotnet
+#  - konveyor.io/target=dotnet-core
+#  links:
+#  - title: .NET Framework technologies unavailable on .NET Core
+#    url: https://learn.microsoft.com/en-us/dotnet/core/porting/net-framework-tech-unavailable
+#  message: |
+#    System.EnterpriseServices (COM+) is not available in .NET Core and has no direct replacement.
+#    This namespace provided enterprise-level service configuration including transactions, object pooling, and role-based security.
+#
+#    Migration actions:
+#    - Remove dependencies on System.EnterpriseServices
+#    - Replace ServicedComponent base class with alternative patterns
+#    - Use database transactions instead of distributed transactions where possible
+#    - Implement object pooling using ObjectPool<T> from Microsoft.Extensions.ObjectPool
+#    - Replace role-based security with ASP.NET Core authorization policies
+#    - Consider redesigning architecture to use modern patterns (microservices, containers)
+#    - For distributed transactions on Windows, evaluate System.Transactions.Local package (limited support)
+#  ruleID: dotnet-core-enterpriseservices-01
+#  when:
+#    csharp.referenced:
+#      location: ALL
+#      pattern: System.EnterpriseServices
 
-    Migration actions:
-    - Remove dependencies on System.EnterpriseServices
-    - Replace ServicedComponent base class with alternative patterns
-    - Use database transactions instead of distributed transactions where possible
-    - Implement object pooling using ObjectPool<T> from Microsoft.Extensions.ObjectPool
-    - Replace role-based security with ASP.NET Core authorization policies
-    - Consider redesigning architecture to use modern patterns (microservices, containers)
-    - For distributed transactions on Windows, evaluate System.Transactions.Local package (limited support)
-  ruleID: dotnet-core-enterpriseservices-01
-  when:
-    csharp.referenced:
-      location: ALL
-      pattern: System.EnterpriseServices
-
-- category: mandatory
-  customVariables: []
-  description: Workflow Foundation is not included in .NET Core
-  effort: 10
-  labels:
-  - konveyor.io/source=dotnet
-  - konveyor.io/target=dotnet-core
-  links:
-  - title: CoreWF - Community port of Workflow Foundation
-    url: https://github.com/UiPath/corewf
-  - title: .NET Framework technologies unavailable on .NET Core
-    url: https://learn.microsoft.com/en-us/dotnet/core/porting/net-framework-tech-unavailable
-  message: |
-    Windows Workflow Foundation (WF) is not included in .NET Core.
-    A community-maintained port called CoreWF is available as an alternative.
-
-    Migration actions:
-    - Evaluate if workflow functionality is still needed
-    - Install CoreWF NuGet package (UiPath.Workflow or CoreWF)
-    - Update namespace references from System.Activities to UiPath.Workflow
-    - Test workflows thoroughly as CoreWF may have behavioral differences
-    - Consider alternative workflow engines or business process management systems
-    - Evaluate modern alternatives like Elsa Workflows, Workflow Core, or custom state machines
-    - Review workflow persistence and hosting requirements
-  ruleID: dotnet-core-workflow-foundation-01
-  when:
-    csharp.referenced:
-      location: ALL
-      pattern: System.(Activities|Workflow)
+#- category: mandatory
+#  customVariables: []
+#  description: Workflow Foundation is not included in .NET Core
+#  effort: 10
+#  labels:
+#  - konveyor.io/source=dotnet
+#  - konveyor.io/target=dotnet-core
+#  links:
+#  - title: CoreWF - Community port of Workflow Foundation
+#    url: https://github.com/UiPath/corewf
+#  - title: .NET Framework technologies unavailable on .NET Core
+#    url: https://learn.microsoft.com/en-us/dotnet/core/porting/net-framework-tech-unavailable
+#  message: |
+#    Windows Workflow Foundation (WF) is not included in .NET Core.
+#    A community-maintained port called CoreWF is available as an alternative.
+#
+#    Migration actions:
+#    - Evaluate if workflow functionality is still needed
+#    - Install CoreWF NuGet package (UiPath.Workflow or CoreWF)
+#    - Update namespace references from System.Activities to UiPath.Workflow
+#    - Test workflows thoroughly as CoreWF may have behavioral differences
+#    - Consider alternative workflow engines or business process management systems
+#    - Evaluate modern alternatives like Elsa Workflows, Workflow Core, or custom state machines
+#    - Review workflow persistence and hosting requirements
+#  ruleID: dotnet-core-workflow-foundation-01
+#  when:
+#    csharp.referenced:
+#      location: ALL
+#      pattern: System.(Activities|Workflow)
 
 - category: mandatory
   customVariables: []
@@ -118,36 +118,36 @@
       location: METHOD
       pattern: "*.(AssemblyBuilder.Save|ModuleBuilder.CreateGlobalFunctions)"
 
-- category: optional
-  customVariables: []
-  description: Security Transparency attributes are not supported in .NET Core
-  effort: 3
-  labels:
-  - konveyor.io/source=dotnet
-  - konveyor.io/target=dotnet-core
-  links:
-  - title: .NET Framework technologies unavailable on .NET Core
-    url: https://learn.microsoft.com/en-us/dotnet/core/porting/net-framework-tech-unavailable
-  - title: Code Access Security is obsolete
-    url: https://learn.microsoft.com/en-us/dotnet/core/compatibility/core-libraries/5.0/code-access-security-apis-obsolete
-  message: |
-    Security Transparency attributes (SecurityTransparent, SecurityCritical, SecuritySafeCritical) are not supported in .NET Core.
-    These were part of the Code Access Security (CAS) model which is obsolete.
-
-    Migration actions:
-    - Remove [SecurityTransparent] attributes from assemblies and types
-    - Remove [SecurityCritical] attributes from methods and types
-    - Remove [SecuritySafeCritical] attributes from methods
-    - Remove [AllowPartiallyTrustedCallers] attribute if present
-    - Redesign security model using OS-level security boundaries
-    - Use process isolation, containers, or virtualization for sandboxing
-    - Implement security checks in application code where needed
-    - Review security requirements and use modern security patterns
-  ruleID: dotnet-core-security-transparency-01
-  when:
-    csharp.referenced:
-      location: ALL
-      pattern: "*.(SecurityTransparent|SecurityCritical|SecuritySafeCritical|AllowPartiallyTrustedCallers)"
+#- category: optional
+#  customVariables: []
+#  description: Security Transparency attributes are not supported in .NET Core
+#  effort: 3
+#  labels:
+#  - konveyor.io/source=dotnet
+#  - konveyor.io/target=dotnet-core
+#  links:
+#  - title: .NET Framework technologies unavailable on .NET Core
+#    url: https://learn.microsoft.com/en-us/dotnet/core/porting/net-framework-tech-unavailable
+#  - title: Code Access Security is obsolete
+#    url: https://learn.microsoft.com/en-us/dotnet/core/compatibility/core-libraries/5.0/code-access-security-apis-obsolete
+#  message: |
+#    Security Transparency attributes (SecurityTransparent, SecurityCritical, SecuritySafeCritical) are not supported in .NET Core.
+#    These were part of the Code Access Security (CAS) model which is obsolete.
+#
+#    Migration actions:
+#    - Remove [SecurityTransparent] attributes from assemblies and types
+#    - Remove [SecurityCritical] attributes from methods and types
+#    - Remove [SecuritySafeCritical] attributes from methods
+#    - Remove [AllowPartiallyTrustedCallers] attribute if present
+#    - Redesign security model using OS-level security boundaries
+#    - Use process isolation, containers, or virtualization for sandboxing
+#    - Implement security checks in application code where needed
+#    - Review security requirements and use modern security patterns
+#  ruleID: dotnet-core-security-transparency-01
+#  when:
+#    csharp.referenced:
+#      location: ALL
+#      pattern: "*.(SecurityTransparent|SecurityCritical|SecuritySafeCritical|AllowPartiallyTrustedCallers)"
 
 - category: optional
   customVariables: []
@@ -174,7 +174,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: "*.(DefineDynamicModule.*fileName|Assembly\.LoadModule)"
+      pattern: "*.(DefineDynamicModule.*fileName|Assembly.LoadModule)"
 
 - category: optional
   customVariables: []

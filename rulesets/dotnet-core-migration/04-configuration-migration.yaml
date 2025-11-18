@@ -98,7 +98,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: "*.(Application\[|HttpContext.Application)"
+      pattern: "*.(Application|HttpContext.Application)"
 
 - category: optional
   customVariables: []
@@ -124,7 +124,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: "*.(Session[|HttpContext.Session)"
+      pattern: "*.(Session|HttpContext.Session)"
 
 - category: mandatory
   customVariables: []

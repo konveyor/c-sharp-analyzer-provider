@@ -8,6 +8,8 @@ use tracing::{debug, error, info};
 use utoipa::{OpenApi, ToSchema};
 
 use crate::c_sharp_graph::query::{Query, QueryType};
+use crate::c_sharp_graph::results::ResultNode;
+use crate::c_sharp_graph::NamespaceFQDNNotFoundError;
 //use crate::c_sharp_graph::find_node::FindNode;
 use crate::provider::AnalysisMode;
 use crate::{
@@ -160,12 +162,16 @@ impl ProviderService for CSharpProvider {
         &self,
         r: Request<EvaluateRequest>,
     ) -> Result<Response<EvaluateResponse>, Status> {
-        debug!("request: {:?}", r);
+        info!("request: {:?}", r);
         let evaluate_request = r.get_ref();
         debug!("evaluate request: {:?}", evaluate_request.condition_info);
 
         if evaluate_request.cap != "referenced" {
-            return Err(Status::invalid_argument("unknown capabilities"));
+            return Ok(Response::new(EvaluateResponse {
+                error: "unable to find referenced capability".to_string(),
+                successful: false,
+                response: None,
+            }));
         }
         let condition: CSharpCondition =
             serde_yml::from_str(evaluate_request.condition_info.as_str()).map_err(|err| {
@@ -178,7 +184,11 @@ impl ProviderService for CSharpProvider {
         let project = match project_guard.as_ref() {
             Some(x) => x,
             None => {
-                return Err(Status::internal("project may not be initialized"));
+                return Ok(Response::new(EvaluateResponse {
+                    error: "project may not be initialized".to_string(),
+                    successful: false,
+                    response: None,
+                }));
             }
         };
         let graph_guard = project.graph.clone();
@@ -186,16 +196,26 @@ impl ProviderService for CSharpProvider {
         let source_type = match project.get_source_type().await {
             Some(s) => s,
             None => {
-                return Err(Status::internal("project may not be initialized"));
+                return Ok(Response::new(EvaluateResponse {
+                    error: "project may not be initialized".to_string(),
+                    successful: false,
+                    response: None,
+                }));
             }
         };
         // Release the project lock, so other evaluate calls can continue
         drop(project_guard);
-        let graph = graph_guard
-            .lock()
-            .expect("unable to get graph guard for project");
+        let graph = graph_guard.lock();
+        let graph_option = match graph {
+            Ok(g) => g,
+            Err(e) => {
+                graph_guard.clear_poison();
+                e.into_inner()
+            }
+        };
 
-        let graph = graph.as_ref().expect("unable to get graph for project");
+        let graph = graph_option.as_ref().unwrap();
+
         // As we are passing an unmutable reference, we can drop the guard here.
 
         let query = match condition.referenced.location {
@@ -216,29 +236,86 @@ impl ProviderService for CSharpProvider {
                 source_type: &source_type,
             },
         };
-        let results = query
-            .query(condition.referenced.pattern.clone())
-            .map_or_else(
-                |err| EvaluateResponse {
-                    error: err.to_string(),
-                    successful: false,
-                    response: None,
-                },
-                |res| {
-                    info!("found {} results for search: {:?}", res.len(), &condition);
-                    let mut i: Vec<IncidentContext> = res.into_iter().map(Into::into).collect();
-                    i.sort_by_key(|i| format!("{}-{:?}", i.file_uri, i.line_number()));
+        let results = query.query(condition.referenced.pattern.clone());
+        let results = match results {
+            Err(e) => {
+                if let Some(_e) = e.downcast_ref::<NamespaceFQDNNotFoundError>() {
                     EvaluateResponse {
                         error: String::new(),
                         successful: true,
                         response: Some(ProviderEvaluateResponse {
-                            matched: !i.is_empty(),
-                            incident_contexts: i,
+                            matched: false,
+                            incident_contexts: vec![],
                             template_context: None,
                         }),
                     }
-                },
-            );
+                } else {
+                    EvaluateResponse {
+                        error: e.to_string(),
+                        successful: false,
+                        response: None,
+                    }
+                }
+            }
+            Ok(res) => {
+                // Deduplicate: group by file+line and keep the one with smallest span
+                use std::collections::BTreeMap;
+                let mut best_by_location: BTreeMap<(String, usize), &ResultNode> = BTreeMap::new();
+
+                for r in &res {
+                    let key = (r.file_uri.clone(), r.line_number);
+                    best_by_location
+                        .entry(key)
+                        .and_modify(|current| {
+                            // Only replace if new result has smaller/better span
+                            let r_span = r.code_location.end_position.line - r.code_location.start_position.line;
+                            let r_start = r.code_location.start_position.character;
+                            let r_end = r.code_location.end_position.character;
+
+                            let current_span = current.code_location.end_position.line - current.code_location.start_position.line;
+                            let current_start = current.code_location.start_position.character;
+                            let current_end = current.code_location.end_position.character;
+
+                            if (r_span, r_start, r_end) < (current_span, current_start, current_end) {
+                                *current = r;
+                            }
+                        })
+                        .or_insert(r);
+                }
+
+                let new_results: Vec<&ResultNode> = best_by_location.values().copied().collect();
+                info!("found {} results for search: {:?}", res.len(), &condition);
+                let mut i: Vec<IncidentContext> = new_results.into_iter().map(Into::into).collect();
+                i.sort_by_key(|i| format!("{}-{:?}", i.file_uri, i.line_number()));
+
+                // Log detailed results for debugging non-determinism
+                if i.len() > 0 {
+                    info!("Returning {} incidents for pattern '{:?}':", i.len(), &condition);
+                    for (idx, incident) in i.iter().enumerate() {
+                        debug!("  Incident[{}]: {} line {}", idx, incident.file_uri, incident.line_number.unwrap_or(0));
+                    }
+                }
+                EvaluateResponse {
+                    error: String::new(),
+                    successful: true,
+                    response: Some(ProviderEvaluateResponse {
+                        matched: !i.is_empty(),
+                        incident_contexts: i,
+                        template_context: None,
+                    }),
+                }
+            }
+        };
+        if results.response.is_some()
+            && !results
+                .response
+                .as_ref()
+                .unwrap()
+                .incident_contexts
+                .is_empty()
+        {
+            info!("returning results: {:?}", results);
+        }
         return Ok(Response::new(results));
     }
 
@@ -275,5 +352,256 @@ impl ProviderService for CSharpProvider {
         return Ok(Response::new(NotifyFileChangesResponse {
             error: String::new(),
         }));
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::c_sharp_graph::results::{Location, Position, ResultNode};
+    use std::collections::BTreeMap;
+
+    fn create_result_node(
+        file_uri: &str,
+        line_number: usize,
+        start_line: usize,
+        start_char: usize,
+        end_line: usize,
+        end_char: usize,
+    ) -> ResultNode {
+        ResultNode {
+            file_uri: file_uri.to_string(),
+            line_number,
+            variables: BTreeMap::new(),
+            code_location: Location {
+                start_position: Position {
+                    line: start_line,
+                    character: start_char,
+                },
+                end_position: Position {
+                    line: end_line,
+                    character: end_char,
+                },
+            },
+        }
+    }
+
+    #[test]
+    fn test_deduplication_keeps_smallest_span() {
+        // Create test data with same file+line but different spans
+        let results = vec![
+            create_result_node("file1.cs", 10, 10, 0, 15, 0), // span=5 lines
+            create_result_node("file1.cs", 10, 10, 5, 12, 0), // span=2 lines (should be kept)
+            create_result_node("file1.cs", 10, 10, 0, 20, 0), // span=10 lines
+            create_result_node("file2.cs", 20, 20, 0, 21, 0), // different location
+        ];
+
+        // Run deduplication logic
+        use std::collections::BTreeMap;
+        let mut best_by_location: BTreeMap<(String, usize), &ResultNode> = BTreeMap::new();
+
+        for r in &results {
+            let key = (r.file_uri.clone(), r.line_number);
+            best_by_location
+                .entry(key)
+                .and_modify(|current| {
+                    let r_span = r.code_location.end_position.line - r.code_location.start_position.line;
+                    let r_start = r.code_location.start_position.character;
+                    let r_end = r.code_location.end_position.character;
+
+                    let current_span = current.code_location.end_position.line - current.code_location.start_position.line;
+                    let current_start = current.code_location.start_position.character;
+                    let current_end = current.code_location.end_position.character;
+
+                    if (r_span, r_start, r_end) < (current_span, current_start, current_end) {
+                        *current = r;
+                    }
+                })
+                .or_insert(r);
+        }
+
+        let deduplicated: Vec<&ResultNode> = best_by_location.values().copied().collect();
+
+        // Should have 2 results (one for each unique file+line)
+        assert_eq!(deduplicated.len(), 2);
+
+        // Find the result for file1.cs:10
+        let file1_result = deduplicated
+            .iter()
+            .find(|r| r.file_uri == "file1.cs" && r.line_number == 10)
+            .expect("Should have result for file1.cs:10");
+
+        // Should be the one with smallest span (2 lines)
+        let span = file1_result.code_location.end_position.line
+            - file1_result.code_location.start_position.line;
+        assert_eq!(span, 2, "Should keep result with smallest span");
+        assert_eq!(file1_result.code_location.start_position.character, 5);
+    }
+
+    #[test]
+    fn test_deduplication_is_deterministic() {
+        // Create test data - same input multiple times
+        let create_test_data = || {
+            vec![
+                create_result_node("file1.cs", 10, 10, 0, 15, 0),
+                create_result_node("file1.cs", 10, 10, 5, 12, 0),
+                create_result_node("file1.cs", 10, 10, 0, 20, 0),
+                create_result_node("file1.cs", 10, 10, 8, 13, 0), // Same span as second, different char
+            ]
+        };
+
+        // Run deduplication 3 times and collect character positions
+        let mut char_positions = vec![];
+        for _ in 0..3 {
+            let results = create_test_data();
+            use std::collections::BTreeMap;
+            let mut best_by_location: BTreeMap<(String, usize), &ResultNode> = BTreeMap::new();
+
+            for r in &results {
+                let key = (r.file_uri.clone(), r.line_number);
+                best_by_location
+                    .entry(key)
+                    .and_modify(|current| {
+                        let r_span = r.code_location.end_position.line - r.code_location.start_position.line;
+                        let r_start = r.code_location.start_position.character;
+                        let r_end = r.code_location.end_position.character;
+
+                        let current_span = current.code_location.end_position.line - current.code_location.start_position.line;
+                        let current_start = current.code_location.start_position.character;
+                        let current_end = current.code_location.end_position.character;
+
+                        if (r_span, r_start, r_end) < (current_span, current_start, current_end) {
+                            *current = r;
+                        }
+                    })
+                    .or_insert(r);
+            }
+
+            let deduplicated: Vec<&ResultNode> = best_by_location.values().copied().collect();
+            assert_eq!(deduplicated.len(), 1, "Should deduplicate to 1 result");
+            char_positions.push(deduplicated[0].code_location.start_position.character);
+        }
+
+        // All runs should produce the same character position
+        assert_eq!(char_positions[0], char_positions[1]);
+        assert_eq!(char_positions[1], char_positions[2]);
+        assert_eq!(char_positions[0], 5, "Should consistently pick character position 5");
+    }
+
+    #[test]
+    fn test_deduplication_prefers_earlier_character_when_same_span() {
+        let results = vec![
+            create_result_node("file1.cs", 10, 10, 10, 12, 0), // span=2, char=10
+            create_result_node("file1.cs", 10, 10, 5, 12, 0),  // span=2, char=5 (should be kept)
+            create_result_node("file1.cs", 10, 10, 15, 12, 0), // span=2, char=15
+        ];
+
+        use std::collections::BTreeMap;
+        let mut best_by_location: BTreeMap<(String, usize), &ResultNode> = BTreeMap::new();
+
+        for r in &results {
+            let key = (r.file_uri.clone(), r.line_number);
+            best_by_location
+                .entry(key)
+                .and_modify(|current| {
+                    let r_span = r.code_location.end_position.line - r.code_location.start_position.line;
+                    let r_start = r.code_location.start_position.character;
+                    let r_end = r.code_location.end_position.character;
+
+                    let current_span = current.code_location.end_position.line - current.code_location.start_position.line;
+                    let current_start = current.code_location.start_position.character;
+                    let current_end = current.code_location.end_position.character;
+
+                    if (r_span, r_start, r_end) < (current_span, current_start, current_end) {
+                        *current = r;
+                    }
+                })
+                .or_insert(r);
+        }
+
+        let deduplicated: Vec<&ResultNode> = best_by_location.values().copied().collect();
+
+        assert_eq!(deduplicated.len(), 1);
+        assert_eq!(
+            deduplicated[0].code_location.start_position.character, 5,
+            "Should keep result with earliest character when spans are equal"
+        );
+    }
+
+    #[test]
+    fn test_deduplication_is_order_independent() {
+        // Create same results in different orders
+        let order1 = vec![
+            create_result_node("file1.cs", 10, 10, 0, 15, 0),  // Large span
+            create_result_node("file1.cs", 10, 10, 5, 12, 0),  // Small span, char=5 (winner)
+            create_result_node("file1.cs", 10, 10, 0, 20, 0),  // Huge span
+            create_result_node("file2.cs", 20, 20, 0, 21, 0),  // Different location
+        ];
+
+        let order2 = vec![
+            create_result_node("file2.cs", 20, 20, 0, 21, 0),  // Different location
+            create_result_node("file1.cs", 10, 10, 0, 20, 0),  // Huge span
+            create_result_node("file1.cs", 10, 10, 5, 12, 0),  // Small span, char=5 (winner)
+            create_result_node("file1.cs", 10, 10, 0, 15, 0),  // Large span
+        ];
+
+        let order3 = vec![
+            create_result_node("file1.cs", 10, 10, 0, 20, 0),  // Huge span
+            create_result_node("file2.cs", 20, 20, 0, 21, 0),  // Different location
+            create_result_node("file1.cs", 10, 10, 0, 15, 0),  // Large span
+            create_result_node("file1.cs", 10, 10, 5, 12, 0),  // Small span, char=5 (winner)
+        ];
+
+        // Process all three orderings
+        let mut results_from_orders = vec![];
+        for results in vec![&order1, &order2, &order3] {
+            use std::collections::BTreeMap;
+            let mut best_by_location: BTreeMap<(String, usize), &ResultNode> = BTreeMap::new();
+
+            for r in results {
+                let key = (r.file_uri.clone(), r.line_number);
+                best_by_location
+                    .entry(key)
+                    .and_modify(|current| {
+                        let r_span = r.code_location.end_position.line - r.code_location.start_position.line;
+                        let r_start = r.code_location.start_position.character;
+                        let r_end = r.code_location.end_position.character;
+
+                        let current_span = current.code_location.end_position.line - current.code_location.start_position.line;
+                        let current_start = current.code_location.start_position.character;
+                        let current_end = current.code_location.end_position.character;
+
+                        if (r_span, r_start, r_end) < (current_span, current_start, current_end) {
+                            *current = r;
+                        }
+                    })
+                    .or_insert(r);
+            }
+
+            let deduplicated: Vec<&ResultNode> = best_by_location.values().copied().collect();
+
+            // Extract key properties for comparison
+            let mut props: Vec<(String, usize, usize, usize)> = deduplicated
+                .iter()
+                .map(|r| (
+                    r.file_uri.clone(),
+                    r.line_number,
+                    r.code_location.end_position.line - r.code_location.start_position.line,
+                    r.code_location.start_position.character,
+                ))
+                .collect();
+            props.sort(); // Sort for consistent comparison
+            results_from_orders.push(props);
+        }
+
+        // All orderings should produce identical results
+        assert_eq!(results_from_orders[0], results_from_orders[1],
+            "Order 1 and Order 2 should produce identical results");
+        assert_eq!(results_from_orders[1], results_from_orders[2],
+            "Order 2 and Order 3 should produce identical results");
+
+        // Verify the actual chosen values
+        let file1_result = &results_from_orders[0].iter().find(|r| r.0 == "file1.cs").unwrap();
+        assert_eq!(file1_result.2, 2, "Should choose span of 2 lines");
+        assert_eq!(file1_result.3, 5, "Should choose character position 5");
     }
 }
