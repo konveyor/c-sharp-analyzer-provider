@@ -1,0 +1,12 @@
+nguage: en-US
+reviews:
+  profile: assertive
+  high_level_summary: false
+  high_level_summary_in_walkthrough: false
+  sequence_diagrams: false
+  changed_files_summary: false
+  review_status: false
+  auto_review:
+    enabled: true
+    drafts: false
+

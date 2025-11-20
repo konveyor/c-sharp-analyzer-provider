@@ -27,7 +27,7 @@ impl PartialOrd for ResultNode {
 
 impl Ord for ResultNode {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        // Sort by file_uri first, then line_number, then code_location, then syntax_type
+        // Sort by file_uri first, then line_number, then code_location, then syntax_type, then symbol
         self.file_uri
             .cmp(&other.file_uri)
             .then_with(|| self.line_number.cmp(&other.line_number))
@@ -41,6 +41,16 @@ impl Ord for ResultNode {
                     .and_then(|v| v.as_str())
                     .unwrap_or("");
                 self_syntax_type.cmp(other_syntax_type)
+            })
+            .then_with(|| {
+                // Compare symbol from variables for full determinism
+                let self_symbol = self.variables.get("symbol")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or("");
+                let other_symbol = other.variables.get("symbol")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or("");
+                self_symbol.cmp(other_symbol)
             })
     }
 }

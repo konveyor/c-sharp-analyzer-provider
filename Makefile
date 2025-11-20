@@ -55,20 +55,24 @@ reset-demo-output:
 run-demo: reset-demo-apps build
 	export SERVER_PID=$$(./scripts/run-demo.sh); \
 	echo $${SERVER_PID}; \
-	$(MAKE) wait-for-server; \
-	$(MAKE) run-grpc-init-http; \
+	$(MAKE) wait-for-server && \
+	$(MAKE) run-grpc-init-http && \
 	$(MAKE) run-integration-tests; \
-	kill $${SERVER_PID}; \
-	$(MAKE) reset-demo-apps
+	TEST_EXIT=$$?; \
+	kill $${SERVER_PID} || true; \
+	$(MAKE) reset-demo-apps; \
+	exit $$TEST_EXIT
 
 run-demo-github: reset-demo-apps build
 	RUST_LOG=c_sharp_analyzer_provider_cli=DEBUG,INFO target/debug/c-sharp-analyzer-provider-cli --port 9000 --name c-sharp &> demo.log & \
 	export SERVER_PID=$$!; \
-	$(MAKE) wait-for-server; \
-	$(MAKE) run-grpc-init-http; \
+	$(MAKE) wait-for-server && \
+	$(MAKE) run-grpc-init-http && \
 	$(MAKE) run-integration-tests; \
+	TEST_EXIT=$$?; \
 	kill $$SERVER_PID || true; \
-	$(MAKE) reset-demo-apps
+	$(MAKE) reset-demo-apps; \
+	exit $$TEST_EXIT
 
 run-integration-tests:
 	cargo test -- --nocapture

@@ -403,7 +403,7 @@ impl<T: GetMatcher> Querier<'_, T> {
             };
 
             // Get syntax type information for the node
-            let syntax_type_str = source_info.syntax_type.into_option().map_or_else(
+            let mut syntax_type_str = source_info.syntax_type.into_option().map_or_else(
                 || "unknown".to_string(),
                 |st| {
                     let st_symbol = &self.graph[st];
@@ -414,6 +414,37 @@ impl<T: GetMatcher> Querier<'_, T> {
             // Create variables map with file and syntax_type
             let mut var: BTreeMap<String, Value> = BTreeMap::new();
             var.insert("file".to_string(), Value::from(file_uri.clone()));
+
+            // Add symbol for debugging
+            var.insert("symbol".to_string(), Value::from(symbol.to_string()));
+
+            // Add FQDN for debugging and infer syntax_type for references
+            if node.is_reference() {
+                if let Some(fqdn) = self.get_type_with_symbol(node_handle, symbol, &searchable_nodes) {
+                    if let Some(ns) = &fqdn.namespace {
+                        var.insert("fqdn_namespace".to_string(), Value::from(ns.clone()));
+                    }
+                    if let Some(cls) = &fqdn.class {
+                        var.insert("fqdn_class".to_string(), Value::from(cls.clone()));
+                    }
+                    if let Some(method) = &fqdn.method {
+                        var.insert("fqdn_method".to_string(), Value::from(method.clone()));
+                        // Infer syntax_type from FQDN structure if it was unknown
+                        if syntax_type_str == "unknown" {
+                            syntax_type_str = "method_reference".to_string();
+                        }
+                    }
+                    if let Some(field) = &fqdn.field {
+                        var.insert("fqdn_field".to_string(), Value::from(field.clone()));
+                        // Infer syntax_type from FQDN structure if it was unknown
+                        if syntax_type_str == "unknown" {
+                            syntax_type_str = "field_reference".to_string();
+                        }
+                    }
+                }
+            }
+
+            // Set syntax_type after potential inference from FQDN
             var.insert("syntax_type".to_string(), Value::from(syntax_type_str));
 
             trace!("found result for node: {:?}", debug_node,);
@@ -820,9 +851,28 @@ impl<T: GetMatcher> Query for Querier<'_, T> {
             .join(".");
         info!("Query results for pattern '{}': {} incidents", pattern, results.len());
         for (i, result) in results.iter().enumerate() {
+            let symbol = result.variables.get("symbol")
+                .and_then(|v| v.as_str())
+                .unwrap_or("?");
+            let fqdn_ns = result.variables.get("fqdn_namespace")
+                .and_then(|v| v.as_str())
+                .unwrap_or("");
+            let fqdn_class = result.variables.get("fqdn_class")
+                .and_then(|v| v.as_str())
+                .unwrap_or("");
+            let fqdn_field = result.variables.get("fqdn_field")
+                .and_then(|v| v.as_str())
+                .unwrap_or("");
+
+            let fqdn_display = if !fqdn_ns.is_empty() || !fqdn_class.is_empty() || !fqdn_field.is_empty() {
+                format!(" fqdn={}.{}.{}", fqdn_ns, fqdn_class, fqdn_field)
+            } else {
+                String::new()
+            };
+
             debug!(
-                "  Result[{}]: {} line {}",
-                i, result.file_uri, result.line_number
+                "  Result[{}]: {} line {} symbol={}{}",
+                i, result.file_uri, result.line_number, symbol, fqdn_display
             );
         }
 

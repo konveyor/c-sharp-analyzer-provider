@@ -13,7 +13,12 @@
         },
         "LineNumber": "37",
         "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs"
+          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+          "fqdn_class": "WebSecurity",
+          "fqdn_method": "Login",
+          "fqdn_namespace": "WebMatrix.WebData",
+          "symbol": "WebSecurity.Login",
+          "syntax_type": "method_reference"
         }
       },
       {
@@ -30,7 +35,12 @@
         },
         "LineNumber": "82",
         "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs"
+          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+          "fqdn_class": "WebSecurity",
+          "fqdn_method": "Login",
+          "fqdn_namespace": "WebMatrix.WebData",
+          "symbol": "WebSecurity.Login",
+          "syntax_type": "method_reference"
         }
       }
     ]

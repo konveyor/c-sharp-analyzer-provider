@@ -259,40 +259,25 @@ impl ProviderService for CSharpProvider {
             }
             Ok(res) => {
                 // Deduplicate: group by file+line and keep the one with smallest span
-                use std::collections::BTreeMap;
-                let mut best_by_location: BTreeMap<(String, usize), &ResultNode> = BTreeMap::new();
-
-                for r in &res {
-                    let key = (r.file_uri.clone(), r.line_number);
-                    best_by_location
-                        .entry(key)
-                        .and_modify(|current| {
-                            // Only replace if new result has smaller/better span
-                            let r_span = r.code_location.end_position.line - r.code_location.start_position.line;
-                            let r_start = r.code_location.start_position.character;
-                            let r_end = r.code_location.end_position.character;
-
-                            let current_span = current.code_location.end_position.line - current.code_location.start_position.line;
-                            let current_start = current.code_location.start_position.character;
-                            let current_end = current.code_location.end_position.character;
-
-                            if (r_span, r_start, r_end) < (current_span, current_start, current_end) {
-                                *current = r;
-                            }
-                        })
-                        .or_insert(r);
-                }
-
-                let new_results: Vec<&ResultNode> = best_by_location.values().copied().collect();
+                let new_results = deduplicate_results(&res);
                 info!("found {} results for search: {:?}", res.len(), &condition);
                 let mut i: Vec<IncidentContext> = new_results.into_iter().map(Into::into).collect();
                 i.sort_by_key(|i| format!("{}-{:?}", i.file_uri, i.line_number()));
 
                 // Log detailed results for debugging non-determinism
                 if i.len() > 0 {
-                    info!("Returning {} incidents for pattern '{:?}':", i.len(), &condition);
+                    info!(
+                        "Returning {} incidents for pattern '{:?}':",
+                        i.len(),
+                        &condition
+                    );
                     for (idx, incident) in i.iter().enumerate() {
-                        debug!("  Incident[{}]: {} line {}", idx, incident.file_uri, incident.line_number.unwrap_or(0));
+                        debug!(
+                            "  Incident[{}]: {} line {}",
+                            idx,
+                            incident.file_uri,
+                            incident.line_number.unwrap_or(0)
+                        );
                     }
                 }
                 EvaluateResponse {
@@ -355,6 +340,43 @@ impl ProviderService for CSharpProvider {
     }
 }
 
+/// Deduplicate results by grouping by (file_uri, line_number) and keeping the result
+/// with the smallest span. When spans are equal, prefer earlier start character and
+/// earlier end character for deterministic selection.
+fn deduplicate_results<'a>(results: &'a [ResultNode]) -> Vec<&'a ResultNode> {
+    use std::collections::BTreeMap;
+    let mut best_by_location: BTreeMap<(String, usize), &ResultNode> = BTreeMap::new();
+
+    for r in results {
+        let key = (r.file_uri.clone(), r.line_number);
+        best_by_location
+            .entry(key)
+            .and_modify(|current| {
+                // Only replace if new result has smaller/better span
+                let r_span =
+                    r.code_location.end_position.line - r.code_location.start_position.line;
+                let r_start = r.code_location.start_position.character;
+                let r_end = r.code_location.end_position.character;
+                let r_line = r.line_number;
+
+                let current_span = current.code_location.end_position.line
+                    - current.code_location.start_position.line;
+                let current_start = current.code_location.start_position.character;
+                let current_end = current.code_location.end_position.character;
+                let current_line = current.line_number;
+
+                if (r_line, r_span, r_start, r_end)
+                    < (current_line, current_span, current_start, current_end)
+                {
+                    *current = r;
+                }
+            })
+            .or_insert(r);
+    }
+
+    best_by_location.values().copied().collect()
+}
+
 #[cfg(test)]
 mod tests {
     use crate::c_sharp_graph::results::{Location, Position, ResultNode};
@@ -396,30 +418,7 @@ mod tests {
         ];
 
         // Run deduplication logic
-        use std::collections::BTreeMap;
-        let mut best_by_location: BTreeMap<(String, usize), &ResultNode> = BTreeMap::new();
-
-        for r in &results {
-            let key = (r.file_uri.clone(), r.line_number);
-            best_by_location
-                .entry(key)
-                .and_modify(|current| {
-                    let r_span = r.code_location.end_position.line - r.code_location.start_position.line;
-                    let r_start = r.code_location.start_position.character;
-                    let r_end = r.code_location.end_position.character;
-
-                    let current_span = current.code_location.end_position.line - current.code_location.start_position.line;
-                    let current_start = current.code_location.start_position.character;
-                    let current_end = current.code_location.end_position.character;
-
-                    if (r_span, r_start, r_end) < (current_span, current_start, current_end) {
-                        *current = r;
-                    }
-                })
-                .or_insert(r);
-        }
-
-        let deduplicated: Vec<&ResultNode> = best_by_location.values().copied().collect();
+        let deduplicated = super::deduplicate_results(&results);
 
         // Should have 2 results (one for each unique file+line)
         assert_eq!(deduplicated.len(), 2);
@@ -453,30 +452,7 @@ mod tests {
         let mut char_positions = vec![];
         for _ in 0..3 {
             let results = create_test_data();
-            use std::collections::BTreeMap;
-            let mut best_by_location: BTreeMap<(String, usize), &ResultNode> = BTreeMap::new();
-
-            for r in &results {
-                let key = (r.file_uri.clone(), r.line_number);
-                best_by_location
-                    .entry(key)
-                    .and_modify(|current| {
-                        let r_span = r.code_location.end_position.line - r.code_location.start_position.line;
-                        let r_start = r.code_location.start_position.character;
-                        let r_end = r.code_location.end_position.character;
-
-                        let current_span = current.code_location.end_position.line - current.code_location.start_position.line;
-                        let current_start = current.code_location.start_position.character;
-                        let current_end = current.code_location.end_position.character;
-
-                        if (r_span, r_start, r_end) < (current_span, current_start, current_end) {
-                            *current = r;
-                        }
-                    })
-                    .or_insert(r);
-            }
-
-            let deduplicated: Vec<&ResultNode> = best_by_location.values().copied().collect();
+            let deduplicated = super::deduplicate_results(&results);
             assert_eq!(deduplicated.len(), 1, "Should deduplicate to 1 result");
             char_positions.push(deduplicated[0].code_location.start_position.character);
         }
@@ -484,7 +460,10 @@ mod tests {
         // All runs should produce the same character position
         assert_eq!(char_positions[0], char_positions[1]);
         assert_eq!(char_positions[1], char_positions[2]);
-        assert_eq!(char_positions[0], 5, "Should consistently pick character position 5");
+        assert_eq!(
+            char_positions[0], 5,
+            "Should consistently pick character position 5"
+        );
     }
 
     #[test]
@@ -495,30 +474,7 @@ mod tests {
             create_result_node("file1.cs", 10, 10, 15, 12, 0), // span=2, char=15
         ];
 
-        use std::collections::BTreeMap;
-        let mut best_by_location: BTreeMap<(String, usize), &ResultNode> = BTreeMap::new();
-
-        for r in &results {
-            let key = (r.file_uri.clone(), r.line_number);
-            best_by_location
-                .entry(key)
-                .and_modify(|current| {
-                    let r_span = r.code_location.end_position.line - r.code_location.start_position.line;
-                    let r_start = r.code_location.start_position.character;
-                    let r_end = r.code_location.end_position.character;
-
-                    let current_span = current.code_location.end_position.line - current.code_location.start_position.line;
-                    let current_start = current.code_location.start_position.character;
-                    let current_end = current.code_location.end_position.character;
-
-                    if (r_span, r_start, r_end) < (current_span, current_start, current_end) {
-                        *current = r;
-                    }
-                })
-                .or_insert(r);
-        }
-
-        let deduplicated: Vec<&ResultNode> = best_by_location.values().copied().collect();
+        let deduplicated = super::deduplicate_results(&results);
 
         assert_eq!(deduplicated.len(), 1);
         assert_eq!(
@@ -531,77 +487,178 @@ mod tests {
     fn test_deduplication_is_order_independent() {
         // Create same results in different orders
         let order1 = vec![
-            create_result_node("file1.cs", 10, 10, 0, 15, 0),  // Large span
-            create_result_node("file1.cs", 10, 10, 5, 12, 0),  // Small span, char=5 (winner)
-            create_result_node("file1.cs", 10, 10, 0, 20, 0),  // Huge span
-            create_result_node("file2.cs", 20, 20, 0, 21, 0),  // Different location
+            create_result_node("file1.cs", 10, 10, 0, 15, 0), // Large span
+            create_result_node("file1.cs", 10, 10, 5, 12, 0), // Small span, char=5 (winner)
+            create_result_node("file1.cs", 10, 10, 0, 20, 0), // Huge span
+            create_result_node("file2.cs", 20, 20, 0, 21, 0), // Different location
         ];
 
         let order2 = vec![
-            create_result_node("file2.cs", 20, 20, 0, 21, 0),  // Different location
-            create_result_node("file1.cs", 10, 10, 0, 20, 0),  // Huge span
-            create_result_node("file1.cs", 10, 10, 5, 12, 0),  // Small span, char=5 (winner)
-            create_result_node("file1.cs", 10, 10, 0, 15, 0),  // Large span
+            create_result_node("file2.cs", 20, 20, 0, 21, 0), // Different location
+            create_result_node("file1.cs", 10, 10, 0, 20, 0), // Huge span
+            create_result_node("file1.cs", 10, 10, 5, 12, 0), // Small span, char=5 (winner)
+            create_result_node("file1.cs", 10, 10, 0, 15, 0), // Large span
         ];
 
         let order3 = vec![
-            create_result_node("file1.cs", 10, 10, 0, 20, 0),  // Huge span
-            create_result_node("file2.cs", 20, 20, 0, 21, 0),  // Different location
-            create_result_node("file1.cs", 10, 10, 0, 15, 0),  // Large span
-            create_result_node("file1.cs", 10, 10, 5, 12, 0),  // Small span, char=5 (winner)
+            create_result_node("file1.cs", 10, 10, 0, 20, 0), // Huge span
+            create_result_node("file2.cs", 20, 20, 0, 21, 0), // Different location
+            create_result_node("file1.cs", 10, 10, 0, 15, 0), // Large span
+            create_result_node("file1.cs", 10, 10, 5, 12, 0), // Small span, char=5 (winner)
         ];
 
         // Process all three orderings
         let mut results_from_orders = vec![];
         for results in vec![&order1, &order2, &order3] {
-            use std::collections::BTreeMap;
-            let mut best_by_location: BTreeMap<(String, usize), &ResultNode> = BTreeMap::new();
-
-            for r in results {
-                let key = (r.file_uri.clone(), r.line_number);
-                best_by_location
-                    .entry(key)
-                    .and_modify(|current| {
-                        let r_span = r.code_location.end_position.line - r.code_location.start_position.line;
-                        let r_start = r.code_location.start_position.character;
-                        let r_end = r.code_location.end_position.character;
-
-                        let current_span = current.code_location.end_position.line - current.code_location.start_position.line;
-                        let current_start = current.code_location.start_position.character;
-                        let current_end = current.code_location.end_position.character;
-
-                        if (r_span, r_start, r_end) < (current_span, current_start, current_end) {
-                            *current = r;
-                        }
-                    })
-                    .or_insert(r);
-            }
-
-            let deduplicated: Vec<&ResultNode> = best_by_location.values().copied().collect();
+            let deduplicated = super::deduplicate_results(results);
 
             // Extract key properties for comparison
             let mut props: Vec<(String, usize, usize, usize)> = deduplicated
                 .iter()
-                .map(|r| (
-                    r.file_uri.clone(),
-                    r.line_number,
-                    r.code_location.end_position.line - r.code_location.start_position.line,
-                    r.code_location.start_position.character,
-                ))
+                .map(|r| {
+                    (
+                        r.file_uri.clone(),
+                        r.line_number,
+                        r.code_location.end_position.line - r.code_location.start_position.line,
+                        r.code_location.start_position.character,
+                    )
+                })
                 .collect();
             props.sort(); // Sort for consistent comparison
             results_from_orders.push(props);
         }
 
         // All orderings should produce identical results
-        assert_eq!(results_from_orders[0], results_from_orders[1],
-            "Order 1 and Order 2 should produce identical results");
-        assert_eq!(results_from_orders[1], results_from_orders[2],
-            "Order 2 and Order 3 should produce identical results");
+        assert_eq!(
+            results_from_orders[0], results_from_orders[1],
+            "Order 1 and Order 2 should produce identical results"
+        );
+        assert_eq!(
+            results_from_orders[1], results_from_orders[2],
+            "Order 2 and Order 3 should produce identical results"
+        );
 
         // Verify the actual chosen values
-        let file1_result = &results_from_orders[0].iter().find(|r| r.0 == "file1.cs").unwrap();
+        let file1_result = &results_from_orders[0]
+            .iter()
+            .find(|r| r.0 == "file1.cs")
+            .unwrap();
         assert_eq!(file1_result.2, 2, "Should choose span of 2 lines");
         assert_eq!(file1_result.3, 5, "Should choose character position 5");
+    }
+
+    #[test]
+    fn test_deduplication_adjacent_lines_tree_sitter_scenario() {
+        // Simulates the System.Web.Mvc scenario where tree-sitter might create multiple nodes
+        // for the SAME line_number with different spans due to parsing ambiguities.
+        //
+        // Real scenario from CI: The same line (e.g., 240) might get reported multiple times
+        // with different span information because tree-sitter creates nodes with ambiguous
+        // boundaries. The deduplication should keep the tightest/smallest span.
+        //
+        // Note: Results on DIFFERENT line_numbers (240 vs 241) are NOT deduplicated - they're
+        // kept as separate results because the grouping key is (file_uri, line_number).
+        let results = vec![
+            // Scenario 1: Multiple nodes reported for line 179 with different spans
+            create_result_node("AccountController.cs", 179, 179, 16, 179, 26), // Tight span on line 179
+            create_result_node("AccountController.cs", 179, 179, 16, 181, 17), // Span crossing to line 181
+            create_result_node("AccountController.cs", 179, 177, 0, 179, 26),  // Span starting earlier
+            // Scenario 2: Multiple nodes reported for line 240 with different spans
+            create_result_node("AccountController.cs", 240, 240, 0, 240, 94), // Tight span on line 240 (WINNER)
+            create_result_node("AccountController.cs", 240, 240, 0, 241, 20), // Span crossing to line 241
+            create_result_node("AccountController.cs", 240, 239, 0, 240, 94), // Span starting earlier
+            // Scenario 3: Line 241 has its own references (separate from 240)
+            create_result_node("AccountController.cs", 241, 241, 16, 241, 23), // ViewBag on line 241
+            create_result_node("AccountController.cs", 241, 241, 0, 242, 10),  // Wider span for line 241
+            // Scenario 4: Different file, should not be affected
+            create_result_node("DinnerController.cs", 100, 100, 0, 100, 10),
+        ];
+
+        let mut deduplicated = super::deduplicate_results(&results);
+        deduplicated.sort_by_key(|r| (&r.file_uri, r.line_number));
+
+        // Should have 4 results after deduplication:
+        // - AccountController.cs:179 (best of 3 results for line 179)
+        // - AccountController.cs:240 (best of 3 results for line 240)
+        // - AccountController.cs:241 (best of 2 results for line 241)
+        // - DinnerController.cs:100
+        assert_eq!(
+            deduplicated.len(),
+            4,
+            "Should deduplicate same-line entries but keep distinct line numbers"
+        );
+
+        // Check line 179: should keep the one with smallest span
+        let line_179 = deduplicated
+            .iter()
+            .find(|r| r.file_uri == "AccountController.cs" && r.line_number == 179)
+            .expect("Should have result for line 179");
+        let span_179 =
+            line_179.code_location.end_position.line - line_179.code_location.start_position.line;
+        assert_eq!(
+            span_179, 0,
+            "Line 179 should keep single-line span (smallest)"
+        );
+        assert_eq!(line_179.code_location.start_position.line, 179);
+        assert_eq!(line_179.code_location.start_position.character, 16);
+        assert_eq!(line_179.code_location.end_position.character, 26);
+
+        // Check line 240: should keep the one with smallest span
+        let line_240 = deduplicated
+            .iter()
+            .find(|r| r.file_uri == "AccountController.cs" && r.line_number == 240)
+            .expect("Should have result for line 240");
+        let span_240 =
+            line_240.code_location.end_position.line - line_240.code_location.start_position.line;
+        assert_eq!(span_240, 0, "Line 240 should keep single-line span");
+        assert_eq!(line_240.code_location.start_position.line, 240);
+        assert_eq!(line_240.code_location.end_position.character, 94);
+
+        // Check line 241: should keep the one with smallest span (separate from 240)
+        let line_241 = deduplicated
+            .iter()
+            .find(|r| r.file_uri == "AccountController.cs" && r.line_number == 241)
+            .expect("Should have result for line 241");
+        let span_241 =
+            line_241.code_location.end_position.line - line_241.code_location.start_position.line;
+        assert_eq!(span_241, 0, "Line 241 should keep single-line span");
+        assert_eq!(line_241.code_location.start_position.line, 241);
+        assert_eq!(line_241.code_location.start_position.character, 16);
+
+        // Verify all AccountController.cs results
+        let account_controller_results: Vec<&&ResultNode> = deduplicated
+            .iter()
+            .filter(|r| r.file_uri == "AccountController.cs")
+            .collect();
+        assert_eq!(
+            account_controller_results.len(),
+            3,
+            "AccountController.cs should have exactly 3 results (lines 179, 240, 241)"
+        );
+    }
+
+    #[test]
+    fn test_deduplication_does_not_merge_different_lines() {
+        // Ensure that the deduplication logic does NOT merge results on different line numbers
+        // even if they're adjacent. Each line number should be treated as a separate key.
+        let results = vec![
+            create_result_node("file.cs", 179, 179, 0, 179, 10), // Line 179
+            create_result_node("file.cs", 180, 180, 0, 180, 10), // Line 180
+            create_result_node("file.cs", 181, 181, 0, 181, 10), // Line 181
+        ];
+
+        let deduplicated = super::deduplicate_results(&results);
+
+        // Should keep all 3 results since they're on different lines
+        assert_eq!(
+            deduplicated.len(),
+            3,
+            "Adjacent line numbers should not be merged - each line is a separate key"
+        );
+
+        // Verify we have results for all three lines
+        assert!(deduplicated.iter().any(|r| r.line_number == 179));
+        assert!(deduplicated.iter().any(|r| r.line_number == 180));
+        assert!(deduplicated.iter().any(|r| r.line_number == 181));
     }
 }

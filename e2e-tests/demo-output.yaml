@@ -32,6 +32,7 @@
         lineNumber: 10
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          symbol: AuthConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
@@ -46,6 +47,7 @@
         lineNumber: 8
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
         message: |
@@ -60,6 +62,7 @@
         lineNumber: 3
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
         message: |
@@ -74,6 +77,7 @@
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+          symbol: BundleConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
         message: |
@@ -88,6 +92,7 @@
         lineNumber: 3
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
         message: |
@@ -102,6 +107,7 @@
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+          symbol: FilterConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
@@ -116,6 +122,7 @@
         lineNumber: 9
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          symbol: RouteConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
@@ -130,6 +137,7 @@
         lineNumber: 7
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
         message: |
@@ -144,6 +152,7 @@
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
         message: |
@@ -158,6 +167,7 @@
         lineNumber: 7
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+          symbol: WebApiConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
@@ -172,6 +182,7 @@
         lineNumber: 10
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
@@ -186,7 +197,11 @@
         lineNumber: 21
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: WebApiConfig
+          fqdn_method: Register
+          fqdn_namespace: NerdDinner
+          symbol: WebApiConfig.Register
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           ValidateAntiForgeryToken attribute exists in ASP.NET Core but works slightly differently.
@@ -200,7 +215,11 @@
         lineNumber: 22
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: FilterConfig
+          fqdn_method: RegisterGlobalFilters
+          fqdn_namespace: NerdDinner
+          symbol: FilterConfig.RegisterGlobalFilters
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           ValidateAntiForgeryToken attribute exists in ASP.NET Core but works slightly differently.
@@ -214,7 +233,11 @@
         lineNumber: 23
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: RouteConfig
+          fqdn_method: RegisterRoutes
+          fqdn_namespace: NerdDinner
+          symbol: RouteConfig.RegisterRoutes
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           ValidateAntiForgeryToken attribute exists in ASP.NET Core but works slightly differently.
@@ -228,7 +251,11 @@
         lineNumber: 24
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: BundleConfig
+          fqdn_method: RegisterBundles
+          fqdn_namespace: NerdDinner
+          symbol: BundleConfig.RegisterBundles
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           ValidateAntiForgeryToken attribute exists in ASP.NET Core but works slightly differently.
@@ -242,7 +269,11 @@
         lineNumber: 25
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: AuthConfig
+          fqdn_method: RegisterAuth
+          fqdn_namespace: NerdDinner
+          symbol: AuthConfig.RegisterAuth
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           ValidateAntiForgeryToken attribute exists in ASP.NET Core but works slightly differently.
@@ -256,6 +287,7 @@
         lineNumber: 15
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          symbol: MvcApplication
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
@@ -270,6 +302,7 @@
         lineNumber: 9
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          symbol: DbGeographyModelBinder
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
@@ -284,6 +317,7 @@
         lineNumber: 7
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
@@ -298,6 +332,7 @@
         lineNumber: 26
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          symbol: EFModelBinderProvider
           syntax_type: class_def
       links:
       - url: https://learn.microsoft.com/en-us/aspnet/core/security/anti-request-forgery
@@ -324,6 +359,7 @@
         lineNumber: 10
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          symbol: AuthConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
@@ -339,6 +375,7 @@
         lineNumber: 8
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
         message: |
@@ -354,6 +391,7 @@
         lineNumber: 3
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
         message: |
@@ -369,6 +407,7 @@
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+          symbol: BundleConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
         message: |
@@ -384,6 +423,7 @@
         lineNumber: 3
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
         message: |
@@ -399,6 +439,7 @@
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+          symbol: FilterConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
@@ -414,6 +455,7 @@
         lineNumber: 9
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          symbol: RouteConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
@@ -429,6 +471,7 @@
         lineNumber: 7
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
         message: |
@@ -444,6 +487,7 @@
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
         message: |
@@ -459,6 +503,7 @@
         lineNumber: 7
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+          symbol: WebApiConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
@@ -474,6 +519,7 @@
         lineNumber: 10
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
@@ -489,7 +535,11 @@
         lineNumber: 21
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: WebApiConfig
+          fqdn_method: Register
+          fqdn_namespace: NerdDinner
+          symbol: WebApiConfig.Register
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
@@ -504,7 +554,11 @@
         lineNumber: 22
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: FilterConfig
+          fqdn_method: RegisterGlobalFilters
+          fqdn_namespace: NerdDinner
+          symbol: FilterConfig.RegisterGlobalFilters
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
@@ -519,7 +573,11 @@
         lineNumber: 23
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: RouteConfig
+          fqdn_method: RegisterRoutes
+          fqdn_namespace: NerdDinner
+          symbol: RouteConfig.RegisterRoutes
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
@@ -534,7 +592,11 @@
         lineNumber: 24
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: BundleConfig
+          fqdn_method: RegisterBundles
+          fqdn_namespace: NerdDinner
+          symbol: BundleConfig.RegisterBundles
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
@@ -549,7 +611,11 @@
         lineNumber: 25
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: AuthConfig
+          fqdn_method: RegisterAuth
+          fqdn_namespace: NerdDinner
+          symbol: AuthConfig.RegisterAuth
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
@@ -564,6 +630,7 @@
         lineNumber: 15
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          symbol: MvcApplication
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
@@ -579,6 +646,7 @@
         lineNumber: 9
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          symbol: DbGeographyModelBinder
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
@@ -594,6 +662,7 @@
         lineNumber: 7
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
@@ -609,6 +678,7 @@
         lineNumber: 26
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          symbol: EFModelBinderProvider
           syntax_type: class_def
       links:
       - url: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/
@@ -637,6 +707,7 @@
         lineNumber: 3
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+          symbol: System.Data.Entity
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
         message: |
@@ -654,6 +725,7 @@
         lineNumber: 1
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+          symbol: System.Data.Entity
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
         message: |
@@ -671,7 +743,11 @@
         lineNumber: 27
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
-          syntax_type: unknown
+          fqdn_class: DbContext
+          fqdn_field: Database
+          fqdn_namespace: System.Data.Entity
+          symbol: Database.SetInitializer<UsersContext>
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
         message: |
           System.Data.Entity is not available in .NET Core. Entity Framework 6 must be migrated to Entity Framework Core.
@@ -688,6 +764,7 @@
         lineNumber: 4
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
+          symbol: System.Data.Entity
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/NerdDinnerContext.cs
         message: |
@@ -705,6 +782,7 @@
         lineNumber: 0
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/NerdDinnerContext.cs
+          symbol: System.Data.Entity
           syntax_type: import
       links:
       - url: https://learn.microsoft.com/en-us/ef/efcore-and-ef6/
@@ -733,6 +811,7 @@
         lineNumber: 2
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+          symbol: System.Data.Entity.Infrastructure
           syntax_type: import
       links:
       - url: https://learn.microsoft.com/en-us/ef/core/querying/related-data/lazy
@@ -764,6 +843,7 @@
         lineNumber: 10
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          symbol: AuthConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
@@ -784,6 +864,7 @@
         lineNumber: 8
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
         message: |
@@ -804,6 +885,7 @@
         lineNumber: 3
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
         message: |
@@ -824,6 +906,7 @@
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+          symbol: BundleConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
         message: |
@@ -844,6 +927,7 @@
         lineNumber: 3
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
         message: |
@@ -864,6 +948,7 @@
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+          symbol: FilterConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
@@ -884,6 +969,7 @@
         lineNumber: 9
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          symbol: RouteConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
@@ -904,6 +990,7 @@
         lineNumber: 7
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
         message: |
@@ -924,6 +1011,7 @@
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
         message: |
@@ -944,6 +1032,7 @@
         lineNumber: 7
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+          symbol: WebApiConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
@@ -964,6 +1053,7 @@
         lineNumber: 10
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
@@ -984,7 +1074,11 @@
         lineNumber: 21
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: WebApiConfig
+          fqdn_method: Register
+          fqdn_namespace: NerdDinner
+          symbol: WebApiConfig.Register
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           HttpRuntime class is not available in ASP.NET Core.
@@ -1004,7 +1098,11 @@
         lineNumber: 22
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: FilterConfig
+          fqdn_method: RegisterGlobalFilters
+          fqdn_namespace: NerdDinner
+          symbol: FilterConfig.RegisterGlobalFilters
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           HttpRuntime class is not available in ASP.NET Core.
@@ -1024,7 +1122,11 @@
         lineNumber: 23
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: RouteConfig
+          fqdn_method: RegisterRoutes
+          fqdn_namespace: NerdDinner
+          symbol: RouteConfig.RegisterRoutes
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           HttpRuntime class is not available in ASP.NET Core.
@@ -1044,7 +1146,11 @@
         lineNumber: 24
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: BundleConfig
+          fqdn_method: RegisterBundles
+          fqdn_namespace: NerdDinner
+          symbol: BundleConfig.RegisterBundles
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           HttpRuntime class is not available in ASP.NET Core.
@@ -1064,7 +1170,11 @@
         lineNumber: 25
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: AuthConfig
+          fqdn_method: RegisterAuth
+          fqdn_namespace: NerdDinner
+          symbol: AuthConfig.RegisterAuth
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           HttpRuntime class is not available in ASP.NET Core.
@@ -1084,6 +1194,7 @@
         lineNumber: 15
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          symbol: MvcApplication
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
@@ -1104,6 +1215,7 @@
         lineNumber: 9
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          symbol: DbGeographyModelBinder
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
@@ -1124,6 +1236,7 @@
         lineNumber: 7
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
@@ -1144,6 +1257,7 @@
         lineNumber: 26
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          symbol: EFModelBinderProvider
           syntax_type: class_def
       links:
       - url: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/app-state
@@ -1179,6 +1293,7 @@
         lineNumber: 10
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          symbol: AuthConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
@@ -1201,6 +1316,7 @@
         lineNumber: 8
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
         message: |
@@ -1223,6 +1339,7 @@
         lineNumber: 3
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
         message: |
@@ -1245,6 +1362,7 @@
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+          symbol: BundleConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
         message: |
@@ -1267,6 +1385,7 @@
         lineNumber: 3
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
         message: |
@@ -1289,6 +1408,7 @@
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+          symbol: FilterConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
@@ -1311,6 +1431,7 @@
         lineNumber: 9
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          symbol: RouteConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
@@ -1333,6 +1454,7 @@
         lineNumber: 7
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
         message: |
@@ -1355,6 +1477,7 @@
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
         message: |
@@ -1377,6 +1500,7 @@
         lineNumber: 7
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+          symbol: WebApiConfig
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
@@ -1399,6 +1523,7 @@
         lineNumber: 10
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
@@ -1421,7 +1546,11 @@
         lineNumber: 21
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: WebApiConfig
+          fqdn_method: Register
+          fqdn_namespace: NerdDinner
+          symbol: WebApiConfig.Register
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           MachineKey class is not available in ASP.NET Core.
@@ -1443,7 +1572,11 @@
         lineNumber: 22
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: FilterConfig
+          fqdn_method: RegisterGlobalFilters
+          fqdn_namespace: NerdDinner
+          symbol: FilterConfig.RegisterGlobalFilters
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           MachineKey class is not available in ASP.NET Core.
@@ -1465,7 +1598,11 @@
         lineNumber: 23
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: RouteConfig
+          fqdn_method: RegisterRoutes
+          fqdn_namespace: NerdDinner
+          symbol: RouteConfig.RegisterRoutes
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           MachineKey class is not available in ASP.NET Core.
@@ -1487,7 +1624,11 @@
         lineNumber: 24
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: BundleConfig
+          fqdn_method: RegisterBundles
+          fqdn_namespace: NerdDinner
+          symbol: BundleConfig.RegisterBundles
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           MachineKey class is not available in ASP.NET Core.
@@ -1509,7 +1650,11 @@
         lineNumber: 25
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: AuthConfig
+          fqdn_method: RegisterAuth
+          fqdn_namespace: NerdDinner
+          symbol: AuthConfig.RegisterAuth
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           MachineKey class is not available in ASP.NET Core.
@@ -1531,6 +1676,7 @@
         lineNumber: 15
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          symbol: MvcApplication
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
@@ -1553,6 +1699,7 @@
         lineNumber: 9
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          symbol: DbGeographyModelBinder
           syntax_type: class_def
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
@@ -1575,6 +1722,7 @@
         lineNumber: 7
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          symbol: NerdDinner
           syntax_type: namespace_declaration
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
@@ -1597,6 +1745,7 @@
         lineNumber: 26
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          symbol: EFModelBinderProvider
           syntax_type: class_def
       links:
       - url: https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/introduction
@@ -1628,6 +1777,7 @@
         lineNumber: 4
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          symbol: Microsoft.Web.WebPages.OAuth
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
@@ -1646,7 +1796,11 @@
         lineNumber: 21
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: RegisterMicrosoftClient
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.RegisterMicrosoftClient
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1664,7 +1818,11 @@
         lineNumber: 30
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: RegisterTwitterClient
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.RegisterTwitterClient
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1682,7 +1840,11 @@
         lineNumber: 39
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: RegisterFacebookClient
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.RegisterFacebookClient
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1700,7 +1862,11 @@
         lineNumber: 44
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: RegisterGoogleClient
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.RegisterGoogleClient
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1717,6 +1883,7 @@
         lineNumber: 8
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          symbol: Microsoft.Web.WebPages.OAuth
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
@@ -1735,7 +1902,11 @@
         lineNumber: 111
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: HasLocalAccount
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.HasLocalAccount
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1753,7 +1924,11 @@
         lineNumber: 112
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: GetAccountsFromUserName
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.GetAccountsFromUserName
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1771,7 +1946,11 @@
         lineNumber: 114
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: DeleteAccount
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.DeleteAccount
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1789,7 +1968,11 @@
         lineNumber: 134
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: HasLocalAccount
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.HasLocalAccount
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1807,7 +1990,11 @@
         lineNumber: 146
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: HasLocalAccount
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.HasLocalAccount
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1825,7 +2012,11 @@
         lineNumber: 219
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: VerifyAuthentication
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.VerifyAuthentication
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1843,7 +2034,11 @@
         lineNumber: 225
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: Login
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.Login
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1861,7 +2056,11 @@
         lineNumber: 233
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: CreateOrUpdateAccount
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.CreateOrUpdateAccount
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1879,7 +2078,11 @@
         lineNumber: 239
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: SerializeProviderUserId
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.SerializeProviderUserId
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1907,7 +2110,11 @@
         lineNumber: 240
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: GetOAuthClientData
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.GetOAuthClientData
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1925,7 +2132,11 @@
         lineNumber: 257
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: TryDeserializeProviderUserId
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.TryDeserializeProviderUserId
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1943,7 +2154,11 @@
         lineNumber: 275
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: CreateOrUpdateAccount
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.CreateOrUpdateAccount
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1961,7 +2176,11 @@
         lineNumber: 276
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: Login
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.Login
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1979,7 +2198,11 @@
         lineNumber: 287
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: GetOAuthClientData
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.GetOAuthClientData
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -1997,7 +2220,11 @@
         lineNumber: 306
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_field: RegisteredClientData
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.RegisteredClientData
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -2015,7 +2242,11 @@
         lineNumber: 312
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: GetAccountsFromUserName
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.GetAccountsFromUserName
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -2033,7 +2264,11 @@
         lineNumber: 316
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: GetOAuthClientData
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.GetOAuthClientData
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -2051,7 +2286,11 @@
         lineNumber: 326
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: HasLocalAccount
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.HasLocalAccount
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -2069,7 +2308,11 @@
         lineNumber: 363
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: RequestAuthentication
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.RequestAuthentication
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -2087,7 +2330,11 @@
         lineNumber: 102
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: OAuthWebSecurity
+          fqdn_method: GetUserName
+          fqdn_namespace: Microsoft.Web.WebPages.OAuth
+          symbol: OAuthWebSecurity.GetUserName
+          syntax_type: method_reference
       links:
       - url: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/
         title: External OAuth authentication providers
@@ -2117,7 +2364,11 @@
         lineNumber: 14
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
-          syntax_type: unknown
+          fqdn_class: RouteParameter
+          fqdn_field: Optional
+          fqdn_namespace: System.Web.Http
+          symbol: RouteParameter.Optional
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2131,7 +2382,11 @@
         lineNumber: 37
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Http
+          symbol: ModelState.IsValid
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2145,7 +2400,11 @@
         lineNumber: 43
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Http
+          symbol: ModelState.AddModelError
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2159,7 +2418,11 @@
         lineNumber: 76
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Http
+          symbol: ModelState.IsValid
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2173,7 +2436,11 @@
         lineNumber: 87
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Http
+          symbol: ModelState.AddModelError
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2187,7 +2454,11 @@
         lineNumber: 312
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2201,7 +2472,11 @@
         lineNumber: 326
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2215,7 +2490,11 @@
         lineNumber: 333
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: Url
+          fqdn_namespace: System.Web.Http
+          symbol: Url.IsLocalUrl
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2230,7 +2509,11 @@
         lineNumber: 111
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2245,7 +2528,11 @@
         lineNumber: 112
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2260,7 +2547,11 @@
         lineNumber: 134
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2275,7 +2566,11 @@
         lineNumber: 135
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: Url
+          fqdn_namespace: System.Web.Http
+          symbol: Url.Action
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2290,7 +2585,11 @@
         lineNumber: 146
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2305,7 +2604,11 @@
         lineNumber: 148
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: Url
+          fqdn_namespace: System.Web.Http
+          symbol: Url.Action
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2320,7 +2623,11 @@
         lineNumber: 151
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Http
+          symbol: ModelState.IsValid
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2345,7 +2652,11 @@
         lineNumber: 157
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2360,7 +2671,11 @@
         lineNumber: 170
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Http
+          symbol: ModelState.AddModelError
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2375,7 +2690,11 @@
         lineNumber: 184
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Http
+          symbol: ModelState.IsValid
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2390,7 +2709,11 @@
         lineNumber: 188
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2405,7 +2728,11 @@
         lineNumber: 193
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Http
+          symbol: ModelState.AddModelError
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2420,7 +2747,11 @@
         lineNumber: 210
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: Url
+          fqdn_namespace: System.Web.Http
+          symbol: Url.Action
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2435,7 +2766,11 @@
         lineNumber: 219
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: Url
+          fqdn_namespace: System.Web.Http
+          symbol: Url.Action
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2450,7 +2785,11 @@
         lineNumber: 230
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2465,7 +2804,11 @@
         lineNumber: 233
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2480,7 +2823,11 @@
         lineNumber: 257
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2495,7 +2842,11 @@
         lineNumber: 262
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Http
+          symbol: ModelState.IsValid
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2510,7 +2861,11 @@
         lineNumber: 282
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Http
+          symbol: ModelState.AddModelError
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2525,7 +2880,11 @@
         lineNumber: 106
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2540,7 +2899,11 @@
         lineNumber: 128
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2555,7 +2918,11 @@
         lineNumber: 143
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2570,7 +2937,11 @@
         lineNumber: 49
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2585,7 +2956,11 @@
         lineNumber: 61
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Http
+          symbol: ModelState.IsValid
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2600,7 +2975,11 @@
         lineNumber: 63
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2615,7 +2994,11 @@
         lineNumber: 66
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2630,7 +3013,11 @@
         lineNumber: 90
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2645,7 +3032,11 @@
         lineNumber: 103
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2660,7 +3051,11 @@
         lineNumber: 108
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Http
+          symbol: ModelState.IsValid
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2675,7 +3070,11 @@
         lineNumber: 35
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2690,7 +3089,11 @@
         lineNumber: 38
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
-          syntax_type: unknown
+          fqdn_class: ApiController
+          fqdn_field: User
+          fqdn_namespace: System.Web.Http
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
@@ -2705,7 +3108,11 @@
         lineNumber: 21
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: GlobalConfiguration
+          fqdn_field: Configuration
+          fqdn_namespace: System.Web.Http
+          symbol: GlobalConfiguration.Configuration
+          syntax_type: field_reference
       links:
       - url: https://learn.microsoft.com/en-us/aspnet/core/migration/webapi
         title: Migrate Web API to ASP.NET Core
@@ -2734,6 +3141,7 @@
         lineNumber: 9
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          symbol: WebMatrix.WebData
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
@@ -2752,7 +3160,11 @@
         lineNumber: 37
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: WebSecurity
+          fqdn_method: Login
+          fqdn_namespace: WebMatrix.WebData
+          symbol: WebSecurity.Login
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
@@ -2770,7 +3182,11 @@
         lineNumber: 54
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: WebSecurity
+          fqdn_method: Logout
+          fqdn_namespace: WebMatrix.WebData
+          symbol: WebSecurity.Logout
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
@@ -2798,7 +3214,11 @@
         lineNumber: 82
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: WebSecurity
+          fqdn_method: Login
+          fqdn_namespace: WebMatrix.WebData
+          symbol: WebSecurity.Login
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
@@ -2816,6 +3236,7 @@
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+          symbol: WebMatrix.WebData
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
         message: |
@@ -2834,7 +3255,11 @@
         lineNumber: 40
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
-          syntax_type: unknown
+          fqdn_class: WebSecurity
+          fqdn_method: InitializeDatabaseConnection
+          fqdn_namespace: WebMatrix.WebData
+          symbol: WebSecurity.InitializeDatabaseConnection
+          syntax_type: method_reference
       links:
       - url: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity
         title: Introduction to Identity on ASP.NET Core
@@ -2863,6 +3288,7 @@
         lineNumber: 1
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+          symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
@@ -2878,6 +3304,7 @@
         lineNumber: 4
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
@@ -2893,7 +3320,11 @@
         lineNumber: 25
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
-          syntax_type: unknown
+          fqdn_class: UrlParameter
+          fqdn_field: Optional
+          fqdn_namespace: System.Web.Mvc
+          symbol: UrlParameter.Optional
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -2907,6 +3338,7 @@
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
@@ -2921,7 +3353,11 @@
         lineNumber: 25
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: AjaxHelper
+          fqdn_field: ViewBag
+          fqdn_namespace: System.Web.Mvc
+          symbol: ViewBag.ReturnUrl
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -2935,7 +3371,11 @@
         lineNumber: 37
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Mvc
+          symbol: ModelState.IsValid
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -2949,7 +3389,11 @@
         lineNumber: 43
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Mvc
+          symbol: ModelState.AddModelError
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -2963,7 +3407,11 @@
         lineNumber: 76
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Mvc
+          symbol: ModelState.IsValid
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -2977,7 +3425,11 @@
         lineNumber: 87
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Mvc
+          symbol: ModelState.AddModelError
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -2991,7 +3443,11 @@
         lineNumber: 241
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: AjaxHelper
+          fqdn_field: ViewBag
+          fqdn_namespace: System.Web.Mvc
+          symbol: ViewBag.ReturnUrl
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3005,7 +3461,11 @@
         lineNumber: 257
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3019,7 +3479,11 @@
         lineNumber: 262
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Mvc
+          symbol: ModelState.IsValid
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3033,7 +3497,11 @@
         lineNumber: 282
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Mvc
+          symbol: ModelState.AddModelError
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3047,7 +3515,11 @@
         lineNumber: 287
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: AjaxHelper
+          fqdn_field: ViewBag
+          fqdn_namespace: System.Web.Mvc
+          symbol: ViewBag.ProviderDisplayName
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3061,7 +3533,11 @@
         lineNumber: 288
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: AjaxHelper
+          fqdn_field: ViewBag
+          fqdn_namespace: System.Web.Mvc
+          symbol: ViewBag.ReturnUrl
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3075,7 +3551,11 @@
         lineNumber: 305
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: AjaxHelper
+          fqdn_field: ViewBag
+          fqdn_namespace: System.Web.Mvc
+          symbol: ViewBag.ReturnUrl
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3089,7 +3569,11 @@
         lineNumber: 312
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3103,7 +3587,11 @@
         lineNumber: 326
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: AjaxHelper
+          fqdn_field: ViewBag
+          fqdn_namespace: System.Web.Mvc
+          symbol: ViewBag.ShowRemoveButton
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3117,7 +3605,11 @@
         lineNumber: 333
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: Url
+          fqdn_namespace: System.Web.Mvc
+          symbol: Url.IsLocalUrl
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3132,7 +3624,11 @@
         lineNumber: 111
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3147,7 +3643,11 @@
         lineNumber: 112
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3162,7 +3662,11 @@
         lineNumber: 129
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: AjaxHelper
+          fqdn_field: ViewBag
+          fqdn_namespace: System.Web.Mvc
+          symbol: ViewBag.StatusMessage
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3177,7 +3681,11 @@
         lineNumber: 134
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: AjaxHelper
+          fqdn_field: ViewBag
+          fqdn_namespace: System.Web.Mvc
+          symbol: ViewBag.HasLocalPassword
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3192,7 +3700,11 @@
         lineNumber: 135
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: AjaxHelper
+          fqdn_field: ViewBag
+          fqdn_namespace: System.Web.Mvc
+          symbol: ViewBag.ReturnUrl
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3207,7 +3719,11 @@
         lineNumber: 146
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3222,7 +3738,11 @@
         lineNumber: 147
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: AjaxHelper
+          fqdn_field: ViewBag
+          fqdn_namespace: System.Web.Mvc
+          symbol: ViewBag.HasLocalPassword
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3237,7 +3757,11 @@
         lineNumber: 148
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: AjaxHelper
+          fqdn_field: ViewBag
+          fqdn_namespace: System.Web.Mvc
+          symbol: ViewBag.ReturnUrl
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3252,7 +3776,11 @@
         lineNumber: 151
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Mvc
+          symbol: ModelState.IsValid
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3277,7 +3805,11 @@
         lineNumber: 157
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3292,7 +3824,11 @@
         lineNumber: 170
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Mvc
+          symbol: ModelState.AddModelError
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3307,7 +3843,11 @@
         lineNumber: 184
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Mvc
+          symbol: ModelState.IsValid
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3322,7 +3862,11 @@
         lineNumber: 188
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3337,7 +3881,11 @@
         lineNumber: 193
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Mvc
+          symbol: ModelState.AddModelError
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3352,7 +3900,11 @@
         lineNumber: 210
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: Url
+          fqdn_namespace: System.Web.Mvc
+          symbol: Url.Action
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3367,7 +3919,11 @@
         lineNumber: 219
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: Url
+          fqdn_namespace: System.Web.Mvc
+          symbol: Url.Action
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3382,7 +3938,11 @@
         lineNumber: 230
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3397,7 +3957,11 @@
         lineNumber: 233
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3422,7 +3986,11 @@
         lineNumber: 240
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: AjaxHelper
+          fqdn_field: ViewBag
+          fqdn_namespace: System.Web.Mvc
+          symbol: ViewBag.ProviderDisplayName
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3437,7 +4005,11 @@
         lineNumber: 106
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3452,6 +4024,7 @@
         lineNumber: 6
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+          symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
@@ -3467,7 +4040,11 @@
         lineNumber: 128
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3482,7 +4059,11 @@
         lineNumber: 143
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3497,7 +4078,11 @@
         lineNumber: 49
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3512,7 +4097,11 @@
         lineNumber: 61
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Mvc
+          symbol: ModelState.IsValid
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3527,7 +4116,11 @@
         lineNumber: 63
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3542,7 +4135,11 @@
         lineNumber: 66
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3557,7 +4154,11 @@
         lineNumber: 90
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3572,7 +4173,11 @@
         lineNumber: 103
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3587,7 +4192,11 @@
         lineNumber: 108
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: ModelState
+          fqdn_namespace: System.Web.Mvc
+          symbol: ModelState.IsValid
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3602,6 +4211,7 @@
         lineNumber: 4
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
+          symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
         message: |
@@ -3617,7 +4227,11 @@
         lineNumber: 12
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
-          syntax_type: unknown
+          fqdn_class: AjaxHelper
+          fqdn_field: ViewBag
+          fqdn_namespace: System.Web.Mvc
+          symbol: ViewBag.Message
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3632,6 +4246,7 @@
         lineNumber: 3
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
+          symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
         message: |
@@ -3647,7 +4262,11 @@
         lineNumber: 35
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3662,7 +4281,11 @@
         lineNumber: 38
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
-          syntax_type: unknown
+          fqdn_class: Controller
+          fqdn_field: User
+          fqdn_namespace: System.Web.Mvc
+          symbol: User.Identity
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3677,6 +4300,7 @@
         lineNumber: 4
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+          symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
@@ -3692,6 +4316,7 @@
         lineNumber: 6
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
@@ -3707,7 +4332,11 @@
         lineNumber: 22
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: GlobalFilters
+          fqdn_field: Filters
+          fqdn_namespace: System.Web.Mvc
+          symbol: GlobalFilters.Filters
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3722,7 +4351,11 @@
         lineNumber: 27
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: ModelBinderProviders
+          fqdn_field: BinderProviders
+          fqdn_namespace: System.Web.Mvc
+          symbol: ModelBinderProviders.BinderProviders
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3737,7 +4370,11 @@
         lineNumber: 19
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          syntax_type: unknown
+          fqdn_class: AreaRegistration
+          fqdn_method: RegisterAllAreas
+          fqdn_namespace: System.Web.Mvc
+          symbol: AreaRegistration.RegisterAllAreas
+          syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3752,6 +4389,7 @@
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
         message: |
@@ -3767,7 +4405,11 @@
         lineNumber: 41
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
-          syntax_type: unknown
+          fqdn_class: CachedDataAnnotationsMetadataAttributes
+          fqdn_field: DataType
+          fqdn_namespace: System.Web.Mvc
+          symbol: DataType.Password
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3782,7 +4424,11 @@
         lineNumber: 47
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
-          syntax_type: unknown
+          fqdn_class: CachedDataAnnotationsMetadataAttributes
+          fqdn_field: DataType
+          fqdn_namespace: System.Web.Mvc
+          symbol: DataType.Password
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3797,7 +4443,11 @@
         lineNumber: 51
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
-          syntax_type: unknown
+          fqdn_class: CachedDataAnnotationsMetadataAttributes
+          fqdn_field: DataType
+          fqdn_namespace: System.Web.Mvc
+          symbol: DataType.Password
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3812,7 +4462,11 @@
         lineNumber: 64
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
-          syntax_type: unknown
+          fqdn_class: CachedDataAnnotationsMetadataAttributes
+          fqdn_field: DataType
+          fqdn_namespace: System.Web.Mvc
+          symbol: DataType.Password
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3827,7 +4481,11 @@
         lineNumber: 80
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
-          syntax_type: unknown
+          fqdn_class: CachedDataAnnotationsMetadataAttributes
+          fqdn_field: DataType
+          fqdn_namespace: System.Web.Mvc
+          symbol: DataType.Password
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3842,7 +4500,11 @@
         lineNumber: 84
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
-          syntax_type: unknown
+          fqdn_class: CachedDataAnnotationsMetadataAttributes
+          fqdn_field: DataType
+          fqdn_namespace: System.Web.Mvc
+          symbol: DataType.Password
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3857,6 +4519,7 @@
         lineNumber: 7
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
+          symbol: System.Web.Mvc
           syntax_type: import
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
         message: |
@@ -3872,7 +4535,11 @@
         lineNumber: 26
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
-          syntax_type: unknown
+          fqdn_class: CachedDataAnnotationsMetadataAttributes
+          fqdn_field: DataType
+          fqdn_namespace: System.Web.Mvc
+          symbol: DataType.MultilineText
+          syntax_type: field_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Services/GeolocationService.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -3887,7 +4554,11 @@
         lineNumber: 22
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Services/GeolocationService.cs
-          syntax_type: unknown
+          fqdn_class: DefaultViewLocationCache
+          fqdn_field: TimeSpan
+          fqdn_namespace: System.Web.Mvc
+          symbol: TimeSpan.FromDays
+          syntax_type: field_reference
       links:
       - url: https://learn.microsoft.com/en-us/aspnet/core/migration/proper-to-2x
         title: Migrate from ASP.NET to ASP.NET Core
