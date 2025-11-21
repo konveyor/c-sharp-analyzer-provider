@@ -1,1605 +1,1231 @@
-    [
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 25,
-            "character": 76
-          },
-          "endPosition": {
-            "line": 25,
-            "character": 97
-          }
-        },
-        "LineNumber": "25",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
-          "fqdn_class": "UrlParameter",
-          "fqdn_field": "Optional",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "UrlParameter.Optional",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 14,
-            "character": 37
-          },
-          "endPosition": {
-            "line": 14,
-            "character": 60
-          }
-        },
-        "LineNumber": "14",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
-          "fqdn_class": "RouteParameter",
-          "fqdn_field": "Optional",
-          "fqdn_namespace": "System.Web.Http",
-          "symbol": "RouteParameter.Optional",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 106,
-            "character": 32
-          },
-          "endPosition": {
-            "line": 106,
-            "character": 45
-          }
-        },
-        "LineNumber": "106",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 111,
-            "character": 98
-          },
-          "endPosition": {
-            "line": 111,
-            "character": 111
-          }
-        },
-        "LineNumber": "111",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 112,
-            "character": 84
-          },
-          "endPosition": {
-            "line": 112,
-            "character": 97
-          }
-        },
-        "LineNumber": "112",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 129,
-            "character": 12
-          },
-          "endPosition": {
-            "line": 129,
-            "character": 33
-          }
-        },
-        "LineNumber": "129",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "AjaxHelper",
-          "fqdn_field": "ViewBag",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ViewBag.StatusMessage",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 134,
-            "character": 12
-          },
-          "endPosition": {
-            "line": 134,
-            "character": 36
-          }
-        },
-        "LineNumber": "134",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "AjaxHelper",
-          "fqdn_field": "ViewBag",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ViewBag.HasLocalPassword",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 135,
-            "character": 12
-          },
-          "endPosition": {
-            "line": 135,
-            "character": 29
-          }
-        },
-        "LineNumber": "135",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "AjaxHelper",
-          "fqdn_field": "ViewBag",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ViewBag.ReturnUrl",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 146,
-            "character": 90
-          },
-          "endPosition": {
-            "line": 146,
-            "character": 103
-          }
-        },
-        "LineNumber": "146",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 147,
-            "character": 12
-          },
-          "endPosition": {
-            "line": 147,
-            "character": 36
-          }
-        },
-        "LineNumber": "147",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "AjaxHelper",
-          "fqdn_field": "ViewBag",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ViewBag.HasLocalPassword",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 148,
-            "character": 12
-          },
-          "endPosition": {
-            "line": 148,
-            "character": 29
-          }
-        },
-        "LineNumber": "148",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "AjaxHelper",
-          "fqdn_field": "ViewBag",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ViewBag.ReturnUrl",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 151,
-            "character": 20
-          },
-          "endPosition": {
-            "line": 151,
-            "character": 38
-          }
-        },
-        "LineNumber": "151",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "ModelState",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ModelState.IsValid",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 157,
-            "character": 77
-          },
-          "endPosition": {
-            "line": 157,
-            "character": 90
-          }
-        },
-        "LineNumber": "157",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 170,
-            "character": 24
-          },
-          "endPosition": {
-            "line": 170,
-            "character": 48
-          }
-        },
-        "LineNumber": "170",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "ModelState",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ModelState.AddModelError",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 181,
-            "character": 20
-          },
-          "endPosition": {
-            "line": 181,
-            "character": 32
-          }
-        },
-        "LineNumber": "181",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "ModelState",
-          "fqdn_field": "Errors",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "state.Errors",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 184,
-            "character": 20
-          },
-          "endPosition": {
-            "line": 184,
-            "character": 38
-          }
-        },
-        "LineNumber": "184",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "ModelState",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ModelState.IsValid",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 188,
-            "character": 50
-          },
-          "endPosition": {
-            "line": 188,
-            "character": 63
-          }
-        },
-        "LineNumber": "188",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 193,
-            "character": 24
-          },
-          "endPosition": {
-            "line": 193,
-            "character": 48
-          }
-        },
-        "LineNumber": "193",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "ModelState",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ModelState.AddModelError",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 210,
-            "character": 53
-          },
-          "endPosition": {
-            "line": 210,
-            "character": 63
-          }
-        },
-        "LineNumber": "210",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "Url",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "Url.Action",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 219,
-            "character": 80
-          },
-          "endPosition": {
-            "line": 219,
-            "character": 90
-          }
-        },
-        "LineNumber": "219",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "Url",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "Url.Action",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 230,
-            "character": 16
-          },
-          "endPosition": {
-            "line": 230,
-            "character": 29
-          }
-        },
-        "LineNumber": "230",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 233,
-            "character": 95
-          },
-          "endPosition": {
-            "line": 233,
-            "character": 108
-          }
-        },
-        "LineNumber": "233",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 240,
-            "character": 16
-          },
-          "endPosition": {
-            "line": 240,
-            "character": 43
-          }
-        },
-        "LineNumber": "240",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "AjaxHelper",
-          "fqdn_field": "ViewBag",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ViewBag.ProviderDisplayName",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 241,
-            "character": 16
-          },
-          "endPosition": {
-            "line": 241,
-            "character": 33
-          }
-        },
-        "LineNumber": "241",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "AjaxHelper",
-          "fqdn_field": "ViewBag",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ViewBag.ReturnUrl",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 25,
-            "character": 12
-          },
-          "endPosition": {
-            "line": 25,
-            "character": 29
-          }
-        },
-        "LineNumber": "25",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "AjaxHelper",
-          "fqdn_field": "ViewBag",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ViewBag.ReturnUrl",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 257,
-            "character": 16
-          },
-          "endPosition": {
-            "line": 257,
-            "character": 29
-          }
-        },
-        "LineNumber": "257",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 262,
-            "character": 16
-          },
-          "endPosition": {
-            "line": 262,
-            "character": 34
-          }
-        },
-        "LineNumber": "262",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "ModelState",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ModelState.IsValid",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 282,
-            "character": 24
-          },
-          "endPosition": {
-            "line": 282,
-            "character": 48
-          }
-        },
-        "LineNumber": "282",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "ModelState",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ModelState.AddModelError",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 287,
-            "character": 12
-          },
-          "endPosition": {
-            "line": 287,
-            "character": 39
-          }
-        },
-        "LineNumber": "287",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "AjaxHelper",
-          "fqdn_field": "ViewBag",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ViewBag.ProviderDisplayName",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 288,
-            "character": 12
-          },
-          "endPosition": {
-            "line": 288,
-            "character": 29
-          }
-        },
-        "LineNumber": "288",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "AjaxHelper",
-          "fqdn_field": "ViewBag",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ViewBag.ReturnUrl",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 305,
-            "character": 12
-          },
-          "endPosition": {
-            "line": 305,
-            "character": 29
-          }
-        },
-        "LineNumber": "305",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "AjaxHelper",
-          "fqdn_field": "ViewBag",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ViewBag.ReturnUrl",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 312,
-            "character": 90
-          },
-          "endPosition": {
-            "line": 312,
-            "character": 103
-          }
-        },
-        "LineNumber": "312",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 326,
-            "character": 12
-          },
-          "endPosition": {
-            "line": 326,
-            "character": 36
-          }
-        },
-        "LineNumber": "326",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "AjaxHelper",
-          "fqdn_field": "ViewBag",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ViewBag.ShowRemoveButton",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 333,
-            "character": 16
-          },
-          "endPosition": {
-            "line": 333,
-            "character": 30
-          }
-        },
-        "LineNumber": "333",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "Url",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "Url.IsLocalUrl",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 37,
-            "character": 16
-          },
-          "endPosition": {
-            "line": 37,
-            "character": 34
-          }
-        },
-        "LineNumber": "37",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "ModelState",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ModelState.IsValid",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 43,
-            "character": 12
-          },
-          "endPosition": {
-            "line": 43,
-            "character": 36
-          }
-        },
-        "LineNumber": "43",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "ModelState",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ModelState.AddModelError",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 76,
-            "character": 16
-          },
-          "endPosition": {
-            "line": 76,
-            "character": 34
-          }
-        },
-        "LineNumber": "76",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "ModelState",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ModelState.IsValid",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 87,
-            "character": 20
-          },
-          "endPosition": {
-            "line": 87,
-            "character": 44
-          }
-        },
-        "LineNumber": "87",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "ModelState",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ModelState.AddModelError",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 103,
-            "character": 35
-          },
-          "endPosition": {
-            "line": 103,
-            "character": 48
-          }
-        },
-        "LineNumber": "103",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 108,
-            "character": 16
-          },
-          "endPosition": {
-            "line": 108,
-            "character": 34
-          }
-        },
-        "LineNumber": "108",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "ModelState",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ModelState.IsValid",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 128,
-            "character": 35
-          },
-          "endPosition": {
-            "line": 128,
-            "character": 48
-          }
-        },
-        "LineNumber": "128",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 143,
-            "character": 35
-          },
-          "endPosition": {
-            "line": 143,
-            "character": 48
-          }
-        },
-        "LineNumber": "143",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 163,
-            "character": 50
-          },
-          "endPosition": {
-            "line": 163,
-            "character": 62
-          }
-        },
-        "LineNumber": "163",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-          "fqdn_class": "Validator",
-          "fqdn_method": "DateTime",
-          "fqdn_namespace": "System.Web.WebPages",
-          "symbol": "DateTime.Now",
-          "syntax_type": "method_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 172,
-            "character": 25
-          },
-          "endPosition": {
-            "line": 172,
-            "character": 37
-          }
-        },
-        "LineNumber": "172",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-          "fqdn_class": "Validator",
-          "fqdn_method": "DateTime",
-          "fqdn_namespace": "System.Web.WebPages",
-          "symbol": "DateTime.Now",
-          "syntax_type": "method_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 23,
-            "character": 63
-          },
-          "endPosition": {
-            "line": 23,
-            "character": 75
-          }
-        },
-        "LineNumber": "23",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-          "fqdn_class": "Validator",
-          "fqdn_method": "DateTime",
-          "fqdn_namespace": "System.Web.WebPages",
-          "symbol": "DateTime.Now",
-          "syntax_type": "method_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 48,
-            "character": 28
-          },
-          "endPosition": {
-            "line": 48,
-            "character": 40
-          }
-        },
-        "LineNumber": "48",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-          "fqdn_class": "Validator",
-          "fqdn_method": "DateTime",
-          "fqdn_namespace": "System.Web.WebPages",
-          "symbol": "DateTime.Now",
-          "syntax_type": "method_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 49,
-            "character": 27
-          },
-          "endPosition": {
-            "line": 49,
-            "character": 40
-          }
-        },
-        "LineNumber": "49",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 61,
-            "character": 16
-          },
-          "endPosition": {
-            "line": 61,
-            "character": 34
-          }
-        },
-        "LineNumber": "61",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "ModelState",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ModelState.IsValid",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 63,
-            "character": 34
-          },
-          "endPosition": {
-            "line": 63,
-            "character": 47
-          }
-        },
-        "LineNumber": "63",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 66,
-            "character": 36
-          },
-          "endPosition": {
-            "line": 66,
-            "character": 49
-          }
-        },
-        "LineNumber": "66",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 90,
-            "character": 35
-          },
-          "endPosition": {
-            "line": 90,
-            "character": 48
-          }
-        },
-        "LineNumber": "90",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 12,
-            "character": 12
-          },
-          "endPosition": {
-            "line": 12,
-            "character": 27
-          }
-        },
-        "LineNumber": "12",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
-          "fqdn_class": "AjaxHelper",
-          "fqdn_field": "ViewBag",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ViewBag.Message",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 35,
-            "character": 41
-          },
-          "endPosition": {
-            "line": 35,
-            "character": 54
-          }
-        },
-        "LineNumber": "35",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 38,
-            "character": 36
-          },
-          "endPosition": {
-            "line": 38,
-            "character": 49
-          }
-        },
-        "LineNumber": "38",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
-          "fqdn_class": "Controller",
-          "fqdn_field": "User",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "User.Identity",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 41,
-            "character": 16
-          },
-          "endPosition": {
-            "line": 41,
-            "character": 36
-          }
-        },
-        "LineNumber": "41",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
-          "fqdn_class": "CSharpKeyword",
-          "fqdn_field": "String",
-          "fqdn_namespace": "System.Web.Razor.Tokenizer.Symbols",
-          "symbol": "String.IsNullOrEmpty",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 56,
-            "character": 63
-          },
-          "endPosition": {
-            "line": 56,
-            "character": 75
-          }
-        },
-        "LineNumber": "56",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
-          "fqdn_class": "Validator",
-          "fqdn_method": "DateTime",
-          "fqdn_namespace": "System.Web.WebPages",
-          "symbol": "DateTime.Now",
-          "syntax_type": "method_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 19,
-            "character": 12
-          },
-          "endPosition": {
-            "line": 19,
-            "character": 45
-          }
-        },
-        "LineNumber": "19",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
-          "fqdn_class": "AreaRegistration",
-          "fqdn_method": "RegisterAllAreas",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "AreaRegistration.RegisterAllAreas",
-          "syntax_type": "method_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 21,
-            "character": 34
-          },
-          "endPosition": {
-            "line": 21,
-            "character": 67
-          }
-        },
-        "LineNumber": "21",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
-          "fqdn_class": "GlobalConfiguration",
-          "fqdn_field": "Configuration",
-          "fqdn_namespace": "System.Web.Http",
-          "symbol": "GlobalConfiguration.Configuration",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 22,
-            "character": 47
-          },
-          "endPosition": {
-            "line": 22,
-            "character": 68
-          }
-        },
-        "LineNumber": "22",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
-          "fqdn_class": "GlobalFilters",
-          "fqdn_field": "Filters",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "GlobalFilters.Filters",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 27,
-            "character": 12
-          },
-          "endPosition": {
-            "line": 27,
-            "character": 48
-          }
-        },
-        "LineNumber": "27",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
-          "fqdn_class": "ModelBinderProviders",
-          "fqdn_field": "BinderProviders",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "ModelBinderProviders.BinderProviders",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Helpers/StringExtensions.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 27,
-            "character": 20
-          },
-          "endPosition": {
-            "line": 27,
-            "character": 35
-          }
-        },
-        "LineNumber": "27",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Helpers/StringExtensions.cs",
-          "fqdn_class": "CSharpKeyword",
-          "fqdn_field": "Double",
-          "fqdn_namespace": "System.Web.Razor.Tokenizer.Symbols",
-          "symbol": "Double.TryParse",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Helpers/StringExtensions.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 4,
-            "character": 4
-          },
-          "endPosition": {
-            "line": 31,
-            "character": 5
-          }
-        },
-        "LineNumber": "4",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Helpers/StringExtensions.cs",
-          "symbol": "StringExtensions",
-          "syntax_type": "class_def"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 41,
-            "character": 18
-          },
-          "endPosition": {
-            "line": 41,
-            "character": 35
-          }
-        },
-        "LineNumber": "41",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
-          "fqdn_class": "CachedDataAnnotationsMetadataAttributes",
-          "fqdn_field": "DataType",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "DataType.Password",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 47,
-            "character": 18
-          },
-          "endPosition": {
-            "line": 47,
-            "character": 35
-          }
-        },
-        "LineNumber": "47",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
-          "fqdn_class": "CachedDataAnnotationsMetadataAttributes",
-          "fqdn_field": "DataType",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "DataType.Password",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 51,
-            "character": 18
-          },
-          "endPosition": {
-            "line": 51,
-            "character": 35
-          }
-        },
-        "LineNumber": "51",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
-          "fqdn_class": "CachedDataAnnotationsMetadataAttributes",
-          "fqdn_field": "DataType",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "DataType.Password",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 64,
-            "character": 18
-          },
-          "endPosition": {
-            "line": 64,
-            "character": 35
-          }
-        },
-        "LineNumber": "64",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
-          "fqdn_class": "CachedDataAnnotationsMetadataAttributes",
-          "fqdn_field": "DataType",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "DataType.Password",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 80,
-            "character": 18
-          },
-          "endPosition": {
-            "line": 80,
-            "character": 35
-          }
-        },
-        "LineNumber": "80",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
-          "fqdn_class": "CachedDataAnnotationsMetadataAttributes",
-          "fqdn_field": "DataType",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "DataType.Password",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 84,
-            "character": 18
-          },
-          "endPosition": {
-            "line": 84,
-            "character": 35
-          }
-        },
-        "LineNumber": "84",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
-          "fqdn_class": "CachedDataAnnotationsMetadataAttributes",
-          "fqdn_field": "DataType",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "DataType.Password",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 26,
-            "character": 18
-          },
-          "endPosition": {
-            "line": 26,
-            "character": 40
-          }
-        },
-        "LineNumber": "26",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
-          "fqdn_class": "CachedDataAnnotationsMetadataAttributes",
-          "fqdn_field": "DataType",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "DataType.MultilineText",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 53,
-            "character": 19
-          },
-          "endPosition": {
-            "line": 53,
-            "character": 32
-          }
-        },
-        "LineNumber": "53",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
-          "fqdn_class": "CSharpKeyword",
-          "fqdn_field": "String",
-          "fqdn_namespace": "System.Web.Razor.Tokenizer.Symbols",
-          "symbol": "String.Equals",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Services/GeolocationService.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 15,
-            "character": 18
-          },
-          "endPosition": {
-            "line": 15,
-            "character": 31
-          }
-        },
-        "LineNumber": "15",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Services/GeolocationService.cs",
-          "fqdn_class": "CSharpKeyword",
-          "fqdn_field": "String",
-          "fqdn_namespace": "System.Web.Razor.Tokenizer.Symbols",
-          "symbol": "String.Format",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Services/GeolocationService.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 22,
-            "character": 64
-          },
-          "endPosition": {
-            "line": 22,
-            "character": 81
-          }
-        },
-        "LineNumber": "22",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Services/GeolocationService.cs",
-          "fqdn_class": "DefaultViewLocationCache",
-          "fqdn_field": "TimeSpan",
-          "fqdn_namespace": "System.Web.Mvc",
-          "symbol": "TimeSpan.FromDays",
-          "syntax_type": "field_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Services/GeolocationService.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 50,
-            "character": 18
-          },
-          "endPosition": {
-            "line": 50,
-            "character": 31
-          }
-        },
-        "LineNumber": "50",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Services/GeolocationService.cs",
-          "fqdn_class": "CSharpKeyword",
-          "fqdn_field": "String",
-          "fqdn_namespace": "System.Web.Razor.Tokenizer.Symbols",
-          "symbol": "String.Format",
-          "syntax_type": "field_reference"
-        }
+[
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 25,
+        "character": 76
+      },
+      "endPosition": {
+        "line": 25,
+        "character": 97
       }
-    ]
+    },
+    "LineNumber": "25",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
+      "fqdn_class": "UrlParameter",
+      "fqdn_field": "Optional",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "UrlParameter.Optional",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 14,
+        "character": 37
+      },
+      "endPosition": {
+        "line": 14,
+        "character": 60
+      }
+    },
+    "LineNumber": "14",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
+      "fqdn_class": "RouteParameter",
+      "fqdn_field": "Optional",
+      "fqdn_namespace": "System.Web.Http",
+      "symbol": "RouteParameter.Optional",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 106,
+        "character": 32
+      },
+      "endPosition": {
+        "line": 106,
+        "character": 45
+      }
+    },
+    "LineNumber": "106",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 111,
+        "character": 98
+      },
+      "endPosition": {
+        "line": 111,
+        "character": 111
+      }
+    },
+    "LineNumber": "111",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 112,
+        "character": 84
+      },
+      "endPosition": {
+        "line": 112,
+        "character": 97
+      }
+    },
+    "LineNumber": "112",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 129,
+        "character": 12
+      },
+      "endPosition": {
+        "line": 129,
+        "character": 33
+      }
+    },
+    "LineNumber": "129",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "AjaxHelper",
+      "fqdn_field": "ViewBag",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ViewBag.StatusMessage",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 134,
+        "character": 12
+      },
+      "endPosition": {
+        "line": 134,
+        "character": 36
+      }
+    },
+    "LineNumber": "134",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "AjaxHelper",
+      "fqdn_field": "ViewBag",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ViewBag.HasLocalPassword",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 135,
+        "character": 12
+      },
+      "endPosition": {
+        "line": 135,
+        "character": 29
+      }
+    },
+    "LineNumber": "135",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "AjaxHelper",
+      "fqdn_field": "ViewBag",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ViewBag.ReturnUrl",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 146,
+        "character": 90
+      },
+      "endPosition": {
+        "line": 146,
+        "character": 103
+      }
+    },
+    "LineNumber": "146",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 147,
+        "character": 12
+      },
+      "endPosition": {
+        "line": 147,
+        "character": 36
+      }
+    },
+    "LineNumber": "147",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "AjaxHelper",
+      "fqdn_field": "ViewBag",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ViewBag.HasLocalPassword",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 148,
+        "character": 12
+      },
+      "endPosition": {
+        "line": 148,
+        "character": 29
+      }
+    },
+    "LineNumber": "148",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "AjaxHelper",
+      "fqdn_field": "ViewBag",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ViewBag.ReturnUrl",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 151,
+        "character": 20
+      },
+      "endPosition": {
+        "line": 151,
+        "character": 38
+      }
+    },
+    "LineNumber": "151",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "ModelState",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ModelState.IsValid",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 157,
+        "character": 77
+      },
+      "endPosition": {
+        "line": 157,
+        "character": 90
+      }
+    },
+    "LineNumber": "157",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 170,
+        "character": 24
+      },
+      "endPosition": {
+        "line": 170,
+        "character": 48
+      }
+    },
+    "LineNumber": "170",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "ModelState",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ModelState.AddModelError",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 181,
+        "character": 20
+      },
+      "endPosition": {
+        "line": 181,
+        "character": 32
+      }
+    },
+    "LineNumber": "181",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "ModelState",
+      "fqdn_field": "Errors",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "state.Errors",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 184,
+        "character": 20
+      },
+      "endPosition": {
+        "line": 184,
+        "character": 38
+      }
+    },
+    "LineNumber": "184",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "ModelState",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ModelState.IsValid",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 188,
+        "character": 50
+      },
+      "endPosition": {
+        "line": 188,
+        "character": 63
+      }
+    },
+    "LineNumber": "188",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 193,
+        "character": 24
+      },
+      "endPosition": {
+        "line": 193,
+        "character": 48
+      }
+    },
+    "LineNumber": "193",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "ModelState",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ModelState.AddModelError",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 210,
+        "character": 53
+      },
+      "endPosition": {
+        "line": 210,
+        "character": 63
+      }
+    },
+    "LineNumber": "210",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "Url",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "Url.Action",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 219,
+        "character": 80
+      },
+      "endPosition": {
+        "line": 219,
+        "character": 90
+      }
+    },
+    "LineNumber": "219",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "Url",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "Url.Action",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 230,
+        "character": 16
+      },
+      "endPosition": {
+        "line": 230,
+        "character": 29
+      }
+    },
+    "LineNumber": "230",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 233,
+        "character": 95
+      },
+      "endPosition": {
+        "line": 233,
+        "character": 108
+      }
+    },
+    "LineNumber": "233",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 240,
+        "character": 16
+      },
+      "endPosition": {
+        "line": 240,
+        "character": 43
+      }
+    },
+    "LineNumber": "240",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "AjaxHelper",
+      "fqdn_field": "ViewBag",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ViewBag.ProviderDisplayName",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 241,
+        "character": 16
+      },
+      "endPosition": {
+        "line": 241,
+        "character": 33
+      }
+    },
+    "LineNumber": "241",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "AjaxHelper",
+      "fqdn_field": "ViewBag",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ViewBag.ReturnUrl",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 25,
+        "character": 12
+      },
+      "endPosition": {
+        "line": 25,
+        "character": 29
+      }
+    },
+    "LineNumber": "25",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "AjaxHelper",
+      "fqdn_field": "ViewBag",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ViewBag.ReturnUrl",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 257,
+        "character": 16
+      },
+      "endPosition": {
+        "line": 257,
+        "character": 29
+      }
+    },
+    "LineNumber": "257",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 262,
+        "character": 16
+      },
+      "endPosition": {
+        "line": 262,
+        "character": 34
+      }
+    },
+    "LineNumber": "262",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "ModelState",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ModelState.IsValid",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 282,
+        "character": 24
+      },
+      "endPosition": {
+        "line": 282,
+        "character": 48
+      }
+    },
+    "LineNumber": "282",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "ModelState",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ModelState.AddModelError",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 287,
+        "character": 12
+      },
+      "endPosition": {
+        "line": 287,
+        "character": 39
+      }
+    },
+    "LineNumber": "287",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "AjaxHelper",
+      "fqdn_field": "ViewBag",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ViewBag.ProviderDisplayName",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 288,
+        "character": 12
+      },
+      "endPosition": {
+        "line": 288,
+        "character": 29
+      }
+    },
+    "LineNumber": "288",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "AjaxHelper",
+      "fqdn_field": "ViewBag",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ViewBag.ReturnUrl",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 305,
+        "character": 12
+      },
+      "endPosition": {
+        "line": 305,
+        "character": 29
+      }
+    },
+    "LineNumber": "305",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "AjaxHelper",
+      "fqdn_field": "ViewBag",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ViewBag.ReturnUrl",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 312,
+        "character": 90
+      },
+      "endPosition": {
+        "line": 312,
+        "character": 103
+      }
+    },
+    "LineNumber": "312",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 326,
+        "character": 12
+      },
+      "endPosition": {
+        "line": 326,
+        "character": 36
+      }
+    },
+    "LineNumber": "326",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "AjaxHelper",
+      "fqdn_field": "ViewBag",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ViewBag.ShowRemoveButton",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 333,
+        "character": 16
+      },
+      "endPosition": {
+        "line": 333,
+        "character": 30
+      }
+    },
+    "LineNumber": "333",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "Url",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "Url.IsLocalUrl",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 37,
+        "character": 16
+      },
+      "endPosition": {
+        "line": 37,
+        "character": 34
+      }
+    },
+    "LineNumber": "37",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "ModelState",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ModelState.IsValid",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 43,
+        "character": 12
+      },
+      "endPosition": {
+        "line": 43,
+        "character": 36
+      }
+    },
+    "LineNumber": "43",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "ModelState",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ModelState.AddModelError",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 76,
+        "character": 16
+      },
+      "endPosition": {
+        "line": 76,
+        "character": 34
+      }
+    },
+    "LineNumber": "76",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "ModelState",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ModelState.IsValid",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 87,
+        "character": 20
+      },
+      "endPosition": {
+        "line": 87,
+        "character": 44
+      }
+    },
+    "LineNumber": "87",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "ModelState",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ModelState.AddModelError",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 103,
+        "character": 35
+      },
+      "endPosition": {
+        "line": 103,
+        "character": 48
+      }
+    },
+    "LineNumber": "103",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 108,
+        "character": 16
+      },
+      "endPosition": {
+        "line": 108,
+        "character": 34
+      }
+    },
+    "LineNumber": "108",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "ModelState",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ModelState.IsValid",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 128,
+        "character": 35
+      },
+      "endPosition": {
+        "line": 128,
+        "character": 48
+      }
+    },
+    "LineNumber": "128",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 143,
+        "character": 35
+      },
+      "endPosition": {
+        "line": 143,
+        "character": 48
+      }
+    },
+    "LineNumber": "143",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 49,
+        "character": 27
+      },
+      "endPosition": {
+        "line": 49,
+        "character": 40
+      }
+    },
+    "LineNumber": "49",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 61,
+        "character": 16
+      },
+      "endPosition": {
+        "line": 61,
+        "character": 34
+      }
+    },
+    "LineNumber": "61",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "ModelState",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ModelState.IsValid",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 63,
+        "character": 34
+      },
+      "endPosition": {
+        "line": 63,
+        "character": 47
+      }
+    },
+    "LineNumber": "63",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 66,
+        "character": 36
+      },
+      "endPosition": {
+        "line": 66,
+        "character": 49
+      }
+    },
+    "LineNumber": "66",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 90,
+        "character": 35
+      },
+      "endPosition": {
+        "line": 90,
+        "character": 48
+      }
+    },
+    "LineNumber": "90",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 12,
+        "character": 12
+      },
+      "endPosition": {
+        "line": 12,
+        "character": 27
+      }
+    },
+    "LineNumber": "12",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+      "fqdn_class": "AjaxHelper",
+      "fqdn_field": "ViewBag",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ViewBag.Message",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 35,
+        "character": 41
+      },
+      "endPosition": {
+        "line": 35,
+        "character": 54
+      }
+    },
+    "LineNumber": "35",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 38,
+        "character": 36
+      },
+      "endPosition": {
+        "line": 38,
+        "character": 49
+      }
+    },
+    "LineNumber": "38",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+      "fqdn_class": "Controller",
+      "fqdn_field": "User",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "User.Identity",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 19,
+        "character": 12
+      },
+      "endPosition": {
+        "line": 19,
+        "character": 45
+      }
+    },
+    "LineNumber": "19",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+      "fqdn_class": "AreaRegistration",
+      "fqdn_method": "RegisterAllAreas",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "AreaRegistration.RegisterAllAreas",
+      "syntax_type": "method_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 21,
+        "character": 34
+      },
+      "endPosition": {
+        "line": 21,
+        "character": 67
+      }
+    },
+    "LineNumber": "21",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+      "fqdn_class": "GlobalConfiguration",
+      "fqdn_field": "Configuration",
+      "fqdn_namespace": "System.Web.Http",
+      "symbol": "GlobalConfiguration.Configuration",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 22,
+        "character": 47
+      },
+      "endPosition": {
+        "line": 22,
+        "character": 68
+      }
+    },
+    "LineNumber": "22",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+      "fqdn_class": "GlobalFilters",
+      "fqdn_field": "Filters",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "GlobalFilters.Filters",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 27,
+        "character": 12
+      },
+      "endPosition": {
+        "line": 27,
+        "character": 48
+      }
+    },
+    "LineNumber": "27",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+      "fqdn_class": "ModelBinderProviders",
+      "fqdn_field": "BinderProviders",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "ModelBinderProviders.BinderProviders",
+      "syntax_type": "field_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Helpers/StringExtensions.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 4,
+        "character": 4
+      },
+      "endPosition": {
+        "line": 31,
+        "character": 5
+      }
+    },
+    "LineNumber": "4",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Helpers/StringExtensions.cs",
+      "symbol": "StringExtensions",
+      "syntax_type": "class_def"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 26,
+        "character": 18
+      },
+      "endPosition": {
+        "line": 26,
+        "character": 40
+      }
+    },
+    "LineNumber": "26",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
+      "fqdn_class": "CachedDataAnnotationsMetadataAttributes",
+      "fqdn_field": "DataType",
+      "fqdn_namespace": "System.Web.Mvc",
+      "symbol": "DataType.MultilineText",
+      "syntax_type": "field_reference"
+    }
+  }
+]

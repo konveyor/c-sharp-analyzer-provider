@@ -11,6 +11,7 @@ use crate::c_sharp_graph::query::{Query, QueryType};
 use crate::c_sharp_graph::results::ResultNode;
 use crate::c_sharp_graph::NamespaceFQDNNotFoundError;
 //use crate::c_sharp_graph::find_node::FindNode;
+use crate::provider::target_framework;
 use crate::provider::AnalysisMode;
 use crate::{
     analyzer_service::{
@@ -89,8 +90,10 @@ impl ProviderService for CSharpProvider {
     }
 
     async fn init(&self, r: Request<Config>) -> Result<Response<InitResponse>, Status> {
+        eprintln!("=== INIT CALLED ===");
         let mut config_guard = self.config.lock().await;
         let saved_config = config_guard.insert(r.get_ref().clone());
+        eprintln!("Config saved: location={}", saved_config.location);
 
         let analysis_mode = AnalysisMode::from(saved_config.analysis_mode.clone());
         let location = PathBuf::from(saved_config.location.clone());
@@ -118,6 +121,100 @@ impl ProviderService for CSharpProvider {
             }
         };
 
+        eprintln!("Getting target framework...");
+        info!("getting the dotnet target framework for the project");
+
+        // Detect target framework from .csproj files (optional)
+        // Note: SDK installation only works for .NET Core and .NET 5+, not old .NET Framework
+        let sdk_xml_handle =
+            match target_framework::TargetFrameworkHelper::get_earliest_from_directory(
+                &project.location,
+            ) {
+                Ok(target_framework) => {
+                    eprintln!("Detected target framework: {}", target_framework.as_str());
+                    info!("Detected target framework: {}", target_framework.as_str());
+
+                    // Store the target framework in the project for later SDK path resolution
+                    project.set_target_framework(target_framework.clone());
+                    eprintln!("Stored target framework in project");
+
+                    // Only attempt SDK installation for modern .NET (Core, 5, 6, 7, 8, etc.)
+                    // Old .NET Framework (net45, net472, etc.) cannot be installed via dotnet-install
+                    let tfm_str = target_framework.as_str();
+                    let is_modern_dotnet = tfm_str.starts_with("netcoreapp")
+                        || tfm_str.starts_with("netstandard")
+                        || tfm_str.starts_with("net")
+                            && !tfm_str.starts_with("net4")
+                            && !tfm_str.starts_with("net3")
+                            && !tfm_str.starts_with("net2")
+                            && !tfm_str.starts_with("net1");
+
+                    eprintln!("is_modern_dotnet: {}", is_modern_dotnet);
+                    if is_modern_dotnet {
+                        eprintln!("Modern .NET detected, spawning SDK installation task");
+                        info!(
+                            "Modern .NET detected ({}), will attempt SDK installation",
+                            target_framework.as_str()
+                        );
+                        // Spawn a task to handle SDK installation and XML processing
+                        // This avoids blocking the init process on SDK download
+                        let project_clone = project.clone();
+                        let dotnet_install_cmd = project.tools.dotnet_install_cmd.clone();
+                        info!(
+                            "Spawning SDK installation task with script: {:?}",
+                            dotnet_install_cmd
+                        );
+                        Some(tokio::spawn(async move {
+                            info!("SDK installation task started in background");
+
+                            match target_framework.install_sdk(&dotnet_install_cmd) {
+                                Ok(sdk_path) => {
+                                    info!("Successfully installed .NET SDK at: {:?}", sdk_path);
+
+                                    // Find and load SDK XML files
+                                    let xml_files = match target_framework::TargetFrameworkHelper::find_sdk_xml_files(&sdk_path, &target_framework) {
+                                    Ok(files) => files,
+                                    Err(e) => {
+                                        error!("Failed to find SDK XML files: {}", e);
+                                        return Err(e);
+                                    }
+                                };
+
+                                    if !xml_files.is_empty() {
+                                        project_clone
+                                            .load_sdk_xml_files_to_database(xml_files)
+                                            .await
+                                    } else {
+                                        info!("No SDK XML files found");
+                                        Ok(0)
+                                    }
+                                }
+                                Err(e) => {
+                                    info!(
+                                    "Could not install .NET SDK for {}: {}. Continuing without SDK XML files.",
+                                    target_framework, e
+                                );
+                                    Err(e)
+                                }
+                            }
+                        }))
+                    } else {
+                        info!(
+                            "Skipping SDK installation for old .NET Framework target: {}",
+                            target_framework
+                        );
+                        None
+                    }
+                }
+                Err(e) => {
+                    info!(
+                    "Could not detect target framework (continuing without SDK installation): {}",
+                    e
+                );
+                    None
+                }
+            };
+
         info!(
             "starting to load project for location: {:?}",
             project.location
@@ -135,6 +232,7 @@ impl ProviderService for CSharpProvider {
         debug!("loaded files: {:?}", stats);
         let get_deps_handle = project.resolve();
 
+        // Await dependency resolution
         let res = match get_deps_handle.await {
             Ok(res) => res,
             Err(e) => {
@@ -143,6 +241,23 @@ impl ProviderService for CSharpProvider {
             }
         };
         debug!("got task result: {:?} -- project: {:?}", res, project);
+
+        // Await SDK XML loading if it was spawned
+        if let Some(handle) = sdk_xml_handle {
+            match handle.await {
+                Ok(Ok(count)) => {
+                    info!("Successfully loaded {} SDK XML files into database", count);
+                }
+                Ok(Err(e)) => {
+                    error!("Failed to load SDK XML files: {}", e);
+                    // Continue anyway - this is not critical to fail the entire init
+                }
+                Err(e) => {
+                    error!("SDK XML loading task panicked: {}", e);
+                }
+            }
+        }
+
         info!("adding depdencies to stack graph database");
         let res = project.load_to_database().await;
         debug!(
@@ -265,7 +380,7 @@ impl ProviderService for CSharpProvider {
                 i.sort_by_key(|i| format!("{}-{:?}", i.file_uri, i.line_number()));
 
                 // Log detailed results for debugging non-determinism
-                if i.len() > 0 {
+                if !i.is_empty() {
                     info!(
                         "Returning {} incidents for pattern '{:?}':",
                         i.len(),
@@ -343,6 +458,7 @@ impl ProviderService for CSharpProvider {
 /// Deduplicate results by grouping by (file_uri, line_number) and keeping the result
 /// with the smallest span. When spans are equal, prefer earlier start character and
 /// earlier end character for deterministic selection.
+#[allow(clippy::needless_lifetimes)]
 fn deduplicate_results<'a>(results: &'a [ResultNode]) -> Vec<&'a ResultNode> {
     use std::collections::BTreeMap;
     let mut best_by_location: BTreeMap<(String, usize), &ResultNode> = BTreeMap::new();
@@ -509,7 +625,7 @@ mod tests {
 
         // Process all three orderings
         let mut results_from_orders = vec![];
-        for results in vec![&order1, &order2, &order3] {
+        for results in [&order1, &order2, &order3] {
             let deduplicated = super::deduplicate_results(results);
 
             // Extract key properties for comparison
@@ -562,14 +678,14 @@ mod tests {
             // Scenario 1: Multiple nodes reported for line 179 with different spans
             create_result_node("AccountController.cs", 179, 179, 16, 179, 26), // Tight span on line 179
             create_result_node("AccountController.cs", 179, 179, 16, 181, 17), // Span crossing to line 181
-            create_result_node("AccountController.cs", 179, 177, 0, 179, 26),  // Span starting earlier
+            create_result_node("AccountController.cs", 179, 177, 0, 179, 26), // Span starting earlier
             // Scenario 2: Multiple nodes reported for line 240 with different spans
             create_result_node("AccountController.cs", 240, 240, 0, 240, 94), // Tight span on line 240 (WINNER)
             create_result_node("AccountController.cs", 240, 240, 0, 241, 20), // Span crossing to line 241
             create_result_node("AccountController.cs", 240, 239, 0, 240, 94), // Span starting earlier
             // Scenario 3: Line 241 has its own references (separate from 240)
             create_result_node("AccountController.cs", 241, 241, 16, 241, 23), // ViewBag on line 241
-            create_result_node("AccountController.cs", 241, 241, 0, 242, 10),  // Wider span for line 241
+            create_result_node("AccountController.cs", 241, 241, 0, 242, 10), // Wider span for line 241
             // Scenario 4: Different file, should not be affected
             create_result_node("DinnerController.cs", 100, 100, 0, 100, 10),
         ];

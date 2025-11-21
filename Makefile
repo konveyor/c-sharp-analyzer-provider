@@ -8,7 +8,7 @@ TAG ?= latest
 IMAGE ?= c-sharp-provider:${TAG}
 IMG_ANALYZER ?= quay.io/konveyor/analyzer-lsp:$(TAG)
 
-.PHONY: download_proto build run build-image run-grpc-init-http run-grpc-ref-http wait-for-server reset-nerd-dinner-demo reset-demo-apps reset-demo-output run-demo run-demo-github run-integration-tests get-konveyor-analyzer-local update-provider-settings-local run-test-local verify-output verify-e2e-results run-analyzer-integration-local run-c-sharp-pod stop-c-sharp-pod run-demo-c-sharp-pod run-analyzer-integration
+.PHONY: download_proto build run build-image run-grpc-init-http run-grpc-ref-http wait-for-server reset-nerd-dinner-demo reset-demo-apps reset-demo-output run-tests run-tests-manual run-integration-tests get-konveyor-analyzer-local update-provider-settings-local run-test-local verify-output verify-e2e-results run-analyzer-integration-local run-c-sharp-pod stop-c-sharp-pod run-demo-c-sharp-pod run-analyzer-integration
 
 download_proto:
 	curl -L -o src/build/proto/provider.proto https://raw.githubusercontent.com/konveyor/analyzer-lsp/refs/heads/main/provider/internal/grpc/library.proto
@@ -24,7 +24,7 @@ build-image:
 
 ### Local GRPC testing
 run-grpc-init-http:
-	grpcurl -max-time 1000 -plaintext -d "{\"analysisMode\": \"source-only\", \"location\": \"$(PWD)/testdata/nerd-dinner\", \"providerSpecificConfig\": {\"ilspy_cmd\": \"$$HOME/.dotnet/tools/ilspycmd\", \"paket_cmd\": \"$$HOME/.dotnet/tools/paket\"}}" localhost:9000 provider.ProviderService.Init
+	grpcurl -max-time 1000 -plaintext -d "{\"analysisMode\": \"source-only\", \"location\": \"$(PWD)/testdata/nerd-dinner\", \"providerSpecificConfig\": {\"ilspy_cmd\": \"$$HOME/.dotnet/tools/ilspycmd\", \"paket_cmd\": \"$$HOME/.dotnet/tools/paket\", \"dotnet_install_cmd\": \"$(PWD)/scripts/dotnet-install.sh\"}}" localhost:9000 provider.ProviderService.Init
 
 run-grpc-ref-http:
 	grpcurl -max-msg-sz 10485760 -max-time 30 -plaintext -d '{"cap": "referenced", "conditionInfo": "{\"referenced\": {\"pattern\": \"System.Web.Mvc.*\"}}" }' -connect-timeout 5000.000000 localhost:9000 provider.ProviderService.Evaluate > output.yaml
@@ -44,15 +44,30 @@ wait-for-server:
 reset-nerd-dinner-demo:
 	cd testdata/nerd-dinner && rm -rf paket-files && rm -rf packages && git clean -f . && git stash push .
 
-reset-demo-apps: reset-nerd-dinner-demo reset-demo-output
-	rm -f demo.db
+reset-net8-sample:
+	cd testdata/net8-sample && rm -rf paket* && rm -rf .paket && rm -rf obj && git clean -f . && git stash push .
+
+reset-demo-apps: reset-nerd-dinner-demo reset-net8-sample reset-demo-output
+	rm -f demo.db test*.db test*.log
+
 
 reset-demo-output:
 	@if [ -f "demo-output.yaml.bak" ]; then \
 		mv demo-output.yaml.bak demo-output.yaml; \
 	fi
 
-run-demo: reset-demo-apps build
+# Integration tests now manage server lifecycle automatically
+run-tests: reset-demo-apps build
+	cargo test -- --nocapture; \
+	TEST_EXIT=$$?; \
+	$(MAKE) reset-demo-apps; \
+	exit $$TEST_EXIT
+
+run-integration-tests:
+	cargo test -- --nocapture
+
+# Legacy target for manual server management (deprecated)
+run-tests-manual: reset-demo-apps build
 	export SERVER_PID=$$(./scripts/run-demo.sh); \
 	echo $${SERVER_PID}; \
 	$(MAKE) wait-for-server && \
@@ -62,20 +77,6 @@ run-demo: reset-demo-apps build
 	kill $${SERVER_PID} || true; \
 	$(MAKE) reset-demo-apps; \
 	exit $$TEST_EXIT
-
-run-demo-github: reset-demo-apps build
-	RUST_LOG=c_sharp_analyzer_provider_cli=DEBUG,INFO target/debug/c-sharp-analyzer-provider-cli --port 9000 --name c-sharp &> demo.log & \
-	export SERVER_PID=$$!; \
-	$(MAKE) wait-for-server && \
-	$(MAKE) run-grpc-init-http && \
-	$(MAKE) run-integration-tests; \
-	TEST_EXIT=$$?; \
-	kill $$SERVER_PID || true; \
-	$(MAKE) reset-demo-apps; \
-	exit $$TEST_EXIT
-
-run-integration-tests:
-	cargo test -- --nocapture
 
 
 ## Running analyzer integration test locally.

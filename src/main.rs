@@ -54,6 +54,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let filter = EnvFilter::from_default_env();
     LogTracer::init_with_filter(tracing_log::log::LevelFilter::Trace)?;
 
+    // Keep the guard alive for the duration of the program
+    // When it's dropped at the end of main(), it will flush remaining logs
+    let _guard;
+
     // Configure logging based on whether a log file is specified
     if let Some(log_file_path) = &args.log_file {
         // Create file appender
@@ -65,7 +69,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .file_name()
                 .unwrap_or_else(|| std::ffi::OsStr::new("output.log")),
         );
-        let (non_blocking, _guard) = tracing_appender::non_blocking(file_appender);
+        let (non_blocking, guard) = tracing_appender::non_blocking(file_appender);
+        _guard = Some(guard);
 
         // Initialize with file output
         let subscriber = tracing_subscriber::registry().with(filter).with(
@@ -75,10 +80,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         );
 
         tracing::subscriber::set_global_default(subscriber)?;
-
-        // Keep the guard alive for the duration of the program
-        std::mem::forget(_guard);
     } else {
+        _guard = None;
+
         // Initialize with stdout output (default behavior)
         let subscriber = tracing_subscriber::registry()
             .with(filter)

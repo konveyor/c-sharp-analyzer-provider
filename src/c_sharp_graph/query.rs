@@ -360,8 +360,9 @@ impl<T: GetMatcher> Querier<'_, T> {
                 }
             };
 
+            let mut full_symbol: Option<Fqdn> = None;
             if node.is_reference() {
-                let full_symbol = self.get_type_with_symbol(node_handle, symbol, &searchable_nodes);
+                full_symbol = self.get_type_with_symbol(node_handle, symbol, &searchable_nodes);
                 if full_symbol.is_none() {
                     trace!(
                         "unable to get full symbol: {}",
@@ -370,9 +371,9 @@ impl<T: GetMatcher> Querier<'_, T> {
                     used_nodes.insert(node_handle);
                     continue;
                 }
-                let full_symbol = full_symbol.unwrap();
+                let full_symbol_unwrap = full_symbol.clone().unwrap();
                 trace!("found FQDN: {:?}", &full_symbol);
-                if !symbol_matcher.match_fqdn(&full_symbol) {
+                if !symbol_matcher.match_fqdn(&full_symbol_unwrap) {
                     used_nodes.insert(node_handle);
                     continue;
                 }
@@ -408,7 +409,7 @@ impl<T: GetMatcher> Querier<'_, T> {
                 |st| {
                     let st_symbol = &self.graph[st];
                     st_symbol.to_string()
-                }
+                },
             );
 
             // Create variables map with file and syntax_type
@@ -419,27 +420,26 @@ impl<T: GetMatcher> Querier<'_, T> {
             var.insert("symbol".to_string(), Value::from(symbol.to_string()));
 
             // Add FQDN for debugging and infer syntax_type for references
-            if node.is_reference() {
-                if let Some(fqdn) = self.get_type_with_symbol(node_handle, symbol, &searchable_nodes) {
-                    if let Some(ns) = &fqdn.namespace {
-                        var.insert("fqdn_namespace".to_string(), Value::from(ns.clone()));
+            if node.is_reference() && full_symbol.is_some() {
+                let fqdn = full_symbol.unwrap();
+                if let Some(ns) = &fqdn.namespace {
+                    var.insert("fqdn_namespace".to_string(), Value::from(ns.clone()));
+                }
+                if let Some(cls) = &fqdn.class {
+                    var.insert("fqdn_class".to_string(), Value::from(cls.clone()));
+                }
+                if let Some(method) = &fqdn.method {
+                    var.insert("fqdn_method".to_string(), Value::from(method.clone()));
+                    // Infer syntax_type from FQDN structure if it was unknown
+                    if syntax_type_str == "unknown" {
+                        syntax_type_str = "method_reference".to_string();
                     }
-                    if let Some(cls) = &fqdn.class {
-                        var.insert("fqdn_class".to_string(), Value::from(cls.clone()));
-                    }
-                    if let Some(method) = &fqdn.method {
-                        var.insert("fqdn_method".to_string(), Value::from(method.clone()));
-                        // Infer syntax_type from FQDN structure if it was unknown
-                        if syntax_type_str == "unknown" {
-                            syntax_type_str = "method_reference".to_string();
-                        }
-                    }
-                    if let Some(field) = &fqdn.field {
-                        var.insert("fqdn_field".to_string(), Value::from(field.clone()));
-                        // Infer syntax_type from FQDN structure if it was unknown
-                        if syntax_type_str == "unknown" {
-                            syntax_type_str = "field_reference".to_string();
-                        }
+                }
+                if let Some(field) = &fqdn.field {
+                    var.insert("fqdn_field".to_string(), Value::from(field.clone()));
+                    // Infer syntax_type from FQDN structure if it was unknown
+                    if syntax_type_str == "unknown" {
+                        syntax_type_str = "field_reference".to_string();
                     }
                 }
             }
@@ -483,36 +483,42 @@ impl<T: GetMatcher> Querier<'_, T> {
 
         if candidates.len() == 1 {
             debug!("Only one candidate, returning: {:?}", candidates[0]);
-            return Some(candidates[0].clone());
+            if let Some(ref ns) = candidates[0].namespace {
+                if imports.contains(ns) {
+                    debug!(
+                        "Selected candidate with exact namespace match: {:?}",
+                        candidates[0]
+                    );
+                    return Some(candidates[0].clone());
+                }
+            }
+            return None;
         }
 
-        debug!("Selecting from {} candidates with {} imports", candidates.len(), imports.len());
+        debug!(
+            "Selecting from {} candidates with {} imports",
+            candidates.len(),
+            imports.len()
+        );
 
-        // First pass: exact namespace match
         for candidate in &candidates {
             if let Some(ref ns) = candidate.namespace {
                 if imports.contains(ns) {
-                    debug!("Selected candidate with exact namespace match: {:?}", candidate);
+                    debug!(
+                        "Selected candidate with exact namespace match: {:?}",
+                        candidate
+                    );
                     return Some(candidate.clone());
                 }
             }
         }
 
-        // Second pass: partial namespace match (import is a prefix of FQDN namespace)
-        for candidate in &candidates {
-            if let Some(ref ns) = candidate.namespace {
-                for import in &imports {
-                    if ns.starts_with(import) {
-                        debug!("Selected candidate with partial namespace match ({}): {:?}", import, candidate);
-                        return Some(candidate.clone());
-                    }
-                }
-            }
-        }
-
-        // Fall back to first candidate for determinism
-        debug!("No import match, using first candidate: {:?}", candidates[0]);
-        Some(candidates[0].clone())
+        // No import match found - return None for consistency
+        debug!(
+            "No import match found for {} candidates, returning None",
+            candidates.len()
+        );
+        None
     }
 
     // Helper function to get all imported namespaces for a file
@@ -656,13 +662,16 @@ impl<T: GetMatcher> Querier<'_, T> {
                 }
                 SyntaxType::LocalVar => {
                     access_node.file().and_then(|f| {
-                        self.get_local_var_type_fqdn(
+                        let fqdns = self.get_local_var_type_fqdn(
                             *definition_node,
                             &accessed_part,
                             f,
                             searchable_nodes,
-                        )
-                    })
+                        );
+                        candidates.extend(fqdns);
+                        None::<Fqdn>
+                    });
+                    None
                     // When the symbol is defined by a local variable
                     // then we need to find the local var type.
                 }
@@ -688,10 +697,10 @@ impl<T: GetMatcher> Querier<'_, T> {
         accessed_part_symbol: &str,
         file: Handle<File>,
         searchable_nodes: &BTreeSet<Handle<Node>>,
-    ) -> Option<Fqdn> {
+    ) -> Vec<Fqdn> {
         let def_node = &self.graph[definition_node];
         if !def_node.is_in_file(file) {
-            return None;
+            return vec![];
         }
         let type_ref_node = self.graph.outgoing_edges(definition_node).find_map(|e| {
             let edge_node = &self.graph[e.sink];
@@ -700,8 +709,17 @@ impl<T: GetMatcher> Querier<'_, T> {
             } else {
                 None
             }
-        })?;
-        let ref_symbol = type_ref_node.symbol()?;
+        });
+        if type_ref_node.is_none() {
+            return vec![];
+        }
+        let type_ref_node = type_ref_node.unwrap();
+
+        let ref_symbol = type_ref_node.symbol();
+        if ref_symbol.is_none() {
+            return vec![];
+        }
+        let ref_symbol = ref_symbol.unwrap();
         trace!(
             "searching for defintion for type_ref_node: {}",
             type_ref_node.display(self.graph)
@@ -710,32 +728,45 @@ impl<T: GetMatcher> Querier<'_, T> {
         let mut sorted_nodes: Vec<_> = searchable_nodes.iter().copied().collect();
         sorted_nodes.sort();
 
-        let defined_node = sorted_nodes.iter().find_map(|x| {
-            let node = &self.graph[*x];
-            if node.symbol().is_none() || node.symbol().unwrap() != ref_symbol {
-                return None;
-            }
-            trace!(
+        let defined_node: Vec<Handle<Node>> = sorted_nodes
+            .iter()
+            .flat_map(|x| {
+                let node = &self.graph[*x];
+                if node.symbol().is_none() || node.symbol().unwrap() != ref_symbol {
+                    return None;
+                }
+                trace!(
                 "found defined node, checking edges for symbols that match the accessed_part: {}",
                 node.display(self.graph)
-            );
-            // Collect and sort edges to ensure deterministic selection
-            let mut matching_edges: Vec<_> = self
-                .graph
-                .outgoing_edges(*x)
-                .filter(|e| {
-                    let sink = &self.graph[e.sink];
-                    trace!("testing sink: {}", sink.display(self.graph));
-                    match sink.symbol() {
-                        Some(sym) => &self.graph[sym] == accessed_part_symbol,
-                        None => false,
-                    }
-                })
-                .collect();
-            matching_edges.sort_by_key(|e| e.sink);
-            matching_edges.first().map(|e| e.sink)
-        })?;
-        get_fqdn(defined_node, self.graph)
+                );
+                // Collect and sort edges to ensure deterministic selection
+                let matching_edges: Vec<_> = self
+                    .graph
+                    .outgoing_edges(*x)
+                    .filter_map(|e| {
+                        let sink = &self.graph[e.sink];
+                        trace!("testing sink: {}", sink.display(self.graph));
+                        match sink.symbol() {
+                            Some(sym) => {
+                                if &self.graph[sym] == accessed_part_symbol {
+                                    Some(e.sink)
+                                } else {
+                                    None
+                                }
+                            }
+                            None => None,
+                        }
+                    })
+                    .collect();
+                Some(matching_edges)
+            })
+            .flatten()
+            .collect();
+
+        defined_node
+            .iter()
+            .filter_map(|x| get_fqdn(*x, self.graph))
+            .collect()
     }
 }
 
@@ -845,30 +876,45 @@ impl<T: GetMatcher> Query for Querier<'_, T> {
         results.sort();
 
         // Log results for determinism debugging
-        let pattern = search.parts.iter()
+        let pattern = search
+            .parts
+            .iter()
             .map(|p| p.part.as_str())
             .collect::<Vec<_>>()
             .join(".");
-        info!("Query results for pattern '{}': {} incidents", pattern, results.len());
+        info!(
+            "Query results for pattern '{}': {} incidents",
+            pattern,
+            results.len()
+        );
         for (i, result) in results.iter().enumerate() {
-            let symbol = result.variables.get("symbol")
+            let symbol = result
+                .variables
+                .get("symbol")
                 .and_then(|v| v.as_str())
                 .unwrap_or("?");
-            let fqdn_ns = result.variables.get("fqdn_namespace")
+            let fqdn_ns = result
+                .variables
+                .get("fqdn_namespace")
                 .and_then(|v| v.as_str())
                 .unwrap_or("");
-            let fqdn_class = result.variables.get("fqdn_class")
+            let fqdn_class = result
+                .variables
+                .get("fqdn_class")
                 .and_then(|v| v.as_str())
                 .unwrap_or("");
-            let fqdn_field = result.variables.get("fqdn_field")
+            let fqdn_field = result
+                .variables
+                .get("fqdn_field")
                 .and_then(|v| v.as_str())
                 .unwrap_or("");
 
-            let fqdn_display = if !fqdn_ns.is_empty() || !fqdn_class.is_empty() || !fqdn_field.is_empty() {
-                format!(" fqdn={}.{}.{}", fqdn_ns, fqdn_class, fqdn_field)
-            } else {
-                String::new()
-            };
+            let fqdn_display =
+                if !fqdn_ns.is_empty() || !fqdn_class.is_empty() || !fqdn_field.is_empty() {
+                    format!(" fqdn={}.{}.{}", fqdn_ns, fqdn_class, fqdn_field)
+                } else {
+                    String::new()
+                };
 
             debug!(
                 "  Result[{}]: {} line {} symbol={}{}",
@@ -932,7 +978,11 @@ impl Search {
             let regex = if new_part == "*" {
                 // Pure wildcard - match anything
                 Some(star_regex.clone())
-            } else if new_part.contains('*') || new_part.contains('(') || new_part.contains(')') || new_part.contains('|') {
+            } else if new_part.contains('*')
+                || new_part.contains('(')
+                || new_part.contains(')')
+                || new_part.contains('|')
+            {
                 // Contains regex metacharacters - treat as regex pattern
                 let pattern = if new_part == ".*" {
                     // Already in regex form, don't replace
@@ -1261,7 +1311,8 @@ mod tests {
 
     #[test]
     fn test_full_query_workflow_simple() {
-        let search = Search::create_search("System.Configuration.ConfigurationManager".to_string()).unwrap();
+        let search =
+            Search::create_search("System.Configuration.ConfigurationManager".to_string()).unwrap();
 
         // Test partial_namespace
         assert!(search.partial_namespace("System.Configuration.ConfigurationManager"));
@@ -1293,7 +1344,10 @@ mod tests {
 
     #[test]
     fn test_full_query_workflow_multi_level() {
-        let search = Search::create_search("System.Configuration.ConfigurationManager.AppSettings".to_string()).unwrap();
+        let search = Search::create_search(
+            "System.Configuration.ConfigurationManager.AppSettings".to_string(),
+        )
+        .unwrap();
 
         // Test partial_namespace - should match prefixes
         assert!(search.partial_namespace("System.Configuration.ConfigurationManager.AppSettings"));
@@ -1319,7 +1373,7 @@ mod tests {
     use stack_graphs::graph::StackGraph;
 
     #[test]
-    fn test_select_best_fqdn_single_candidate() {
+    fn test_select_best_fqdn_single_candidate_not_in_import() {
         let mut graph = StackGraph::new();
         let source_type = SourceType::Source {
             symbol_handle: graph.add_symbol("source"),
@@ -1339,8 +1393,31 @@ mod tests {
         let imports = BTreeSet::new();
 
         let result = querier.select_best_fqdn(candidates, imports);
-        assert!(result.is_some());
-        assert_eq!(result.unwrap().namespace, Some("System.Configuration".to_string()));
+        assert!(result.is_none());
+    }
+    #[test]
+    fn test_select_best_fqdn_single_candidate_not_ns_in_imports() {
+        let mut graph = StackGraph::new();
+        let source_type = SourceType::Source {
+            symbol_handle: graph.add_symbol("source"),
+        };
+        let querier = Querier {
+            graph: &graph,
+            source_type: &source_type,
+            _matcher_getter: NamespaceSymbolsGetter {},
+        };
+
+        let candidates = vec![Fqdn {
+            namespace: Some("System.Configuration".to_string()),
+            class: Some("ConfigurationManager".to_string()),
+            method: Some("AppSettings".to_string()),
+            field: None,
+        }];
+        let mut imports = BTreeSet::new();
+        imports.insert("System.Configuration.Test".to_string());
+
+        let result = querier.select_best_fqdn(candidates, imports);
+        assert!(result.is_none());
     }
 
     #[test]
@@ -1375,11 +1452,14 @@ mod tests {
         let result = querier.select_best_fqdn(candidates, imports);
         assert!(result.is_some());
         // Should select the one with exact namespace match
-        assert_eq!(result.unwrap().namespace, Some("System.Configuration".to_string()));
+        assert_eq!(
+            result.unwrap().namespace,
+            Some("System.Configuration".to_string())
+        );
     }
 
     #[test]
-    fn test_select_best_fqdn_partial_namespace_match() {
+    fn test_select_best_fqdn_partial_namespace_no_match() {
         let mut graph = StackGraph::new();
         let source_type = SourceType::Source {
             symbol_handle: graph.add_symbol("source"),
@@ -1408,13 +1488,11 @@ mod tests {
         imports.insert("System.Configuration".to_string());
 
         let result = querier.select_best_fqdn(candidates, imports);
-        assert!(result.is_some());
-        // Should select the one whose namespace starts with an import
-        assert_eq!(result.unwrap().namespace, Some("System.Configuration.Internal".to_string()));
+        assert!(result.is_none());
     }
 
     #[test]
-    fn test_select_best_fqdn_no_match_returns_first() {
+    fn test_select_best_fqdn_no_match_returns_none() {
         let mut graph = StackGraph::new();
         let source_type = SourceType::Source {
             symbol_handle: graph.add_symbol("source"),
@@ -1443,9 +1521,8 @@ mod tests {
         imports.insert("Other.Namespace".to_string());
 
         let result = querier.select_best_fqdn(candidates, imports);
-        assert!(result.is_some());
-        // Should return first candidate when no matches
-        assert_eq!(result.unwrap().namespace, Some("AAA.Configuration".to_string()));
+        // Should return None when no import matches
+        assert!(result.is_none());
     }
 
     #[test]
@@ -1499,6 +1576,9 @@ mod tests {
         let result = querier.select_best_fqdn(candidates, imports);
         assert!(result.is_some());
         // Should prefer exact match over partial match
-        assert_eq!(result.unwrap().namespace, Some("System.Configuration".to_string()));
+        assert_eq!(
+            result.unwrap().namespace,
+            Some("System.Configuration".to_string())
+        );
     }
 }

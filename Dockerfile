@@ -19,7 +19,12 @@ RUN dnf install -y dotnet-sdk-8.0 dotnet-runtime-8.0
 
 RUN dotnet tool install --global Paket
 RUN dotnet tool install --global ilspycmd
+ENV PATH="/root/.dotnet/tools:${PATH}"
 ENV RUST_LOG=INFO,c_sharp_analyzer_provider_cli=DEBUG,
+
+# TODO: move this whole thing to ubi-minimal, and make these permissions actually correct.
+COPY --chmod=0777 scripts/dotnet-install.sh /usr/local/bin/scripts/dotnet-install.sh
+COPY --chmod=0777 scripts/dotnet-install.ps1 /usr/local/bin/scripts/dotnet-install.ps1
 
 COPY --from=builder /csharp-provider/target/debug/c-sharp-analyzer-provider-cli /usr/local/bin/c-sharp-provider
 ENTRYPOINT ["/usr/local/bin/c-sharp-provider", "--name", "c-sharp"]

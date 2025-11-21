@@ -38,6 +38,7 @@ pub struct EdgeInfo {
 }
 
 impl FileAnalyzer for DepXMLFileAnalyzer {
+    #[allow(clippy::needless_lifetimes)]
     fn build_stack_graph_into<'a>(
         &self,
         stack_graph: &mut StackGraph,
@@ -577,7 +578,8 @@ mod tests {
     #[test]
     fn test_handle_member_type_nested_namespace() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("T", "System.Configuration.ConfigurationManager");
+        let (nodes, edges) =
+            analyzer.handle_member("T", "System.Configuration.ConfigurationManager");
 
         assert_eq!(nodes.len(), 2);
         assert_eq!(edges.len(), 2);
@@ -618,7 +620,8 @@ mod tests {
     #[test]
     fn test_handle_member_field_simple() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("F", "System.Configuration.ConfigurationManager.AppSettings");
+        let (nodes, edges) =
+            analyzer.handle_member("F", "System.Configuration.ConfigurationManager.AppSettings");
 
         assert_eq!(nodes.len(), 3);
         assert_eq!(edges.len(), 4);
@@ -717,7 +720,8 @@ mod tests {
     #[test]
     fn test_handle_member_method_with_parameters() {
         let analyzer = create_analyzer();
-        let (nodes, _edges) = analyzer.handle_member("M", "System.String.Format(System.String,System.Object)");
+        let (nodes, _edges) =
+            analyzer.handle_member("M", "System.String.Format(System.String,System.Object)");
 
         assert_eq!(nodes.len(), 3);
 
@@ -777,7 +781,8 @@ mod tests {
     #[test]
     fn test_handle_member_method_nested_namespace() {
         let analyzer = create_analyzer();
-        let (nodes, _) = analyzer.handle_member("M", "System.Configuration.ConfigurationManager.GetSection");
+        let (nodes, _) =
+            analyzer.handle_member("M", "System.Configuration.ConfigurationManager.GetSection");
 
         assert_eq!(nodes.len(), 3);
         assert_eq!(nodes[0].symbol, "GetSection");
@@ -866,10 +871,8 @@ mod tests {
     #[test]
     fn test_handle_member_real_world_configuration_manager() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member(
-            "F",
-            "System.Configuration.ConfigurationManager.AppSettings",
-        );
+        let (nodes, edges) =
+            analyzer.handle_member("F", "System.Configuration.ConfigurationManager.AppSettings");
 
         assert_eq!(nodes.len(), 3);
         assert_eq!(edges.len(), 4);
@@ -955,11 +958,18 @@ mod tests {
 
         // Create all edges
         for edge_info in edges {
-            let source_key = format!("{:?}:{}", edge_info.source.syntax_type, edge_info.source.symbol);
+            let source_key = format!(
+                "{:?}:{}",
+                edge_info.source.syntax_type, edge_info.source.symbol
+            );
             let sink_key = format!("{:?}:{}", edge_info.sink.syntax_type, edge_info.sink.symbol);
 
-            let source_handle = node_map.get(&source_key).expect(&format!("Source node not found: {}", source_key));
-            let sink_handle = node_map.get(&sink_key).expect(&format!("Sink node not found: {}", sink_key));
+            let source_handle = node_map
+                .get(&source_key)
+                .unwrap_or_else(|| panic!("Source node not found: {}", source_key));
+            let sink_handle = node_map
+                .get(&sink_key)
+                .unwrap_or_else(|| panic!("Sink node not found: {}", sink_key));
 
             graph.add_edge(*source_handle, *sink_handle, edge_info.precedence);
         }
@@ -989,10 +999,8 @@ mod tests {
     #[test]
     fn test_fqdn_for_field() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member(
-            "F",
-            "System.Configuration.ConfigurationManager.AppSettings",
-        );
+        let (nodes, edges) =
+            analyzer.handle_member("F", "System.Configuration.ConfigurationManager.AppSettings");
 
         let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
 
@@ -1030,10 +1038,8 @@ mod tests {
     #[test]
     fn test_fqdn_for_method_with_parameters() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member(
-            "M",
-            "System.String.Format(System.String,System.Object)",
-        );
+        let (nodes, edges) =
+            analyzer.handle_member("M", "System.String.Format(System.String,System.Object)");
 
         let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
 
@@ -1071,7 +1077,8 @@ mod tests {
     #[test]
     fn test_fqdn_for_nested_namespace_type() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("T", "System.Configuration.ConfigurationManager");
+        let (nodes, edges) =
+            analyzer.handle_member("T", "System.Configuration.ConfigurationManager");
 
         let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
 
@@ -1090,10 +1097,8 @@ mod tests {
     #[test]
     fn test_fqdn_for_nested_namespace_method() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member(
-            "M",
-            "System.Configuration.ConfigurationManager.GetSection",
-        );
+        let (nodes, edges) =
+            analyzer.handle_member("M", "System.Configuration.ConfigurationManager.GetSection");
 
         let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
 
@@ -1153,10 +1158,8 @@ mod tests {
     #[test]
     fn test_fqdn_from_class_node() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member(
-            "F",
-            "System.Configuration.ConfigurationManager.AppSettings",
-        );
+        let (nodes, edges) =
+            analyzer.handle_member("F", "System.Configuration.ConfigurationManager.AppSettings");
 
         let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
 
