@@ -4,11 +4,23 @@ CONTAINER_RUNTIME ?= podman
 # Branch to download konveyor-analyzer from (defaults to main)
 KONVEYOR_BRANCH ?= main
 
+# SELinux label for shared volumes (use :z for shared, :Z for exclusive)
+MOUNT_OPT ?= :z
+
 TAG ?= latest
 IMAGE ?= c-sharp-provider:${TAG}
 IMG_ANALYZER ?= quay.io/konveyor/analyzer-lsp:$(TAG)
 
-.PHONY: download_proto build run build-image run-grpc-init-http run-grpc-ref-http wait-for-server reset-nerd-dinner-demo reset-demo-apps reset-demo-output run-tests run-tests-manual run-integration-tests get-konveyor-analyzer-local update-provider-settings-local run-test-local verify-output verify-e2e-results run-analyzer-integration-local run-c-sharp-pod stop-c-sharp-pod run-demo-c-sharp-pod run-analyzer-integration
+.PHONY: all clean test download_proto build run build-image run-grpc-init-http run-grpc-ref-http wait-for-server reset-nerd-dinner-demo reset-demo-apps reset-demo-output run-tests run-tests-manual run-integration-tests get-konveyor-analyzer-local update-provider-settings-local run-test-local verify-output verify-e2e-results run-analyzer-integration-local run-c-sharp-pod stop-c-sharp-pod run-demo-c-sharp-pod run-analyzer-integration
+
+all: build
+
+clean: reset-demo-apps
+	cargo clean
+	rm -f e2e-tests/konveyor-analyzer
+	rm -f e2e-tests/analysis-output.yaml
+
+test: run-tests
 
 download_proto:
 	curl -L -o src/build/proto/provider.proto https://raw.githubusercontent.com/konveyor/analyzer-lsp/refs/heads/main/provider/internal/grpc/library.proto
@@ -224,9 +236,9 @@ stop-c-sharp-pod:
 run-demo-c-sharp-pod:
 	$(CONTAINER_RUNTIME) run --entrypoint /usr/local/bin/konveyor-analyzer --pod=analyzer-c-sharp\
 		-v test-data:/analyzer-lsp/examples$(MOUNT_OPT) \
-		-v $(PWD)/e2e-tests/demo-output.yaml:/analyzer-lsp/output.yaml:Z \
-		-v $(PWD)/e2e-tests/provider_settings.json:/analyzer-lsp/provider_settings.json:Z \
-		-v $(PWD)/rulesets/:/analyzer-lsp/rules:Z \
+		-v $(PWD)/e2e-tests/demo-output.yaml:/analyzer-lsp/output.yaml$(MOUNT_OPT) \
+		-v $(PWD)/e2e-tests/provider_settings.json:/analyzer-lsp/provider_settings.json$(MOUNT_OPT) \
+		-v $(PWD)/rulesets/:/analyzer-lsp/rules$(MOUNT_OPT) \
 		$(IMG_ANALYZER) \
 		--verbose=100 \
 		--output-file=/analyzer-lsp/output.yaml \

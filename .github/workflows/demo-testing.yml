@@ -61,7 +61,6 @@ jobs:
           cache-key-file: Cargo.lock
 
       ## TODO: Once I have the artifact download working, this should run the analyzer-lsp from last working nightly based on branch.
-
       - name: Run Provider test
         shell: bash
         run: |
@@ -123,8 +122,3 @@ jobs:
       
       - name: install yq for testing
         run: go install github.com/mikefarah/yq/v4@latest
-
-
-
-        
-
