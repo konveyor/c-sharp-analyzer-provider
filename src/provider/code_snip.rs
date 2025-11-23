@@ -39,7 +39,7 @@ impl ProviderCodeLocationService for CSharpProvider {
         }
         let end_position = code_location.end_position.unwrap();
 
-        info!("getting code snip for {:?}", code_location);
+        info!(file=%code_snip_request.uri, "getting code snip for {:?}", code_location);
         let file_uri = Url::parse(code_snip_request.uri.clone().as_str());
         if let Err(e) = file_uri {
             return Err(Status::invalid_argument(format!(

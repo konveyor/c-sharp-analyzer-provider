@@ -13,7 +13,6 @@ use stack_graphs::graph::StackGraph;
 use tracing::debug;
 use tracing::error;
 use tracing::info;
-use tracing::trace;
 use tree_sitter_stack_graphs::BuildError;
 use tree_sitter_stack_graphs::CancellationFlag;
 use tree_sitter_stack_graphs::FileAnalyzer;
@@ -58,7 +57,7 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
         loop {
             match reader.read_event() {
                 Err(e) => {
-                    error!("got errror {}", e);
+                    error!(file=?path, "got errror {}", e);
                     return Err(BuildError::ParseError);
                 }
                 Ok(Event::Eof) => {
@@ -78,7 +77,7 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                         let member_name = String::from_utf8_lossy(&member_name.value).to_string();
                         let parts: Vec<&str> = member_name.split(":").collect();
                         if parts.len() != 2 {
-                            debug!("unable to get correct parts: {}", &member_name);
+                            debug!(file=?path, "unable to get correct parts: {}", &member_name);
                             continue;
                         }
                         let (nodes, mut edges) =
@@ -92,6 +91,7 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
             }
         }
         info!(
+            file=?path,
             "got {} nodes and {} edges to be created",
             &inter_node_info.len(),
             &inter_edge_info.len()
@@ -102,7 +102,7 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
         let symbol = stack_graph.add_symbol(path.to_string_lossy().as_ref());
         let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
         if node_handle.is_none() {
-            error!("node_handle is none???");
+            error!(file=?path, "node_handle is none???");
             return Err(BuildError::UnknownSymbolType(
                 "unable to handle comp unit".to_string(),
             ));
@@ -127,7 +127,6 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                         let symbol = stack_graph.add_symbol(&node.symbol);
                         let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
                         if node_handle.is_none() {
-                            info!("node_handle is none???");
                             continue;
                         }
                         let node_handle = node_handle.unwrap();
@@ -144,7 +143,6 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                         let symbol = stack_graph.add_symbol(&node.symbol);
                         let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
                         if node_handle.is_none() {
-                            info!("node_handle is none???");
                             continue;
                         }
                         let node_handle = node_handle.unwrap();
@@ -161,7 +159,6 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                         let symbol = stack_graph.add_symbol(&node.symbol);
                         let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
                         if node_handle.is_none() {
-                            info!("node_handle is none???");
                             continue;
                         }
                         let node_handle = node_handle.unwrap();
@@ -178,7 +175,6 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                         let symbol = stack_graph.add_symbol(&node.symbol);
                         let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
                         if node_handle.is_none() {
-                            info!("node_handle is none???");
                             continue;
                         }
                         let node_handle = node_handle.unwrap();
@@ -189,7 +185,7 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                     }
                 }
                 _ => {
-                    error!("unable to get node syntax type");
+                    error!(file = ?path, "unable to get node syntax type");
                     return Err(BuildError::ParseError);
                 }
             };
@@ -205,7 +201,7 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                 SyntaxType::FieldName => {
                     let graph_node = map_field_nodes.get(&edge.source.symbol);
                     if graph_node.is_none() {
-                        error!("didn't create graph node for field {:?}", edge);
+                        error!(file=?path, "didn't create graph node for field {:?}", edge);
                         return Err(BuildError::ParseError);
                     }
                     graph_node.unwrap()
@@ -213,7 +209,7 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                 SyntaxType::ClassDef => {
                     let graph_node = map_class_nodes.get(&edge.source.symbol);
                     if graph_node.is_none() {
-                        error!("didn't create graph node for field {:?}", edge.source);
+                        error!(file=?path, "didn't create graph node for field {:?}", edge.source);
                         return Err(BuildError::ParseError);
                     }
                     graph_node.unwrap()
@@ -221,7 +217,7 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                 SyntaxType::MethodName => {
                     let graph_node = map_method_nodes.get(&edge.source.symbol);
                     if graph_node.is_none() {
-                        error!("didn't create graph node for field {:?}", edge.source);
+                        error!(file=?path, "didn't create graph node for field {:?}", edge.source);
                         return Err(BuildError::ParseError);
                     }
                     graph_node.unwrap()
@@ -229,13 +225,13 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                 SyntaxType::NamespaceDeclaration => {
                     let graph_node = map_namespace_nodes.get(&edge.source.symbol);
                     if graph_node.is_none() {
-                        error!("didn't create graph node for field {:?}", edge.source);
+                        error!(file=?path, "didn't create graph node for field {:?}", edge.source);
                         return Err(BuildError::ParseError);
                     }
                     graph_node.unwrap()
                 }
                 _ => {
-                    error!("uanble to get node syntax type");
+                    error!(file=?path, "uanble to get node syntax type");
                     return Err(BuildError::UnknownNodeType(format!(
                         "unable to get edge source symbol: {:?}",
                         edge,
@@ -246,7 +242,7 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                 SyntaxType::FieldName => {
                     let graph_node = map_field_nodes.get(&edge.sink.symbol);
                     if graph_node.is_none() {
-                        error!("didn't create graph node for field {:?}", edge.sink);
+                        error!(file=?path, "didn't create graph node for field {:?}", edge.sink);
                         return Err(BuildError::ParseError);
                     }
                     graph_node.unwrap()
@@ -254,7 +250,7 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                 SyntaxType::ClassDef => {
                     let graph_node = map_class_nodes.get(&edge.sink.symbol);
                     if graph_node.is_none() {
-                        error!("didn't create graph node for class {:?} sink", edge.sink);
+                        error!(file=?path, "didn't create graph node for class {:?} sink", edge.sink);
                         return Err(BuildError::ParseError);
                     }
                     graph_node.unwrap()
@@ -262,7 +258,7 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                 SyntaxType::MethodName => {
                     let graph_node = map_method_nodes.get(&edge.sink.symbol);
                     if graph_node.is_none() {
-                        error!("didn't create graph node for field {:?}", edge.sink);
+                        error!(file=?path, "didn't create graph node for field {:?}", edge.sink);
                         return Err(BuildError::ParseError);
                     }
                     graph_node.unwrap()
@@ -270,13 +266,13 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                 SyntaxType::NamespaceDeclaration => {
                     let graph_node = map_namespace_nodes.get(&edge.sink.symbol);
                     if graph_node.is_none() {
-                        error!("didn't create graph node for field {:?}", edge.sink);
+                        error!(file=?path, "didn't create graph node for field {:?}", edge.sink);
                         return Err(BuildError::ParseError);
                     }
                     graph_node.unwrap()
                 }
                 _ => {
-                    error!("didn't create graph node for field {:?}", edge);
+                    error!(file=?path, "didn't create graph node for field {:?}", edge);
                     return Err(BuildError::ParseError);
                 }
             };
@@ -285,6 +281,7 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
         }
 
         info!(
+            file=?path,
             "created {} graph nodes {} edge nodes",
             &node_tracking_number, &edge_tracking_number
         );
@@ -413,7 +410,6 @@ impl DepXMLFileAnalyzer {
                     let x = x.nth(0);
                     new_name = x.unwrap();
                 }
-                trace!("method new string to deal with: {}", new_name);
                 let mut parts = new_name.split('.');
                 let mut nodes: Vec<NodeInfo> = vec![];
                 let mut edges: Vec<EdgeInfo> = vec![];

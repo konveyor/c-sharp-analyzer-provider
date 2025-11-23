@@ -274,7 +274,7 @@ impl<T: GetMatcher> Querier<'_, T> {
             let symbol = &self.graph[node.symbol().unwrap()];
             let source_info = self.graph.source_info(node_handle);
             if source_info.is_none() {
-                debug!("node no source_info: {}", node.display(self.graph));
+                trace!("node no source_info: {}", node.display(self.graph));
                 continue;
             }
             match source_info.unwrap().syntax_type.into_option() {
@@ -328,9 +328,9 @@ impl<T: GetMatcher> Querier<'_, T> {
         let mut searchable_nodes = searchable_nodes.clone();
         searchable_nodes.extend(self.graph.nodes_for_file(file));
         debug!(
-            "searchable nodes: {:?} for file: {} already found: {}",
+            file = %file_uri,
+            "searchable nodes: {:?} for already found: {}",
             searchable_nodes.len(),
-            &file_uri,
             results.len(),
         );
         let mut used_nodes: BTreeSet<Handle<Node>> = BTreeSet::new();
@@ -340,7 +340,6 @@ impl<T: GetMatcher> Querier<'_, T> {
         let file_nodes_count = file_nodes.len();
         for node_handle in file_nodes {
             if used_nodes.contains(&node_handle) {
-                debug!("repeating node");
                 continue;
             }
             let node = &self.graph[node_handle];
@@ -365,8 +364,9 @@ impl<T: GetMatcher> Querier<'_, T> {
                 full_symbol = self.get_type_with_symbol(node_handle, symbol, &searchable_nodes);
                 if full_symbol.is_none() {
                     trace!(
+                        file = %file_uri,
                         "unable to get full symbol: {}",
-                        node_handle.display(self.graph)
+                        node_handle.display(self.graph),
                     );
                     used_nodes.insert(node_handle);
                     continue;
@@ -447,7 +447,7 @@ impl<T: GetMatcher> Querier<'_, T> {
             // Set syntax_type after potential inference from FQDN
             var.insert("syntax_type".to_string(), Value::from(syntax_type_str));
 
-            trace!("found result for node: {:?}", debug_node,);
+            trace!(file=%file_uri, "found result for node: {:?}", debug_node);
             results.push(ResultNode {
                 file_uri: file_uri.clone(),
                 line_number,
@@ -458,15 +458,16 @@ impl<T: GetMatcher> Querier<'_, T> {
         }
         if used_nodes.len() != file_nodes_count {
             error!(
+                file = %file_uri,
                 "Not all file nodes were processed! used_nodes: {}, file_nodes: {}",
                 used_nodes.len(),
                 file_nodes_count
             );
         }
         debug!(
-            "searchable nodes: {:?} for file: {} found after searching file nodes: {}",
+            file = %file_uri,
+            "searchable nodes: {:?} for found after searching file nodes: {}",
             searchable_nodes.len(),
-            &file_uri,
             results.len(),
         );
     }
