@@ -21,7 +21,7 @@
   when:
     csharp.referenced:
       location: METHOD
-      pattern: Thread\.Abort
+      pattern: "*.Thread.Abort"
 
 - category: mandatory
   customVariables: []
@@ -47,7 +47,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: BinaryFormatter
+      pattern: "*.BinaryFormatter"
 
 - category: mandatory
   customVariables: []
@@ -78,7 +78,7 @@
   when:
     csharp.referenced:
       location: METHOD
-      pattern: AppDomain\.CreateDomain
+      pattern: "*.AppDomain.CreateDomain"
 
 - category: mandatory
   customVariables: []
@@ -107,7 +107,7 @@
   when:
     csharp.referenced:
       location: METHOD
-      pattern: AppDomain\.Unload
+      pattern: "*.AppDomain.Unload"
 
 - category: optional
   customVariables: []
@@ -133,7 +133,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: AppDomain
+      pattern: "*.AppDomain"
 
 - category: mandatory
   customVariables: []
@@ -158,7 +158,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: System\.Runtime\.Remoting
+      pattern: System.Runtime.Remoting
 
 - category: optional
   customVariables: []
@@ -182,7 +182,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: Assembly\.CodeBase
+      pattern: "*.Assembly.CodeBase"
 
 - category: optional
   customVariables: []
@@ -206,32 +206,32 @@
   when:
     csharp.referenced:
       location: METHOD
-      pattern: ReflectionOnlyLoad
+      pattern: "*.ReflectionOnlyLoad"
 
-- category: optional
-  customVariables: []
-  description: Review Code Access Security (CAS) usage - not supported
-  effort: 5
-  labels:
-  - konveyor.io/source=dotnet
-  - konveyor.io/target=dotnet-core
-  links:
-  - title: Code Access Security not supported
-    url: https://learn.microsoft.com/en-us/dotnet/core/compatibility/core-libraries/5.0/code-access-security-apis-obsolete
-  message: |
-    Code Access Security (CAS) is not supported in .NET Core.
-    All CAS-related APIs throw PlatformNotSupportedException.
-
-    Review actions:
-    - Remove all CAS-related code (SecurityPermission, CodeAccessPermission, etc.)
-    - Redesign security model using OS-level security
-    - Use principle of least privilege at the process level
-    - Review security requirements and implement using supported mechanisms
-  ruleID: dotnet-core-cas-01
-  when:
-    csharp.referenced:
-      location: ALL
-      pattern: (CodeAccessPermission|SecurityPermission)
+#- category: optional
+#  customVariables: []
+#  description: Review Code Access Security (CAS) usage - not supported
+#  effort: 5
+#  labels:
+#  - konveyor.io/source=dotnet
+#  - konveyor.io/target=dotnet-core
+#  links:
+#  - title: Code Access Security not supported
+#    url: https://learn.microsoft.com/en-us/dotnet/core/compatibility/core-libraries/5.0/code-access-security-apis-obsolete
+#  message: |
+#    Code Access Security (CAS) is not supported in .NET Core.
+#    All CAS-related APIs throw PlatformNotSupportedException.
+#
+#    Review actions:
+#    - Remove all CAS-related code (SecurityPermission, CodeAccessPermission, etc.)
+#    - Redesign security model using OS-level security
+#    - Use principle of least privilege at the process level
+#    - Review security requirements and implement using supported mechanisms
+#  ruleID: dotnet-core-cas-01
+#  when:
+#    csharp.referenced:
+#      location: ALL
+#      pattern: "*.(CodeAccessPermission|SecurityPermission)"
 
 - category: optional
   customVariables: []
@@ -258,7 +258,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: ChildActionOnly
+      pattern: "*.ChildActionOnly"
 
 - category: optional
   customVariables: []
@@ -284,36 +284,36 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: ModelBinderProviders
+      pattern: "*.ModelBinderProviders"
 
-- category: mandatory
-  customVariables: []
-  description: Delegate.BeginInvoke/EndInvoke async pattern not supported in .NET Core
-  effort: 3
-  labels:
-  - konveyor.io/source=dotnet
-  - konveyor.io/target=dotnet-core
-  links:
-  - title: .NET Framework technologies unavailable on .NET Core
-    url: https://learn.microsoft.com/en-us/dotnet/core/porting/net-framework-tech-unavailable
-  - title: Task-based asynchronous pattern (TAP)
-    url: https://learn.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap
-  message: |
-    Delegate.BeginInvoke and Delegate.EndInvoke are not supported in .NET Core.
-    These methods are part of the legacy Asynchronous Programming Model (APM) pattern.
-
-    Migration actions:
-    - Replace BeginInvoke/EndInvoke with Task-based async pattern
-    - Use Task.Run() to execute delegates asynchronously
-    - Use async/await pattern for asynchronous operations
-    - Example: Instead of delegate.BeginInvoke(...), use await Task.Run(() => delegate())
-    - For event handlers, consider using asynchronous event patterns
-    - Review callback patterns and convert to Task continuations
-  ruleID: dotnet-core-delegate-begininvoke-01
-  when:
-    csharp.referenced:
-      location: METHOD
-      pattern: \.(BeginInvoke|EndInvoke)\(
+#- category: mandatory
+#  customVariables: []
+#  description: Delegate.BeginInvoke/EndInvoke async pattern not supported in .NET Core
+#  effort: 3
+#  labels:
+#  - konveyor.io/source=dotnet
+#  - konveyor.io/target=dotnet-core
+#  links:
+#  - title: .NET Framework technologies unavailable on .NET Core
+#    url: https://learn.microsoft.com/en-us/dotnet/core/porting/net-framework-tech-unavailable
+#  - title: Task-based asynchronous pattern (TAP)
+#    url: https://learn.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap
+#  message: |
+#    Delegate.BeginInvoke and Delegate.EndInvoke are not supported in .NET Core.
+#    These methods are part of the legacy Asynchronous Programming Model (APM) pattern.
+#
+#    Migration actions:
+#    - Replace BeginInvoke/EndInvoke with Task-based async pattern
+#    - Use Task.Run() to execute delegates asynchronously
+#    - Use async/await pattern for asynchronous operations
+#    - Example: Instead of delegate.BeginInvoke(...), use await Task.Run(() => delegate())
+#    - For event handlers, consider using asynchronous event patterns
+#    - Review callback patterns and convert to Task continuations
+#  ruleID: dotnet-core-delegate-begininvoke-01
+#  when:
+#    csharp.referenced:
+#      location: METHOD
+#      pattern: "*.(BeginInvoke|EndInvoke)"
 
 - category: mandatory
   customVariables: []
@@ -355,4 +355,4 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: System\.ServiceModel
+      pattern: System.ServiceModel

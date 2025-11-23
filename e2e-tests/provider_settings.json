@@ -1,0 +1,16 @@
+[
+  {
+    "name": "csharp",
+    "address": "localhost:14652",
+    "initConfig": [
+      {
+        "analysisMode": "source-only",
+        "location": "analyzer-lsp/examples/nerd-dinner",
+        "providerSpecificConfig": {
+          "ilspy_cmd": "/root/.dotnet/tools/ilspycmd",
+          "paket_cmd": "/root/.dotnet/tools/paket"
+        }
+      }
+    ]
+  }
+]

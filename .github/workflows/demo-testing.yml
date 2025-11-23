@@ -1,4 +1,4 @@
-name: Demo Testing
+name: Testing
 
 on:
   pull_request:
@@ -9,17 +9,22 @@ on:
     - "v*"
 
 jobs:
-  test:
+  integration-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - name: Install Protoc
         uses: arduino/setup-protoc@v3
       - name: "Clippy format"
         run: cargo clippy
-      - name: install grpcurl
-        run: |
-          go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '9.0.x'
@@ -30,7 +35,90 @@ jobs:
         run: |
           dotnet tool install --global paket
           ls -la $HOME/.dotnet/tools/
-      - name: run demo test
+      - name: run all tests
+        run: cargo test -- --nocapture
+  local-analyzer-integration-test:
+    runs-on: ubuntu-latest
+    outputs:
+      image-tag: ${{ steps.set-tag.outputs.image_tag }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set image tag
+        id: set-tag
+        run: |
+          echo "image_tag=${{ github.run_id }}-${{ github.sha }}" >> $GITHUB_OUTPUT
+
+      - name: Build c-sharp-provider-image
+        uses: shawn-hurley/ci/build-image@main
+        with:
+          repo: ${{ github.repository }}
+          checked_out: true
+          image_name: quay.io/konveyor/c-sharp-provider
+          image_tag: ${{ steps.set-tag.outputs.image_tag }}
+          dockerfile_path: Dockerfile
+          build_context: .
+          cache-key-file: Cargo.lock
+
+      ## TODO: Once I have the artifact download working, this should run the analyzer-lsp from last working nightly based on branch.
+      - name: Run Provider test
+        shell: bash
+        run: |
+          podman volume create test-data
+          podman run --rm -v test-data:/target:z -v $(pwd)/testdata:/src/:z --entrypoint=cp alpine -a /src/. /target/
+          podman pod create --name=analyzer-c-sharp
+          podman run --pod analyzer-c-sharp --name c-sharp -d -v test-data:/analyzer-lsp/examples:z quay.io/konveyor/c-sharp-provider:${{ steps.set-tag.outputs.image_tag }} --port 14652
+          podman run --entrypoint /usr/local/bin/konveyor-analyzer --pod=analyzer-c-sharp \
+            -v test-data:/analyzer-lsp/examples:z \
+            -v $(pwd)/e2e-tests/demo-output.yaml:/analyzer-lsp/output.yaml:z \
+            -v $(pwd)/e2e-tests/provider_settings.json:/analyzer-lsp/provider_settings.json:z \
+            -v $(pwd)/rulesets/:/analyzer-lsp/rules:z \
+            quay.io/konveyor/analyzer-lsp \
+            --output-file=/analyzer-lsp/output.yaml \
+            --rules=/analyzer-lsp/rules \
+            --provider-settings=/analyzer-lsp/provider_settings.json
+      - name: Verify output
+        shell: bash
+        run: |
+          git diff --exit-code HEAD -- $(pwd)/e2e-tests/demo-output.yaml
+  
+  run-analyzer-tests:
+    runs-on: ubuntu-latest
+    needs: local-analyzer-integration-test 
+    steps:
+      - name: download built image
+        uses: actions/download-artifact@v5
+        with:
+          pattern: "**-${{ needs.local-analyzer-integration-test.outputs.image-tag }}"
+          path: "/tmp/images"
+      
+      - name: Load images into podman
+        run: |
+          for image in $(find /tmp/images -type f -name "*.tar"); do
+            echo "Loading image: ${image}"
+            podman load -i "${image}"
+          done
+          echo "Loaded images:"
+          podman images
+          rm -rf /tmp/images
+        
+        
+      
+      - uses: actions/checkout@v4
+        with:
+          repository: konveyor/analyzer-lsp
+          ref: ${{ github.base_ref }}
+          
+
+      - name: run analyzer demo image
+        env:
+          IMG_C_SHARP_PROVIDER: quay.io/konveyor/c-sharp-provider:${{ needs.local-analyzer-integration-test.outputs.image-tag }}
+          IMG_JAVA_PROVIDER: quay.io/konveyor/java-external-provider:latest
+          IMG_GENERIC_PROVIDER: quay.io/konveyor/generic-external-provider:latest
+          IMG_YQ_PROVIDER: quay.io/konveyor/yq-external-provider:latest
         run : |
-          export PATH=${PATH}:`go env GOPATH`/bin
-          make run-demo-github
+          make run-external-providers-pod
+          make run-demo-image
+      
+      - name: install yq for testing
+        run: go install github.com/mikefarah/yq/v4@latest

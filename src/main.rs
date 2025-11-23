@@ -10,6 +10,7 @@ use std::{
         atomic::{AtomicUsize, Ordering},
         Arc,
     },
+    time::Duration,
 };
 
 use clap::{command, Parser};
@@ -17,7 +18,7 @@ use tokio::runtime;
 use tonic::transport::Server;
 use tracing::{debug, info, instrument::WithSubscriber};
 use tracing_log::LogTracer;
-use tracing_subscriber::EnvFilter;
+use tracing_subscriber::{fmt, layer::SubscriberExt, EnvFilter};
 
 use crate::analyzer_service::proto;
 use crate::analyzer_service::{
@@ -51,21 +52,51 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
 
     let filter = EnvFilter::from_default_env();
-    // construct a subscriber that prints formatted traces to stdout
     LogTracer::init_with_filter(tracing_log::log::LevelFilter::Trace)?;
-    let subscriber = tracing_subscriber::FmtSubscriber::builder()
-        .with_env_filter(filter)
-        .with_thread_names(true)
-        .finish();
-    // use that subscriber to process traces emitted after this point
-    tracing::subscriber::set_global_default(subscriber)?;
+
+    // Keep the guard alive for the duration of the program
+    // When it's dropped at the end of main(), it will flush remaining logs
+    let _guard;
+
+    // Configure logging based on whether a log file is specified
+    if let Some(log_file_path) = &args.log_file {
+        // Create file appender
+        let file_appender = tracing_appender::rolling::never(
+            std::path::Path::new(log_file_path)
+                .parent()
+                .unwrap_or_else(|| std::path::Path::new(".")),
+            std::path::Path::new(log_file_path)
+                .file_name()
+                .unwrap_or_else(|| std::ffi::OsStr::new("output.log")),
+        );
+        let (non_blocking, guard) = tracing_appender::non_blocking(file_appender);
+        _guard = Some(guard);
+
+        // Initialize with file output
+        let subscriber = tracing_subscriber::registry().with(filter).with(
+            fmt::layer()
+                .with_writer(non_blocking)
+                .with_thread_names(true),
+        );
+
+        tracing::subscriber::set_global_default(subscriber)?;
+    } else {
+        _guard = None;
+
+        // Initialize with stdout output (default behavior)
+        let subscriber = tracing_subscriber::registry()
+            .with(filter)
+            .with(fmt::layer().with_thread_names(true));
+
+        tracing::subscriber::set_global_default(subscriber)?;
+    }
     let rt = runtime::Builder::new_multi_thread()
         .thread_name_fn(|| {
             static ATOMIC_ID: AtomicUsize = AtomicUsize::new(0);
             let id = ATOMIC_ID.fetch_add(1, Ordering::SeqCst);
             format!("worker-{}", id)
         })
-        .worker_threads(6)
+        .worker_threads(32)
         .enable_all()
         .build()?;
 
@@ -89,6 +120,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         rt.block_on(async {
             let _ = Server::builder()
+                .http2_max_pending_accept_reset_streams(Some(30))
                 .add_service(ProviderServiceServer::from_arc(provider.clone()))
                 .add_service(ProviderCodeLocationServiceServer::from_arc(
                     provider.clone(),
@@ -117,6 +149,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
                 let uds_stream = UnixListenerStream::new(uds.unwrap());
                 let _ = Server::builder()
+                    .http2_keepalive_timeout(Some(Duration::new(20, 0)))
+                    .http2_keepalive_interval(Some(Duration::new(7200, 0)))
+                    .tcp_keepalive(Some(Duration::new(7200, 0)))
                     .add_service(ProviderServiceServer::from_arc(provider.clone()))
                     .add_service(ProviderCodeLocationServiceServer::from_arc(
                         provider.clone(),
@@ -133,6 +168,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             use crate::pipe_stream::get_named_pipe_connection_stream;
             rt.block_on(async {
                 let _ = Server::builder()
+                    .http2_keepalive_timeout(Some(Duration::new(20, 0)))
+                    .http2_keepalive_interval(Some(Duration::new(7200, 0)))
+                    .tcp_keepalive(Some(Duration::new(7200, 0)))
                     .add_service(ProviderServiceServer::from_arc(provider.clone()))
                     .add_service(ProviderCodeLocationServiceServer::from_arc(
                         provider.clone(),

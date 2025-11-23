@@ -268,7 +268,11 @@ impl Project {
                 .output()?;
             if !paket_output.status.success() {
                 //TODO: Consider a specific error type
-                debug!("paket command not successful");
+                debug!(
+                    "paket command not successful: {} --- {}",
+                    String::from_utf8_lossy(&paket_output.stdout),
+                    String::from_utf8_lossy(&paket_output.stderr)
+                );
                 return Err(Error::msg("paket command did not succeed"));
             }
         }
@@ -276,6 +280,12 @@ impl Project {
         let (reference_assembly_path, highest_restriction, deps) = self
             .read_packet_dependency_file(paket_deps_file.as_path())
             .await?;
+        if deps.is_empty() {
+            let mut d = self.dependencies.lock().await;
+            *d = Some(deps);
+            return Ok(());
+        }
+
         debug!(
             "got: {:?} -- {:?}",
             reference_assembly_path, highest_restriction
@@ -348,7 +358,28 @@ impl Project {
             .expect("project may not have been initialized");
         info!("adding all dependency and source to graph");
         let mut db_reader = SQLiteReader::open(&self.db_path)?;
+        // Load graphs from project location
+        info!("Loading project graphs from: {:?}", &self.location);
         db_reader.load_graphs_for_file_or_directory(&self.location, &NoCancellation)?;
+
+        // Also load SDK XML files if target framework is set
+        if let Some(sdk_path) = self.get_sdk_path() {
+            info!("Target framework set, SDK path: {:?}", sdk_path);
+            info!("SDK path exists: {}", sdk_path.exists());
+            if sdk_path.exists() {
+                info!("Loading SDK graphs from: {:?}", sdk_path);
+                if let Err(e) = db_reader.load_graphs_for_file_or_directory(&sdk_path, &NoCancellation) {
+                    error!("Failed to load SDK graphs: {}", e);
+                } else {
+                    info!("Successfully loaded SDK graphs from database");
+                }
+            } else {
+                info!("SDK path does not exist yet, skipping SDK graph loading");
+            }
+        } else {
+            info!("No target framework set, skipping SDK graph loading");
+        }
+
         // Once you read the data back from the DB, you will not get the source information
         // This is not currently stored in the database
         // There may be a way to re-attach this but for now we will relay code-snipper.
@@ -622,13 +653,17 @@ impl Project {
         }
         drop(lines);
 
-        let deps = deps
+        let deps: Vec<Dependencies> = deps
             .into_iter()
             .map(|mut d| {
                 d.highest_restriction = smallest_framework.clone();
                 d
             })
             .collect();
+
+        if deps.is_empty() {
+            return Ok((PathBuf::new(), String::new(), deps));
+        }
 
         // Now we we have the framework, we need to get the reference_assmblies
         let base_name = format!("{}.{}", REFERNCE_ASSEMBLIES_NAME, smallest_framework);
@@ -670,5 +705,152 @@ impl Project {
         }
 
         Err(anyhow!("unable to get reference assembly"))
+    }
+
+    /// Load SDK XML files into the database
+    /// Processes all files in a single graph build and database write
+    /// Returns the count of successfully loaded files
+    pub async fn load_sdk_xml_files_to_database(
+        &self,
+        xml_files: Vec<PathBuf>,
+    ) -> Result<usize, Error> {
+        info!("Loading {} SDK XML files into database", xml_files.len());
+
+        if xml_files.is_empty() {
+            return Ok(0);
+        }
+
+        // Filter out non-existent files
+        let valid_files: Vec<PathBuf> = xml_files
+            .into_iter()
+            .filter(|file| {
+                if !file.exists() {
+                    error!("SDK XML file does not exist: {:?}", file);
+                    false
+                } else {
+                    true
+                }
+            })
+            .collect();
+
+        if valid_files.is_empty() {
+            return Ok(0);
+        }
+
+        // Create a single graph for all XML files
+        let mut graph = StackGraph::new();
+
+        // Load source type symbols into graph
+        let (_, dep_source_type_node) = SourceType::load_symbols_into_graph(&mut graph);
+        let graph = graph; // Remove mutability
+
+        // Create language configuration with all XML file analyzers
+        let mut source_lc =
+            SourceNodeLanguageConfiguration::new(&tree_sitter_stack_graphs::NoCancellation)?;
+
+        // Register all XML files with the analyzer
+        let mut file_analyzers = FileAnalyzers::new();
+        for file in &valid_files {
+            let file_name = file
+                .file_name()
+                .ok_or_else(|| anyhow!("unable to get file name for {:?}", file))?
+                .to_string_lossy()
+                .to_string();
+            file_analyzers = file_analyzers.with(file_name, DepXMLFileAnalyzer {});
+        }
+        source_lc.language_config.special_files = file_analyzers;
+
+        // Process all files into the same graph
+        let mut current_graph = graph;
+        let mut success_count = 0;
+        let mut combined_file_to_tag = std::collections::HashMap::new();
+
+        for file in &valid_files {
+            info!("Indexing SDK XML file: {:?} into graph", file);
+            match add_dir_to_graph(
+                file,
+                &source_lc.dependnecy_type_node_info,
+                &source_lc.language_config,
+                current_graph,
+            ) {
+                std::result::Result::Ok(result) => {
+                    success_count += result.files_loaded;
+                    current_graph = result.stack_graph;
+                    // Accumulate file_to_tag mappings
+                    for (path, tag) in result.file_to_tag {
+                        combined_file_to_tag.insert(path, tag);
+                    }
+                }
+                Err(e) => {
+                    error!("Failed to add SDK XML file {:?} to graph: {}", file, e);
+                    // Continue with the rest of the files - need to recreate a graph
+                    current_graph = StackGraph::new();
+                    let (_, _) = SourceType::load_symbols_into_graph(&mut current_graph);
+                }
+            }
+        }
+
+        if success_count == 0 {
+            return Err(anyhow!("Failed to process any SDK XML files"));
+        }
+
+        // Connect root node to dependency source type node
+        let root_node = current_graph.iter_nodes().find(|n| {
+            let node = &current_graph[*n];
+            node.is_root()
+        });
+
+        if root_node.is_none() {
+            error!("Unable to find root node in combined graph");
+            return Err(anyhow!("unable to find root node"));
+        }
+        let root_node = root_node.unwrap();
+
+        let dep_source_type_node_handle = current_graph.iter_nodes().find(|n| {
+            let node = &current_graph[*n];
+            let symbol = node.symbol();
+            symbol.is_some() && symbol.unwrap() == dep_source_type_node.get_symbol_handle()
+        });
+
+        if let Some(dep_node) = dep_source_type_node_handle {
+            current_graph.add_edge(root_node, dep_node, 0);
+        }
+
+        // Write all results to database in a single operation
+        info!("Writing {} SDK XML files to database", success_count);
+        let mut db: SQLiteWriter = SQLiteWriter::open(&self.db_path)?;
+
+        for (file_path, tag) in combined_file_to_tag {
+            let file_str = file_path.to_string_lossy();
+            let file_handle = current_graph
+                .get_file(&file_str)
+                .ok_or_else(|| anyhow!("unable to get file"))?;
+
+            let mut partials = PartialPaths::new();
+            let mut paths: Vec<PartialPath> = vec![];
+            let stats = ForwardPartialPathStitcher::find_minimal_partial_path_set_in_file(
+                &current_graph,
+                &mut partials,
+                file_handle,
+                StitcherConfig::default().with_collect_stats(true),
+                &NoCancellation,
+                |_, _, p| paths.push(p.clone()),
+            )?;
+
+            db.store_result_for_file(&current_graph, file_handle, &tag, &mut partials, &paths)?;
+
+            trace!(
+                "Stats for stitching SDK XML {}: {:?} - paths: {}",
+                file_str,
+                stats,
+                paths.len()
+            );
+        }
+
+        info!(
+            "SDK XML loading complete: {} files successfully processed",
+            success_count
+        );
+        Ok(success_count)
     }
 }

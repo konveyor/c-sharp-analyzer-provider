@@ -25,7 +25,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: System\.Data\.Entity\.DbContext
+      pattern: System.Data.Entity.DbContext
 
 - category: mandatory
   customVariables: []
@@ -51,7 +51,7 @@
   when:
     csharp.referenced:
       location: METHOD
-      pattern: Database\.SetInitializer
+      pattern: "*.Database.SetInitializer"
 
 - category: optional
   customVariables: []
@@ -76,7 +76,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: DbSet
+      pattern: "*.DbSet"
 
 - category: mandatory
   customVariables: []
@@ -101,7 +101,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: System\.Data\.Entity\.Spatial
+      pattern: System.Data.Entity.Spatial
 
 - category: optional
   customVariables: []
@@ -126,5 +126,4 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: System\.Data\.Entity
-
+      pattern: System.Data.Entity

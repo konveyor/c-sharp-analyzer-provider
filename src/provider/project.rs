@@ -19,6 +19,7 @@ use which::which;
 use crate::c_sharp_graph::language_config::SourceNodeLanguageConfiguration;
 use crate::c_sharp_graph::loader::{init_stack_graph, SourceType};
 use crate::provider::dependency_resolution::Dependencies;
+use crate::provider::target_framework::TargetFramework;
 
 pub struct Project {
     pub location: PathBuf,
@@ -28,6 +29,7 @@ pub struct Project {
     pub source_language_config: Arc<RwLock<Option<SourceNodeLanguageConfiguration>>>,
     pub analysis_mode: AnalysisMode,
     pub tools: Tools,
+    target_framework: Arc<Mutex<Option<TargetFramework>>>,
 }
 
 #[derive(Eq, PartialEq, Debug, Deserialize)]
@@ -79,13 +81,19 @@ impl Debug for Project {
 pub struct Tools {
     pub ilspy_cmd: PathBuf,
     pub paket_cmd: PathBuf,
+    pub dotnet_install_cmd: PathBuf,
 }
 
 impl Project {
     const ILSPY_CMD_LOC_KEY: &str = "ilspy_cmd";
     const PAKET_CMD_LOC_KEY: &str = "paket_cmd";
+    const DOTNET_INSTALL_CMD_LOC_KEY: &str = "dotnet_install_cmd";
     const ILSPY_CMD: &str = "ilspy";
     const PAKET_CMD: &str = "paket";
+    #[cfg(windows)]
+    const DOTNET_INSTALL_SCRIPT: &str = "/usr/local/bin/scripts/dotnet-install.ps1";
+    #[cfg(not(windows))]
+    const DOTNET_INSTALL_SCRIPT: &str = "/usr/local/bin/scripts/dotnet-install.sh";
     pub fn new(
         location: PathBuf,
         db_path: PathBuf,
@@ -100,7 +108,24 @@ impl Project {
             source_language_config: Arc::new(RwLock::new(None)),
             analysis_mode,
             tools,
+            target_framework: Arc::new(Mutex::new(None)),
         }
+    }
+
+    pub(crate) fn set_target_framework(&self, tfm: TargetFramework) {
+        if let Ok(mut guard) = self.target_framework.lock() {
+            *guard = Some(tfm);
+        }
+    }
+
+    pub fn get_sdk_path(&self) -> Option<PathBuf> {
+        if let Ok(guard) = self.target_framework.lock() {
+            if let Some(ref tfm) = *guard {
+                // Derive SDK path from target framework
+                return Some(std::env::temp_dir().join("dotnet-sdks").join(tfm.as_str()));
+            }
+        }
+        None
     }
 
     pub fn get_tools(specific_provider_config: &Option<Struct>) -> Result<Tools, Error> {
@@ -138,15 +163,57 @@ impl Project {
                         return Err(anyhow!("not valid paket_cmd"));
                     }
                 };
+                let dotnet_install_cmd = match specific_provider_config
+                    .fields
+                    .get(Self::DOTNET_INSTALL_CMD_LOC_KEY)
+                {
+                    Some(Value {
+                        kind: Some(prost_types::value::Kind::StringValue(s)),
+                    }) => {
+                        let p = PathBuf::from_str(s)?;
+                        if p.exists() {
+                            p
+                        } else {
+                            return Err(anyhow!("not valid dotnet_install_cmd"));
+                        }
+                    }
+                    None => {
+                        let default_path = PathBuf::from(Self::DOTNET_INSTALL_SCRIPT);
+                        if default_path.exists() {
+                            default_path
+                        } else {
+                            return Err(anyhow!(
+                                "dotnet-install script not found at {}",
+                                Self::DOTNET_INSTALL_SCRIPT
+                            ));
+                        }
+                    }
+                    _ => {
+                        return Err(anyhow!("not valid dotnet_install_cmd"));
+                    }
+                };
                 Ok(Tools {
                     ilspy_cmd,
                     paket_cmd,
+                    dotnet_install_cmd,
                 })
             }
-            None => Ok(Tools {
-                ilspy_cmd: which(Self::ILSPY_CMD)?,
-                paket_cmd: which(Self::PAKET_CMD)?,
-            }),
+            None => {
+                let default_path = PathBuf::from(Self::DOTNET_INSTALL_SCRIPT);
+                let dotnet_install_cmd = if default_path.exists() {
+                    default_path
+                } else {
+                    return Err(anyhow!(
+                        "dotnet-install script not found at {}",
+                        Self::DOTNET_INSTALL_SCRIPT
+                    ));
+                };
+                Ok(Tools {
+                    ilspy_cmd: which(Self::ILSPY_CMD)?,
+                    paket_cmd: which(Self::PAKET_CMD)?,
+                    dotnet_install_cmd,
+                })
+            }
         }
     }
 
@@ -169,10 +236,14 @@ impl Project {
                 }
             };
 
-            if let Err(e) =
-                db_reader.load_graphs_for_file_or_directory(&self.location, &NoCancellation)
-            {
-                return Err(anyhow!(e));
+            // Load graphs from project location
+            db_reader.load_graphs_for_file_or_directory(&self.location, &NoCancellation)?;
+
+            // Also load SDK XML files if target framework is set
+            if let Some(sdk_path) = self.get_sdk_path() {
+                debug!("Loading SDK graphs from: {:?}", sdk_path);
+                // Ignore errors here - SDK might not be installed yet
+                let _ = db_reader.load_graphs_for_file_or_directory(&sdk_path, &NoCancellation);
             }
 
             let (stack_graph, _, _) = db_reader.get_graph_partials_and_db();
