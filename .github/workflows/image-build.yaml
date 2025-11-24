@@ -10,6 +10,7 @@ on:
 jobs:
   ## Building image will always happen.
   build-image:
+    runs-on: ubuntu-latest
     steps:
       - name: Build and Push
         uses: konveyor/release-tools/.github/workflows/build-push-images.yaml@main
