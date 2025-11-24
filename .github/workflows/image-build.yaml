@@ -1,0 +1,25 @@
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+      - 'release-*'
+    tags:
+      - 'v*'
+
+jobs:
+  ## Building image will always happen.
+  build-image:
+    steps:
+      - name: Build and Push
+        uses: konveyor/release-tools/.github/workflows/build-push-images.yaml@main
+        with:
+          regirstry: "quay.io/konveyor"
+          image_name: "c-sharp-provider"
+          containerfile: "./Dockerfile"
+          context: "."
+          architectures: '[ "amd64", "arm64" ]'
+        secrets:
+          registry_username: ${{ secrets.QUAY_PUBLISH_ROBOT }}
+          registry_password: ${{ secrets.QUAY_PUBLISH_TOKEN }}
+

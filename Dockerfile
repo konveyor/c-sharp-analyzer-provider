@@ -11,7 +11,7 @@ COPY Cargo.toml /csharp-provider/
 COPY build.rs  /csharp-provider/
 COPY src  /csharp-provider/src
 
-RUN --mount=type=cache,id=cagohome,uid=1001,gid=0,mode=0777,target=/root/.cargo PROTOC=$HOME/protoc/bin/protoc cargo build
+RUN --mount=type=cache,id=cagohome,uid=1001,gid=0,mode=0777,target=/root/.cargo PROTOC=$HOME/protoc/bin/protoc cargo build --release
 
 FROM registry.access.redhat.com/ubi9/ubi
 
