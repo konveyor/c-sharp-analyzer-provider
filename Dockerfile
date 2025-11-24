@@ -26,5 +26,5 @@ ENV RUST_LOG=INFO,c_sharp_analyzer_provider_cli=DEBUG,
 COPY --chmod=0777 scripts/dotnet-install.sh /usr/local/bin/scripts/dotnet-install.sh
 COPY --chmod=0777 scripts/dotnet-install.ps1 /usr/local/bin/scripts/dotnet-install.ps1
 
-COPY --from=builder /csharp-provider/target/debug/c-sharp-analyzer-provider-cli /usr/local/bin/c-sharp-provider
+COPY --from=builder /csharp-provider/target/release/c-sharp-analyzer-provider-cli /usr/local/bin/c-sharp-provider
 ENTRYPOINT ["/usr/local/bin/c-sharp-provider", "--name", "c-sharp"]
