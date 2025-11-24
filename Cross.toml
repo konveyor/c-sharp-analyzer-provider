@@ -1,0 +1,39 @@
+# Cross configuration for multi-platform builds
+# This file configures the cross tool for building the C# analyzer provider
+# for different architectures and operating systems.
+
+[build]
+# Default target directory for builds
+target-dir = "target/cross"
+
+[target.x86_64-unknown-linux-gnu]
+# Use a custom image with protoc installed
+image = "ghcr.io/cross-rs/x86_64-unknown-linux-gnu:edge"
+
+[target.x86_64-unknown-linux-gnu.env]
+# Environment variables for the build
+passthrough = ["PROTOC"]
+
+[target.aarch64-unknown-linux-gnu]
+# Use a custom image with protoc installed
+image = "ghcr.io/cross-rs/aarch64-unknown-linux-gnu:edge"
+
+[target.aarch64-unknown-linux-gnu.env]
+passthrough = ["PROTOC"]
+
+[target.x86_64-pc-windows-gnu]
+# Windows cross-compilation from Linux
+image = "ghcr.io/cross-rs/x86_64-pc-windows-gnu:edge"
+
+[target.x86_64-pc-windows-gnu.env]
+passthrough = ["PROTOC"]
+
+[target.aarch64-pc-windows-gnullvm]
+# ARM64 Windows support (experimental)
+image = "ghcr.io/cross-rs/aarch64-pc-windows-gnullvm:edge"
+
+[target.aarch64-pc-windows-gnullvm.env]
+passthrough = ["PROTOC"]
+
+# Note: macOS targets (darwin) cannot be cross-compiled from Linux runners
+# These will be built on macOS runners directly
