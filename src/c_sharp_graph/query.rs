@@ -296,7 +296,7 @@ impl<T: GetMatcher> Querier<'_, T> {
                             }
                         }
                         SyntaxType::NamespaceDeclaration => {
-                            if search.match_namespace(symbol) {
+                            if search.partial_namespace(symbol) {
                                 definition_root_nodes.push(node_handle);
                                 referenced_files.insert(file_handle);
                             }
@@ -1027,17 +1027,75 @@ impl Search {
     }
 
     pub(crate) fn match_namespace(&self, symbol: &str) -> bool {
-        for (i, symbol_part) in symbol.split(".").enumerate() {
-            // Because we can assume that the last part here is a '*' right now,
-            // we anything past that should match
-            if self.parts.len() <= i {
-                break;
-            }
-            if !self.parts[i].matches(symbol_part) {
-                return false;
-            }
+        let symbol_split: Vec<&str> = symbol.split(".").collect();
+        let mut part_index = 0;
+        let mut symbol_index = 0;
+        loop {
+            let s = symbol_split.get(symbol_index);
+            let p = self.parts.get(part_index);
+            match (s, p) {
+                (Some(symbol), Some(part)) => {
+                    if part.regex.is_some() && part.part == "*" {
+                        if let Some(look_ahead_part) = self.parts.get(part_index + 1) {
+                            println!(
+                                "here look-ahead: {}, {:?}, {:?}",
+                                symbol, part, look_ahead_part
+                            );
+                            symbol_index += 1;
+                            if look_ahead_part.matches(symbol) {
+                                // This has to move from the current star, to the next value, that
+                                // matches, and the next round needs to look at the next value.
+                                // an example:
+                                // System.*.Web.Mvc
+                                // the Ns is System.MicroSoft.Web.Mvc
+                                // System will match in previous iteration.
+                                // We see * and MicroSoft and lookahead to Web and determine that
+                                // matches.
+                                // We then need to match the Mvc part with the Mvc Symbol;
+                                println!("here look-ahead match: {}, {:?}", symbol, part);
+                                part_index += 2;
+                                continue;
+                            } else {
+                                // if it was a star regex for the part, then this would match.
+                                // This means we need to continue to see if we match later.
+                                println!("here look-ahead match no match: {}, {:?}", symbol, part);
+                                continue;
+                            }
+                        } else {
+                            // ending Star regex, everthing has matched before this is valid.
+                            return part.matches(symbol);
+                        }
+                    } else if part.matches(symbol) {
+                        part_index += 1;
+                        symbol_index += 1;
+                        continue;
+                    } else {
+                        return false;
+                    }
+                }
+                (Some(_), None) => {
+                    // Here we no longer have parts but have symbols.
+                    // check if the last part is star regex, if it is match.
+                    if let Some(part) = self.parts.last() {
+                        return part.regex.is_some() && part.part == "*";
+                    } else {
+                        return false;
+                    }
+                }
+                (None, Some(_)) => {
+                    // If we have parts but no more symbols
+                    if let Some(part) = self.parts.last() {
+                        return part.regex.is_some() && part.part == "*";
+                    } else {
+                        return false;
+                    }
+                }
+                (None, None) => {
+                    // This happens when the last element maatches for both.
+                    return true;
+                }
+            };
         }
-        true
     }
 
     pub(crate) fn match_symbol(&self, symbol: &str) -> bool {
@@ -1234,15 +1292,15 @@ mod tests {
 
     #[test]
     fn test_match_namespace_symbol_longer() {
-        let search = Search::create_search("System".to_string()).unwrap();
+        let search = Search::create_search("System.*".to_string()).unwrap();
         assert!(search.match_namespace("System.Configuration.Manager"));
     }
 
     #[test]
     fn test_match_namespace_symbol_shorter() {
         let search = Search::create_search("System.Configuration.Manager".to_string()).unwrap();
-        assert!(search.match_namespace("System.Configuration"));
-        assert!(search.match_namespace("System"));
+        assert!(!search.match_namespace("System.Configuration"));
+        assert!(!search.match_namespace("System"));
     }
 
     #[test]
@@ -1322,7 +1380,7 @@ mod tests {
 
         // Test match_namespace
         assert!(search.match_namespace("System.Configuration.ConfigurationManager"));
-        assert!(search.match_namespace("System.Configuration"));
+        assert!(!search.match_namespace("System.Configuration"));
 
         // Test match_symbol
         assert!(search.match_symbol("ConfigurationManager"));
@@ -1359,7 +1417,7 @@ mod tests {
 
         // Test match_namespace - same behavior as partial for this case
         assert!(search.match_namespace("System.Configuration.ConfigurationManager.AppSettings"));
-        assert!(search.match_namespace("System.Configuration"));
+        assert!(!search.match_namespace("System.Configuration"));
 
         // Test match_symbol (last part is "AppSettings")
         assert!(search.match_symbol("AppSettings"));
