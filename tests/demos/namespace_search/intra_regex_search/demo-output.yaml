@@ -125,42 +125,6 @@
     }
   },
   {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs",
-    "codeLocation": {
-      "startPosition": {
-        "line": 8
-      },
-      "endPosition": {
-        "line": 47,
-        "character": 1
-      }
-    },
-    "LineNumber": "8",
-    "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs",
-      "symbol": "NerdDinner",
-      "syntax_type": "namespace_declaration"
-    }
-  },
-  {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs",
-    "codeLocation": {
-      "startPosition": {
-        "line": 3
-      },
-      "endPosition": {
-        "line": 56,
-        "character": 1
-      }
-    },
-    "LineNumber": "3",
-    "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs",
-      "symbol": "NerdDinner",
-      "syntax_type": "namespace_declaration"
-    }
-  },
-  {
     "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs",
     "codeLocation": {
       "startPosition": {
@@ -195,24 +159,6 @@
       "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs",
       "symbol": "System.Web.Mvc",
       "syntax_type": "import"
-    }
-  },
-  {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs",
-    "codeLocation": {
-      "startPosition": {
-        "line": 3
-      },
-      "endPosition": {
-        "line": 12,
-        "character": 1
-      }
-    },
-    "LineNumber": "3",
-    "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs",
-      "symbol": "NerdDinner",
-      "syntax_type": "namespace_declaration"
     }
   },
   {
@@ -278,24 +224,6 @@
     "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
     "codeLocation": {
       "startPosition": {
-        "line": 7
-      },
-      "endPosition": {
-        "line": 29,
-        "character": 1
-      }
-    },
-    "LineNumber": "7",
-    "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
-      "symbol": "NerdDinner",
-      "syntax_type": "namespace_declaration"
-    }
-  },
-  {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
-    "codeLocation": {
-      "startPosition": {
         "line": 9,
         "character": 4
       },
@@ -349,24 +277,6 @@
       "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
       "symbol": "System.Web.Http",
       "syntax_type": "import"
-    }
-  },
-  {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
-    "codeLocation": {
-      "startPosition": {
-        "line": 5
-      },
-      "endPosition": {
-        "line": 18,
-        "character": 1
-      }
-    },
-    "LineNumber": "5",
-    "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
-      "symbol": "NerdDinner",
-      "syntax_type": "namespace_declaration"
     }
   },
   {
@@ -1634,24 +1544,6 @@
     "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
     "codeLocation": {
       "startPosition": {
-        "line": 8
-      },
-      "endPosition": {
-        "line": 8,
-        "character": 16
-      }
-    },
-    "LineNumber": "8",
-    "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-      "symbol": "PagedList",
-      "syntax_type": "import"
-    }
-  },
-  {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
-    "codeLocation": {
-      "startPosition": {
         "line": 90,
         "character": 35
       },
@@ -1806,24 +1698,6 @@
       "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
       "symbol": "System.Web.Mvc",
       "syntax_type": "import"
-    }
-  },
-  {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
-    "codeLocation": {
-      "startPosition": {
-        "line": 10
-      },
-      "endPosition": {
-        "line": 33,
-        "character": 1
-      }
-    },
-    "LineNumber": "10",
-    "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
-      "symbol": "NerdDinner",
-      "syntax_type": "namespace_declaration"
     }
   },
   {
@@ -2023,24 +1897,6 @@
       "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
       "symbol": "System.Web.Mvc",
       "syntax_type": "import"
-    }
-  },
-  {
-    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
-    "codeLocation": {
-      "startPosition": {
-        "line": 7
-      },
-      "endPosition": {
-        "line": 37,
-        "character": 1
-      }
-    },
-    "LineNumber": "7",
-    "variables": {
-      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
-      "symbol": "NerdDinner",
-      "syntax_type": "namespace_declaration"
     }
   },
   {

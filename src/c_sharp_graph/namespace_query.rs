@@ -6,7 +6,7 @@ use stack_graphs::{
     arena::Handle,
     graph::{Node, StackGraph},
 };
-use tracing::{error, info};
+use tracing::trace;
 
 use crate::c_sharp_graph::{
     class_query::ClassSymbols,
@@ -16,15 +16,15 @@ use crate::c_sharp_graph::{
 };
 
 #[derive(Debug, Clone)]
-pub struct NamespaceFQDNNotFoundError;
+pub struct NotFoundError;
 
-impl fmt::Display for NamespaceFQDNNotFoundError {
+impl fmt::Display for NotFoundError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "unable to find FQDN for namespace")
     }
 }
 
-impl std::error::Error for NamespaceFQDNNotFoundError {}
+impl std::error::Error for NotFoundError {}
 
 pub(crate) struct NamespaceSymbolsGetter {}
 
@@ -45,9 +45,9 @@ impl GetMatcher for NamespaceSymbolsGetter {
 
 #[derive(Debug)]
 pub(crate) struct NamespaceSymbols {
-    classes: ClassSymbols,
-    fields: FieldSymbols,
-    methods: MethodSymbols,
+    classes: Option<ClassSymbols>,
+    fields: Option<FieldSymbols>,
+    methods: Option<MethodSymbols>,
     namespace: Vec<Fqdn>,
 }
 
@@ -59,23 +59,34 @@ impl NamespaceSymbols {
         search: &Search,
     ) -> anyhow::Result<NamespaceSymbols, Error> {
         // TODO: Handle borrow in new function
-        let class_symbol = ClassSymbols::new(graph, nodes.clone(), search)?;
-        let field_symbol = FieldSymbols::new(graph, nodes.clone(), search)?;
-        let method_symbols = MethodSymbols::new(graph, nodes.clone(), search)?;
+        let class_symbol = ClassSymbols::new(graph, nodes.clone(), search);
+        let field_symbol = FieldSymbols::new(graph, nodes.clone(), search);
+        let method_symbols = MethodSymbols::new(graph, nodes.clone(), search);
 
         let mut results: Vec<Fqdn> = vec![];
         for node in nodes {
             Self::traverse_node(graph, node, search, &mut results);
         }
 
-        if results.is_empty() {
-            return Err(anyhow!(NamespaceFQDNNotFoundError {}));
+        if results.is_empty()
+            && class_symbol.is_err()
+            && field_symbol.is_err()
+            && method_symbols.is_err()
+        {
+            return Err(anyhow!(NotFoundError {}));
         }
+        trace!(
+            "nodes found: \nclasses: {:?}\nmethods: {:?}\nfields: {:?}\nnamespaces: {:?}",
+            class_symbol,
+            field_symbol,
+            method_symbols,
+            results
+        );
 
         Ok(NamespaceSymbols {
-            classes: class_symbol,
-            fields: field_symbol,
-            methods: method_symbols,
+            classes: class_symbol.ok(),
+            fields: field_symbol.ok(),
+            methods: method_symbols.ok(),
             namespace: results,
         })
     }
@@ -90,15 +101,41 @@ impl SymbolMatcher for NamespaceSymbols {
         {
             return true;
         }
-        self.classes.match_symbol(symbol.clone())
-            || self.fields.match_symbol(symbol.clone())
-            || self.methods.match_symbol(symbol.clone())
+        if let Some(classes) = &self.classes {
+            if classes.match_symbol(symbol.clone()) {
+                return true;
+            }
+        }
+        if let Some(methods) = &self.methods {
+            if methods.match_symbol(symbol.clone()) {
+                return true;
+            }
+        }
+        if let Some(fields) = &self.fields {
+            if fields.match_symbol(symbol.clone()) {
+                return true;
+            }
+        }
+        false
     }
 
     fn match_fqdn(&self, fqdn: &Fqdn) -> bool {
-        self.classes.match_fqdn(fqdn)
-            || self.fields.match_fqdn(fqdn)
-            || self.methods.match_fqdn(fqdn)
+        if let Some(classes) = &self.classes {
+            if classes.match_fqdn(fqdn) {
+                return true;
+            }
+        }
+        if let Some(methods) = &self.methods {
+            if methods.match_fqdn(fqdn) {
+                return true;
+            }
+        }
+        if let Some(fields) = &self.fields {
+            if fields.match_fqdn(fqdn) {
+                return true;
+            }
+        }
+        false
     }
 }
 
@@ -263,7 +300,8 @@ mod tests {
     #[test]
     fn test_namespace_symbols_match_symbol_class() {
         let (graph, roots) = build_mock_namespace_graph();
-        let search = Search::create_search("*".to_string()).unwrap();
+        let search =
+            Search::create_search("Configuration.ConfigurationManager.*".to_string()).unwrap();
         let ns_symbols = NamespaceSymbols::new(&graph, roots, &search).unwrap();
 
         // Should match class within namespace
