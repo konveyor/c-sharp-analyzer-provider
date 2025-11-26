@@ -5,6 +5,6 @@ pub mod language_config;
 pub mod loader;
 mod method_query;
 mod namespace_query;
-pub use namespace_query::NamespaceFQDNNotFoundError;
+pub use namespace_query::NotFoundError;
 pub mod query;
 pub mod results;

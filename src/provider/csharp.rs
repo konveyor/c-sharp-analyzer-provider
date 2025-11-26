@@ -9,7 +9,7 @@ use utoipa::{OpenApi, ToSchema};
 
 use crate::c_sharp_graph::query::{Query, QueryType};
 use crate::c_sharp_graph::results::ResultNode;
-use crate::c_sharp_graph::NamespaceFQDNNotFoundError;
+use crate::c_sharp_graph::NotFoundError;
 //use crate::c_sharp_graph::find_node::FindNode;
 use crate::provider::target_framework;
 use crate::provider::AnalysisMode;
@@ -90,10 +90,8 @@ impl ProviderService for CSharpProvider {
     }
 
     async fn init(&self, r: Request<Config>) -> Result<Response<InitResponse>, Status> {
-        eprintln!("=== INIT CALLED ===");
         let mut config_guard = self.config.lock().await;
         let saved_config = config_guard.insert(r.get_ref().clone());
-        eprintln!("Config saved: location={}", saved_config.location);
 
         let analysis_mode = AnalysisMode::from(saved_config.analysis_mode.clone());
         let location = PathBuf::from(saved_config.location.clone());
@@ -121,7 +119,6 @@ impl ProviderService for CSharpProvider {
             }
         };
 
-        eprintln!("Getting target framework...");
         info!("getting the dotnet target framework for the project");
 
         // Detect target framework from .csproj files (optional)
@@ -131,12 +128,10 @@ impl ProviderService for CSharpProvider {
                 &project.location,
             ) {
                 Ok(target_framework) => {
-                    eprintln!("Detected target framework: {}", target_framework.as_str());
                     info!("Detected target framework: {}", target_framework.as_str());
 
                     // Store the target framework in the project for later SDK path resolution
                     project.set_target_framework(target_framework.clone());
-                    eprintln!("Stored target framework in project");
 
                     // Only attempt SDK installation for modern .NET (Core, 5, 6, 7, 8, etc.)
                     // Old .NET Framework (net45, net472, etc.) cannot be installed via dotnet-install
@@ -149,9 +144,7 @@ impl ProviderService for CSharpProvider {
                             && !tfm_str.starts_with("net2")
                             && !tfm_str.starts_with("net1");
 
-                    eprintln!("is_modern_dotnet: {}", is_modern_dotnet);
                     if is_modern_dotnet {
-                        eprintln!("Modern .NET detected, spawning SDK installation task");
                         info!(
                             "Modern .NET detected ({}), will attempt SDK installation",
                             target_framework.as_str()
@@ -354,7 +347,7 @@ impl ProviderService for CSharpProvider {
         let results = query.query(condition.referenced.pattern.clone());
         let results = match results {
             Err(e) => {
-                if let Some(_e) = e.downcast_ref::<NamespaceFQDNNotFoundError>() {
+                if let Some(_e) = e.downcast_ref::<NotFoundError>() {
                     EvaluateResponse {
                         error: String::new(),
                         successful: true,

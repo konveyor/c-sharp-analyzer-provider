@@ -1037,10 +1037,6 @@ impl Search {
                 (Some(symbol), Some(part)) => {
                     if part.regex.is_some() && part.part == "*" {
                         if let Some(look_ahead_part) = self.parts.get(part_index + 1) {
-                            println!(
-                                "here look-ahead: {}, {:?}, {:?}",
-                                symbol, part, look_ahead_part
-                            );
                             symbol_index += 1;
                             if look_ahead_part.matches(symbol) {
                                 // This has to move from the current star, to the next value, that
@@ -1052,13 +1048,11 @@ impl Search {
                                 // We see * and MicroSoft and lookahead to Web and determine that
                                 // matches.
                                 // We then need to match the Mvc part with the Mvc Symbol;
-                                println!("here look-ahead match: {}, {:?}", symbol, part);
                                 part_index += 2;
                                 continue;
                             } else {
                                 // if it was a star regex for the part, then this would match.
                                 // This means we need to continue to see if we match later.
-                                println!("here look-ahead match no match: {}, {:?}", symbol, part);
                                 continue;
                             }
                         } else {
@@ -1084,14 +1078,15 @@ impl Search {
                 }
                 (None, Some(_)) => {
                     // If we have parts but no more symbols
-                    if let Some(part) = self.parts.last() {
-                        return part.regex.is_some() && part.part == "*";
-                    } else {
-                        return false;
+                    for remaining_part in &self.parts[part_index..] {
+                        if !(remaining_part.regex.is_some() && remaining_part.part == "*") {
+                            return false;
+                        }
                     }
+                    return true;
                 }
                 (None, None) => {
-                    // This happens when the last element maatches for both.
+                    // This happens when the last element matches for both.
                     return true;
                 }
             };
@@ -1292,8 +1287,11 @@ mod tests {
 
     #[test]
     fn test_match_namespace_symbol_longer() {
-        let search = Search::create_search("System.*".to_string()).unwrap();
+        let search = Search::create_search("System.*.Manager.*".to_string()).unwrap();
         assert!(search.match_namespace("System.Configuration.Manager"));
+        assert!(search.match_namespace("System.Test.Manager"));
+        assert!(!search.match_namespace("System.Web"));
+        assert!(!search.match_namespace("System"));
     }
 
     #[test]
