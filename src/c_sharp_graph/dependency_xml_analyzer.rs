@@ -107,9 +107,9 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                 "unable to handle comp unit".to_string(),
             ));
         }
-        let node_handle = node_handle.unwrap();
+        let comp_unit_node_handle = node_handle.unwrap();
         let syntax_type = stack_graph.add_string(SyntaxType::CompUnit.to_string());
-        let source_info = stack_graph.source_info_mut(node_handle);
+        let source_info = stack_graph.source_info_mut(comp_unit_node_handle);
         source_info.syntax_type = syntax_type.into();
 
         let mut map_namespace_nodes: HashMap<String, Handle<Node>> = HashMap::new();
@@ -179,6 +179,8 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                         }
                         let node_handle = node_handle.unwrap();
                         map_namespace_nodes.insert(node.symbol.clone(), node_handle);
+
+                        stack_graph.add_edge(comp_unit_node_handle, node_handle, 0);
                         node_handle
                     } else {
                         continue;
@@ -318,10 +320,17 @@ impl DepXMLFileAnalyzer {
                 };
                 nodes.push(type_name.clone());
                 let namespace_symbol = parts.fold("".to_string(), |acc, p| {
-                    if acc.is_empty() {
-                        p.to_string()
+                    let interface_check_parts: Vec<&str> = p.split("#").collect();
+                    let t = if interface_check_parts.len() > 1 {
+                        interface_check_parts[0]
                     } else {
-                        format!("{}.{}", acc, p)
+                        p
+                    };
+
+                    if acc.is_empty() {
+                        t.to_string()
+                    } else {
+                        format!("{}.{}", acc, t)
                     }
                 });
                 let namesapce_node = NodeInfo {

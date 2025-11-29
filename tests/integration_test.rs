@@ -391,25 +391,19 @@ async fn integration_test_net8() {
         Some(response) => {
             println!("Found {} incidents", response.incident_contexts.len());
 
-            if response.incident_contexts.is_empty() {
-                println!("WARNING: No Person references found. This is expected if the stack graph didn't load properly.");
-                println!(
-                    "SDK installation status from logs: Check for 'Permission denied' errors above"
-                );
-            } else {
-                // Verify at least one incident is in Program.cs
-                let program_incidents: Vec<_> = response
-                    .incident_contexts
-                    .iter()
-                    .filter(|ic| ic.file_uri.contains("Program.cs"))
-                    .collect();
+            assert_ne!(response.incident_contexts.len(), 0);
+            // Verify at least one incident is in Program.cs
+            let program_incidents: Vec<_> = response
+                .incident_contexts
+                .iter()
+                .filter(|ic| ic.file_uri.contains("Program.cs"))
+                .collect();
 
-                println!(
-                    "✓ Successfully found {} Person class references total",
-                    response.incident_contexts.len()
-                );
-                println!("✓ {} references in Program.cs", program_incidents.len());
-            }
+            println!(
+                "✓ Successfully found {} Person class references total",
+                response.incident_contexts.len()
+            );
+            println!("✓ {} references in Program.cs", program_incidents.len());
         }
     }
 
