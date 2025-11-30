@@ -67,7 +67,7 @@ jobs:
           podman volume create test-data
           podman run --rm -v test-data:/target:z -v $(pwd)/testdata:/src/:z --entrypoint=cp alpine -a /src/. /target/
           podman pod create --name=analyzer-c-sharp
-          podman run --pod analyzer-c-sharp --name c-sharp -d -v test-data:/analyzer-lsp/examples:z quay.io/konveyor/c-sharp-provider:${{ steps.set-tag.outputs.image_tag }} --port 14652
+          podman run --pod analyzer-c-sharp --name c-sharp -d -v test-data:/analyzer-lsp/examples:z quay.io/konveyor/c-sharp-provider:${{ steps.set-tag.outputs.image_tag }} --port 14651
           podman run --entrypoint /usr/local/bin/konveyor-analyzer --pod=analyzer-c-sharp \
             -v test-data:/analyzer-lsp/examples:z \
             -v $(pwd)/e2e-tests/demo-output.yaml:/analyzer-lsp/output.yaml:z \
