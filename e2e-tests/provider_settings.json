@@ -1,7 +1,7 @@
 [
   {
     "name": "csharp",
-    "address": "localhost:14652",
+    "address": "localhost:14651",
     "initConfig": [
       {
         "analysisMode": "source-only",

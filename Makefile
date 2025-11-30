@@ -226,7 +226,7 @@ run-c-sharp-pod:
 	$(CONTAINER_RUNTIME) volume create test-data
 	$(CONTAINER_RUNTIME) run --rm -v test-data:/target$(MOUNT_OPT) -v $(PWD)/testdata:/src/$(MOUNT_OPT) --entrypoint=cp alpine -a /src/. /target/
 	$(CONTAINER_RUNTIME) pod create --name=analyzer-c-sharp
-	$(CONTAINER_RUNTIME) run --pod analyzer-c-sharp --name c-sharp -d -v test-data:/analyzer-lsp/examples$(MOUNT_OPT) ${IMAGE} --port 14652
+	$(CONTAINER_RUNTIME) run --pod analyzer-c-sharp --name c-sharp -d -v test-data:/analyzer-lsp/examples$(MOUNT_OPT) ${IMAGE} --port 14651
 
 stop-c-sharp-pod:
 	$(CONTAINER_RUNTIME) pod kill analyzer-c-sharp || true
