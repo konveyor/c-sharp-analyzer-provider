@@ -1,13 +1,16 @@
 use std::{collections::BTreeMap, vec};
 
-use anyhow::{Error, Ok};
+use anyhow::{anyhow, Error, Ok};
 use stack_graphs::{
     arena::Handle,
     graph::{Node, StackGraph},
 };
 use tracing::{debug, trace};
 
-use crate::c_sharp_graph::query::{get_fqdn, Fqdn, GetMatcher, Search, SymbolMatcher, SyntaxType};
+use crate::c_sharp_graph::{
+    namespace_query::NotFoundError,
+    query::{get_fqdn, Fqdn, GetMatcher, Search, SymbolMatcher, SyntaxType},
+};
 
 pub(crate) struct ClassSymbolsGetter {}
 
@@ -27,6 +30,7 @@ impl GetMatcher for ClassSymbolsGetter {
     }
 }
 
+#[derive(Debug)]
 pub(crate) struct ClassSymbols {
     classes: BTreeMap<Fqdn, Handle<Node>>,
 }
@@ -43,6 +47,10 @@ impl ClassSymbols {
         for node_handle in nodes {
             //Get all the edges
             Self::traverse_node(graph, node_handle, search, &mut classes)
+        }
+
+        if classes.is_empty() {
+            return Err(anyhow!(NotFoundError {}));
         }
 
         trace!("class nodes found: {:?}", classes);
@@ -149,7 +157,9 @@ mod tests {
         // Create root node
         let root_id = graph.new_node_id(file);
         let root_symbol = graph.add_symbol("root");
-        let root = graph.add_pop_symbol_node(root_id, root_symbol, true).unwrap();
+        let root = graph
+            .add_pop_symbol_node(root_id, root_symbol, true)
+            .unwrap();
 
         // Create namespace: System
         let ns_id = graph.new_node_id(file);
@@ -161,14 +171,18 @@ mod tests {
         // Create class: String
         let class1_id = graph.new_node_id(file);
         let class1_symbol = graph.add_symbol("String");
-        let class1_node = graph.add_pop_symbol_node(class1_id, class1_symbol, true).unwrap();
+        let class1_node = graph
+            .add_pop_symbol_node(class1_id, class1_symbol, true)
+            .unwrap();
         let class_syntax = graph.add_string("class_def");
         graph.source_info_mut(class1_node).syntax_type = class_syntax.into();
 
         // Create class: StringBuilder
         let class2_id = graph.new_node_id(file);
         let class2_symbol = graph.add_symbol("StringBuilder");
-        let class2_node = graph.add_pop_symbol_node(class2_id, class2_symbol, true).unwrap();
+        let class2_node = graph
+            .add_pop_symbol_node(class2_id, class2_symbol, true)
+            .unwrap();
         graph.source_info_mut(class2_node).syntax_type = class_syntax.into();
 
         // Add edges: root -> namespace (precedence 0)

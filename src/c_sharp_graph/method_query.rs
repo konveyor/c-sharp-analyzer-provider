@@ -1,13 +1,16 @@
 use std::{collections::BTreeMap, vec};
 
-use anyhow::{Error, Ok};
+use anyhow::{anyhow, Error, Ok};
 use stack_graphs::{
     arena::Handle,
     graph::{Node, StackGraph},
 };
 use tracing::{debug, trace};
 
-use crate::c_sharp_graph::query::{get_fqdn, Fqdn, GetMatcher, Search, SymbolMatcher, SyntaxType};
+use crate::c_sharp_graph::{
+    namespace_query::NotFoundError,
+    query::{get_fqdn, Fqdn, GetMatcher, Search, SymbolMatcher, SyntaxType},
+};
 
 pub(crate) struct MethodSymbolsGetter {}
 
@@ -27,6 +30,7 @@ impl GetMatcher for MethodSymbolsGetter {
     }
 }
 
+#[derive(Debug)]
 pub(crate) struct MethodSymbols {
     methods: BTreeMap<Fqdn, Handle<Node>>,
 }
@@ -45,6 +49,9 @@ impl MethodSymbols {
             Self::traverse_node(graph, node_handle, search, &mut methods)
         }
 
+        if methods.is_empty() {
+            return Err(anyhow!(NotFoundError {}));
+        }
         trace!("method nodes found: {:?}", methods);
 
         Ok(MethodSymbols { methods })
@@ -147,7 +154,9 @@ mod tests {
         // Create root node
         let root_id = graph.new_node_id(file);
         let root_symbol = graph.add_symbol("root");
-        let root = graph.add_pop_symbol_node(root_id, root_symbol, true).unwrap();
+        let root = graph
+            .add_pop_symbol_node(root_id, root_symbol, true)
+            .unwrap();
 
         // Create namespace: System
         let ns_id = graph.new_node_id(file);
@@ -159,21 +168,27 @@ mod tests {
         // Create class: String
         let class_id = graph.new_node_id(file);
         let class_symbol = graph.add_symbol("String");
-        let class_node = graph.add_pop_symbol_node(class_id, class_symbol, true).unwrap();
+        let class_node = graph
+            .add_pop_symbol_node(class_id, class_symbol, true)
+            .unwrap();
         let class_syntax = graph.add_string("class_def");
         graph.source_info_mut(class_node).syntax_type = class_syntax.into();
 
         // Create method: Format
         let method1_id = graph.new_node_id(file);
         let method1_symbol = graph.add_symbol("Format");
-        let method1_node = graph.add_pop_symbol_node(method1_id, method1_symbol, true).unwrap();
+        let method1_node = graph
+            .add_pop_symbol_node(method1_id, method1_symbol, true)
+            .unwrap();
         let method_syntax = graph.add_string("method_name");
         graph.source_info_mut(method1_node).syntax_type = method_syntax.into();
 
         // Create method: Concat
         let method2_id = graph.new_node_id(file);
         let method2_symbol = graph.add_symbol("Concat");
-        let method2_node = graph.add_pop_symbol_node(method2_id, method2_symbol, true).unwrap();
+        let method2_node = graph
+            .add_pop_symbol_node(method2_id, method2_symbol, true)
+            .unwrap();
         graph.source_info_mut(method2_node).syntax_type = method_syntax.into();
 
         // Build edge structure

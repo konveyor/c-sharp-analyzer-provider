@@ -1,13 +1,16 @@
 use std::{collections::BTreeMap, vec};
 
-use anyhow::{Error, Ok};
+use anyhow::{anyhow, Error, Ok};
 use stack_graphs::{
     arena::Handle,
     graph::{Node, StackGraph},
 };
 use tracing::{debug, trace};
 
-use crate::c_sharp_graph::query::{get_fqdn, Fqdn, GetMatcher, Search, SymbolMatcher, SyntaxType};
+use crate::c_sharp_graph::{
+    namespace_query::NotFoundError,
+    query::{get_fqdn, Fqdn, GetMatcher, Search, SymbolMatcher, SyntaxType},
+};
 
 pub(crate) struct FieldSymbolsGetter {}
 
@@ -27,6 +30,7 @@ impl GetMatcher for FieldSymbolsGetter {
     }
 }
 
+#[derive(Debug)]
 pub(crate) struct FieldSymbols {
     fields: BTreeMap<Fqdn, Handle<Node>>,
 }
@@ -41,10 +45,13 @@ impl FieldSymbols {
         let mut fields: BTreeMap<Fqdn, Handle<Node>> = BTreeMap::new();
 
         for node_handle in nodes {
-            trace!("node: {}", node_handle.display(graph));
             //Get all the edges
             Self::traverse_node(graph, node_handle, search, &mut fields)
         }
+        if fields.is_empty() {
+            return Err(anyhow!(NotFoundError {}));
+        }
+        trace!("field nodes found: {:?}", fields);
 
         Ok(FieldSymbols { fields })
     }
@@ -153,7 +160,9 @@ mod tests {
         // Create root node
         let root_id = graph.new_node_id(file);
         let root_symbol = graph.add_symbol("root");
-        let root = graph.add_pop_symbol_node(root_id, root_symbol, true).unwrap();
+        let root = graph
+            .add_pop_symbol_node(root_id, root_symbol, true)
+            .unwrap();
 
         // Create namespace: System
         let ns_id = graph.new_node_id(file);
@@ -165,21 +174,27 @@ mod tests {
         // Create class: Console
         let class_id = graph.new_node_id(file);
         let class_symbol = graph.add_symbol("Console");
-        let class_node = graph.add_pop_symbol_node(class_id, class_symbol, true).unwrap();
+        let class_node = graph
+            .add_pop_symbol_node(class_id, class_symbol, true)
+            .unwrap();
         let class_syntax = graph.add_string("class_def");
         graph.source_info_mut(class_node).syntax_type = class_syntax.into();
 
         // Create field: Out
         let field1_id = graph.new_node_id(file);
         let field1_symbol = graph.add_symbol("Out");
-        let field1_node = graph.add_pop_symbol_node(field1_id, field1_symbol, true).unwrap();
+        let field1_node = graph
+            .add_pop_symbol_node(field1_id, field1_symbol, true)
+            .unwrap();
         let field_syntax = graph.add_string("field_name");
         graph.source_info_mut(field1_node).syntax_type = field_syntax.into();
 
         // Create field: Error
         let field2_id = graph.new_node_id(file);
         let field2_symbol = graph.add_symbol("Error");
-        let field2_node = graph.add_pop_symbol_node(field2_id, field2_symbol, true).unwrap();
+        let field2_node = graph
+            .add_pop_symbol_node(field2_id, field2_symbol, true)
+            .unwrap();
         graph.source_info_mut(field2_node).syntax_type = field_syntax.into();
 
         // Build edge structure
