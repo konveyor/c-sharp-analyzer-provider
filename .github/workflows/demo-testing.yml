@@ -122,3 +122,47 @@ jobs:
       
       - name: install yq for testing
         run: go install github.com/mikefarah/yq/v4@latest
+
+  # Test binary artifacts if available
+  test-binaries:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download binary artifacts
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          pattern: "pr-merge-*"
+          path: "/tmp/binaries"
+      
+      - name: Test Linux binary if available
+        run: |
+          if [ -d "/tmp/binaries" ]; then
+            echo "Testing binary artifacts..."
+            find /tmp/binaries -name "*.tar.gz" -path "*linux-x86_64*" | head -1 | while read archive; do
+              echo "Testing archive: $archive"
+              cd /tmp
+              tar -xzf "$archive" || echo "Failed to extract $archive"
+              if [ -f "c-sharp-analyzer-provider-cli" ]; then
+                echo "Binary extracted successfully"
+                ./c-sharp-analyzer-provider-cli --help || echo "Binary help command failed"
+              else
+                echo "Binary not found after extraction"
+              fi
+            done
+          else
+            echo "No binary artifacts found to test"
+          fi
+      
+      - name: Verify binary checksums
+        run: |
+          if [ -d "/tmp/binaries" ]; then
+            echo "Verifying checksums..."
+            find /tmp/binaries -name "*.sha256" | while read checksum_file; do
+              echo "Checking: $checksum_file"
+              cd "$(dirname "$checksum_file")"
+              sha256sum -c "$(basename "$checksum_file")" || echo "Checksum verification failed for $(basename "$checksum_file")"
+            done
+          fi

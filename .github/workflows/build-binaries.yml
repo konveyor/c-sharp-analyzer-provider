@@ -1,0 +1,215 @@
+name: Build Binaries (Reusable)
+
+on:
+  workflow_call:
+    inputs:
+      artifact_prefix:
+        description: 'Prefix for artifact names (e.g., "release", "pr-merge")'
+        required: true
+        type: string
+      upload_artifacts:
+        description: 'Whether to upload artifacts'
+        required: false
+        type: boolean
+        default: true
+
+env:
+  BINARY_NAME: c-sharp-analyzer-provider-cli
+  RUST_BACKTRACE: 1
+
+jobs:
+  # Build binaries for Linux targets using cross
+  build-linux:
+    name: Build Linux ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-gnu
+            arch: x86_64
+            os: linux
+          - target: aarch64-unknown-linux-gnu
+            arch: aarch64
+            os: linux
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Install cross
+        run: |
+          cargo install cross --git https://github.com/cross-rs/cross
+
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v3
+
+      - name: Download proto file
+        run: |
+          mkdir -p src/build/proto
+          curl -L -o src/build/proto/provider.proto \
+            https://raw.githubusercontent.com/konveyor/analyzer-lsp/refs/heads/main/provider/internal/grpc/library.proto
+
+      - name: Cache cargo dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-${{ matrix.target }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build with cross
+        run: |
+          export PROTOC=$(which protoc)
+          cross build --release --target ${{ matrix.target }}
+
+      - name: Strip binary
+        run: |
+          if [[ "${{ matrix.target }}" == *"musl"* ]]; then
+            echo "Skipping strip for musl target"
+          else
+            cross run --target ${{ matrix.target }} -- strip target/${{ matrix.target }}/release/${{ env.BINARY_NAME }} || true
+          fi
+
+      - name: Create archive
+        run: |
+          cd target/${{ matrix.target }}/release
+          tar czf ../../../${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}.tar.gz ${{ env.BINARY_NAME }}
+          cd ../../../
+          sha256sum ${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}.tar.gz > ${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}.tar.gz.sha256
+
+      - name: Upload artifact
+        if: ${{ inputs.upload_artifacts }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}
+          path: |
+            ${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}.tar.gz
+            ${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}.tar.gz.sha256
+
+  # Build binaries for macOS targets
+  build-macos:
+    name: Build macOS ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        include:
+          - target: x86_64-apple-darwin
+            arch: x86_64
+            os: darwin
+            runner: macos-13  # Intel runner
+          - target: aarch64-apple-darwin
+            arch: aarch64
+            os: darwin
+            runner: macos-14  # Apple Silicon runner
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v3
+
+      - name: Download proto file
+        run: |
+          mkdir -p src/build/proto
+          curl -L -o src/build/proto/provider.proto \
+            https://raw.githubusercontent.com/konveyor/analyzer-lsp/refs/heads/main/provider/internal/grpc/library.proto
+
+      - name: Cache cargo dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-${{ matrix.target }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build
+        run: |
+          cargo build --release --target ${{ matrix.target }}
+          strip target/${{ matrix.target }}/release/${{ env.BINARY_NAME }} || true
+
+      - name: Create archive
+        run: |
+          cd target/${{ matrix.target }}/release
+          tar czf ../../../${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}.tar.gz ${{ env.BINARY_NAME }}
+          cd ../../../
+          shasum -a 256 ${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}.tar.gz > ${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}.tar.gz.sha256
+
+      - name: Upload artifact
+        if: ${{ inputs.upload_artifacts }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}
+          path: |
+            ${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}.tar.gz
+            ${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}.tar.gz.sha256
+
+  # Build binaries for Windows targets
+  build-windows:
+    name: Build Windows ${{ matrix.target }}
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        include:
+          - target: x86_64-pc-windows-msvc
+            arch: x86_64
+            os: windows
+          - target: aarch64-pc-windows-msvc
+            arch: aarch64
+            os: windows
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v3
+
+      - name: Download proto file
+        shell: bash
+        run: |
+          mkdir -p src/build/proto
+          curl -L -o src/build/proto/provider.proto \
+            https://raw.githubusercontent.com/konveyor/analyzer-lsp/refs/heads/main/provider/internal/grpc/library.proto
+
+      - name: Cache cargo dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-${{ matrix.target }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Build
+        run: |
+          cargo build --release --target ${{ matrix.target }}
+
+      - name: Create archive
+        shell: pwsh
+        run: |
+          $binary = "target/${{ matrix.target }}/release/${{ env.BINARY_NAME }}.exe"
+          $archive = "${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}.zip"
+          Compress-Archive -Path $binary -DestinationPath $archive
+          $hash = Get-FileHash -Path $archive -Algorithm SHA256
+          "$($hash.Hash.ToLower())  $archive" | Out-File -FilePath "$archive.sha256" -Encoding ASCII
+
+      - name: Upload artifact
+        if: ${{ inputs.upload_artifacts }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}
+          path: |
+            ${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}.zip
+            ${{ inputs.artifact_prefix }}-c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}.zip.sha256
