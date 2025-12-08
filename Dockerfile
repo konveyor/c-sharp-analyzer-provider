@@ -13,18 +13,23 @@ COPY src  /csharp-provider/src
 
 RUN --mount=type=cache,id=cagohome,uid=1001,gid=0,mode=0777,target=/root/.cargo PROTOC=$HOME/protoc/bin/protoc cargo build --release
 
-FROM registry.access.redhat.com/ubi9/ubi
+FROM registry.access.redhat.com/ubi9/ubi-minimal
 
-RUN dnf install -y dotnet-sdk-8.0 dotnet-runtime-8.0
+RUN microdnf install -y dotnet-sdk-8.0 dotnet-runtime-8.0 tar gzip findutils && \
+    microdnf clean all && \
+    rm -rf /var/cache/dnf
+RUN dotnet tool install --tool-path=/usr/local/bin Paket
+RUN dotnet tool install --tool-path=/usr/local/bin ilspycmd
+USER 1001
 
-RUN dotnet tool install --global Paket
-RUN dotnet tool install --global ilspycmd
-ENV PATH="/root/.dotnet/tools:${PATH}"
 ENV RUST_LOG=INFO,c_sharp_analyzer_provider_cli=DEBUG,
+COPY --chmod=0755 scripts/dotnet-install.sh /usr/local/bin/scripts/dotnet-install.sh
+COPY --chmod=0755 scripts/dotnet-install.ps1 /usr/local/bin/scripts/dotnet-install.ps1
 
-# TODO: move this whole thing to ubi-minimal, and make these permissions actually correct.
-COPY --chmod=0777 scripts/dotnet-install.sh /usr/local/bin/scripts/dotnet-install.sh
-COPY --chmod=0777 scripts/dotnet-install.ps1 /usr/local/bin/scripts/dotnet-install.ps1
+WORKDIR /analyzer-lsp
+RUN chgrp -R 0 /analyzer-lsp && chmod -R g=u /analyzer-lsp
+
 
 COPY --from=builder /csharp-provider/target/release/c-sharp-analyzer-provider-cli /usr/local/bin/c-sharp-provider
-ENTRYPOINT ["/usr/local/bin/c-sharp-provider", "--name", "c-sharp"]
+ENTRYPOINT ["/usr/local/bin/c-sharp-provider"]
+CMD ["--name", "c-sharp", "--port", "14651"]

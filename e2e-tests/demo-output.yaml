@@ -19,7 +19,7 @@
       - konveyor.io/source=dotnet
       - konveyor.io/target=dotnet-core
       incidents:
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
           ValidateAntiForgeryToken attribute exists in ASP.NET Core but works slightly differently.
 
@@ -31,10 +31,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Text;\n4 using Microsoft.Web.WebPages.OAuth;\n5 using NerdDinner.Models;\n6 using System.Web.Configuration;\n7 \n8 namespace NerdDinner\n9 {\n10     public static class AuthConfig\n11     {\n12         public static void RegisterAuth()\n13         {\n14             // To let users of this site log in using their accounts from other sites such as Microsoft, Facebook, and Twitter,\n15             // you must update this site. For more information visit http://go.microsoft.com/fwlink/?LinkID=252166\n16 \n17             var microsoftClientId = WebConfigurationManager.AppSettings[\"microsoftClientId\"];\n18             var microsoftClientSecret = WebConfigurationManager.AppSettings[\"microsoftClientSecret\"];\n19             if (!string.IsNullOrEmpty(microsoftClientId) && !string.IsNullOrEmpty(microsoftClientSecret))\n20             {\n21                 OAuthWebSecurity.RegisterMicrosoftClient(\n22                     clientId: microsoftClientId,\n23                     clientSecret: microsoftClientSecret);\n24             }\n25 \n26             var twitterConsumerKey = WebConfigurationManager.AppSettings[\"twitterConsumerKey\"];\n27             var twitterConsumerSecret = WebConfigurationManager.AppSettings[\"twitterConsumerSecret\"];\n28             if (!string.IsNullOrEmpty(twitterConsumerKey) && !string.IsNullOrEmpty(twitterConsumerSecret))\n29             {\n30                 OAuthWebSecurity.RegisterTwitterClient(\n31                     consumerKey: twitterConsumerKey,\n32                     consumerSecret: twitterConsumerSecret);\n33             }\n34 \n35             var facebookAppId = WebConfigurationManager.AppSettings[\"facebookAppId\"];\n36             var facebookAppSecret = WebConfigurationManager.AppSettings[\"facebookAppSecret\"];\n37             if (!string.IsNullOrEmpty(facebookAppId) && !string.IsNullOrEmpty(facebookAppSecret))\n38             {\n39                 OAuthWebSecurity.RegisterFacebookClient(\n40                     appId: facebookAppId,\n41                     appSecret: facebookAppSecret);\n42             }\n43 \n44             OAuthWebSecurity.RegisterGoogleClient();\n45         }\n"
         lineNumber: 10
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
           symbol: AuthConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
         message: |
           ValidateAntiForgeryToken attribute exists in ASP.NET Core but works slightly differently.
 
@@ -46,10 +46,10 @@
         codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Optimization;\n2 \n3 namespace NerdDinner\n4 {\n5     public class BundleConfig\n6     {\n7         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725\n8         public static void RegisterBundles(BundleCollection bundles)\n9         {\n10             bundles.Add(new ScriptBundle(\"~/bundles/jquery\").Include(\n11                         \"~/Scripts/jquery-{version}.js\"));\n12 \n13             bundles.Add(new ScriptBundle(\"~/bundles/jqueryui\").Include(\n14                         \"~/Scripts/jquery-ui-{version}.js\"));\n15 \n16             bundles.Add(new ScriptBundle(\"~/bundles/jqueryval\").Include(\n17                         \"~/Scripts/jquery.unobtrusive*\",\n18                         \"~/Scripts/jquery.validate*\"));\n19 \n20             bundles.Add(new ScriptBundle(\"~/bundles/jquerymobile\").Include(\n21                         \"~/Scripts/jquery.mobile-{version}.js\"));\n22 \n23             // Use the development version of Modernizr to develop with and learn from. Then, when you're\n24             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.\n25             bundles.Add(new ScriptBundle(\"~/bundles/modernizr\").Include(\n26                         \"~/Scripts/modernizr-*\"));\n27 \n28             bundles.Add(new ScriptBundle(\"~/bundles/knockout\").Include(\n29                         \"~/Scripts/knockout-*\"));\n30 \n31             bundles.Add(new ScriptBundle(\"~/bundles/yepnope\").Include(\n32                         \"~/Scripts/yepnope.{version}.js\"));\n33 \n34             bundles.Add(new StyleBundle(\"~/Content/css\").Include(\"~/Content/site.css\"));\n35 \n36             bundles.Add(new StyleBundle(\"~/Content/themes/base/css\").Include(\n37                         \"~/Content/themes/base/jquery.ui.core.css\",\n38                         \"~/Content/themes/base/jquery.ui.resizable.css\",\n39                         \"~/Content/themes/base/jquery.ui.selectable.css\",\n40                         \"~/Content/themes/base/jquery.ui.accordion.css\",\n41                         \"~/Content/themes/base/jquery.ui.autocomplete.css\",\n42                         \"~/Content/themes/base/jquery.ui.button.css\",\n43                         \"~/Content/themes/base/jquery.ui.dialog.css\",\n44                         \"~/Content/themes/base/jquery.ui.slider.css\",\n45                         \"~/Content/themes/base/jquery.ui.tabs.css\",\n46                         \"~/Content/themes/base/jquery.ui.datepicker.css\",\n47                         \"~/Content/themes/base/jquery.ui.progressbar.css\",\n48                         \"~/Content/themes/base/jquery.ui.theme.css\"));\n49 \n50             bundles.Add(new StyleBundle(\"~/Content/jquerymobile\").Include(\n51                         \"~/Content/jquery.mobile-{version}.css\",\n52                         \"~/Content/jquery.mobile.structure-{version}.css\",\n53                         \"~/Content/jquery.mobile.theme-{version}.css\"));\n54         }\n55     }\n56 }\n"
         lineNumber: 5
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
           symbol: BundleConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
         message: |
           ValidateAntiForgeryToken attribute exists in ASP.NET Core but works slightly differently.
 
@@ -61,10 +61,10 @@
         codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Mvc;\n2 \n3 namespace NerdDinner\n4 {\n5     public class FilterConfig\n6     {\n7         public static void RegisterGlobalFilters(GlobalFilterCollection filters)\n8         {\n9             filters.Add(new HandleErrorAttribute());\n10         }\n11     }\n12 }\n"
         lineNumber: 5
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
           symbol: FilterConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
           ValidateAntiForgeryToken attribute exists in ASP.NET Core but works slightly differently.
 
@@ -76,10 +76,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 using System.Web.Routing;\n6 \n7 namespace NerdDinner\n8 {\n9     public class RouteConfig\n10     {\n11         public static void RegisterRoutes(RouteCollection routes)\n12         {\n13             routes.IgnoreRoute(\"{resource}.axd/{*pathInfo}\");\n14 \n15             routes.MapRoute(\n16                     \"PrettyDetails\",\n17                     \"{Id}\",\n18                         new { controller = \"Dinners\", action = \"Details\" },\n19                         new { Id = @\"\\d+\" }\n20                     );\n21 \n22             routes.MapRoute(\n23                 name: \"Default\",\n24                 url: \"{controller}/{action}/{id}\",\n25                 defaults: new { controller = \"Home\", action = \"Index\", id = UrlParameter.Optional }\n26             );\n27         }\n28     }\n"
         lineNumber: 9
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
           symbol: RouteConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
         message: |
           ValidateAntiForgeryToken attribute exists in ASP.NET Core but works slightly differently.
 
@@ -91,10 +91,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web.Http;\n4 \n5 namespace NerdDinner\n6 {\n7     public static class WebApiConfig\n8     {\n9         public static void Register(HttpConfiguration config)\n10         {\n11             config.Routes.MapHttpRoute(\n12                 name: \"DefaultApi\",\n13                 routeTemplate: \"api/{controller}/{id}\",\n14                 defaults: new { id = RouteParameter.Optional }\n15             );\n16         }\n17     }\n18 }\n"
         lineNumber: 7
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
           symbol: WebApiConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           ValidateAntiForgeryToken attribute exists in ASP.NET Core but works slightly differently.
 
@@ -106,10 +106,10 @@
         codeSnip: "5 using System.Web.Http;\n6 using System.Web.Mvc;\n7 using System.Web.Optimization;\n8 using System.Web.Routing;\n9 \n10 namespace NerdDinner\n11 {\n12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n21             WebApiConfig.Register(GlobalConfiguration.Configuration);\n22             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n23             RouteConfig.RegisterRoutes(RouteTable.Routes);\n24             BundleConfig.RegisterBundles(BundleTable.Bundles);\n25             AuthConfig.RegisterAuth();\n26 \n27             ModelBinderProviders.BinderProviders.Add(new EFModelBinderProvider());\n28 \n29             Version version = Assembly.GetExecutingAssembly().GetName().Version;\n30             Application[\"Version\"] = string.Format(\"{0}.{1}\", version.Major, version.Minor);\n31         }\n"
         lineNumber: 15
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
           symbol: MvcApplication
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
           ValidateAntiForgeryToken attribute exists in ASP.NET Core but works slightly differently.
 
@@ -121,10 +121,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data.Spatial;\n3 using System.Linq;\n4 using System.Web;\n5 using System.Web.Mvc;\n6 \n7 namespace NerdDinner\n8 {\n9     public class DbGeographyModelBinder : DefaultModelBinder\n10     {\n11         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)\n12         {\n13             var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);\n14             if (valueProviderResult != null)\n15             {\n16                 string[] latLongStr = valueProviderResult.AttemptedValue.Split(',');\n17                 string point = string.Format(\"POINT ({0} {1})\", latLongStr[1], latLongStr[0]);\n18                 //4326 format puts LONGITUDE first then LATITUDE\n19                 DbGeography result = DbGeography.FromText(point, 4326);\n20                 return result;\n21             }\n22             return null;\n23         }\n24     }\n"
         lineNumber: 9
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
           symbol: DbGeographyModelBinder
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
           ValidateAntiForgeryToken attribute exists in ASP.NET Core but works slightly differently.
 
@@ -136,7 +136,7 @@
         codeSnip: "16                 string[] latLongStr = valueProviderResult.AttemptedValue.Split(',');\n17                 string point = string.Format(\"POINT ({0} {1})\", latLongStr[1], latLongStr[0]);\n18                 //4326 format puts LONGITUDE first then LATITUDE\n19                 DbGeography result = DbGeography.FromText(point, 4326);\n20                 return result;\n21             }\n22             return null;\n23         }\n24     }\n25 \n26     public class EFModelBinderProvider : IModelBinderProvider\n27     {\n28         public IModelBinder GetBinder(Type modelType)\n29         {\n30             if (modelType == typeof(DbGeography))\n31             {\n32                 return new DbGeographyModelBinder();\n33             }\n34             return null;\n35         }\n"
         lineNumber: 26
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
           symbol: EFModelBinderProvider
           syntax_type: class_def
       links:
@@ -150,7 +150,7 @@
       - konveyor.io/source=dotnet
       - konveyor.io/target=dotnet-core
       incidents:
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
           DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
           Use ASP.NET Core's built-in OAuth authentication instead.
@@ -163,10 +163,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Text;\n4 using Microsoft.Web.WebPages.OAuth;\n5 using NerdDinner.Models;\n6 using System.Web.Configuration;\n7 \n8 namespace NerdDinner\n9 {\n10     public static class AuthConfig\n11     {\n12         public static void RegisterAuth()\n13         {\n14             // To let users of this site log in using their accounts from other sites such as Microsoft, Facebook, and Twitter,\n15             // you must update this site. For more information visit http://go.microsoft.com/fwlink/?LinkID=252166\n16 \n17             var microsoftClientId = WebConfigurationManager.AppSettings[\"microsoftClientId\"];\n18             var microsoftClientSecret = WebConfigurationManager.AppSettings[\"microsoftClientSecret\"];\n19             if (!string.IsNullOrEmpty(microsoftClientId) && !string.IsNullOrEmpty(microsoftClientSecret))\n20             {\n21                 OAuthWebSecurity.RegisterMicrosoftClient(\n22                     clientId: microsoftClientId,\n23                     clientSecret: microsoftClientSecret);\n24             }\n25 \n26             var twitterConsumerKey = WebConfigurationManager.AppSettings[\"twitterConsumerKey\"];\n27             var twitterConsumerSecret = WebConfigurationManager.AppSettings[\"twitterConsumerSecret\"];\n28             if (!string.IsNullOrEmpty(twitterConsumerKey) && !string.IsNullOrEmpty(twitterConsumerSecret))\n29             {\n30                 OAuthWebSecurity.RegisterTwitterClient(\n31                     consumerKey: twitterConsumerKey,\n32                     consumerSecret: twitterConsumerSecret);\n33             }\n34 \n35             var facebookAppId = WebConfigurationManager.AppSettings[\"facebookAppId\"];\n36             var facebookAppSecret = WebConfigurationManager.AppSettings[\"facebookAppSecret\"];\n37             if (!string.IsNullOrEmpty(facebookAppId) && !string.IsNullOrEmpty(facebookAppSecret))\n38             {\n39                 OAuthWebSecurity.RegisterFacebookClient(\n40                     appId: facebookAppId,\n41                     appSecret: facebookAppSecret);\n42             }\n43 \n44             OAuthWebSecurity.RegisterGoogleClient();\n45         }\n"
         lineNumber: 10
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
           symbol: AuthConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
         message: |
           DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
           Use ASP.NET Core's built-in OAuth authentication instead.
@@ -179,10 +179,10 @@
         codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Optimization;\n2 \n3 namespace NerdDinner\n4 {\n5     public class BundleConfig\n6     {\n7         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725\n8         public static void RegisterBundles(BundleCollection bundles)\n9         {\n10             bundles.Add(new ScriptBundle(\"~/bundles/jquery\").Include(\n11                         \"~/Scripts/jquery-{version}.js\"));\n12 \n13             bundles.Add(new ScriptBundle(\"~/bundles/jqueryui\").Include(\n14                         \"~/Scripts/jquery-ui-{version}.js\"));\n15 \n16             bundles.Add(new ScriptBundle(\"~/bundles/jqueryval\").Include(\n17                         \"~/Scripts/jquery.unobtrusive*\",\n18                         \"~/Scripts/jquery.validate*\"));\n19 \n20             bundles.Add(new ScriptBundle(\"~/bundles/jquerymobile\").Include(\n21                         \"~/Scripts/jquery.mobile-{version}.js\"));\n22 \n23             // Use the development version of Modernizr to develop with and learn from. Then, when you're\n24             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.\n25             bundles.Add(new ScriptBundle(\"~/bundles/modernizr\").Include(\n26                         \"~/Scripts/modernizr-*\"));\n27 \n28             bundles.Add(new ScriptBundle(\"~/bundles/knockout\").Include(\n29                         \"~/Scripts/knockout-*\"));\n30 \n31             bundles.Add(new ScriptBundle(\"~/bundles/yepnope\").Include(\n32                         \"~/Scripts/yepnope.{version}.js\"));\n33 \n34             bundles.Add(new StyleBundle(\"~/Content/css\").Include(\"~/Content/site.css\"));\n35 \n36             bundles.Add(new StyleBundle(\"~/Content/themes/base/css\").Include(\n37                         \"~/Content/themes/base/jquery.ui.core.css\",\n38                         \"~/Content/themes/base/jquery.ui.resizable.css\",\n39                         \"~/Content/themes/base/jquery.ui.selectable.css\",\n40                         \"~/Content/themes/base/jquery.ui.accordion.css\",\n41                         \"~/Content/themes/base/jquery.ui.autocomplete.css\",\n42                         \"~/Content/themes/base/jquery.ui.button.css\",\n43                         \"~/Content/themes/base/jquery.ui.dialog.css\",\n44                         \"~/Content/themes/base/jquery.ui.slider.css\",\n45                         \"~/Content/themes/base/jquery.ui.tabs.css\",\n46                         \"~/Content/themes/base/jquery.ui.datepicker.css\",\n47                         \"~/Content/themes/base/jquery.ui.progressbar.css\",\n48                         \"~/Content/themes/base/jquery.ui.theme.css\"));\n49 \n50             bundles.Add(new StyleBundle(\"~/Content/jquerymobile\").Include(\n51                         \"~/Content/jquery.mobile-{version}.css\",\n52                         \"~/Content/jquery.mobile.structure-{version}.css\",\n53                         \"~/Content/jquery.mobile.theme-{version}.css\"));\n54         }\n55     }\n56 }\n"
         lineNumber: 5
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
           symbol: BundleConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
         message: |
           DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
           Use ASP.NET Core's built-in OAuth authentication instead.
@@ -195,10 +195,10 @@
         codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Mvc;\n2 \n3 namespace NerdDinner\n4 {\n5     public class FilterConfig\n6     {\n7         public static void RegisterGlobalFilters(GlobalFilterCollection filters)\n8         {\n9             filters.Add(new HandleErrorAttribute());\n10         }\n11     }\n12 }\n"
         lineNumber: 5
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
           symbol: FilterConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
           DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
           Use ASP.NET Core's built-in OAuth authentication instead.
@@ -211,10 +211,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 using System.Web.Routing;\n6 \n7 namespace NerdDinner\n8 {\n9     public class RouteConfig\n10     {\n11         public static void RegisterRoutes(RouteCollection routes)\n12         {\n13             routes.IgnoreRoute(\"{resource}.axd/{*pathInfo}\");\n14 \n15             routes.MapRoute(\n16                     \"PrettyDetails\",\n17                     \"{Id}\",\n18                         new { controller = \"Dinners\", action = \"Details\" },\n19                         new { Id = @\"\\d+\" }\n20                     );\n21 \n22             routes.MapRoute(\n23                 name: \"Default\",\n24                 url: \"{controller}/{action}/{id}\",\n25                 defaults: new { controller = \"Home\", action = \"Index\", id = UrlParameter.Optional }\n26             );\n27         }\n28     }\n"
         lineNumber: 9
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
           symbol: RouteConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
         message: |
           DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
           Use ASP.NET Core's built-in OAuth authentication instead.
@@ -227,10 +227,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web.Http;\n4 \n5 namespace NerdDinner\n6 {\n7     public static class WebApiConfig\n8     {\n9         public static void Register(HttpConfiguration config)\n10         {\n11             config.Routes.MapHttpRoute(\n12                 name: \"DefaultApi\",\n13                 routeTemplate: \"api/{controller}/{id}\",\n14                 defaults: new { id = RouteParameter.Optional }\n15             );\n16         }\n17     }\n18 }\n"
         lineNumber: 7
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
           symbol: WebApiConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
           Use ASP.NET Core's built-in OAuth authentication instead.
@@ -243,10 +243,10 @@
         codeSnip: "5 using System.Web.Http;\n6 using System.Web.Mvc;\n7 using System.Web.Optimization;\n8 using System.Web.Routing;\n9 \n10 namespace NerdDinner\n11 {\n12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n21             WebApiConfig.Register(GlobalConfiguration.Configuration);\n22             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n23             RouteConfig.RegisterRoutes(RouteTable.Routes);\n24             BundleConfig.RegisterBundles(BundleTable.Bundles);\n25             AuthConfig.RegisterAuth();\n26 \n27             ModelBinderProviders.BinderProviders.Add(new EFModelBinderProvider());\n28 \n29             Version version = Assembly.GetExecutingAssembly().GetName().Version;\n30             Application[\"Version\"] = string.Format(\"{0}.{1}\", version.Major, version.Minor);\n31         }\n"
         lineNumber: 15
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
           symbol: MvcApplication
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
           DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
           Use ASP.NET Core's built-in OAuth authentication instead.
@@ -259,10 +259,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data.Spatial;\n3 using System.Linq;\n4 using System.Web;\n5 using System.Web.Mvc;\n6 \n7 namespace NerdDinner\n8 {\n9     public class DbGeographyModelBinder : DefaultModelBinder\n10     {\n11         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)\n12         {\n13             var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);\n14             if (valueProviderResult != null)\n15             {\n16                 string[] latLongStr = valueProviderResult.AttemptedValue.Split(',');\n17                 string point = string.Format(\"POINT ({0} {1})\", latLongStr[1], latLongStr[0]);\n18                 //4326 format puts LONGITUDE first then LATITUDE\n19                 DbGeography result = DbGeography.FromText(point, 4326);\n20                 return result;\n21             }\n22             return null;\n23         }\n24     }\n"
         lineNumber: 9
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
           symbol: DbGeographyModelBinder
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
           DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
           Use ASP.NET Core's built-in OAuth authentication instead.
@@ -275,7 +275,7 @@
         codeSnip: "16                 string[] latLongStr = valueProviderResult.AttemptedValue.Split(',');\n17                 string point = string.Format(\"POINT ({0} {1})\", latLongStr[1], latLongStr[0]);\n18                 //4326 format puts LONGITUDE first then LATITUDE\n19                 DbGeography result = DbGeography.FromText(point, 4326);\n20                 return result;\n21             }\n22             return null;\n23         }\n24     }\n25 \n26     public class EFModelBinderProvider : IModelBinderProvider\n27     {\n28         public IModelBinder GetBinder(Type modelType)\n29         {\n30             if (modelType == typeof(DbGeography))\n31             {\n32                 return new DbGeographyModelBinder();\n33             }\n34             return null;\n35         }\n"
         lineNumber: 26
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
           symbol: EFModelBinderProvider
           syntax_type: class_def
       links:
@@ -289,7 +289,7 @@
       - konveyor.io/source=dotnet
       - konveyor.io/target=dotnet-core
       incidents:
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
         message: |
           System.Data.Entity is not available in .NET Core. Entity Framework 6 must be migrated to Entity Framework Core.
 
@@ -304,7 +304,7 @@
         codeSnip: "17         public override void OnActionExecuting(ActionExecutingContext filterContext)\n18         {\n19             // Ensure ASP.NET Simple Membership is initialized only once per app start\n20             LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);\n21         }\n22 \n23         private class SimpleMembershipInitializer\n24         {\n25             public SimpleMembershipInitializer()\n26             {\n"
         lineNumber: 27
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
           fqdn_class: DbContext
           fqdn_field: Database
           fqdn_namespace: System.Data.Entity
@@ -323,7 +323,7 @@
       - konveyor.io/source=dotnet
       - konveyor.io/target=dotnet-core
       incidents:
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           Lazy loading works differently in EF Core and requires explicit configuration.
 
@@ -336,10 +336,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data;\n3 using System.Data.Entity;\n4 using System.Linq;\n5 using System.Web;\n6 using System.Web.Mvc;\n7 using NerdDinner.Models;\n8 using PagedList;\n9 \n"
         lineNumber: 3
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
           symbol: System.Data.Entity
           syntax_type: import
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
         message: |
           Lazy loading works differently in EF Core and requires explicit configuration.
 
@@ -352,10 +352,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Data.Entity;\n2 using System.Data.Entity.Infrastructure;\n3 using System.Threading;\n4 using System.Web.Mvc;\n5 using WebMatrix.WebData;\n6 using NerdDinner.Models;\n7 \n8 namespace NerdDinner.Filters\n9 {\n"
         lineNumber: 1
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
           symbol: System.Data.Entity
           syntax_type: import
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
         message: |
           Lazy loading works differently in EF Core and requires explicit configuration.
 
@@ -368,10 +368,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.ComponentModel.DataAnnotations;\n3 using System.ComponentModel.DataAnnotations.Schema;\n4 using System.Data.Entity;\n5 using System.Globalization;\n6 using System.Web.Security;\n7 \n8 namespace NerdDinner.Models\n9 {\n"
         lineNumber: 4
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
           symbol: System.Data.Entity
           syntax_type: import
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/NerdDinnerContext.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/NerdDinnerContext.cs
         message: |
           Lazy loading works differently in EF Core and requires explicit configuration.
 
@@ -384,7 +384,7 @@
         codeSnip: "0 \uFEFFusing System.Data.Entity;\n1 \n2 namespace NerdDinner.Models\n3 {\n4     public class NerdDinnerContext : DbContext\n5     {\n6         // You can add custom code to this file. Changes will not be overwritten.\n7         // \n8         // If you want Entity Framework to drop and regenerate your database\n9         // automatically whenever you change your model schema, add the following\n"
         lineNumber: 0
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/NerdDinnerContext.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/NerdDinnerContext.cs
           symbol: System.Data.Entity
           syntax_type: import
       links:
@@ -398,7 +398,7 @@
       - konveyor.io/source=dotnet
       - konveyor.io/target=dotnet-core
       incidents:
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
           HttpRuntime class is not available in ASP.NET Core.
           Various HttpRuntime members have different replacements in ASP.NET Core.
@@ -416,10 +416,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Text;\n4 using Microsoft.Web.WebPages.OAuth;\n5 using NerdDinner.Models;\n6 using System.Web.Configuration;\n7 \n8 namespace NerdDinner\n9 {\n10     public static class AuthConfig\n11     {\n12         public static void RegisterAuth()\n13         {\n14             // To let users of this site log in using their accounts from other sites such as Microsoft, Facebook, and Twitter,\n15             // you must update this site. For more information visit http://go.microsoft.com/fwlink/?LinkID=252166\n16 \n17             var microsoftClientId = WebConfigurationManager.AppSettings[\"microsoftClientId\"];\n18             var microsoftClientSecret = WebConfigurationManager.AppSettings[\"microsoftClientSecret\"];\n19             if (!string.IsNullOrEmpty(microsoftClientId) && !string.IsNullOrEmpty(microsoftClientSecret))\n20             {\n21                 OAuthWebSecurity.RegisterMicrosoftClient(\n22                     clientId: microsoftClientId,\n23                     clientSecret: microsoftClientSecret);\n24             }\n25 \n26             var twitterConsumerKey = WebConfigurationManager.AppSettings[\"twitterConsumerKey\"];\n27             var twitterConsumerSecret = WebConfigurationManager.AppSettings[\"twitterConsumerSecret\"];\n28             if (!string.IsNullOrEmpty(twitterConsumerKey) && !string.IsNullOrEmpty(twitterConsumerSecret))\n29             {\n30                 OAuthWebSecurity.RegisterTwitterClient(\n31                     consumerKey: twitterConsumerKey,\n32                     consumerSecret: twitterConsumerSecret);\n33             }\n34 \n35             var facebookAppId = WebConfigurationManager.AppSettings[\"facebookAppId\"];\n36             var facebookAppSecret = WebConfigurationManager.AppSettings[\"facebookAppSecret\"];\n37             if (!string.IsNullOrEmpty(facebookAppId) && !string.IsNullOrEmpty(facebookAppSecret))\n38             {\n39                 OAuthWebSecurity.RegisterFacebookClient(\n40                     appId: facebookAppId,\n41                     appSecret: facebookAppSecret);\n42             }\n43 \n44             OAuthWebSecurity.RegisterGoogleClient();\n45         }\n"
         lineNumber: 10
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
           symbol: AuthConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
         message: |
           HttpRuntime class is not available in ASP.NET Core.
           Various HttpRuntime members have different replacements in ASP.NET Core.
@@ -437,10 +437,10 @@
         codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Optimization;\n2 \n3 namespace NerdDinner\n4 {\n5     public class BundleConfig\n6     {\n7         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725\n8         public static void RegisterBundles(BundleCollection bundles)\n9         {\n10             bundles.Add(new ScriptBundle(\"~/bundles/jquery\").Include(\n11                         \"~/Scripts/jquery-{version}.js\"));\n12 \n13             bundles.Add(new ScriptBundle(\"~/bundles/jqueryui\").Include(\n14                         \"~/Scripts/jquery-ui-{version}.js\"));\n15 \n16             bundles.Add(new ScriptBundle(\"~/bundles/jqueryval\").Include(\n17                         \"~/Scripts/jquery.unobtrusive*\",\n18                         \"~/Scripts/jquery.validate*\"));\n19 \n20             bundles.Add(new ScriptBundle(\"~/bundles/jquerymobile\").Include(\n21                         \"~/Scripts/jquery.mobile-{version}.js\"));\n22 \n23             // Use the development version of Modernizr to develop with and learn from. Then, when you're\n24             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.\n25             bundles.Add(new ScriptBundle(\"~/bundles/modernizr\").Include(\n26                         \"~/Scripts/modernizr-*\"));\n27 \n28             bundles.Add(new ScriptBundle(\"~/bundles/knockout\").Include(\n29                         \"~/Scripts/knockout-*\"));\n30 \n31             bundles.Add(new ScriptBundle(\"~/bundles/yepnope\").Include(\n32                         \"~/Scripts/yepnope.{version}.js\"));\n33 \n34             bundles.Add(new StyleBundle(\"~/Content/css\").Include(\"~/Content/site.css\"));\n35 \n36             bundles.Add(new StyleBundle(\"~/Content/themes/base/css\").Include(\n37                         \"~/Content/themes/base/jquery.ui.core.css\",\n38                         \"~/Content/themes/base/jquery.ui.resizable.css\",\n39                         \"~/Content/themes/base/jquery.ui.selectable.css\",\n40                         \"~/Content/themes/base/jquery.ui.accordion.css\",\n41                         \"~/Content/themes/base/jquery.ui.autocomplete.css\",\n42                         \"~/Content/themes/base/jquery.ui.button.css\",\n43                         \"~/Content/themes/base/jquery.ui.dialog.css\",\n44                         \"~/Content/themes/base/jquery.ui.slider.css\",\n45                         \"~/Content/themes/base/jquery.ui.tabs.css\",\n46                         \"~/Content/themes/base/jquery.ui.datepicker.css\",\n47                         \"~/Content/themes/base/jquery.ui.progressbar.css\",\n48                         \"~/Content/themes/base/jquery.ui.theme.css\"));\n49 \n50             bundles.Add(new StyleBundle(\"~/Content/jquerymobile\").Include(\n51                         \"~/Content/jquery.mobile-{version}.css\",\n52                         \"~/Content/jquery.mobile.structure-{version}.css\",\n53                         \"~/Content/jquery.mobile.theme-{version}.css\"));\n54         }\n55     }\n56 }\n"
         lineNumber: 5
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
           symbol: BundleConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
         message: |
           HttpRuntime class is not available in ASP.NET Core.
           Various HttpRuntime members have different replacements in ASP.NET Core.
@@ -458,10 +458,10 @@
         codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Mvc;\n2 \n3 namespace NerdDinner\n4 {\n5     public class FilterConfig\n6     {\n7         public static void RegisterGlobalFilters(GlobalFilterCollection filters)\n8         {\n9             filters.Add(new HandleErrorAttribute());\n10         }\n11     }\n12 }\n"
         lineNumber: 5
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
           symbol: FilterConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
           HttpRuntime class is not available in ASP.NET Core.
           Various HttpRuntime members have different replacements in ASP.NET Core.
@@ -479,10 +479,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 using System.Web.Routing;\n6 \n7 namespace NerdDinner\n8 {\n9     public class RouteConfig\n10     {\n11         public static void RegisterRoutes(RouteCollection routes)\n12         {\n13             routes.IgnoreRoute(\"{resource}.axd/{*pathInfo}\");\n14 \n15             routes.MapRoute(\n16                     \"PrettyDetails\",\n17                     \"{Id}\",\n18                         new { controller = \"Dinners\", action = \"Details\" },\n19                         new { Id = @\"\\d+\" }\n20                     );\n21 \n22             routes.MapRoute(\n23                 name: \"Default\",\n24                 url: \"{controller}/{action}/{id}\",\n25                 defaults: new { controller = \"Home\", action = \"Index\", id = UrlParameter.Optional }\n26             );\n27         }\n28     }\n"
         lineNumber: 9
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
           symbol: RouteConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
         message: |
           HttpRuntime class is not available in ASP.NET Core.
           Various HttpRuntime members have different replacements in ASP.NET Core.
@@ -500,10 +500,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web.Http;\n4 \n5 namespace NerdDinner\n6 {\n7     public static class WebApiConfig\n8     {\n9         public static void Register(HttpConfiguration config)\n10         {\n11             config.Routes.MapHttpRoute(\n12                 name: \"DefaultApi\",\n13                 routeTemplate: \"api/{controller}/{id}\",\n14                 defaults: new { id = RouteParameter.Optional }\n15             );\n16         }\n17     }\n18 }\n"
         lineNumber: 7
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
           symbol: WebApiConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           HttpRuntime class is not available in ASP.NET Core.
           Various HttpRuntime members have different replacements in ASP.NET Core.
@@ -521,10 +521,10 @@
         codeSnip: "5 using System.Web.Http;\n6 using System.Web.Mvc;\n7 using System.Web.Optimization;\n8 using System.Web.Routing;\n9 \n10 namespace NerdDinner\n11 {\n12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n21             WebApiConfig.Register(GlobalConfiguration.Configuration);\n22             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n23             RouteConfig.RegisterRoutes(RouteTable.Routes);\n24             BundleConfig.RegisterBundles(BundleTable.Bundles);\n25             AuthConfig.RegisterAuth();\n26 \n27             ModelBinderProviders.BinderProviders.Add(new EFModelBinderProvider());\n28 \n29             Version version = Assembly.GetExecutingAssembly().GetName().Version;\n30             Application[\"Version\"] = string.Format(\"{0}.{1}\", version.Major, version.Minor);\n31         }\n"
         lineNumber: 15
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
           symbol: MvcApplication
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
           HttpRuntime class is not available in ASP.NET Core.
           Various HttpRuntime members have different replacements in ASP.NET Core.
@@ -542,10 +542,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data.Spatial;\n3 using System.Linq;\n4 using System.Web;\n5 using System.Web.Mvc;\n6 \n7 namespace NerdDinner\n8 {\n9     public class DbGeographyModelBinder : DefaultModelBinder\n10     {\n11         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)\n12         {\n13             var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);\n14             if (valueProviderResult != null)\n15             {\n16                 string[] latLongStr = valueProviderResult.AttemptedValue.Split(',');\n17                 string point = string.Format(\"POINT ({0} {1})\", latLongStr[1], latLongStr[0]);\n18                 //4326 format puts LONGITUDE first then LATITUDE\n19                 DbGeography result = DbGeography.FromText(point, 4326);\n20                 return result;\n21             }\n22             return null;\n23         }\n24     }\n"
         lineNumber: 9
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
           symbol: DbGeographyModelBinder
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
           HttpRuntime class is not available in ASP.NET Core.
           Various HttpRuntime members have different replacements in ASP.NET Core.
@@ -563,7 +563,7 @@
         codeSnip: "16                 string[] latLongStr = valueProviderResult.AttemptedValue.Split(',');\n17                 string point = string.Format(\"POINT ({0} {1})\", latLongStr[1], latLongStr[0]);\n18                 //4326 format puts LONGITUDE first then LATITUDE\n19                 DbGeography result = DbGeography.FromText(point, 4326);\n20                 return result;\n21             }\n22             return null;\n23         }\n24     }\n25 \n26     public class EFModelBinderProvider : IModelBinderProvider\n27     {\n28         public IModelBinder GetBinder(Type modelType)\n29         {\n30             if (modelType == typeof(DbGeography))\n31             {\n32                 return new DbGeographyModelBinder();\n33             }\n34             return null;\n35         }\n"
         lineNumber: 26
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
           symbol: EFModelBinderProvider
           syntax_type: class_def
       links:
@@ -579,7 +579,7 @@
       - konveyor.io/source=dotnet
       - konveyor.io/target=dotnet-core
       incidents:
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
           MachineKey class is not available in ASP.NET Core.
           Encryption and validation functions are replaced by the Data Protection API.
@@ -599,10 +599,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Text;\n4 using Microsoft.Web.WebPages.OAuth;\n5 using NerdDinner.Models;\n6 using System.Web.Configuration;\n7 \n8 namespace NerdDinner\n9 {\n10     public static class AuthConfig\n11     {\n12         public static void RegisterAuth()\n13         {\n14             // To let users of this site log in using their accounts from other sites such as Microsoft, Facebook, and Twitter,\n15             // you must update this site. For more information visit http://go.microsoft.com/fwlink/?LinkID=252166\n16 \n17             var microsoftClientId = WebConfigurationManager.AppSettings[\"microsoftClientId\"];\n18             var microsoftClientSecret = WebConfigurationManager.AppSettings[\"microsoftClientSecret\"];\n19             if (!string.IsNullOrEmpty(microsoftClientId) && !string.IsNullOrEmpty(microsoftClientSecret))\n20             {\n21                 OAuthWebSecurity.RegisterMicrosoftClient(\n22                     clientId: microsoftClientId,\n23                     clientSecret: microsoftClientSecret);\n24             }\n25 \n26             var twitterConsumerKey = WebConfigurationManager.AppSettings[\"twitterConsumerKey\"];\n27             var twitterConsumerSecret = WebConfigurationManager.AppSettings[\"twitterConsumerSecret\"];\n28             if (!string.IsNullOrEmpty(twitterConsumerKey) && !string.IsNullOrEmpty(twitterConsumerSecret))\n29             {\n30                 OAuthWebSecurity.RegisterTwitterClient(\n31                     consumerKey: twitterConsumerKey,\n32                     consumerSecret: twitterConsumerSecret);\n33             }\n34 \n35             var facebookAppId = WebConfigurationManager.AppSettings[\"facebookAppId\"];\n36             var facebookAppSecret = WebConfigurationManager.AppSettings[\"facebookAppSecret\"];\n37             if (!string.IsNullOrEmpty(facebookAppId) && !string.IsNullOrEmpty(facebookAppSecret))\n38             {\n39                 OAuthWebSecurity.RegisterFacebookClient(\n40                     appId: facebookAppId,\n41                     appSecret: facebookAppSecret);\n42             }\n43 \n44             OAuthWebSecurity.RegisterGoogleClient();\n45         }\n"
         lineNumber: 10
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
           symbol: AuthConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
         message: |
           MachineKey class is not available in ASP.NET Core.
           Encryption and validation functions are replaced by the Data Protection API.
@@ -622,10 +622,10 @@
         codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Optimization;\n2 \n3 namespace NerdDinner\n4 {\n5     public class BundleConfig\n6     {\n7         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725\n8         public static void RegisterBundles(BundleCollection bundles)\n9         {\n10             bundles.Add(new ScriptBundle(\"~/bundles/jquery\").Include(\n11                         \"~/Scripts/jquery-{version}.js\"));\n12 \n13             bundles.Add(new ScriptBundle(\"~/bundles/jqueryui\").Include(\n14                         \"~/Scripts/jquery-ui-{version}.js\"));\n15 \n16             bundles.Add(new ScriptBundle(\"~/bundles/jqueryval\").Include(\n17                         \"~/Scripts/jquery.unobtrusive*\",\n18                         \"~/Scripts/jquery.validate*\"));\n19 \n20             bundles.Add(new ScriptBundle(\"~/bundles/jquerymobile\").Include(\n21                         \"~/Scripts/jquery.mobile-{version}.js\"));\n22 \n23             // Use the development version of Modernizr to develop with and learn from. Then, when you're\n24             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.\n25             bundles.Add(new ScriptBundle(\"~/bundles/modernizr\").Include(\n26                         \"~/Scripts/modernizr-*\"));\n27 \n28             bundles.Add(new ScriptBundle(\"~/bundles/knockout\").Include(\n29                         \"~/Scripts/knockout-*\"));\n30 \n31             bundles.Add(new ScriptBundle(\"~/bundles/yepnope\").Include(\n32                         \"~/Scripts/yepnope.{version}.js\"));\n33 \n34             bundles.Add(new StyleBundle(\"~/Content/css\").Include(\"~/Content/site.css\"));\n35 \n36             bundles.Add(new StyleBundle(\"~/Content/themes/base/css\").Include(\n37                         \"~/Content/themes/base/jquery.ui.core.css\",\n38                         \"~/Content/themes/base/jquery.ui.resizable.css\",\n39                         \"~/Content/themes/base/jquery.ui.selectable.css\",\n40                         \"~/Content/themes/base/jquery.ui.accordion.css\",\n41                         \"~/Content/themes/base/jquery.ui.autocomplete.css\",\n42                         \"~/Content/themes/base/jquery.ui.button.css\",\n43                         \"~/Content/themes/base/jquery.ui.dialog.css\",\n44                         \"~/Content/themes/base/jquery.ui.slider.css\",\n45                         \"~/Content/themes/base/jquery.ui.tabs.css\",\n46                         \"~/Content/themes/base/jquery.ui.datepicker.css\",\n47                         \"~/Content/themes/base/jquery.ui.progressbar.css\",\n48                         \"~/Content/themes/base/jquery.ui.theme.css\"));\n49 \n50             bundles.Add(new StyleBundle(\"~/Content/jquerymobile\").Include(\n51                         \"~/Content/jquery.mobile-{version}.css\",\n52                         \"~/Content/jquery.mobile.structure-{version}.css\",\n53                         \"~/Content/jquery.mobile.theme-{version}.css\"));\n54         }\n55     }\n56 }\n"
         lineNumber: 5
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
           symbol: BundleConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
         message: |
           MachineKey class is not available in ASP.NET Core.
           Encryption and validation functions are replaced by the Data Protection API.
@@ -645,10 +645,10 @@
         codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Mvc;\n2 \n3 namespace NerdDinner\n4 {\n5     public class FilterConfig\n6     {\n7         public static void RegisterGlobalFilters(GlobalFilterCollection filters)\n8         {\n9             filters.Add(new HandleErrorAttribute());\n10         }\n11     }\n12 }\n"
         lineNumber: 5
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
           symbol: FilterConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
           MachineKey class is not available in ASP.NET Core.
           Encryption and validation functions are replaced by the Data Protection API.
@@ -668,10 +668,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 using System.Web.Routing;\n6 \n7 namespace NerdDinner\n8 {\n9     public class RouteConfig\n10     {\n11         public static void RegisterRoutes(RouteCollection routes)\n12         {\n13             routes.IgnoreRoute(\"{resource}.axd/{*pathInfo}\");\n14 \n15             routes.MapRoute(\n16                     \"PrettyDetails\",\n17                     \"{Id}\",\n18                         new { controller = \"Dinners\", action = \"Details\" },\n19                         new { Id = @\"\\d+\" }\n20                     );\n21 \n22             routes.MapRoute(\n23                 name: \"Default\",\n24                 url: \"{controller}/{action}/{id}\",\n25                 defaults: new { controller = \"Home\", action = \"Index\", id = UrlParameter.Optional }\n26             );\n27         }\n28     }\n"
         lineNumber: 9
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
           symbol: RouteConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
         message: |
           MachineKey class is not available in ASP.NET Core.
           Encryption and validation functions are replaced by the Data Protection API.
@@ -691,10 +691,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web.Http;\n4 \n5 namespace NerdDinner\n6 {\n7     public static class WebApiConfig\n8     {\n9         public static void Register(HttpConfiguration config)\n10         {\n11             config.Routes.MapHttpRoute(\n12                 name: \"DefaultApi\",\n13                 routeTemplate: \"api/{controller}/{id}\",\n14                 defaults: new { id = RouteParameter.Optional }\n15             );\n16         }\n17     }\n18 }\n"
         lineNumber: 7
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
           symbol: WebApiConfig
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           MachineKey class is not available in ASP.NET Core.
           Encryption and validation functions are replaced by the Data Protection API.
@@ -714,10 +714,10 @@
         codeSnip: "5 using System.Web.Http;\n6 using System.Web.Mvc;\n7 using System.Web.Optimization;\n8 using System.Web.Routing;\n9 \n10 namespace NerdDinner\n11 {\n12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n21             WebApiConfig.Register(GlobalConfiguration.Configuration);\n22             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n23             RouteConfig.RegisterRoutes(RouteTable.Routes);\n24             BundleConfig.RegisterBundles(BundleTable.Bundles);\n25             AuthConfig.RegisterAuth();\n26 \n27             ModelBinderProviders.BinderProviders.Add(new EFModelBinderProvider());\n28 \n29             Version version = Assembly.GetExecutingAssembly().GetName().Version;\n30             Application[\"Version\"] = string.Format(\"{0}.{1}\", version.Major, version.Minor);\n31         }\n"
         lineNumber: 15
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
           symbol: MvcApplication
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
           MachineKey class is not available in ASP.NET Core.
           Encryption and validation functions are replaced by the Data Protection API.
@@ -737,10 +737,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data.Spatial;\n3 using System.Linq;\n4 using System.Web;\n5 using System.Web.Mvc;\n6 \n7 namespace NerdDinner\n8 {\n9     public class DbGeographyModelBinder : DefaultModelBinder\n10     {\n11         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)\n12         {\n13             var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);\n14             if (valueProviderResult != null)\n15             {\n16                 string[] latLongStr = valueProviderResult.AttemptedValue.Split(',');\n17                 string point = string.Format(\"POINT ({0} {1})\", latLongStr[1], latLongStr[0]);\n18                 //4326 format puts LONGITUDE first then LATITUDE\n19                 DbGeography result = DbGeography.FromText(point, 4326);\n20                 return result;\n21             }\n22             return null;\n23         }\n24     }\n"
         lineNumber: 9
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
           symbol: DbGeographyModelBinder
           syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
           MachineKey class is not available in ASP.NET Core.
           Encryption and validation functions are replaced by the Data Protection API.
@@ -760,7 +760,7 @@
         codeSnip: "16                 string[] latLongStr = valueProviderResult.AttemptedValue.Split(',');\n17                 string point = string.Format(\"POINT ({0} {1})\", latLongStr[1], latLongStr[0]);\n18                 //4326 format puts LONGITUDE first then LATITUDE\n19                 DbGeography result = DbGeography.FromText(point, 4326);\n20                 return result;\n21             }\n22             return null;\n23         }\n24     }\n25 \n26     public class EFModelBinderProvider : IModelBinderProvider\n27     {\n28         public IModelBinder GetBinder(Type modelType)\n29         {\n30             if (modelType == typeof(DbGeography))\n31             {\n32                 return new DbGeographyModelBinder();\n33             }\n34             return null;\n35         }\n"
         lineNumber: 26
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
           symbol: EFModelBinderProvider
           syntax_type: class_def
       links:
@@ -776,7 +776,7 @@
       - konveyor.io/source=dotnet
       - konveyor.io/target=dotnet-core
       incidents:
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -792,13 +792,13 @@
         codeSnip: "11     {\n12         public static void RegisterAuth()\n13         {\n14             // To let users of this site log in using their accounts from other sites such as Microsoft, Facebook, and Twitter,\n15             // you must update this site. For more information visit http://go.microsoft.com/fwlink/?LinkID=252166\n16 \n17             var microsoftClientId = WebConfigurationManager.AppSettings[\"microsoftClientId\"];\n18             var microsoftClientSecret = WebConfigurationManager.AppSettings[\"microsoftClientSecret\"];\n19             if (!string.IsNullOrEmpty(microsoftClientId) && !string.IsNullOrEmpty(microsoftClientSecret))\n20             {\n"
         lineNumber: 21
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: RegisterMicrosoftClient
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.RegisterMicrosoftClient
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -814,13 +814,13 @@
         codeSnip: "20             {\n21                 OAuthWebSecurity.RegisterMicrosoftClient(\n22                     clientId: microsoftClientId,\n23                     clientSecret: microsoftClientSecret);\n24             }\n25 \n26             var twitterConsumerKey = WebConfigurationManager.AppSettings[\"twitterConsumerKey\"];\n27             var twitterConsumerSecret = WebConfigurationManager.AppSettings[\"twitterConsumerSecret\"];\n28             if (!string.IsNullOrEmpty(twitterConsumerKey) && !string.IsNullOrEmpty(twitterConsumerSecret))\n29             {\n"
         lineNumber: 30
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: RegisterTwitterClient
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.RegisterTwitterClient
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -836,13 +836,13 @@
         codeSnip: "29             {\n30                 OAuthWebSecurity.RegisterTwitterClient(\n31                     consumerKey: twitterConsumerKey,\n32                     consumerSecret: twitterConsumerSecret);\n33             }\n34 \n35             var facebookAppId = WebConfigurationManager.AppSettings[\"facebookAppId\"];\n36             var facebookAppSecret = WebConfigurationManager.AppSettings[\"facebookAppSecret\"];\n37             if (!string.IsNullOrEmpty(facebookAppId) && !string.IsNullOrEmpty(facebookAppSecret))\n38             {\n"
         lineNumber: 39
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: RegisterFacebookClient
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.RegisterFacebookClient
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -858,13 +858,13 @@
         codeSnip: "34 \n35             var facebookAppId = WebConfigurationManager.AppSettings[\"facebookAppId\"];\n36             var facebookAppSecret = WebConfigurationManager.AppSettings[\"facebookAppSecret\"];\n37             if (!string.IsNullOrEmpty(facebookAppId) && !string.IsNullOrEmpty(facebookAppSecret))\n38             {\n39                 OAuthWebSecurity.RegisterFacebookClient(\n40                     appId: facebookAppId,\n41                     appSecret: facebookAppSecret);\n42             }\n43 \n"
         lineNumber: 44
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: RegisterGoogleClient
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.RegisterGoogleClient
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -880,13 +880,13 @@
         codeSnip: "92             return View(model);\n93         }\n94 \n95         //\n96         // POST: /Account/Disassociate\n97 \n98         [HttpPost]\n99         [ValidateAntiForgeryToken]\n100         public ActionResult Disassociate(string provider, string providerUserId)\n101         {\n"
         lineNumber: 102
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: GetUserName
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.GetUserName
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -902,13 +902,13 @@
         codeSnip: "101         {\n102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n"
         lineNumber: 111
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: HasLocalAccount
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.HasLocalAccount
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -924,13 +924,13 @@
         codeSnip: "102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n111                     bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n"
         lineNumber: 112
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: GetAccountsFromUserName
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.GetAccountsFromUserName
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -946,13 +946,13 @@
         codeSnip: "104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n111                     bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n112                     if (hasLocalAccount || OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name).Count > 1)\n113                     {\n"
         lineNumber: 114
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: DeleteAccount
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.DeleteAccount
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -968,13 +968,13 @@
         codeSnip: "124         //\n125         // GET: /Account/Manage\n126 \n127         public ActionResult Manage(ManageMessageId? message)\n128         {\n129             ViewBag.StatusMessage =\n130                 message == ManageMessageId.ChangePasswordSuccess ? \"Your password has been changed.\"\n131                 : message == ManageMessageId.SetPasswordSuccess ? \"Your password has been set.\"\n132                 : message == ManageMessageId.RemoveLoginSuccess ? \"The external login was removed.\"\n133                 : \"\";\n"
         lineNumber: 134
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: HasLocalAccount
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.HasLocalAccount
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -990,13 +990,13 @@
         codeSnip: "136             return View();\n137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n"
         lineNumber: 146
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: HasLocalAccount
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.HasLocalAccount
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -1012,13 +1012,13 @@
         codeSnip: "209         {\n210             return new ExternalLoginResult(provider, Url.Action(\"ExternalLoginCallback\", new { ReturnUrl = returnUrl }));\n211         }\n212 \n213         //\n214         // GET: /Account/ExternalLoginCallback\n215 \n216         [AllowAnonymous]\n217         public ActionResult ExternalLoginCallback(string returnUrl)\n218         {\n"
         lineNumber: 219
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: VerifyAuthentication
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.VerifyAuthentication
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -1034,13 +1034,13 @@
         codeSnip: "215 \n216         [AllowAnonymous]\n217         public ActionResult ExternalLoginCallback(string returnUrl)\n218         {\n219             AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action(\"ExternalLoginCallback\", new { ReturnUrl = returnUrl }));\n220             if (!result.IsSuccessful)\n221             {\n222                 return RedirectToAction(\"ExternalLoginFailure\");\n223             }\n224 \n"
         lineNumber: 225
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: Login
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.Login
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -1056,13 +1056,13 @@
         codeSnip: "223             }\n224 \n225             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))\n226             {\n227                 return RedirectToLocal(returnUrl);\n228             }\n229 \n230             if (User.Identity.IsAuthenticated)\n231             {\n232                 // If the current user is logged in add the new account\n"
         lineNumber: 233
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: CreateOrUpdateAccount
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.CreateOrUpdateAccount
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -1078,13 +1078,13 @@
         codeSnip: "229 \n230             if (User.Identity.IsAuthenticated)\n231             {\n232                 // If the current user is logged in add the new account\n233                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);\n234                 return RedirectToLocal(returnUrl);\n235             }\n236             else\n237             {\n238                 // User is new, ask for their desired membership name\n"
         lineNumber: 239
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: SerializeProviderUserId
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.SerializeProviderUserId
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -1110,13 +1110,13 @@
           239                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
         lineNumber: 240
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: GetOAuthClientData
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.GetOAuthClientData
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -1132,13 +1132,13 @@
         codeSnip: "247         // POST: /Account/ExternalLoginConfirmation\n248 \n249         [HttpPost]\n250         [AllowAnonymous]\n251         [ValidateAntiForgeryToken]\n252         public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)\n253         {\n254             string provider = null;\n255             string providerUserId = null;\n256 \n"
         lineNumber: 257
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: TryDeserializeProviderUserId
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.TryDeserializeProviderUserId
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -1154,13 +1154,13 @@
         codeSnip: "265                 using (UsersContext db = new UsersContext())\n266                 {\n267                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());\n268                     // Check if user already exists\n269                     if (user == null)\n270                     {\n271                         // Insert name into the profile table\n272                         db.UserProfiles.Add(new UserProfile { UserName = model.UserName });\n273                         db.SaveChanges();\n274 \n"
         lineNumber: 275
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: CreateOrUpdateAccount
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.CreateOrUpdateAccount
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -1176,13 +1176,13 @@
         codeSnip: "266                 {\n267                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());\n268                     // Check if user already exists\n269                     if (user == null)\n270                     {\n271                         // Insert name into the profile table\n272                         db.UserProfiles.Add(new UserProfile { UserName = model.UserName });\n273                         db.SaveChanges();\n274 \n275                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);\n"
         lineNumber: 276
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: Login
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.Login
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -1198,13 +1198,13 @@
         codeSnip: "277 \n278                         return RedirectToLocal(returnUrl);\n279                     }\n280                     else\n281                     {\n282                         ModelState.AddModelError(\"UserName\", \"User name already exists. Please enter a different user name.\");\n283                     }\n284                 }\n285             }\n286 \n"
         lineNumber: 287
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: GetOAuthClientData
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.GetOAuthClientData
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -1220,13 +1220,13 @@
         codeSnip: "296         public ActionResult ExternalLoginFailure()\n297         {\n298             return View();\n299         }\n300 \n301         [AllowAnonymous]\n302         [ChildActionOnly]\n303         public ActionResult ExternalLoginsList(string returnUrl)\n304         {\n305             ViewBag.ReturnUrl = returnUrl;\n"
         lineNumber: 306
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_field: RegisteredClientData
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.RegisteredClientData
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -1242,13 +1242,13 @@
         codeSnip: "302         [ChildActionOnly]\n303         public ActionResult ExternalLoginsList(string returnUrl)\n304         {\n305             ViewBag.ReturnUrl = returnUrl;\n306             return PartialView(\"_ExternalLoginsListPartial\", OAuthWebSecurity.RegisteredClientData);\n307         }\n308 \n309         [ChildActionOnly]\n310         public ActionResult RemoveExternalLogins()\n311         {\n"
         lineNumber: 312
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: GetAccountsFromUserName
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.GetAccountsFromUserName
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -1264,13 +1264,13 @@
         codeSnip: "306             return PartialView(\"_ExternalLoginsListPartial\", OAuthWebSecurity.RegisteredClientData);\n307         }\n308 \n309         [ChildActionOnly]\n310         public ActionResult RemoveExternalLogins()\n311         {\n312             ICollection<OAuthAccount> accounts = OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name);\n313             List<ExternalLogin> externalLogins = new List<ExternalLogin>();\n314             foreach (OAuthAccount account in accounts)\n315             {\n"
         lineNumber: 316
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: GetOAuthClientData
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.GetOAuthClientData
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -1286,13 +1286,13 @@
         codeSnip: "316                 AuthenticationClientData clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider);\n317 \n318                 externalLogins.Add(new ExternalLogin\n319                 {\n320                     Provider = account.Provider,\n321                     ProviderDisplayName = clientData.DisplayName,\n322                     ProviderUserId = account.ProviderUserId,\n323                 });\n324             }\n325 \n"
         lineNumber: 326
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: HasLocalAccount
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.HasLocalAccount
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
           External authentication is handled differently in ASP.NET Core.
@@ -1308,7 +1308,7 @@
         codeSnip: "353             {\n354                 Provider = provider;\n355                 ReturnUrl = returnUrl;\n356             }\n357 \n358             public string Provider { get; private set; }\n359             public string ReturnUrl { get; private set; }\n360 \n361             public override void ExecuteResult(ControllerContext context)\n362             {\n"
         lineNumber: 363
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: OAuthWebSecurity
           fqdn_method: RequestAuthentication
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
@@ -1329,7 +1329,7 @@
       - konveyor.io/source=dotnet
       - konveyor.io/target=dotnet-core
       incidents:
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
 
@@ -1342,13 +1342,13 @@
         codeSnip: "4 \n5 namespace NerdDinner\n6 {\n7     public static class WebApiConfig\n8     {\n9         public static void Register(HttpConfiguration config)\n10         {\n11             config.Routes.MapHttpRoute(\n12                 name: \"DefaultApi\",\n13                 routeTemplate: \"api/{controller}/{id}\",\n"
         lineNumber: 14
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
           fqdn_class: RouteParameter
           fqdn_field: Optional
           fqdn_namespace: System.Web.Http
           symbol: RouteParameter.Optional
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
 
@@ -1361,7 +1361,7 @@
         codeSnip: "11 {\n12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n"
         lineNumber: 21
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
           fqdn_class: GlobalConfiguration
           fqdn_field: Configuration
           fqdn_namespace: System.Web.Http
@@ -1378,7 +1378,7 @@
       - konveyor.io/source=dotnet
       - konveyor.io/target=dotnet-core
       incidents:
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
 
@@ -1394,13 +1394,13 @@
         codeSnip: "27         }\n28 \n29         //\n30         // POST: /Account/Login\n31 \n32         [HttpPost]\n33         [AllowAnonymous]\n34         [ValidateAntiForgeryToken]\n35         public ActionResult Login(LoginModel model, string returnUrl)\n36         {\n"
         lineNumber: 37
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: WebSecurity
           fqdn_method: Login
           fqdn_namespace: WebMatrix.WebData
           symbol: WebSecurity.Login
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
 
@@ -1416,13 +1416,13 @@
         codeSnip: "44             return View(model);\n45         }\n46 \n47         //\n48         // POST: /Account/LogOff\n49 \n50         [HttpPost]\n51         [ValidateAntiForgeryToken]\n52         public ActionResult LogOff()\n53         {\n"
         lineNumber: 54
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: WebSecurity
           fqdn_method: Logout
           fqdn_namespace: WebMatrix.WebData
           symbol: WebSecurity.Logout
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
 
@@ -1448,13 +1448,13 @@
           81                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
         lineNumber: 82
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: WebSecurity
           fqdn_method: Login
           fqdn_namespace: WebMatrix.WebData
           symbol: WebSecurity.Login
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
 
@@ -1470,7 +1470,7 @@
         codeSnip: "30                 {\n31                     using (var context = new UsersContext())\n32                     {\n33                         if (!context.Database.Exists())\n34                         {\n35                             // Create the SimpleMembership database without Entity Framework migration schema\n36                             ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();\n37                         }\n38                     }\n39 \n"
         lineNumber: 40
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
           fqdn_class: WebSecurity
           fqdn_method: InitializeDatabaseConnection
           fqdn_namespace: WebMatrix.WebData
@@ -1490,7 +1490,7 @@
       - konveyor.io/source=dotnet
       - konveyor.io/target=dotnet-core
       incidents:
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1503,10 +1503,10 @@
         codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Mvc;\n2 \n3 namespace NerdDinner\n4 {\n5     public class FilterConfig\n6     {\n7         public static void RegisterGlobalFilters(GlobalFilterCollection filters)\n8         {\n9             filters.Add(new HandleErrorAttribute());\n"
         lineNumber: 1
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
           symbol: System.Web.Mvc
           syntax_type: import
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1519,10 +1519,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 using System.Web.Routing;\n6 \n7 namespace NerdDinner\n8 {\n9     public class RouteConfig\n"
         lineNumber: 4
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
           symbol: System.Web.Mvc
           syntax_type: import
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1535,13 +1535,13 @@
         codeSnip: "15             routes.MapRoute(\n16                     \"PrettyDetails\",\n17                     \"{Id}\",\n18                         new { controller = \"Dinners\", action = \"Details\" },\n19                         new { Id = @\"\\d+\" }\n20                     );\n21 \n22             routes.MapRoute(\n23                 name: \"Default\",\n24                 url: \"{controller}/{action}/{id}\",\n"
         lineNumber: 25
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
           fqdn_class: UrlParameter
           fqdn_field: Optional
           fqdn_namespace: System.Web.Mvc
           symbol: UrlParameter.Optional
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1553,10 +1553,10 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 5
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           symbol: System.Web.Mvc
           syntax_type: import
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1568,13 +1568,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 25
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ReturnUrl
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1586,13 +1586,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 37
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.IsValid
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1604,13 +1604,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 43
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.AddModelError
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1622,13 +1622,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 76
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.IsValid
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1640,13 +1640,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 87
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.AddModelError
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1659,13 +1659,13 @@
         codeSnip: "96         // POST: /Account/Disassociate\n97 \n98         [HttpPost]\n99         [ValidateAntiForgeryToken]\n100         public ActionResult Disassociate(string provider, string providerUserId)\n101         {\n102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n"
         lineNumber: 106
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1678,13 +1678,13 @@
         codeSnip: "101         {\n102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n"
         lineNumber: 111
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1697,13 +1697,13 @@
         codeSnip: "102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n111                     bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n"
         lineNumber: 112
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1716,13 +1716,13 @@
         codeSnip: "119             }\n120 \n121             return RedirectToAction(\"Manage\", new { Message = message });\n122         }\n123 \n124         //\n125         // GET: /Account/Manage\n126 \n127         public ActionResult Manage(ManageMessageId? message)\n128         {\n"
         lineNumber: 129
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.StatusMessage
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1735,13 +1735,13 @@
         codeSnip: "124         //\n125         // GET: /Account/Manage\n126 \n127         public ActionResult Manage(ManageMessageId? message)\n128         {\n129             ViewBag.StatusMessage =\n130                 message == ManageMessageId.ChangePasswordSuccess ? \"Your password has been changed.\"\n131                 : message == ManageMessageId.SetPasswordSuccess ? \"Your password has been set.\"\n132                 : message == ManageMessageId.RemoveLoginSuccess ? \"The external login was removed.\"\n133                 : \"\";\n"
         lineNumber: 134
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.HasLocalPassword
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1754,13 +1754,13 @@
         codeSnip: "125         // GET: /Account/Manage\n126 \n127         public ActionResult Manage(ManageMessageId? message)\n128         {\n129             ViewBag.StatusMessage =\n130                 message == ManageMessageId.ChangePasswordSuccess ? \"Your password has been changed.\"\n131                 : message == ManageMessageId.SetPasswordSuccess ? \"Your password has been set.\"\n132                 : message == ManageMessageId.RemoveLoginSuccess ? \"The external login was removed.\"\n133                 : \"\";\n134             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n"
         lineNumber: 135
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ReturnUrl
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1773,13 +1773,13 @@
         codeSnip: "136             return View();\n137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n"
         lineNumber: 146
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1792,13 +1792,13 @@
         codeSnip: "137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n146             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n"
         lineNumber: 147
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.HasLocalPassword
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1811,13 +1811,13 @@
         codeSnip: "138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n146             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n147             ViewBag.HasLocalPassword = hasLocalAccount;\n"
         lineNumber: 148
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ReturnUrl
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1830,13 +1830,13 @@
         codeSnip: "141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n146             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n147             ViewBag.HasLocalPassword = hasLocalAccount;\n148             ViewBag.ReturnUrl = Url.Action(\"Manage\");\n149             if (hasLocalAccount)\n150             {\n"
         lineNumber: 151
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.IsValid
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1859,13 +1859,13 @@
           156                     {
         lineNumber: 157
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1878,13 +1878,13 @@
         codeSnip: "160                     {\n161                         changePasswordSucceeded = false;\n162                     }\n163 \n164                     if (changePasswordSucceeded)\n165                     {\n166                         return RedirectToAction(\"Manage\", new { Message = ManageMessageId.ChangePasswordSuccess });\n167                     }\n168                     else\n169                     {\n"
         lineNumber: 170
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.AddModelError
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1907,13 +1907,13 @@
           180                 {
         lineNumber: 181
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: ModelState
           fqdn_field: Errors
           fqdn_namespace: System.Web.Mvc
           symbol: state.Errors
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1926,13 +1926,13 @@
         codeSnip: "174             else\n175             {\n176                 // User does not have a local password so remove any validation errors caused by a missing\n177                 // OldPassword field\n178                 ModelState state = ModelState[\"OldPassword\"];\n179                 if (state != null)\n180                 {\n181                     state.Errors.Clear();\n182                 }\n183 \n"
         lineNumber: 184
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.IsValid
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1945,13 +1945,13 @@
         codeSnip: "178                 ModelState state = ModelState[\"OldPassword\"];\n179                 if (state != null)\n180                 {\n181                     state.Errors.Clear();\n182                 }\n183 \n184                 if (ModelState.IsValid)\n185                 {\n186                     try\n187                     {\n"
         lineNumber: 188
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1964,13 +1964,13 @@
         codeSnip: "183 \n184                 if (ModelState.IsValid)\n185                 {\n186                     try\n187                     {\n188                         WebSecurity.CreateAccount(User.Identity.Name, model.NewPassword);\n189                         return RedirectToAction(\"Manage\", new { Message = ManageMessageId.SetPasswordSuccess });\n190                     }\n191                     catch (Exception)\n192                     {\n"
         lineNumber: 193
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.AddModelError
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -1983,13 +1983,13 @@
         codeSnip: "200         }\n201 \n202         //\n203         // POST: /Account/ExternalLogin\n204 \n205         [HttpPost]\n206         [AllowAnonymous]\n207         [ValidateAntiForgeryToken]\n208         public ActionResult ExternalLogin(string provider, string returnUrl)\n209         {\n"
         lineNumber: 210
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: Url
           fqdn_namespace: System.Web.Mvc
           symbol: Url.Action
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2002,13 +2002,13 @@
         codeSnip: "209         {\n210             return new ExternalLoginResult(provider, Url.Action(\"ExternalLoginCallback\", new { ReturnUrl = returnUrl }));\n211         }\n212 \n213         //\n214         // GET: /Account/ExternalLoginCallback\n215 \n216         [AllowAnonymous]\n217         public ActionResult ExternalLoginCallback(string returnUrl)\n218         {\n"
         lineNumber: 219
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: Url
           fqdn_namespace: System.Web.Mvc
           symbol: Url.Action
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2021,13 +2021,13 @@
         codeSnip: "220             if (!result.IsSuccessful)\n221             {\n222                 return RedirectToAction(\"ExternalLoginFailure\");\n223             }\n224 \n225             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))\n226             {\n227                 return RedirectToLocal(returnUrl);\n228             }\n229 \n"
         lineNumber: 230
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2040,13 +2040,13 @@
         codeSnip: "223             }\n224 \n225             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))\n226             {\n227                 return RedirectToLocal(returnUrl);\n228             }\n229 \n230             if (User.Identity.IsAuthenticated)\n231             {\n232                 // If the current user is logged in add the new account\n"
         lineNumber: 233
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2058,13 +2058,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 240
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ProviderDisplayName
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2076,13 +2076,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 241
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ReturnUrl
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2094,13 +2094,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 257
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2112,13 +2112,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 262
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.IsValid
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2130,13 +2130,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 282
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.AddModelError
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2148,13 +2148,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 287
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ProviderDisplayName
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2166,13 +2166,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 288
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ReturnUrl
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2184,13 +2184,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 305
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ReturnUrl
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2202,13 +2202,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 312
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2220,13 +2220,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 326
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ShowRemoveButton
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2238,13 +2238,13 @@
           - Migrate to ASP.NET Core middleware pipeline
         lineNumber: 333
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           fqdn_class: Controller
           fqdn_field: Url
           fqdn_namespace: System.Web.Mvc
           symbol: Url.IsLocalUrl
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2257,10 +2257,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data;\n3 using System.Data.Entity;\n4 using System.Linq;\n5 using System.Web;\n6 using System.Web.Mvc;\n7 using NerdDinner.Models;\n8 using PagedList;\n9 \n"
         lineNumber: 6
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
           symbol: System.Web.Mvc
           syntax_type: import
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2273,13 +2273,13 @@
         codeSnip: "39 \n40         //\n41         // GET: /Dinners/Create\n42 \n43         [Authorize]\n44         public ActionResult Create()\n45         {\n46             var dinner = new Dinner()\n47             {\n48                 EventDate = DateTime.Now.AddDays(7),\n"
         lineNumber: 49
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2292,13 +2292,13 @@
         codeSnip: "51 \n52             return View(dinner);\n53         }\n54 \n55         //\n56         // POST: /Dinners/Create\n57 \n58         [HttpPost, Authorize, ValidateAntiForgeryToken]\n59         public ActionResult Create(Dinner dinner)\n60         {\n"
         lineNumber: 61
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.IsValid
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2311,13 +2311,13 @@
         codeSnip: "53         }\n54 \n55         //\n56         // POST: /Dinners/Create\n57 \n58         [HttpPost, Authorize, ValidateAntiForgeryToken]\n59         public ActionResult Create(Dinner dinner)\n60         {\n61             if (ModelState.IsValid)\n62             {\n"
         lineNumber: 63
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2330,13 +2330,13 @@
         codeSnip: "56         // POST: /Dinners/Create\n57 \n58         [HttpPost, Authorize, ValidateAntiForgeryToken]\n59         public ActionResult Create(Dinner dinner)\n60         {\n61             if (ModelState.IsValid)\n62             {\n63                 dinner.HostedBy = User.Identity.Name;\n64 \n65                 RSVP rsvp = new RSVP();\n"
         lineNumber: 66
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2349,13 +2349,13 @@
         codeSnip: "80         // GET: /Dinners/Edit/5\n81 \n82         [Authorize]\n83         public ActionResult Edit(int id = 0)\n84         {\n85             Dinner dinner = db.Dinners.Find(id);\n86             if (dinner == null)\n87             {\n88                 return HttpNotFound();\n89             }\n"
         lineNumber: 90
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2368,13 +2368,13 @@
         codeSnip: "93             }\n94             return View(dinner);\n95         }\n96 \n97         //\n98         // POST: /Dinners/Edit/5\n99 \n100         [HttpPost, Authorize, ValidateAntiForgeryToken]\n101         public ActionResult Edit(Dinner dinner)\n102         {\n"
         lineNumber: 103
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2387,13 +2387,13 @@
         codeSnip: "98         // POST: /Dinners/Edit/5\n99 \n100         [HttpPost, Authorize, ValidateAntiForgeryToken]\n101         public ActionResult Edit(Dinner dinner)\n102         {\n103             if (!dinner.IsHostedBy(User.Identity.Name))\n104             {\n105                 return View(\"InvalidOwner\");\n106             }\n107 \n"
         lineNumber: 108
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: ModelState
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.IsValid
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2406,13 +2406,13 @@
         codeSnip: "118         // GET: /Dinners/Delete/5\n119 \n120         [Authorize]\n121         public ActionResult Delete(int id = 0)\n122         {\n123             Dinner dinner = db.Dinners.Find(id);\n124             if (dinner == null)\n125             {\n126                 return HttpNotFound();\n127             }\n"
         lineNumber: 128
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2425,13 +2425,13 @@
         codeSnip: "133         }\n134 \n135         //\n136         // POST: /Dinners/Delete/5\n137 \n138         [HttpPost, ActionName(\"Delete\"), Authorize, ValidateAntiForgeryToken]\n139         public ActionResult DeleteConfirmed(int id)\n140         {\n141             Dinner dinner = db.Dinners.Find(id);\n142 \n"
         lineNumber: 143
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2444,10 +2444,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 \n6 namespace NerdDinner.Controllers\n7 {\n8     public class HomeController : Controller\n9     {\n"
         lineNumber: 4
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
           symbol: System.Web.Mvc
           syntax_type: import
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2460,13 +2460,13 @@
         codeSnip: "2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 \n6 namespace NerdDinner.Controllers\n7 {\n8     public class HomeController : Controller\n9     {\n10         public ActionResult Index()\n11         {\n"
         lineNumber: 12
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
           fqdn_class: AjaxHelper
           fqdn_field: ViewBag
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.Message
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2479,10 +2479,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Globalization;\n2 using System.Linq;\n3 using System.Web.Mvc;\n4 using NerdDinner.Helpers;\n5 using NerdDinner.Models;\n6 \n7 namespace NerdDinner.Controllers\n8 {\n9     public class RSVPController : Controller\n"
         lineNumber: 3
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
           symbol: System.Web.Mvc
           syntax_type: import
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2495,13 +2495,13 @@
         codeSnip: "25         public ActionResult RegisterAjax(int id)\n26         {\n27             RegisterForDinner(id);\n28             return Content(\"Thanks - we'll see you there!\");\n29         }\n30 \n31         private void RegisterForDinner(int id)\n32         {\n33             Dinner dinner = db.Dinners.Find(id);\n34 \n"
         lineNumber: 35
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2514,13 +2514,13 @@
         codeSnip: "28             return Content(\"Thanks - we'll see you there!\");\n29         }\n30 \n31         private void RegisterForDinner(int id)\n32         {\n33             Dinner dinner = db.Dinners.Find(id);\n34 \n35             if (!dinner.IsUserRegistered(User.Identity.Name))\n36             {\n37                 RSVP rsvp = new RSVP();\n"
         lineNumber: 38
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
           fqdn_class: Controller
           fqdn_field: User
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2533,10 +2533,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Data.Entity;\n2 using System.Data.Entity.Infrastructure;\n3 using System.Threading;\n4 using System.Web.Mvc;\n5 using WebMatrix.WebData;\n6 using NerdDinner.Models;\n7 \n8 namespace NerdDinner.Filters\n9 {\n"
         lineNumber: 4
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
           symbol: System.Web.Mvc
           syntax_type: import
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2549,10 +2549,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Reflection;\n4 using System.Web;\n5 using System.Web.Http;\n6 using System.Web.Mvc;\n7 using System.Web.Optimization;\n8 using System.Web.Routing;\n9 \n"
         lineNumber: 6
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
           symbol: System.Web.Mvc
           syntax_type: import
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2565,13 +2565,13 @@
         codeSnip: "9 \n10 namespace NerdDinner\n11 {\n12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n17         protected void Application_Start()\n18         {\n"
         lineNumber: 19
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
           fqdn_class: AreaRegistration
           fqdn_method: RegisterAllAreas
           fqdn_namespace: System.Web.Mvc
           symbol: AreaRegistration.RegisterAllAreas
           syntax_type: method_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2584,13 +2584,13 @@
         codeSnip: "12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n21             WebApiConfig.Register(GlobalConfiguration.Configuration);\n"
         lineNumber: 22
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
           fqdn_class: GlobalFilters
           fqdn_field: Filters
           fqdn_namespace: System.Web.Mvc
           symbol: GlobalFilters.Filters
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2603,13 +2603,13 @@
         codeSnip: "17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n21             WebApiConfig.Register(GlobalConfiguration.Configuration);\n22             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n23             RouteConfig.RegisterRoutes(RouteTable.Routes);\n24             BundleConfig.RegisterBundles(BundleTable.Bundles);\n25             AuthConfig.RegisterAuth();\n26 \n"
         lineNumber: 27
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
           fqdn_class: ModelBinderProviders
           fqdn_field: BinderProviders
           fqdn_namespace: System.Web.Mvc
           symbol: ModelBinderProviders.BinderProviders
           syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2622,10 +2622,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data.Spatial;\n3 using System.Linq;\n4 using System.Web;\n5 using System.Web.Mvc;\n6 \n7 namespace NerdDinner\n8 {\n9     public class DbGeographyModelBinder : DefaultModelBinder\n"
         lineNumber: 5
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
           symbol: System.Web.Mvc
           syntax_type: import
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2638,10 +2638,10 @@
         codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.ComponentModel.DataAnnotations;\n3 using System.ComponentModel.DataAnnotations.Schema;\n4 using System.Data.Spatial;\n5 using System.Linq;\n6 using System.Web;\n7 using System.Web.Mvc;\n8 \n9 namespace NerdDinner.Models\n"
         lineNumber: 7
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
           symbol: System.Web.Mvc
           syntax_type: import
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
         message: |
           The System.Web namespace is not available in .NET Core.
           This namespace contains types that are specific to ASP.NET web applications and is replaced by ASP.NET Core components.
@@ -2654,7 +2654,7 @@
         codeSnip: "16         [Required(ErrorMessage = \"Title is required\")]\n17         [StringLength(50, ErrorMessage = \"Title may not be longer than 50 characters\")]\n18         public string Title { get; set; }\n19 \n20         [Required(ErrorMessage = \"Event Date is required\")]\n21         [Display(Name = \"Event Date\")]\n22         public DateTime EventDate { get; set; }\n23 \n24         [Required(ErrorMessage = \"Description is required\")]\n25         [StringLength(256, ErrorMessage = \"Description may not be longer than 256 characters\")]\n"
         lineNumber: 26
         variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
           fqdn_class: CachedDataAnnotationsMetadataAttributes
           fqdn_field: DataType
           fqdn_namespace: System.Web.Mvc
