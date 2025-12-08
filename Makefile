@@ -5,7 +5,7 @@ CONTAINER_RUNTIME ?= podman
 KONVEYOR_BRANCH ?= main
 
 # SELinux label for shared volumes (use :z for shared, :Z for exclusive)
-MOUNT_OPT ?= :z
+MOUNT_OPT ?= :U,z
 
 TAG ?= latest
 IMAGE ?= c-sharp-provider:${TAG}
