@@ -117,6 +117,7 @@ jobs:
           IMG_JAVA_PROVIDER: quay.io/konveyor/java-external-provider:latest
           IMG_GENERIC_PROVIDER: quay.io/konveyor/generic-external-provider:latest
           IMG_YQ_PROVIDER: quay.io/konveyor/yq-external-provider:latest
+          IMG_ANALYZER: quay.io/konveyor/analyzer-lsp:latest
         run : |
           make run-external-providers-pod
           make run-demo-image
