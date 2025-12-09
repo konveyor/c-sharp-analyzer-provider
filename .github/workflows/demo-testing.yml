@@ -1,6 +1,7 @@
 name: Testing
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
     branches:
@@ -67,12 +68,12 @@ jobs:
           podman volume create test-data
           podman run --rm -v test-data:/target:z -v $(pwd)/testdata:/src/:z --entrypoint=cp alpine -a /src/. /target/
           podman pod create --name=analyzer-c-sharp
-          podman run --pod analyzer-c-sharp --name c-sharp -d -v test-data:/analyzer-lsp/examples:z quay.io/konveyor/c-sharp-provider:${{ steps.set-tag.outputs.image_tag }} --port 14651
+          podman run --pod analyzer-c-sharp --name c-sharp -d -v test-data:/analyzer-lsp/examples:U,z quay.io/konveyor/c-sharp-provider:${{ steps.set-tag.outputs.image_tag }} --port 14651
           podman run --entrypoint /usr/local/bin/konveyor-analyzer --pod=analyzer-c-sharp \
-            -v test-data:/analyzer-lsp/examples:z \
-            -v $(pwd)/e2e-tests/demo-output.yaml:/analyzer-lsp/output.yaml:z \
-            -v $(pwd)/e2e-tests/provider_settings.json:/analyzer-lsp/provider_settings.json:z \
-            -v $(pwd)/rulesets/:/analyzer-lsp/rules:z \
+            -v test-data:/analyzer-lsp/examples:U,z \
+            -v $(pwd)/e2e-tests/demo-output.yaml:/analyzer-lsp/output.yaml:U,z \
+            -v $(pwd)/e2e-tests/provider_settings.json:/analyzer-lsp/provider_settings.json:U,z \
+            -v $(pwd)/rulesets/:/analyzer-lsp/rules:U,z \
             quay.io/konveyor/analyzer-lsp \
             --output-file=/analyzer-lsp/output.yaml \
             --rules=/analyzer-lsp/rules \
@@ -116,6 +117,7 @@ jobs:
           IMG_JAVA_PROVIDER: quay.io/konveyor/java-external-provider:latest
           IMG_GENERIC_PROVIDER: quay.io/konveyor/generic-external-provider:latest
           IMG_YQ_PROVIDER: quay.io/konveyor/yq-external-provider:latest
+          IMG_ANALYZER: quay.io/konveyor/analyzer-lsp:latest
         run : |
           make run-external-providers-pod
           make run-demo-image
