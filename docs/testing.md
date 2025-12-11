@@ -71,13 +71,14 @@ RUST_LOG=c_sharp_analyzer_provider_cli=DEBUG,INFO cargo run -- --port 9000 --nam
 ```bash
 # Terminal 2: Send init request
 grpcurl -max-time 1000 -plaintext -d '{
-  "analysisMode": "source-only",
-  "location": "'$(PWD)'/testdata/nerd-dinner",
-  "providerSpecificConfig": {
-    "ilspy_cmd": "'${HOME}'/.dotnet/tools/ilspycmd",
-    "paket_cmd": "'${HOME}'/.dotnet/tools/paket"
-  }
-}' localhost:9000 provider.ProviderService.Init
+    "analysisMode": "source-only",
+    "location": "'$(pwd)'/testdata/nerd-dinner",
+    "providerSpecificConfig": {
+      "ilspy_cmd": "'${HOME}'/.dotnet/tools/ilspycmd",
+      "paket_cmd": "'${HOME}'/.dotnet/tools/paket",
+      "dotnet_install_cmd": "'$(pwd)'/scripts/dotnet-install.sh"
+    }
+  }' localhost:9000 provider.ProviderService.Init
 ```
 
 ### 3. Run a Query

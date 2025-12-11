@@ -26,7 +26,7 @@ It builds a stack graph from C# source code and optionally decompiled dependenci
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd c-sharp-analyzer-provider-cli
+cd c-sharp-analyzer-provider
 
 # Build
 cargo build
