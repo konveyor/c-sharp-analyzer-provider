@@ -2,9 +2,6 @@
 # This file configures the cross tool for building the C# analyzer provider
 # for different architectures and operating systems.
 
-[build]
-# Default target directory for builds
-target-dir = "target/cross"
 
 [target.x86_64-unknown-linux-gnu]
 # Use a custom image with protoc installed

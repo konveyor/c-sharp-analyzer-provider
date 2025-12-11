@@ -1,8 +1,17 @@
 fn main() {
     #[cfg(feature = "generate-proto")]
     {
-        // Download protoc if not available
-        dlprotoc::download_protoc().unwrap();
+        // Check if protoc is already available before downloading
+        if std::process::Command::new("protoc")
+            .arg("--version")
+            .output()
+            .is_ok()
+        {
+            println!("Using existing protoc installation");
+        } else {
+            // Download protoc if not available
+            dlprotoc::download_protoc().unwrap();
+        }
         
         tonic_build::configure()
             .out_dir("src/analyzer_service/")
