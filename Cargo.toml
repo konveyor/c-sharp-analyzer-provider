@@ -44,4 +44,4 @@ quick-xml = "0.38.3"
 
 [build-dependencies]
 tonic-build = {version="0.13.1", optional = true}
-dlprotoc = {version="0.4", optional = true}
+dlprotoc = {version="0.4.5", optional = true}
