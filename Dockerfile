@@ -20,8 +20,10 @@ RUN microdnf install -y dotnet-sdk-8.0 dotnet-runtime-8.0 tar gzip findutils && 
     rm -rf /var/cache/dnf
 RUN dotnet tool install --tool-path=/usr/local/bin Paket
 RUN dotnet tool install --tool-path=/usr/local/bin ilspycmd
+RUN chgrp -R 0 /home && chmod -R g=u /home
 USER 1001
 
+ENV HOME=/home
 ENV RUST_LOG=INFO,c_sharp_analyzer_provider_cli=DEBUG,
 COPY --chmod=0755 scripts/dotnet-install.sh /usr/local/bin/scripts/dotnet-install.sh
 COPY --chmod=0755 scripts/dotnet-install.ps1 /usr/local/bin/scripts/dotnet-install.ps1
