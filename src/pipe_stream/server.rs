@@ -36,7 +36,7 @@ impl AsyncRead for NamedPipeConnection {
     ) -> std::task::Poll<std::io::Result<()>> {
         let x = Pin::new(&mut self.inner).poll_read(cx, buf);
         if x.is_ready() {
-            debug!("buffer: {:?}", buf)
+            tracing::debug!("buffer: {:?}", buf)
         }
         return x;
     }
