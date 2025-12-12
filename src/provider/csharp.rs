@@ -230,7 +230,7 @@ impl ProviderService for CSharpProvider {
             Ok(res) => res,
             Err(e) => {
                 debug!("unable to get deps: {}", e);
-                return Err(Status::internal("unable to resolve dependenies"));
+                return Err(Status::internal("unable to resolve dependencies"));
             }
         };
         debug!("got task result: {:?} -- project: {:?}", res, project);
