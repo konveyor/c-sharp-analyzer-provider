@@ -5,6 +5,9 @@ on:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
       - 'v[0-9]+.[0-9]+.[0-9]+-*'
+    branches:
+      # generate binaries when a merge to main branch happens
+      - main
   workflow_dispatch:
     inputs:
       tag_name:
@@ -181,7 +184,7 @@ jobs:
             c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}.zip
             c-sharp-analyzer-provider-${{ matrix.os }}-${{ matrix.arch }}.zip.sha256
 
-  # Create GitHub release with all artifacts
+  # Create GitHub release with all artifacts (only for tags)
   create-release:
     name: Create Release
     runs-on: ubuntu-latest
