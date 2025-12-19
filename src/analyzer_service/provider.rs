@@ -227,11 +227,77 @@ pub struct FileChange {
 pub struct NotifyFileChangesRequest {
     #[prost(message, repeated, tag = "1")]
     pub changes: ::prost::alloc::vec::Vec<FileChange>,
+    #[prost(int64, tag = "2")]
+    pub id: i64,
 }
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NotifyFileChangesResponse {
     #[prost(string, tag = "1")]
     pub error: ::prost::alloc::string::String,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ConditionsByCapability {
+    #[prost(string, tag = "1")]
+    pub cap: ::prost::alloc::string::String,
+    #[prost(string, repeated, tag = "2")]
+    pub condition_info: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PrepareRequest {
+    #[prost(message, repeated, tag = "1")]
+    pub conditions: ::prost::alloc::vec::Vec<ConditionsByCapability>,
+    #[prost(int64, tag = "2")]
+    pub id: i64,
+}
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct PrepareResponse {
+    #[prost(string, tag = "1")]
+    pub error: ::prost::alloc::string::String,
+}
+/// ProgressEvent represents a progress update during provider execution.
+/// This message is streamed to clients during long-running operations.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ProgressEvent {
+    #[prost(enumeration = "ProgressEventType", tag = "1")]
+    pub r#type: i32,
+    #[prost(string, tag = "2")]
+    pub provider_name: ::prost::alloc::string::String,
+    #[prost(int32, tag = "3")]
+    pub files_processed: i32,
+    #[prost(int32, tag = "4")]
+    pub total_files: i32,
+}
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct PrepareProgressRequest {
+    #[prost(int64, tag = "1")]
+    pub id: i64,
+}
+/// ProgressEventType indicates which phase of provider execution is being reported.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum ProgressEventType {
+    /// PREPARE indicates progress during the Prepare() phase (symbol cache population).
+    ///
+    /// Future types can be added here (e.g., EVALUATE, DEPENDENCY_ANALYSIS, etc.)
+    Prepare = 0,
+}
+impl ProgressEventType {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            Self::Prepare => "PREPARE",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "PREPARE" => Some(Self::Prepare),
+            _ => None,
+        }
+    }
 }
 /// Generated client implementations.
 pub mod provider_code_location_service_client {
@@ -738,6 +804,56 @@ pub mod provider_service_client {
                 );
             self.inner.unary(req, path, codec).await
         }
+        pub async fn prepare(
+            &mut self,
+            request: impl tonic::IntoRequest<super::PrepareRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::PrepareResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/provider.ProviderService/Prepare",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("provider.ProviderService", "Prepare"));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn stream_prepare_progress(
+            &mut self,
+            request: impl tonic::IntoRequest<super::PrepareProgressRequest>,
+        ) -> std::result::Result<
+            tonic::Response<tonic::codec::Streaming<super::ProgressEvent>>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/provider.ProviderService/StreamPrepareProgress",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("provider.ProviderService", "StreamPrepareProgress"),
+                );
+            self.inner.server_streaming(req, path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -1174,6 +1290,23 @@ pub mod provider_service_server {
             tonic::Response<super::NotifyFileChangesResponse>,
             tonic::Status,
         >;
+        async fn prepare(
+            &self,
+            request: tonic::Request<super::PrepareRequest>,
+        ) -> std::result::Result<tonic::Response<super::PrepareResponse>, tonic::Status>;
+        /// Server streaming response type for the StreamPrepareProgress method.
+        type StreamPrepareProgressStream: tonic::codegen::tokio_stream::Stream<
+                Item = std::result::Result<super::ProgressEvent, tonic::Status>,
+            >
+            + std::marker::Send
+            + 'static;
+        async fn stream_prepare_progress(
+            &self,
+            request: tonic::Request<super::PrepareProgressRequest>,
+        ) -> std::result::Result<
+            tonic::Response<Self::StreamPrepareProgressStream>,
+            tonic::Status,
+        >;
     }
     #[derive(Debug)]
     pub struct ProviderServiceServer<T> {
@@ -1560,6 +1693,102 @@ pub mod provider_service_server {
                                 max_encoding_message_size,
                             );
                         let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/provider.ProviderService/Prepare" => {
+                    #[allow(non_camel_case_types)]
+                    struct PrepareSvc<T: ProviderService>(pub Arc<T>);
+                    impl<
+                        T: ProviderService,
+                    > tonic::server::UnaryService<super::PrepareRequest>
+                    for PrepareSvc<T> {
+                        type Response = super::PrepareResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::PrepareRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as ProviderService>::prepare(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = PrepareSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/provider.ProviderService/StreamPrepareProgress" => {
+                    #[allow(non_camel_case_types)]
+                    struct StreamPrepareProgressSvc<T: ProviderService>(pub Arc<T>);
+                    impl<
+                        T: ProviderService,
+                    > tonic::server::ServerStreamingService<
+                        super::PrepareProgressRequest,
+                    > for StreamPrepareProgressSvc<T> {
+                        type Response = super::ProgressEvent;
+                        type ResponseStream = T::StreamPrepareProgressStream;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::ResponseStream>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::PrepareProgressRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as ProviderService>::stream_prepare_progress(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = StreamPrepareProgressSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.server_streaming(method, req).await;
                         Ok(res)
                     };
                     Box::pin(fut)

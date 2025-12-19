@@ -3,6 +3,7 @@ use std::sync::Arc;
 
 use serde::Deserialize;
 use tokio::sync::Mutex;
+use tokio_stream;
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info};
 use utoipa::{OpenApi, ToSchema};
@@ -18,6 +19,7 @@ use crate::{
         provider_service_server::ProviderService, CapabilitiesResponse, Capability, Config,
         DependencyDagResponse, DependencyResponse, EvaluateRequest, EvaluateResponse,
         IncidentContext, InitResponse, NotifyFileChangesRequest, NotifyFileChangesResponse,
+        PrepareRequest, PrepareResponse, PrepareProgressRequest, ProgressEvent, ProgressEventType,
         ProviderEvaluateResponse, ServiceRequest,
     },
     provider::Project,
@@ -67,6 +69,7 @@ impl CSharpProvider {
 
 #[tonic::async_trait]
 impl ProviderService for CSharpProvider {
+    type StreamPrepareProgressStream = tokio_stream::wrappers::ReceiverStream<Result<ProgressEvent, Status>>;
     async fn capabilities(&self, _: Request<()>) -> Result<Response<CapabilitiesResponse>, Status> {
         // Add Referenced
 
@@ -264,6 +267,34 @@ impl ProviderService for CSharpProvider {
             id: 4,
             builtin_config: None,
         }));
+    }
+
+    async fn prepare(
+        &self,
+        _r: Request<PrepareRequest>,
+    ) -> Result<Response<PrepareResponse>, Status> {
+        Result::Ok(Response::new(PrepareResponse {
+            error: String::new(),
+        }))
+    }
+
+    async fn stream_prepare_progress(
+        &self,
+        _r: Request<PrepareProgressRequest>,
+    ) -> Result<Response<Self::StreamPrepareProgressStream>, Status> {
+        let (tx, rx) = tokio::sync::mpsc::channel(32);
+
+        // Send a single progress event and close the stream
+        tokio::spawn(async move {
+            let _ = tx.send(Ok(ProgressEvent {
+                r#type: ProgressEventType::Prepare as i32,
+                provider_name: "c-sharp".to_string(),
+                files_processed: 0,
+                total_files: 0,
+            })).await;
+        });
+
+        Ok(Response::new(tokio_stream::wrappers::ReceiverStream::new(rx)))
     }
 
     async fn evaluate(
