@@ -3,7 +3,7 @@ use std::sync::Arc;
 
 use serde::Deserialize;
 use tokio::sync::Mutex;
-use tokio_stream;
+use tokio_stream::wrappers::ReceiverStream;
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info};
 use utoipa::{OpenApi, ToSchema};
@@ -69,7 +69,7 @@ impl CSharpProvider {
 
 #[tonic::async_trait]
 impl ProviderService for CSharpProvider {
-    type StreamPrepareProgressStream = tokio_stream::wrappers::ReceiverStream<Result<ProgressEvent, Status>>;
+    type StreamPrepareProgressStream = ReceiverStream<Result<ProgressEvent, Status>>;
     async fn capabilities(&self, _: Request<()>) -> Result<Response<CapabilitiesResponse>, Status> {
         // Add Referenced
 
@@ -286,15 +286,20 @@ impl ProviderService for CSharpProvider {
 
         // Send a single progress event and close the stream
         tokio::spawn(async move {
-            let _ = tx.send(Ok(ProgressEvent {
+            if let Err(e) = tx.send(Ok(ProgressEvent {
                 r#type: ProgressEventType::Prepare as i32,
                 provider_name: "c-sharp".to_string(),
                 files_processed: 0,
                 total_files: 0,
-            })).await;
+            })).await {
+                error!(
+                    "Failed to send Prepare progress event for c-sharp provider: {:?}",
+                    e
+                );
+            }
         });
 
-        Ok(Response::new(tokio_stream::wrappers::ReceiverStream::new(rx)))
+        Ok(Response::new(ReceiverStream::new(rx)))
     }
 
     async fn evaluate(
