@@ -2,13 +2,18 @@
 
 ## Overview
 
-The project uses integration tests that validate the entire stack: gRPC service → query engine → stack graph → results. Tests run against a live server instance.
+The project has multiple layers of testing:
+
+1. **Integration Tests**: Validate the entire stack (gRPC service → query engine → stack graph → results). Tests automatically manage server lifecycle.
+2. **Analyzer Integration Tests (Local)**: Run the provider with the konveyor-analyzer CLI locally
+3. **Analyzer Integration Tests (Container)**: Run the provider in containers as it would in CI/production
 
 ## Test Architecture
 
+### Integration Tests
 ```
 tests/
-├── integration_test.rs         # Main test runner
+├── integration_test.rs         # Main test runner (auto-manages server)
 └── demos/                       # Test cases
     ├── class_search/
     │   ├── request.yaml         # Query definition
@@ -18,58 +23,160 @@ tests/
     └── ...
 ```
 
-Each test case is a directory containing:
+### Analyzer Integration Tests
+```
+e2e-tests/
+├── konveyor-analyzer           # Analyzer binary (downloaded)
+├── provider_settings.json      # Provider configuration
+├── demo-output.yaml            # Expected e2e output
+└── analysis-output.yaml        # Actual e2e output (generated)
+```
+
+Each integration test case directory contains:
 - `request.yaml`: The `EvaluateRequest` to send
 - `demo-output.yaml`: The expected `ResultNode[]` output
 
+## Requirements
+
+### For Integration Tests
+- Rust/Cargo (for building and running tests)
+- .NET SDK 9.x or compatible version
+- ilspycmd (.NET tool): `dotnet tool install -g ilspycmd`
+- paket (.NET tool): `dotnet tool install -g paket`
+
+### For Analyzer Integration Tests (Local)
+- All integration test requirements above
+- `jq` (for updating provider_settings.json)
+- `yq` (optional, for sorted output verification)
+- `gh` CLI (optional, for downloading konveyor-analyzer)
+
+### For Container-Based Tests
+- Container runtime: `podman` (default) or `docker`
+- All build dependencies
+
+### For Manual Testing
+- `grpcurl` (for manual gRPC requests)
+
 ## Running Tests
 
-### Quick Test Run
+### Integration Tests (Automated)
 
 ```bash
-# Run all integration tests (requires server running on localhost:9000)
-cargo test -- --nocapture
-```
-
-### Full Demo Test (Automated)
-
-```bash
-# This runs everything: build, start server, init, test, cleanup
-make run-demo
+# Run all integration tests with automatic server lifecycle management
+make run-tests
 ```
 
 **What it does:**
 1. Resets test data (cleans up any previous state)
 2. Builds the project with `cargo build`
-3. Starts server in background on port 9000
-4. Waits for server to be ready
-5. Sends init request to configure the project
-6. Runs all integration tests
-7. Kills the server
-8. Cleans up test data
+3. Runs integration tests (tests start/stop server automatically)
+4. Cleans up test data
 
-### CI/CD Test (GitHub Actions)
-
+**Or run just the tests:**
 ```bash
-# Same as run-demo but with logging to demo.log
-make run-demo-github
+# Tests manage server lifecycle internally
+cargo test -- --nocapture
 ```
 
-This is used in `.github/workflows/demo-testing.yml`.
+### Analyzer Integration Tests (Local)
 
-## Manual Testing
+Run the complete end-to-end test locally with konveyor-analyzer:
 
-### 1. Start the Server
+```bash
+# Run complete local analyzer integration test
+make run-analyzer-integration-local
+```
+
+**What it does:**
+1. Downloads/locates konveyor-analyzer binary
+2. Updates provider_settings.json with current paths
+3. Runs analyzer with rulesets
+4. Verifies output matches expected results
+
+**Individual steps:**
+```bash
+# Download or locate konveyor-analyzer binary
+make get-konveyor-analyzer-local
+
+# Update provider_settings.json with current paths (requires jq)
+make update-provider-settings-local
+
+# Run analyzer with rulesets
+make run-test-local
+
+# Verify output matches expected (exact diff)
+make verify-output
+
+# Verify output with sorted comparison (requires yq)
+make verify-e2e-results
+```
+
+**Override konveyor-analyzer branch:**
+```bash
+make get-konveyor-analyzer-local KONVEYOR_BRANCH=development
+```
+
+### Analyzer Integration Tests (Container)
+
+Run the provider in containers as it would in CI:
+
+```bash
+# Run complete container-based integration test
+make run-analyzer-integration
+```
+
+**What it does:**
+1. Builds container image
+2. Creates pod and runs provider container
+3. Runs analyzer in container against provider
+4. Stops and cleans up pod
+
+**Individual steps:**
+```bash
+# Build container image
+make build-image
+
+# Create pod and run provider container
+make run-c-sharp-pod
+
+# Run analyzer in container against provider
+make run-demo-c-sharp-pod
+
+# Stop and clean up pod
+make stop-c-sharp-pod
+```
+
+**Override container runtime and tags:**
+```bash
+make run-analyzer-integration CONTAINER_RUNTIME=docker TAG=v0.1.0
+make run-analyzer-integration IMG_ANALYZER=quay.io/konveyor/analyzer-lsp:latest
+```
+
+## Manual Testing (Debugging/Legacy)
+
+> **Note**: Manual server management is now legacy. Integration tests automatically manage the server lifecycle. Use this approach only for debugging or manual exploration.
+
+### Manual Testing with grpcurl
+
+For manual testing, you can use the provided Makefile targets:
 
 ```bash
 # Terminal 1: Start server with debug logging
 RUST_LOG=c_sharp_analyzer_provider_cli=DEBUG,INFO cargo run -- --port 9000 --name c-sharp --db-path testing.db
 ```
 
-### 2. Initialize the Project
-
 ```bash
-# Terminal 2: Send init request
+# Terminal 2: Initialize the project
+make run-grpc-init-http
+
+# Run a query for references
+make run-grpc-ref-http
+```
+
+These targets use grpcurl with pre-configured requests. To customize:
+
+**Initialize with custom config:**
+```bash
 grpcurl -max-time 1000 -plaintext -d '{
     "analysisMode": "source-only",
     "location": "'$(pwd)'/testdata/nerd-dinner",
@@ -81,124 +188,45 @@ grpcurl -max-time 1000 -plaintext -d '{
   }' localhost:9000 provider.ProviderService.Init
 ```
 
-### 3. Run a Query
-
+**Run custom query:**
 ```bash
-# Query for references to System.Web.Mvc.*
 grpcurl -max-msg-sz 10485760 -max-time 30 -plaintext -d '{
   "cap": "referenced",
   "conditionInfo": "{\"referenced\": {\"pattern\": \"System.Web.Mvc.*\"}}"
 }' localhost:9000 provider.ProviderService.Evaluate > output.yaml
 ```
 
-### 4. Check Results
-
-```bash
-# View the results
-cat output.yaml
-```
-
-## Writing New Tests
-
-### 1. Create Test Directory
-
-```bash
-mkdir -p tests/demos/my_new_test
-```
-
-### 2. Create Request Definition
-
-Create `tests/demos/my_new_test/request.yaml`:
-
-```yaml
-id: 1
-cap: referenced
-condition_info: '{"referenced": {"pattern": "MyNamespace\\.MyClass", "location": "class"}}'
-```
-
-**Fields:**
-- `id`: Unique identifier for this request
-- `cap`: Capability to use (currently only "referenced")
-- `condition_info`: JSON string with query parameters
-  - `pattern`: Regex pattern to match against FQDNs
-  - `location`: Filter by location type (optional)
-    - `all` (default): Match anywhere
-    - `method`: Only in method contexts
-    - `field`: Only field declarations/usages
-    - `class`: Only class definitions
-  - `file_paths`: Filter by file paths (optional)
-
-### 3. Run Test to Generate Output
-
-```bash
-# Start server and run your test
-make run-demo
-
-# Find your test's output
-cat demo-output.yaml
-```
-
-### 4. Create Expected Output
-
-Copy the actual output to your test directory:
-
-```bash
-# Create expected output from actual results
-cp demo-output.yaml tests/demos/my_new_test/demo-output.yaml
-```
-
-Edit `demo-output.yaml` to verify it contains the expected matches:
-
-```yaml
-- file_uri: file:///path/to/file.cs
-  location:
-    start:
-      line: 10
-      column: 4
-    end:
-      line: 10
-      column: 20
-  source_type: source
-```
-
-### 5. Verify Test Passes
-
-```bash
-# Run all tests including your new one
-make run-demo
-```
-
-The test runner will:
-1. Find your test directory
-2. Parse `request.yaml`
-3. Send the request to the server
-4. Compare actual output with `demo-output.yaml`
-5. Report pass/fail
-
 ## Test Data
 
-### Primary Test Project: nerd-dinner
+### Test Projects
 
-Located in `testdata/nerd-dinner/`, this is a .NET MVC application used for testing.
+The project includes multiple test applications:
+
+1. **nerd-dinner** (`testdata/nerd-dinner/`): .NET MVC 4 application used for primary testing
+2. **net8-sample** (`testdata/net8-sample/`): .NET 8 sample application
 
 **Resetting test data:**
 ```bash
 make reset-nerd-dinner-demo  # Reset just nerd-dinner
-make reset-demo-apps         # Reset all test apps
+make reset-net8-sample       # Reset just net8-sample
+make reset-demo-apps         # Reset all test apps and output
+make reset-demo-output       # Restore demo-output.yaml from backup
 ```
 
 **What gets reset:**
-- Removes `paket-files/` (downloaded dependencies)
+- Removes `paket-files/` and `.paket/` (Paket artifacts)
 - Removes `packages/` (NuGet packages)
+- Removes `obj/` (build artifacts)
 - Runs `git clean -f` (removes untracked files)
 - Runs `git stash push` (stashes changes)
+- Cleans up database files (`*.db`, `*.log`)
 
 ### Adding New Test Projects
 
 1. Add project to `testdata/`
-2. Create reset target in Makefile if needed
-3. Update test cases to use the new project
-4. Update `run-demo-github` if needed for CI
+2. Create reset target in Makefile following the pattern of existing targets
+3. Update `reset-demo-apps` target to include the new reset target
+4. Create test cases in `tests/demos/` or `e2e-tests/` that use the new project
 
 ## Debugging Tests
 
@@ -221,14 +249,14 @@ RUST_LOG=c_sharp_analyzer_provider_cli=DEBUG,tree_sitter_stack_graphs=DEBUG carg
 
 ### Inspect Server Logs
 
-When using `make run-demo-github`, logs go to `demo.log`:
+When running tests, server logs are output to stdout/stderr:
 
 ```bash
-# Tail logs during test run
-tail -f demo.log
+# Run tests with all logging visible
+RUST_LOG=trace make run-tests
 
-# Search for errors
-grep ERROR demo.log
+# Or capture to a file
+make run-tests 2>&1 | tee test-run.log
 ```
 
 ### Debug a Single Test
@@ -283,15 +311,17 @@ Common regex pitfalls:
 
 #### Unexpected Results
 
-Compare actual vs expected:
+The test framework automatically compares actual vs expected output and shows differences. For e2e tests:
 
 ```bash
-# Run test to generate actual output
-make run-demo
+# Run analyzer integration test and verify
+make run-analyzer-integration-local
 
-# Diff actual vs expected
-diff demo-output.yaml tests/demos/my_test/demo-output.yaml
+# For sorted comparison (when order differs)
+make verify-e2e-results
 ```
+
+For integration tests, the test output will show the difference between expected and actual results.
 
 ### Using grpcurl for Debugging
 
@@ -326,58 +356,46 @@ time grpcurl -plaintext -d '{"cap": "referenced", "conditionInfo": "..."}' local
 time grpcurl -max-time 1000 -plaintext -d '{"analysisMode": "full", ...}' localhost:9000 provider.ProviderService.Init
 ```
 
-### Profile with Flamegraph
-
-```bash
-# Install cargo-flamegraph
-cargo install flamegraph
-
-# Run server under profiling
-cargo flamegraph -- --port 9000 --name c-sharp
-
-# In another terminal, run your workload
-make run-grpc-init-http
-make run-grpc-ref-http
-
-# Ctrl+C the server, then open flamegraph.svg
-```
-
 ## CI/CD Integration
 
 ### GitHub Actions Workflow
 
-Located in `.github/workflows/demo-testing.yml`:
+The project uses GitHub Actions for continuous integration. Check `.github/workflows/` for active workflows.
 
-**Steps:**
+**Typical CI steps:**
 1. Checkout code
 2. Install Protoc (for building gRPC)
 3. Run Clippy (linting)
-4. Install grpcurl (for testing)
-5. Install .NET SDK 9.x
-6. Install ilspycmd and paket tools
-7. Run `make run-demo-github`
+4. Install .NET SDK and required tools
+5. Install ilspycmd and paket tools
+6. Run integration tests
+7. Run analyzer integration tests (container-based)
 
-**When it runs:**
+**When tests run:**
 - On pull requests
 - On pushes to main
 - On pushes to release branches
 
-### Adding Checks
+### Adding Checks to CI
 
 To add new validation to CI:
 
-1. Edit `.github/workflows/demo-testing.yml`
-2. Add a new step after clippy:
+1. Edit the appropriate workflow file in `.github/workflows/`
+2. Add a new step:
 
 ```yaml
-- name: "Run my check"
+- name: "Run additional check"
   run: |
-    cargo test unit_tests
+    make your-test-target
 ```
+
+### Container Testing in CI
+
+The `make run-analyzer-integration` target is designed for CI environments and tests the provider in containers as it would run in production.
 
 ## Test Coverage
 
-Currently the integration tests cover:
+### Integration Tests Cover:
 
 - ✅ Server startup and initialization
 - ✅ Dependency resolution (paket)
@@ -386,8 +404,18 @@ Currently the integration tests cover:
 - ✅ Location-based filtering (method, field, class)
 - ✅ Source vs dependency filtering
 - ✅ Result formatting
+- ✅ Automatic server lifecycle management
 
-**Not covered:**
+### Analyzer Integration Tests Cover:
+
+- ✅ End-to-end provider integration with konveyor-analyzer
+- ✅ Ruleset execution and violation detection
+- ✅ Provider settings configuration
+- ✅ Container-based deployment testing
+- ✅ Output verification (exact and sorted)
+
+### Not Covered:
+
 - ❌ Unit tests for individual components
 - ❌ Error handling edge cases
 - ❌ Concurrent request handling
