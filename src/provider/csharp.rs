@@ -133,7 +133,10 @@ impl ProviderService for CSharpProvider {
             ) {
                 Ok(target_framework) => {
                     info!("Detected target framework: {}", target_framework.as_str());
-
+                    if project.tools.dotnet_install_cmd.is_none() {
+                        warn!("project '{}' has target framework '{}' but no dotnet-install script is available.",
+                                project.location.display(), target_framework);
+                    }
                     // Store the target framework in the project for later SDK path resolution
                     project.set_target_framework(target_framework.clone());
 
