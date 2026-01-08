@@ -13,7 +13,7 @@ use stack_graphs::{
     storage::SQLiteReader, NoCancellation,
 };
 use tokio::sync::{Mutex as TokioMutex, RwLock};
-use tracing::debug;
+use tracing::{debug, warn};
 use which::which;
 
 use crate::c_sharp_graph::language_config::SourceNodeLanguageConfiguration;
@@ -81,7 +81,7 @@ impl Debug for Project {
 pub struct Tools {
     pub ilspy_cmd: PathBuf,
     pub paket_cmd: PathBuf,
-    pub dotnet_install_cmd: PathBuf,
+    pub dotnet_install_cmd: Option<PathBuf>,
 }
 
 impl Project {
@@ -172,24 +172,24 @@ impl Project {
                     }) => {
                         let p = PathBuf::from_str(s)?;
                         if p.exists() {
-                            p
+                            Some(p)
                         } else {
-                            return Err(anyhow!("not valid dotnet_install_cmd"));
+                            warn!("Configured dotnet_install_cmd not found at {}, SDK installation will be unavailable", p.display());
+                            None
                         }
                     }
                     None => {
                         let default_path = PathBuf::from(Self::DOTNET_INSTALL_SCRIPT);
                         if default_path.exists() {
-                            default_path
+                            Some(default_path)
                         } else {
-                            return Err(anyhow!(
-                                "dotnet-install script not found at {}",
-                                Self::DOTNET_INSTALL_SCRIPT
-                            ));
+                            warn!("dotnet-install script not found at {}, SDK installation will be unavailable", Self::DOTNET_INSTALL_SCRIPT);
+                            None
                         }
                     }
                     _ => {
-                        return Err(anyhow!("not valid dotnet_install_cmd"));
+                        warn!("Invalid dotnet_install_cmd configuration, SDK installation will be unavailable");
+                        None
                     }
                 };
                 Ok(Tools {
@@ -201,12 +201,10 @@ impl Project {
             None => {
                 let default_path = PathBuf::from(Self::DOTNET_INSTALL_SCRIPT);
                 let dotnet_install_cmd = if default_path.exists() {
-                    default_path
+                    Some(default_path)
                 } else {
-                    return Err(anyhow!(
-                        "dotnet-install script not found at {}",
-                        Self::DOTNET_INSTALL_SCRIPT
-                    ));
+                    warn!("dotnet-install script not found at {}, SDK installation will be unavailable", Self::DOTNET_INSTALL_SCRIPT);
+                    None
                 };
                 Ok(Tools {
                     ilspy_cmd: which(Self::ILSPY_CMD)?,

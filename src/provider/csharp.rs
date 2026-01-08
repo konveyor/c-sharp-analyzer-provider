@@ -1,11 +1,12 @@
 use std::path::PathBuf;
 use std::sync::Arc;
 
+use anyhow::anyhow;
 use serde::Deserialize;
 use tokio::sync::Mutex;
 use tokio_stream::wrappers::ReceiverStream;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error, info};
+use tracing::{debug, error, info, warn};
 use utoipa::{OpenApi, ToSchema};
 
 use crate::c_sharp_graph::query::{Query, QueryType};
@@ -163,7 +164,20 @@ impl ProviderService for CSharpProvider {
                         Some(tokio::spawn(async move {
                             info!("SDK installation task started in background");
 
-                            match target_framework.install_sdk(&dotnet_install_cmd) {
+                            let install_result = match dotnet_install_cmd {
+                                Some(ref script_path) => {
+                                    info!("Installing SDK using script: {:?}", script_path);
+                                    target_framework.install_sdk(script_path)
+                                }
+                                None => {
+                                    warn!("No dotnet-install script available, skipping SDK installation. SDK XML files may not be available for dependency analysis.");
+                                    // Try to find existing SDK installation instead of installing
+                                    // For now, we'll return an error but not fail completely
+                                    Err(anyhow!("dotnet-install script not available"))
+                                }
+                            };
+
+                            match install_result {
                                 Ok(sdk_path) => {
                                     info!("Successfully installed .NET SDK at: {:?}", sdk_path);
 
