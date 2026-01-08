@@ -133,10 +133,6 @@ impl ProviderService for CSharpProvider {
             ) {
                 Ok(target_framework) => {
                     info!("Detected target framework: {}", target_framework.as_str());
-                    if project.tools.dotnet_install_cmd.is_none() {
-                        warn!("project '{}' has target framework '{}' but no dotnet-install script is available.",
-                                project.location.display(), target_framework);
-                    }
                     // Store the target framework in the project for later SDK path resolution
                     project.set_target_framework(target_framework.clone());
 
@@ -156,6 +152,10 @@ impl ProviderService for CSharpProvider {
                             "Modern .NET detected ({}), will attempt SDK installation",
                             target_framework.as_str()
                         );
+                        if project.tools.dotnet_install_cmd.is_none() {
+                            warn!("project '{}' has target framework '{}' but no dotnet-install script is available.",
+                                    project.location.display(), target_framework);
+                        }
                         // Spawn a task to handle SDK installation and XML processing
                         // This avoids blocking the init process on SDK download
                         let project_clone = project.clone();
@@ -174,8 +174,7 @@ impl ProviderService for CSharpProvider {
                                 }
                                 None => {
                                     warn!("No dotnet-install script available, skipping SDK installation. SDK XML files may not be available for dependency analysis.");
-                                    // Try to find existing SDK installation instead of installing
-                                    // For now, we'll return an error but not fail completely
+                                    // Return error to skip SDK installation; caught and treated as non-fatal below
                                     Err(anyhow!("dotnet-install script not available"))
                                 }
                             };
