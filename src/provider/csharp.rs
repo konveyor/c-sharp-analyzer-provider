@@ -1,11 +1,12 @@
 use std::path::PathBuf;
 use std::sync::Arc;
 
+use anyhow::anyhow;
 use serde::Deserialize;
 use tokio::sync::Mutex;
 use tokio_stream::wrappers::ReceiverStream;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error, info};
+use tracing::{debug, error, info, warn};
 use utoipa::{OpenApi, ToSchema};
 
 use crate::c_sharp_graph::query::{Query, QueryType};
@@ -132,7 +133,6 @@ impl ProviderService for CSharpProvider {
             ) {
                 Ok(target_framework) => {
                     info!("Detected target framework: {}", target_framework.as_str());
-
                     // Store the target framework in the project for later SDK path resolution
                     project.set_target_framework(target_framework.clone());
 
@@ -152,6 +152,10 @@ impl ProviderService for CSharpProvider {
                             "Modern .NET detected ({}), will attempt SDK installation",
                             target_framework.as_str()
                         );
+                        if project.tools.dotnet_install_cmd.is_none() {
+                            warn!("project '{}' has target framework '{}' but no dotnet-install script is available.",
+                                    project.location.display(), target_framework);
+                        }
                         // Spawn a task to handle SDK installation and XML processing
                         // This avoids blocking the init process on SDK download
                         let project_clone = project.clone();
@@ -163,7 +167,19 @@ impl ProviderService for CSharpProvider {
                         Some(tokio::spawn(async move {
                             info!("SDK installation task started in background");
 
-                            match target_framework.install_sdk(&dotnet_install_cmd) {
+                            let install_result = match dotnet_install_cmd {
+                                Some(ref script_path) => {
+                                    info!("Installing SDK using script: {:?}", script_path);
+                                    target_framework.install_sdk(script_path)
+                                }
+                                None => {
+                                    warn!("No dotnet-install script available, skipping SDK installation. SDK XML files may not be available for dependency analysis.");
+                                    // Return error to skip SDK installation; caught and treated as non-fatal below
+                                    Err(anyhow!("dotnet-install script not available"))
+                                }
+                            };
+
+                            match install_result {
                                 Ok(sdk_path) => {
                                     info!("Successfully installed .NET SDK at: {:?}", sdk_path);
 
