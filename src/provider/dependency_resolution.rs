@@ -18,8 +18,9 @@ use stack_graphs::storage::SQLiteWriter;
 use stack_graphs::NoCancellation;
 use tokio::fs::{self, File};
 use tokio::io::{AsyncBufReadExt, BufReader};
+use tokio::sync::Semaphore;
 use tokio::task::JoinSet;
-use tracing::{debug, error, info, trace};
+use tracing::{debug, error, info, trace, warn};
 use tree_sitter_stack_graphs::loader::FileAnalyzers;
 
 use crate::c_sharp_graph::dependency_xml_analyzer::DepXMLFileAnalyzer;
@@ -332,26 +333,37 @@ impl Project {
     }
 
     pub async fn load_to_database(&self) -> Result<(), Error> {
+        info!("Starting load_to_database with analysis_mode: {:?}", self.analysis_mode);
+        let start_time = std::time::Instant::now();
+
         let set = if self.analysis_mode == AnalysisMode::Full {
+            info!("Using full analysis mode - will process decompiled files");
             self.load_to_database_full_analysis().await?
         } else {
+            info!("Using source-only analysis mode - will process XML files");
             self.load_to_database_source_only().await?
         };
+
+        info!("Waiting for all spawned tasks to complete...");
+        let mut completed_count = 0;
         for res in set.join_all().await {
             let (init_graph, dep_name) = match res {
                 std::result::Result::Ok((i, dep_name)) => (i, dep_name),
                 Err(e) => {
+                    error!("Task failed for dependency processing: {}", e);
                     return Err(anyhow!(
                         "unable to get graph, project may not have been initialized: {}",
                         e
                     ));
                 }
             };
+            completed_count += 1;
             info!(
-                "loaded {} files for dep: {:?} into database",
-                init_graph.files_loaded, dep_name
+                "Completed task #{}: loaded {} files for dep: {:?} into database",
+                completed_count, init_graph.files_loaded, dep_name
             );
         }
+        info!("All {} tasks completed successfully in {:?}", completed_count, start_time.elapsed());
         let mut graph_guard = self
             .graph
             .lock()
@@ -510,25 +522,47 @@ impl Project {
         let shared_deps = Arc::clone(&self.dependencies);
         let mut x = shared_deps.lock().await;
         let mut set: JoinSet<Result<(AsyncInitializeGraph, String), Error>> = JoinSet::new();
+
+        // Limit concurrent task processing to prevent resource exhaustion
+        // This is critical for large projects with many dependencies
+        const MAX_CONCURRENT_TASKS: usize = 4;
+        let semaphore = Arc::new(Semaphore::new(MAX_CONCURRENT_TASKS));
+        info!("Full analysis mode: limiting to {} concurrent file processing tasks", MAX_CONCURRENT_TASKS);
+
         if let Some(ref mut vec) = *x {
+            info!("Processing {} dependencies for full analysis", vec.len());
             // For each dependnecy in the list we will try and load the decompiled files
             // Into the stack graph database.
-            for d in vec {
+            let mut total_files = 0;
+            for (dep_idx, d) in vec.iter().enumerate() {
                 let size = d.decompiled_size.lock().unwrap().unwrap_or_default();
                 let decompiled_locations: Arc<Mutex<HashSet<PathBuf>>> =
                     Arc::clone(&d.decompiled_location);
                 let decompiled_locations = decompiled_locations.lock().unwrap();
                 let decompiled_files = &(*decompiled_locations);
-                for decompiled_file in decompiled_files {
+                info!(
+                    "Dependency {}/{}: '{}' has {} decompiled files (total size: {} bytes)",
+                    dep_idx + 1, vec.len(), d.name, decompiled_files.len(), size
+                );
+                total_files += decompiled_files.len();
+
+                for (file_idx, decompiled_file) in decompiled_files.iter().enumerate() {
                     let file = decompiled_file.clone();
                     let lc = self.source_language_config.clone();
                     let db_path = self.db_path.clone();
                     let dep_name = d.name.clone();
+                    let semaphore = semaphore.clone();
+
                     set.spawn(async move {
+                        // Acquire semaphore permit to limit concurrency
+                        let _permit = semaphore.acquire().await.expect("Failed to acquire semaphore");
+
                         info!(
-                            "indexing dep: {} with size: {} into a graph",
-                            dep_name, &size
+                            "Starting to index dep: '{}' file {}, size: {} bytes",
+                            dep_name, file_idx + 1, &size
                         );
+                        let task_start = std::time::Instant::now();
+
                         let mut graph = StackGraph::new();
                         // We need to make sure that the symols for source type are the first
                         // symbols, so that they match what is in the builtins.
@@ -539,10 +573,12 @@ impl Project {
                         let lc = match lc_guard.as_ref() {
                             Some(x) => x,
                             None => {
+                                error!("Failed to get source language config for dep: {}", dep_name);
                                 return Err(anyhow!("unable to get source language config"));
                             }
                         };
 
+                        debug!("Adding directory {:?} to graph for dep: {}", file, dep_name);
                         let graph = add_dir_to_graph(
                             &file,
                             &lc.dependnecy_type_node_info,
@@ -550,7 +586,13 @@ impl Project {
                             graph,
                         )?;
                         drop(lc_guard);
+
+                        debug!("Opening SQLite database for dep: {}", dep_name);
                         let mut db: SQLiteWriter = SQLiteWriter::open(db_path)?;
+
+                        let file_count = graph.file_to_tag.len();
+                        debug!("Processing {} files for path stitching for dep: {}", file_count, dep_name);
+
                         for (file_path, tag) in graph.file_to_tag.clone() {
                             let file_str = file_path.to_string_lossy();
                             let file_handle = graph
@@ -577,14 +619,18 @@ impl Project {
                             )?;
                             trace!("stats for stitiching: {:?} - paths: {}", stats, paths.len(),);
                         }
-                        debug!(
-                            "stats for dependency: {:?}, files indexed {:?}",
-                            dep_name, graph.files_loaded,
+
+                        info!(
+                            "Completed indexing dep: '{}' in {:?} - indexed {} files",
+                            dep_name, task_start.elapsed(), graph.files_loaded
                         );
                         Ok((graph, dep_name))
                     });
                 }
             }
+            info!("Spawned tasks for {} total decompiled files across {} dependencies", total_files, vec.len());
+        } else {
+            warn!("No dependencies found for full analysis");
         }
         Ok(set)
     }
