@@ -183,7 +183,7 @@
   when:
     csharp.referenced:
       location: ALL
-      pattern: "*.ValidateAntiForgeryToken.*"
+      pattern: "System.Web.Mvc.ValidateAntiForgeryToken*"
 
 - category: mandatory
   customVariables: []
