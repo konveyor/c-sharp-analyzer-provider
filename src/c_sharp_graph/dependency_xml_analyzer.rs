@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use std::iter::DoubleEndedIterator;
-use std::iter::Extend;
 use std::path::Path;
 
 use quick_xml::events::Event;
@@ -52,8 +51,7 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
 
         reader.config_mut().trim_text(true);
 
-        let mut inter_node_info: Vec<NodeInfo> = vec![];
-        let mut inter_edge_info: Vec<EdgeInfo> = vec![];
+        let mut inter_node_info: Vec<Vec<NodeInfo>> = vec![];
         loop {
             match reader.read_event() {
                 Err(e) => {
@@ -80,10 +78,9 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                             debug!(file=?path, "unable to get correct parts: {}", &member_name);
                             continue;
                         }
-                        let (nodes, mut edges) =
+                        let nodes =
                             self.handle_member(parts.first().unwrap(), parts.last().unwrap());
-                        inter_node_info.extend(nodes.iter().cloned());
-                        inter_edge_info.append(&mut edges);
+                        inter_node_info.push(nodes);
                     }
                     continue;
                 }
@@ -92,9 +89,8 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
         }
         info!(
             file=?path,
-            "got {} nodes and {} edges to be created",
+            "got {} nodes to be created",
             &inter_node_info.len(),
-            &inter_edge_info.len()
         );
 
         // Create Compilation Unit.
@@ -112,187 +108,195 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
         let source_info = stack_graph.source_info_mut(comp_unit_node_handle);
         source_info.syntax_type = syntax_type.into();
 
-        let mut map_namespace_nodes: HashMap<String, Handle<Node>> = HashMap::new();
-        let mut map_class_nodes: HashMap<String, Handle<Node>> = HashMap::new();
-        let mut map_method_nodes: HashMap<String, Handle<Node>> = HashMap::new();
-        let mut map_field_nodes: HashMap<String, Handle<Node>> = HashMap::new();
-
         let mut node_tracking_number = 0;
-        for node in inter_node_info {
-            let id: Handle<Node> = match node.syntax_type {
-                SyntaxType::FieldName => {
-                    let node_id = map_field_nodes.get(&node.symbol);
-                    if node_id.is_none() {
-                        let id = stack_graph.new_node_id(file);
-                        let symbol = stack_graph.add_symbol(&node.symbol);
-                        let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
-                        if node_handle.is_none() {
-                            continue;
-                        }
-                        let node_handle = node_handle.unwrap();
-                        map_field_nodes.insert(node.symbol.clone(), node_handle);
-                        node_handle
-                    } else {
-                        continue;
-                    }
-                }
-                SyntaxType::ClassDef => {
-                    let node_id = map_class_nodes.get(&node.symbol);
-                    if node_id.is_none() {
-                        let id = stack_graph.new_node_id(file);
-                        let symbol = stack_graph.add_symbol(&node.symbol);
-                        let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
-                        if node_handle.is_none() {
-                            continue;
-                        }
-                        let node_handle = node_handle.unwrap();
-                        map_class_nodes.insert(node.symbol.clone(), node_handle);
-                        node_handle
-                    } else {
-                        continue;
-                    }
-                }
-                SyntaxType::MethodName => {
-                    let node_id = map_method_nodes.get(&node.symbol);
-                    if node_id.is_none() {
-                        let id = stack_graph.new_node_id(file);
-                        let symbol = stack_graph.add_symbol(&node.symbol);
-                        let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
-                        if node_handle.is_none() {
-                            continue;
-                        }
-                        let node_handle = node_handle.unwrap();
-                        map_method_nodes.insert(node.symbol.clone(), node_handle);
-                        node_handle
-                    } else {
-                        continue;
-                    }
-                }
-                SyntaxType::NamespaceDeclaration => {
-                    let node_id = map_namespace_nodes.get(&node.symbol);
-                    if node_id.is_none() {
-                        let id = stack_graph.new_node_id(file);
-                        let symbol = stack_graph.add_symbol(&node.symbol);
-                        let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
-                        if node_handle.is_none() {
-                            continue;
-                        }
-                        let node_handle = node_handle.unwrap();
-                        map_namespace_nodes.insert(node.symbol.clone(), node_handle);
-
-                        stack_graph.add_edge(comp_unit_node_handle, node_handle, 0);
-                        node_handle
-                    } else {
-                        continue;
-                    }
-                }
-                _ => {
-                    error!(file = ?path, "unable to get node syntax type");
-                    return Err(BuildError::ParseError);
-                }
-            };
-            let syntax_type = stack_graph.add_string(&node.syntax_type.to_string());
-            let source_info = stack_graph.source_info_mut(id);
-            source_info.syntax_type = syntax_type.into();
-            node_tracking_number += 1
-        }
-
         let mut edge_tracking_number = 0;
-        for edge in inter_edge_info {
-            let source_graph_node = match edge.source.syntax_type {
-                SyntaxType::FieldName => {
-                    let graph_node = map_field_nodes.get(&edge.source.symbol);
-                    if graph_node.is_none() {
-                        error!(file=?path, "didn't create graph node for field {:?}", edge);
-                        return Err(BuildError::ParseError);
+        let mut namespace_node_map: HashMap<String, Handle<Node>> = HashMap::new();
+        let mut type_node_map: HashMap<String, Handle<Node>> = HashMap::new();
+        // Anything under a type, needs to be scoped to that type,
+        // And because we don't have a good way of de-duping here
+        // We will just create more nodes.
+        for nodes in inter_node_info {
+            match nodes.len() {
+                1 => {
+                    let namespace_node = nodes.first();
+                    if namespace_node.is_none() {
+                        continue;
                     }
-                    graph_node.unwrap()
+                    let namespace_node = namespace_node.unwrap();
+                    // If the list is size of one, then we only have the namespace declartion.
+                    if namespace_node_map.contains_key(&namespace_node.symbol) {
+                        continue;
+                    }
+                    let id = stack_graph.new_node_id(file);
+                    let symbol = stack_graph.add_symbol(&namespace_node.symbol);
+                    let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
+                    if node_handle.is_none() {
+                        continue;
+                    }
+                    let node_handle = node_handle.unwrap();
+                    let syntax_type =
+                        stack_graph.add_string(&namespace_node.syntax_type.to_string());
+                    let source_info = stack_graph.source_info_mut(node_handle);
+                    source_info.syntax_type = syntax_type.into();
+                    node_tracking_number += 1;
+
+                    stack_graph.add_edge(comp_unit_node_handle, node_handle, 0);
+                    edge_tracking_number += 1;
+                    namespace_node_map.insert(namespace_node.symbol.clone(), node_handle);
                 }
-                SyntaxType::ClassDef => {
-                    let graph_node = map_class_nodes.get(&edge.source.symbol);
-                    if graph_node.is_none() {
-                        error!(file=?path, "didn't create graph node for field {:?}", edge.source);
-                        return Err(BuildError::ParseError);
+                2 => {
+                    // When there are two nodes, then it must be a class and namespace node.
+                    // the list is <class_node, namespace_node>
+                    let namespace_node = nodes.last();
+                    if namespace_node.is_none() {
+                        continue;
                     }
-                    graph_node.unwrap()
+                    let namespace_node = namespace_node.unwrap();
+                    let namespace_node_handle =
+                        if namespace_node_map.contains_key(&namespace_node.symbol) {
+                            *namespace_node_map.get(&namespace_node.symbol).unwrap()
+                        } else {
+                            let id = stack_graph.new_node_id(file);
+                            let symbol = stack_graph.add_symbol(&namespace_node.symbol);
+                            let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
+                            if node_handle.is_none() {
+                                continue;
+                            }
+                            let node_handle = node_handle.unwrap();
+                            let syntax_type =
+                                stack_graph.add_string(&namespace_node.syntax_type.to_string());
+                            let source_info = stack_graph.source_info_mut(node_handle);
+                            source_info.syntax_type = syntax_type.into();
+                            node_tracking_number += 1;
+
+                            stack_graph.add_edge(comp_unit_node_handle, node_handle, 0);
+                            edge_tracking_number += 1;
+                            namespace_node_map.insert(namespace_node.symbol.clone(), node_handle);
+                            node_handle
+                        };
+                    let class_node = nodes.first();
+                    if class_node.is_none() {
+                        continue;
+                    }
+                    let class_node = class_node.unwrap();
+                    let class_node_handle = if type_node_map.contains_key(&class_node.symbol) {
+                        *type_node_map.get(&class_node.symbol).unwrap()
+                    } else {
+                        let id = stack_graph.new_node_id(file);
+                        let symbol = stack_graph.add_symbol(&class_node.symbol);
+                        let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
+                        if node_handle.is_none() {
+                            continue;
+                        }
+                        let node_handle = node_handle.unwrap();
+                        let syntax_type =
+                            stack_graph.add_string(&class_node.syntax_type.to_string());
+                        let source_info = stack_graph.source_info_mut(node_handle);
+                        source_info.syntax_type = syntax_type.into();
+                        node_tracking_number += 1;
+                        type_node_map.insert(class_node.symbol.clone(), node_handle);
+                        node_handle
+                    };
+                    stack_graph.add_edge(namespace_node_handle, class_node_handle, 0);
+                    stack_graph.add_edge(class_node_handle, namespace_node_handle, 10);
+                    edge_tracking_number += 2;
                 }
-                SyntaxType::MethodName => {
-                    let graph_node = map_method_nodes.get(&edge.source.symbol);
-                    if graph_node.is_none() {
-                        error!(file=?path, "didn't create graph node for field {:?}", edge.source);
-                        return Err(BuildError::ParseError);
+                3 => {
+                    // When there are three nodes, then it must be a property(field or method), class and namespace nodes.
+                    // the list is <property_node, class_node, namespace_node>
+                    let namespace_node = nodes.last();
+                    if namespace_node.is_none() {
+                        continue;
                     }
-                    graph_node.unwrap()
-                }
-                SyntaxType::NamespaceDeclaration => {
-                    let graph_node = map_namespace_nodes.get(&edge.source.symbol);
-                    if graph_node.is_none() {
-                        error!(file=?path, "didn't create graph node for field {:?}", edge.source);
-                        return Err(BuildError::ParseError);
+                    let namespace_node = namespace_node.unwrap();
+                    let namespace_node_handle =
+                        if namespace_node_map.contains_key(&namespace_node.symbol) {
+                            *namespace_node_map.get(&namespace_node.symbol).unwrap()
+                        } else {
+                            let id = stack_graph.new_node_id(file);
+                            let symbol = stack_graph.add_symbol(&namespace_node.symbol);
+                            let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
+                            if node_handle.is_none() {
+                                continue;
+                            }
+                            node_tracking_number += 1;
+                            let node_handle = node_handle.unwrap();
+                            let syntax_type =
+                                stack_graph.add_string(&namespace_node.syntax_type.to_string());
+                            let source_info = stack_graph.source_info_mut(node_handle);
+                            source_info.syntax_type = syntax_type.into();
+
+                            stack_graph.add_edge(comp_unit_node_handle, node_handle, 0);
+                            edge_tracking_number += 1;
+                            namespace_node_map.insert(namespace_node.symbol.clone(), node_handle);
+                            node_handle
+                        };
+                    let class_node = nodes.get(1);
+                    if class_node.is_none() {
+                        continue;
                     }
-                    graph_node.unwrap()
+                    let class_node = class_node.unwrap();
+                    let class_node_handle = if type_node_map.contains_key(&class_node.symbol) {
+                        *type_node_map.get(&class_node.symbol).unwrap()
+                    } else {
+                        let id = stack_graph.new_node_id(file);
+                        let symbol = stack_graph.add_symbol(&class_node.symbol);
+                        let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
+                        node_tracking_number += 1;
+                        if node_handle.is_none() {
+                            continue;
+                        }
+                        let node_handle = node_handle.unwrap();
+                        let syntax_type =
+                            stack_graph.add_string(&class_node.syntax_type.to_string());
+                        let source_info = stack_graph.source_info_mut(node_handle);
+                        source_info.syntax_type = syntax_type.into();
+                        type_node_map.insert(class_node.symbol.clone(), node_handle);
+                        // If this was not created before, then we need to make sure to add the edges.
+                        stack_graph.add_edge(namespace_node_handle, node_handle, 0);
+                        stack_graph.add_edge(node_handle, namespace_node_handle, 10);
+                        edge_tracking_number += 2;
+                        node_handle
+                    };
+                    let prop_node = nodes.first();
+                    if prop_node.is_none() {
+                        continue;
+                    }
+                    let prop_node = prop_node.unwrap();
+                    let id = stack_graph.new_node_id(file);
+                    let symbol = stack_graph.add_symbol(&prop_node.symbol);
+                    let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
+                    if node_handle.is_none() {
+                        continue;
+                    }
+                    let node_handle = node_handle.unwrap();
+                    let syntax_type = stack_graph.add_string(&prop_node.syntax_type.to_string());
+                    let source_info = stack_graph.source_info_mut(node_handle);
+                    source_info.syntax_type = syntax_type.into();
+                    node_tracking_number += 1;
+                    stack_graph.add_edge(class_node_handle, node_handle, 0);
+                    stack_graph.add_edge(node_handle, class_node_handle, 10);
+                    edge_tracking_number += 2;
                 }
                 _ => {
-                    error!(file=?path, "uanble to get node syntax type");
-                    return Err(BuildError::UnknownNodeType(format!(
-                        "unable to get edge source symbol: {:?}",
-                        edge,
-                    )));
+                    error!("invalid nodes found. continuing with reset of file");
+                    continue;
                 }
-            };
-            let sink_graph_node = match edge.sink.syntax_type {
-                SyntaxType::FieldName => {
-                    let graph_node = map_field_nodes.get(&edge.sink.symbol);
-                    if graph_node.is_none() {
-                        error!(file=?path, "didn't create graph node for field {:?}", edge.sink);
-                        return Err(BuildError::ParseError);
-                    }
-                    graph_node.unwrap()
-                }
-                SyntaxType::ClassDef => {
-                    let graph_node = map_class_nodes.get(&edge.sink.symbol);
-                    if graph_node.is_none() {
-                        error!(file=?path, "didn't create graph node for class {:?} sink", edge.sink);
-                        return Err(BuildError::ParseError);
-                    }
-                    graph_node.unwrap()
-                }
-                SyntaxType::MethodName => {
-                    let graph_node = map_method_nodes.get(&edge.sink.symbol);
-                    if graph_node.is_none() {
-                        error!(file=?path, "didn't create graph node for field {:?}", edge.sink);
-                        return Err(BuildError::ParseError);
-                    }
-                    graph_node.unwrap()
-                }
-                SyntaxType::NamespaceDeclaration => {
-                    let graph_node = map_namespace_nodes.get(&edge.sink.symbol);
-                    if graph_node.is_none() {
-                        error!(file=?path, "didn't create graph node for field {:?}", edge.sink);
-                        return Err(BuildError::ParseError);
-                    }
-                    graph_node.unwrap()
-                }
-                _ => {
-                    error!(file=?path, "didn't create graph node for field {:?}", edge);
-                    return Err(BuildError::ParseError);
-                }
-            };
-            stack_graph.add_edge(*source_graph_node, *sink_graph_node, edge.precedence);
-            edge_tracking_number += 1;
+            }
         }
 
         info!(
             file=?path,
-            "created {} graph nodes {} edge nodes",
-            &node_tracking_number, &edge_tracking_number
+            "created {} graph nodes with {} edges",
+            &node_tracking_number,
+            &edge_tracking_number
         );
         Ok(())
     }
 }
 
 impl DepXMLFileAnalyzer {
-    fn handle_member(&self, member_type: &str, name: &str) -> (Vec<NodeInfo>, Vec<EdgeInfo>) {
+    fn handle_member(&self, member_type: &str, name: &str) -> Vec<NodeInfo> {
         match member_type {
             // namespace.
             "N" => {
@@ -300,19 +304,18 @@ impl DepXMLFileAnalyzer {
                     symbol: name.to_string(),
                     syntax_type: SyntaxType::NamespaceDeclaration,
                 };
-                (vec![node], vec![])
+                vec![node]
             }
             // type, field and property
             "T" => {
                 if name.is_empty() {
-                    return (vec![], vec![]);
+                    return vec![];
                 }
                 let mut parts = name.split('.');
                 let mut nodes: Vec<NodeInfo> = vec![];
-                let mut edges: Vec<EdgeInfo> = vec![];
                 let part = parts.next_back();
                 if part.is_none() {
-                    return (vec![], vec![]);
+                    return nodes;
                 }
                 let type_name = NodeInfo {
                     symbol: part.unwrap().to_string(),
@@ -338,28 +341,17 @@ impl DepXMLFileAnalyzer {
                     syntax_type: SyntaxType::NamespaceDeclaration,
                 };
                 nodes.push(namesapce_node.clone());
-                edges.push(EdgeInfo {
-                    source: namesapce_node.clone(),
-                    sink: type_name.clone(),
-                    precedence: 0,
-                });
-                edges.push(EdgeInfo {
-                    source: type_name,
-                    sink: namesapce_node,
-                    precedence: 10,
-                });
-                (nodes, edges)
+                nodes
             }
             "F" | "P" => {
                 if name.is_empty() {
-                    return (vec![], vec![]);
+                    return vec![];
                 }
                 let mut parts = name.split('.');
                 let mut nodes: Vec<NodeInfo> = vec![];
-                let mut edges: Vec<EdgeInfo> = vec![];
                 let part = parts.next_back();
                 if part.is_none() {
-                    return (vec![], vec![]);
+                    return vec![];
                 }
                 let field_name = NodeInfo {
                     symbol: part.unwrap().to_string(),
@@ -368,7 +360,7 @@ impl DepXMLFileAnalyzer {
                 nodes.push(field_name.clone());
                 let part = parts.next_back();
                 if part.is_none() {
-                    return (vec![], vec![]);
+                    return vec![];
                 }
                 let type_name = NodeInfo {
                     symbol: part.unwrap().to_string(),
@@ -387,31 +379,11 @@ impl DepXMLFileAnalyzer {
                     syntax_type: SyntaxType::NamespaceDeclaration,
                 };
                 nodes.push(namesapce_node.clone());
-                edges.push(EdgeInfo {
-                    source: namesapce_node.clone(),
-                    sink: type_name.clone(),
-                    precedence: 0,
-                });
-                edges.push(EdgeInfo {
-                    source: type_name.clone(),
-                    sink: field_name.clone(),
-                    precedence: 0,
-                });
-                edges.push(EdgeInfo {
-                    source: field_name,
-                    sink: type_name.clone(),
-                    precedence: 10,
-                });
-                edges.push(EdgeInfo {
-                    source: type_name.clone(),
-                    sink: namesapce_node,
-                    precedence: 10,
-                });
-                (nodes, edges)
+                nodes
             }
             "M" => {
                 if name.is_empty() {
-                    return (vec![], vec![]);
+                    return vec![];
                 }
                 let mut new_name = name;
                 if name.contains('(') {
@@ -421,10 +393,9 @@ impl DepXMLFileAnalyzer {
                 }
                 let mut parts = new_name.split('.');
                 let mut nodes: Vec<NodeInfo> = vec![];
-                let mut edges: Vec<EdgeInfo> = vec![];
                 let part = parts.next_back();
                 if part.is_none() {
-                    return (vec![], vec![]);
+                    return vec![];
                 }
                 // Handle the name of the method here.
                 // if #ctor means constructor.
@@ -436,7 +407,7 @@ impl DepXMLFileAnalyzer {
                     // Get the next back Symbol and that will be the symbol.
                     let part = parts.next_back();
                     if part.is_none() {
-                        return (vec![], vec![]);
+                        return vec![];
                     }
                     method_node = NodeInfo {
                         symbol: part.unwrap().to_string(),
@@ -453,7 +424,7 @@ impl DepXMLFileAnalyzer {
                     };
                     let part = parts.next_back();
                     if part.is_none() {
-                        return (vec![], vec![]);
+                        return vec![];
                     }
                     type_name = NodeInfo {
                         symbol: part.unwrap().to_string(),
@@ -474,31 +445,11 @@ impl DepXMLFileAnalyzer {
                     syntax_type: SyntaxType::NamespaceDeclaration,
                 };
                 nodes.push(namesapce_node.clone());
-                edges.push(EdgeInfo {
-                    source: namesapce_node.clone(),
-                    sink: type_name.clone(),
-                    precedence: 0,
-                });
-                edges.push(EdgeInfo {
-                    source: type_name.clone(),
-                    sink: method_node.clone(),
-                    precedence: 0,
-                });
-                edges.push(EdgeInfo {
-                    source: method_node,
-                    sink: type_name.clone(),
-                    precedence: 10,
-                });
-                edges.push(EdgeInfo {
-                    source: type_name.clone(),
-                    sink: namesapce_node,
-                    precedence: 10,
-                });
-                (nodes, edges)
+                nodes
             }
             _ => {
                 info!("unable to handle: {} -- {}", member_type, name);
-                (vec![], vec![])
+                vec![]
             }
         }
     }
@@ -518,10 +469,9 @@ mod tests {
     #[test]
     fn test_handle_member_namespace_simple() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("N", "System");
+        let nodes = analyzer.handle_member("N", "System");
 
         assert_eq!(nodes.len(), 1);
-        assert_eq!(edges.len(), 0);
 
         assert_eq!(nodes[0].symbol, "System");
         assert_eq!(nodes[0].syntax_type, SyntaxType::NamespaceDeclaration);
@@ -530,10 +480,9 @@ mod tests {
     #[test]
     fn test_handle_member_namespace_nested() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("N", "System.Configuration");
+        let nodes = analyzer.handle_member("N", "System.Configuration");
 
         assert_eq!(nodes.len(), 1);
-        assert_eq!(edges.len(), 0);
 
         // Namespace member type returns the full name as-is
         assert_eq!(nodes[0].symbol, "System.Configuration");
@@ -543,10 +492,9 @@ mod tests {
     #[test]
     fn test_handle_member_namespace_empty() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("N", "");
+        let nodes = analyzer.handle_member("N", "");
 
         assert_eq!(nodes.len(), 1);
-        assert_eq!(edges.len(), 0);
         assert_eq!(nodes[0].symbol, "");
     }
 
@@ -555,10 +503,9 @@ mod tests {
     #[test]
     fn test_handle_member_type_simple() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("T", "System.String");
+        let nodes = analyzer.handle_member("T", "System.String");
 
         assert_eq!(nodes.len(), 2);
-        assert_eq!(edges.len(), 2);
 
         // First node should be the class
         assert_eq!(nodes[0].symbol, "String");
@@ -567,27 +514,14 @@ mod tests {
         // Second node should be the namespace
         assert_eq!(nodes[1].symbol, "System");
         assert_eq!(nodes[1].syntax_type, SyntaxType::NamespaceDeclaration);
-
-        // Check edges
-        // Edge 1: namespace -> class (precedence 0)
-        assert_eq!(edges[0].source.symbol, "System");
-        assert_eq!(edges[0].sink.symbol, "String");
-        assert_eq!(edges[0].precedence, 0);
-
-        // Edge 2: class -> namespace (precedence 10, for FQDN traversal)
-        assert_eq!(edges[1].source.symbol, "String");
-        assert_eq!(edges[1].sink.symbol, "System");
-        assert_eq!(edges[1].precedence, 10);
     }
 
     #[test]
     fn test_handle_member_type_nested_namespace() {
         let analyzer = create_analyzer();
-        let (nodes, edges) =
-            analyzer.handle_member("T", "System.Configuration.ConfigurationManager");
+        let nodes = analyzer.handle_member("T", "System.Configuration.ConfigurationManager");
 
         assert_eq!(nodes.len(), 2);
-        assert_eq!(edges.len(), 2);
 
         // Class name
         assert_eq!(nodes[0].symbol, "ConfigurationManager");
@@ -601,10 +535,9 @@ mod tests {
     #[test]
     fn test_handle_member_type_no_namespace() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("T", "String");
+        let nodes = analyzer.handle_member("T", "String");
 
         assert_eq!(nodes.len(), 2);
-        assert_eq!(edges.len(), 2);
 
         assert_eq!(nodes[0].symbol, "String");
         assert_eq!(nodes[1].symbol, ""); // Empty namespace
@@ -613,11 +546,10 @@ mod tests {
     #[test]
     fn test_handle_member_type_empty_string() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("T", "");
+        let nodes = analyzer.handle_member("T", "");
 
         // Empty string should return empty vectors
         assert_eq!(nodes.len(), 0);
-        assert_eq!(edges.len(), 0);
     }
 
     // Tests for Field (F) and Property (P) members
@@ -625,11 +557,10 @@ mod tests {
     #[test]
     fn test_handle_member_field_simple() {
         let analyzer = create_analyzer();
-        let (nodes, edges) =
+        let nodes =
             analyzer.handle_member("F", "System.Configuration.ConfigurationManager.AppSettings");
 
         assert_eq!(nodes.len(), 3);
-        assert_eq!(edges.len(), 4);
 
         // Field node
         assert_eq!(nodes[0].symbol, "AppSettings");
@@ -642,38 +573,16 @@ mod tests {
         // Namespace node
         assert_eq!(nodes[2].symbol, "System.Configuration");
         assert_eq!(nodes[2].syntax_type, SyntaxType::NamespaceDeclaration);
-
-        // Check edges
-        // Edge 0: namespace -> class (precedence 0)
-        assert_eq!(edges[0].source.symbol, "System.Configuration");
-        assert_eq!(edges[0].sink.symbol, "ConfigurationManager");
-        assert_eq!(edges[0].precedence, 0);
-
-        // Edge 1: class -> field (precedence 0)
-        assert_eq!(edges[1].source.symbol, "ConfigurationManager");
-        assert_eq!(edges[1].sink.symbol, "AppSettings");
-        assert_eq!(edges[1].precedence, 0);
-
-        // Edge 2: field -> class (precedence 10, FQDN)
-        assert_eq!(edges[2].source.symbol, "AppSettings");
-        assert_eq!(edges[2].sink.symbol, "ConfigurationManager");
-        assert_eq!(edges[2].precedence, 10);
-
-        // Edge 3: class -> namespace (precedence 10, FQDN)
-        assert_eq!(edges[3].source.symbol, "ConfigurationManager");
-        assert_eq!(edges[3].sink.symbol, "System.Configuration");
-        assert_eq!(edges[3].precedence, 10);
     }
 
     #[test]
     fn test_handle_member_property_same_as_field() {
         let analyzer = create_analyzer();
-        let (nodes_f, edges_f) = analyzer.handle_member("F", "System.Console.Out");
-        let (nodes_p, edges_p) = analyzer.handle_member("P", "System.Console.Out");
+        let nodes_f = analyzer.handle_member("F", "System.Console.Out");
+        let nodes_p = analyzer.handle_member("P", "System.Console.Out");
 
         // Field and Property should be handled identically
         assert_eq!(nodes_f.len(), nodes_p.len());
-        assert_eq!(edges_f.len(), edges_p.len());
 
         assert_eq!(nodes_f[0].symbol, nodes_p[0].symbol);
         assert_eq!(nodes_f[0].syntax_type, nodes_p[0].syntax_type);
@@ -684,19 +593,17 @@ mod tests {
         let analyzer = create_analyzer();
 
         // Only class and field, no namespace
-        let (nodes, _edges) = analyzer.handle_member("F", "Console.Out");
+        let nodes = analyzer.handle_member("F", "Console.Out");
         assert_eq!(nodes.len(), 3);
         assert_eq!(nodes[2].symbol, ""); // Empty namespace
 
         // Only one part - should return empty
-        let (nodes, edges) = analyzer.handle_member("F", "Out");
+        let nodes = analyzer.handle_member("F", "Out");
         assert_eq!(nodes.len(), 0);
-        assert_eq!(edges.len(), 0);
 
         // Empty string
-        let (nodes, edges) = analyzer.handle_member("F", "");
+        let nodes = analyzer.handle_member("F", "");
         assert_eq!(nodes.len(), 0);
-        assert_eq!(edges.len(), 0);
     }
 
     // Tests for Method (M) members
@@ -704,10 +611,9 @@ mod tests {
     #[test]
     fn test_handle_member_method_simple() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("M", "System.String.Format");
+        let nodes = analyzer.handle_member("M", "System.String.Format");
 
         assert_eq!(nodes.len(), 3);
-        assert_eq!(edges.len(), 4);
 
         // Method node
         assert_eq!(nodes[0].symbol, "Format");
@@ -725,7 +631,7 @@ mod tests {
     #[test]
     fn test_handle_member_method_with_parameters() {
         let analyzer = create_analyzer();
-        let (nodes, _edges) =
+        let nodes =
             analyzer.handle_member("M", "System.String.Format(System.String,System.Object)");
 
         assert_eq!(nodes.len(), 3);
@@ -741,7 +647,7 @@ mod tests {
     #[test]
     fn test_handle_member_method_with_complex_parameters() {
         let analyzer = create_analyzer();
-        let (nodes, _) = analyzer.handle_member(
+        let nodes = analyzer.handle_member(
             "M",
             "System.Collections.Generic.List.Add(System.Collections.Generic.T)",
         );
@@ -755,7 +661,7 @@ mod tests {
     #[test]
     fn test_handle_member_method_constructor() {
         let analyzer = create_analyzer();
-        let (nodes, _edges) = analyzer.handle_member("M", "System.String.#ctor");
+        let nodes = analyzer.handle_member("M", "System.String.#ctor");
 
         assert_eq!(nodes.len(), 3);
 
@@ -773,7 +679,7 @@ mod tests {
     #[test]
     fn test_handle_member_method_constructor_with_params() {
         let analyzer = create_analyzer();
-        let (nodes, _) = analyzer.handle_member("M", "System.String.#ctor(System.Char[])");
+        let nodes = analyzer.handle_member("M", "System.String.#ctor(System.Char[])");
 
         assert_eq!(nodes.len(), 3);
 
@@ -786,7 +692,7 @@ mod tests {
     #[test]
     fn test_handle_member_method_nested_namespace() {
         let analyzer = create_analyzer();
-        let (nodes, _) =
+        let nodes =
             analyzer.handle_member("M", "System.Configuration.ConfigurationManager.GetSection");
 
         assert_eq!(nodes.len(), 3);
@@ -800,29 +706,26 @@ mod tests {
         let analyzer = create_analyzer();
 
         // Only class and method, no namespace
-        let (nodes, _) = analyzer.handle_member("M", "String.Format");
+        let nodes = analyzer.handle_member("M", "String.Format");
         assert_eq!(nodes.len(), 3);
         assert_eq!(nodes[2].symbol, ""); // Empty namespace
 
         // Only one part - should return empty
-        let (nodes, edges) = analyzer.handle_member("M", "Format");
+        let nodes = analyzer.handle_member("M", "Format");
         assert_eq!(nodes.len(), 0);
-        assert_eq!(edges.len(), 0);
 
         // Empty string
-        let (nodes, edges) = analyzer.handle_member("M", "");
+        let nodes = analyzer.handle_member("M", "");
         assert_eq!(nodes.len(), 0);
-        assert_eq!(edges.len(), 0);
     }
 
     #[test]
     fn test_handle_member_method_constructor_missing_class() {
         let analyzer = create_analyzer();
         // Constructor with no class name before it
-        let (nodes, edges) = analyzer.handle_member("M", "#ctor");
+        let nodes = analyzer.handle_member("M", "#ctor");
 
         assert_eq!(nodes.len(), 0);
-        assert_eq!(edges.len(), 0);
     }
 
     // Tests for unknown member types
@@ -830,57 +733,27 @@ mod tests {
     #[test]
     fn test_handle_member_unknown_type() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("X", "System.Something");
+        let nodes = analyzer.handle_member("X", "System.Something");
 
         assert_eq!(nodes.len(), 0);
-        assert_eq!(edges.len(), 0);
     }
 
     #[test]
     fn test_handle_member_empty_type() {
         let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("", "System.Something");
+        let nodes = analyzer.handle_member("", "System.Something");
 
         assert_eq!(nodes.len(), 0);
-        assert_eq!(edges.len(), 0);
     }
-
-    // Edge precedence tests
-
-    #[test]
-    fn test_edge_precedence_values() {
-        let analyzer = create_analyzer();
-
-        // Test Type edges
-        let (_, edges) = analyzer.handle_member("T", "System.String");
-        assert_eq!(edges[0].precedence, 0); // namespace -> class
-        assert_eq!(edges[1].precedence, 10); // class -> namespace (FQDN)
-
-        // Test Field edges
-        let (_, edges) = analyzer.handle_member("F", "System.Console.Out");
-        assert_eq!(edges[0].precedence, 0); // namespace -> class
-        assert_eq!(edges[1].precedence, 0); // class -> field
-        assert_eq!(edges[2].precedence, 10); // field -> class (FQDN)
-        assert_eq!(edges[3].precedence, 10); // class -> namespace (FQDN)
-
-        // Test Method edges
-        let (_, edges) = analyzer.handle_member("M", "System.String.Format");
-        assert_eq!(edges[0].precedence, 0); // namespace -> class
-        assert_eq!(edges[1].precedence, 0); // class -> method
-        assert_eq!(edges[2].precedence, 10); // method -> class (FQDN)
-        assert_eq!(edges[3].precedence, 10); // class -> namespace (FQDN)
-    }
-
     // Integration tests with real-world examples
 
     #[test]
     fn test_handle_member_real_world_configuration_manager() {
         let analyzer = create_analyzer();
-        let (nodes, edges) =
+        let nodes =
             analyzer.handle_member("F", "System.Configuration.ConfigurationManager.AppSettings");
 
         assert_eq!(nodes.len(), 3);
-        assert_eq!(edges.len(), 4);
 
         // Verify the complete graph structure
         let field = &nodes[0];
@@ -890,18 +763,12 @@ mod tests {
         assert_eq!(field.symbol, "AppSettings");
         assert_eq!(class.symbol, "ConfigurationManager");
         assert_eq!(namespace.symbol, "System.Configuration");
-
-        // Verify FQDN can be built: field -> class -> namespace
-        assert_eq!(edges[2].source.symbol, field.symbol);
-        assert_eq!(edges[2].sink.symbol, class.symbol);
-        assert_eq!(edges[3].source.symbol, class.symbol);
-        assert_eq!(edges[3].sink.symbol, namespace.symbol);
     }
 
     #[test]
     fn test_handle_member_real_world_linq_method() {
         let analyzer = create_analyzer();
-        let (nodes, _) = analyzer.handle_member(
+        let nodes = analyzer.handle_member(
             "M",
             "System.Linq.Enumerable.Where(System.Collections.Generic.IEnumerable,System.Func)",
         );
@@ -915,289 +782,11 @@ mod tests {
     #[test]
     fn test_handle_member_real_world_type_with_generics() {
         let analyzer = create_analyzer();
-        let (nodes, _) = analyzer.handle_member("T", "System.Collections.Generic.List`1");
+        let nodes = analyzer.handle_member("T", "System.Collections.Generic.List`1");
 
         assert_eq!(nodes.len(), 2);
         // Generic type notation is preserved
         assert_eq!(nodes[0].symbol, "List`1");
         assert_eq!(nodes[1].symbol, "System.Collections.Generic");
-    }
-
-    // FQDN Integration Tests
-    // These tests verify that nodes/edges from handle_member() produce correct FQDNs
-
-    use crate::c_sharp_graph::query::get_fqdn;
-    use stack_graphs::graph::StackGraph;
-    use std::collections::HashMap;
-
-    /// Helper function to build a stack graph from NodeInfo and EdgeInfo structures
-    fn build_stack_graph_from_nodes_edges(
-        nodes: Vec<NodeInfo>,
-        edges: Vec<EdgeInfo>,
-    ) -> (StackGraph, HashMap<String, Handle<Node>>) {
-        let mut graph = StackGraph::new();
-        let file = graph.add_file("test.cs").unwrap();
-
-        let mut node_map: HashMap<String, Handle<Node>> = HashMap::new();
-
-        // Create all nodes
-        for node_info in nodes {
-            let key = format!("{:?}:{}", node_info.syntax_type, node_info.symbol);
-
-            // Skip duplicates
-            if node_map.contains_key(&key) {
-                continue;
-            }
-
-            let node_id = graph.new_node_id(file);
-            let symbol = graph.add_symbol(&node_info.symbol);
-            let node_handle = graph.add_pop_symbol_node(node_id, symbol, true).unwrap();
-
-            // Set syntax type
-            let syntax_type_str = graph.add_string(node_info.syntax_type.to_string());
-            let source_info = graph.source_info_mut(node_handle);
-            source_info.syntax_type = syntax_type_str.into();
-
-            node_map.insert(key, node_handle);
-        }
-
-        // Create all edges
-        for edge_info in edges {
-            let source_key = format!(
-                "{:?}:{}",
-                edge_info.source.syntax_type, edge_info.source.symbol
-            );
-            let sink_key = format!("{:?}:{}", edge_info.sink.syntax_type, edge_info.sink.symbol);
-
-            let source_handle = node_map
-                .get(&source_key)
-                .unwrap_or_else(|| panic!("Source node not found: {}", source_key));
-            let sink_handle = node_map
-                .get(&sink_key)
-                .unwrap_or_else(|| panic!("Sink node not found: {}", sink_key));
-
-            graph.add_edge(*source_handle, *sink_handle, edge_info.precedence);
-        }
-
-        (graph, node_map)
-    }
-
-    #[test]
-    fn test_fqdn_for_type() {
-        let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("T", "System.String");
-
-        let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
-
-        // Get FQDN from the class node (String)
-        let class_key = format!("{:?}:String", SyntaxType::ClassDef);
-        let class_handle = node_map.get(&class_key).unwrap();
-
-        let fqdn = get_fqdn(*class_handle, &graph).unwrap();
-
-        assert_eq!(fqdn.namespace, Some("System".to_string()));
-        assert_eq!(fqdn.class, Some("String".to_string()));
-        assert_eq!(fqdn.method, None);
-        assert_eq!(fqdn.field, None);
-    }
-
-    #[test]
-    fn test_fqdn_for_field() {
-        let analyzer = create_analyzer();
-        let (nodes, edges) =
-            analyzer.handle_member("F", "System.Configuration.ConfigurationManager.AppSettings");
-
-        let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
-
-        // Get FQDN from the field node (AppSettings)
-        let field_key = format!("{:?}:AppSettings", SyntaxType::FieldName);
-        let field_handle = node_map.get(&field_key).unwrap();
-
-        let fqdn = get_fqdn(*field_handle, &graph).unwrap();
-
-        assert_eq!(fqdn.namespace, Some("System.Configuration".to_string()));
-        assert_eq!(fqdn.class, Some("ConfigurationManager".to_string()));
-        assert_eq!(fqdn.field, Some("AppSettings".to_string()));
-        assert_eq!(fqdn.method, None);
-    }
-
-    #[test]
-    fn test_fqdn_for_method() {
-        let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("M", "System.String.Format");
-
-        let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
-
-        // Get FQDN from the method node (Format)
-        let method_key = format!("{:?}:Format", SyntaxType::MethodName);
-        let method_handle = node_map.get(&method_key).unwrap();
-
-        let fqdn = get_fqdn(*method_handle, &graph).unwrap();
-
-        assert_eq!(fqdn.namespace, Some("System".to_string()));
-        assert_eq!(fqdn.class, Some("String".to_string()));
-        assert_eq!(fqdn.method, Some("Format".to_string()));
-        assert_eq!(fqdn.field, None);
-    }
-
-    #[test]
-    fn test_fqdn_for_method_with_parameters() {
-        let analyzer = create_analyzer();
-        let (nodes, edges) =
-            analyzer.handle_member("M", "System.String.Format(System.String,System.Object)");
-
-        let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
-
-        // Get FQDN from the method node (Format) - parameters should be stripped
-        let method_key = format!("{:?}:Format", SyntaxType::MethodName);
-        let method_handle = node_map.get(&method_key).unwrap();
-
-        let fqdn = get_fqdn(*method_handle, &graph).unwrap();
-
-        assert_eq!(fqdn.namespace, Some("System".to_string()));
-        assert_eq!(fqdn.class, Some("String".to_string()));
-        assert_eq!(fqdn.method, Some("Format".to_string()));
-        assert_eq!(fqdn.field, None);
-    }
-
-    #[test]
-    fn test_fqdn_for_constructor() {
-        let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("M", "System.String.#ctor");
-
-        let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
-
-        // Get FQDN from the method node (String constructor)
-        let method_key = format!("{:?}:String", SyntaxType::MethodName);
-        let method_handle = node_map.get(&method_key).unwrap();
-
-        let fqdn = get_fqdn(*method_handle, &graph).unwrap();
-
-        assert_eq!(fqdn.namespace, Some("System".to_string()));
-        assert_eq!(fqdn.class, Some("String".to_string()));
-        assert_eq!(fqdn.method, Some("String".to_string()));
-        assert_eq!(fqdn.field, None);
-    }
-
-    #[test]
-    fn test_fqdn_for_nested_namespace_type() {
-        let analyzer = create_analyzer();
-        let (nodes, edges) =
-            analyzer.handle_member("T", "System.Configuration.ConfigurationManager");
-
-        let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
-
-        // Get FQDN from the class node
-        let class_key = format!("{:?}:ConfigurationManager", SyntaxType::ClassDef);
-        let class_handle = node_map.get(&class_key).unwrap();
-
-        let fqdn = get_fqdn(*class_handle, &graph).unwrap();
-
-        assert_eq!(fqdn.namespace, Some("System.Configuration".to_string()));
-        assert_eq!(fqdn.class, Some("ConfigurationManager".to_string()));
-        assert_eq!(fqdn.method, None);
-        assert_eq!(fqdn.field, None);
-    }
-
-    #[test]
-    fn test_fqdn_for_nested_namespace_method() {
-        let analyzer = create_analyzer();
-        let (nodes, edges) =
-            analyzer.handle_member("M", "System.Configuration.ConfigurationManager.GetSection");
-
-        let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
-
-        // Get FQDN from the method node
-        let method_key = format!("{:?}:GetSection", SyntaxType::MethodName);
-        let method_handle = node_map.get(&method_key).unwrap();
-
-        let fqdn = get_fqdn(*method_handle, &graph).unwrap();
-
-        assert_eq!(fqdn.namespace, Some("System.Configuration".to_string()));
-        assert_eq!(fqdn.class, Some("ConfigurationManager".to_string()));
-        assert_eq!(fqdn.method, Some("GetSection".to_string()));
-        assert_eq!(fqdn.field, None);
-    }
-
-    #[test]
-    fn test_fqdn_for_linq_method() {
-        let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member(
-            "M",
-            "System.Linq.Enumerable.Where(System.Collections.Generic.IEnumerable,System.Func)",
-        );
-
-        let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
-
-        // Get FQDN from the method node
-        let method_key = format!("{:?}:Where", SyntaxType::MethodName);
-        let method_handle = node_map.get(&method_key).unwrap();
-
-        let fqdn = get_fqdn(*method_handle, &graph).unwrap();
-
-        assert_eq!(fqdn.namespace, Some("System.Linq".to_string()));
-        assert_eq!(fqdn.class, Some("Enumerable".to_string()));
-        assert_eq!(fqdn.method, Some("Where".to_string()));
-        assert_eq!(fqdn.field, None);
-    }
-
-    #[test]
-    fn test_fqdn_for_property() {
-        let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("P", "System.Console.Out");
-
-        let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
-
-        // Get FQDN from the property/field node
-        let field_key = format!("{:?}:Out", SyntaxType::FieldName);
-        let field_handle = node_map.get(&field_key).unwrap();
-
-        let fqdn = get_fqdn(*field_handle, &graph).unwrap();
-
-        assert_eq!(fqdn.namespace, Some("System".to_string()));
-        assert_eq!(fqdn.class, Some("Console".to_string()));
-        assert_eq!(fqdn.field, Some("Out".to_string()));
-        assert_eq!(fqdn.method, None);
-    }
-
-    #[test]
-    fn test_fqdn_from_class_node() {
-        let analyzer = create_analyzer();
-        let (nodes, edges) =
-            analyzer.handle_member("F", "System.Configuration.ConfigurationManager.AppSettings");
-
-        let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
-
-        // Get FQDN from the class node instead of field
-        let class_key = format!("{:?}:ConfigurationManager", SyntaxType::ClassDef);
-        let class_handle = node_map.get(&class_key).unwrap();
-
-        let fqdn = get_fqdn(*class_handle, &graph).unwrap();
-
-        // Should only have namespace and class, not field
-        assert_eq!(fqdn.namespace, Some("System.Configuration".to_string()));
-        assert_eq!(fqdn.class, Some("ConfigurationManager".to_string()));
-        assert_eq!(fqdn.field, None);
-        assert_eq!(fqdn.method, None);
-    }
-
-    #[test]
-    fn test_fqdn_from_namespace_node() {
-        let analyzer = create_analyzer();
-        let (nodes, edges) = analyzer.handle_member("T", "System.String");
-
-        let (graph, node_map) = build_stack_graph_from_nodes_edges(nodes, edges);
-
-        // Get FQDN from the namespace node
-        let namespace_key = format!("{:?}:System", SyntaxType::NamespaceDeclaration);
-        let namespace_handle = node_map.get(&namespace_key).unwrap();
-
-        let fqdn = get_fqdn(*namespace_handle, &graph).unwrap();
-
-        // Should only have namespace
-        assert_eq!(fqdn.namespace, Some("System".to_string()));
-        assert_eq!(fqdn.class, None);
-        assert_eq!(fqdn.field, None);
-        assert_eq!(fqdn.method, None);
     }
 }

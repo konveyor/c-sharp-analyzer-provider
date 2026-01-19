@@ -12,145 +12,6 @@
     - Configuration and State Management Migration
     - Runtime and Utility Class Migration
   violations:
-    dotnet-core-dotnetopenauth-01:
-      description: DotNetOpenAuth library is not compatible with .NET Core
-      category: mandatory
-      labels:
-      - konveyor.io/source=dotnet
-      - konveyor.io/target=dotnet-core
-      incidents:
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
-        message: |
-          DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
-          Use ASP.NET Core's built-in OAuth authentication instead.
-
-          Migration actions:
-          - Replace DotNetOpenAuth OAuth implementation with ASP.NET Core OAuth providers
-          - Use AddAuthentication().AddOAuth() for custom OAuth providers
-          - Use built-in providers (AddGoogle, AddFacebook, etc.) for common providers
-          - Implement IAuthenticationHandler for custom authentication schemes if needed
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Text;\n4 using Microsoft.Web.WebPages.OAuth;\n5 using NerdDinner.Models;\n6 using System.Web.Configuration;\n7 \n8 namespace NerdDinner\n9 {\n10     public static class AuthConfig\n11     {\n12         public static void RegisterAuth()\n13         {\n14             // To let users of this site log in using their accounts from other sites such as Microsoft, Facebook, and Twitter,\n15             // you must update this site. For more information visit http://go.microsoft.com/fwlink/?LinkID=252166\n16 \n17             var microsoftClientId = WebConfigurationManager.AppSettings[\"microsoftClientId\"];\n18             var microsoftClientSecret = WebConfigurationManager.AppSettings[\"microsoftClientSecret\"];\n19             if (!string.IsNullOrEmpty(microsoftClientId) && !string.IsNullOrEmpty(microsoftClientSecret))\n20             {\n21                 OAuthWebSecurity.RegisterMicrosoftClient(\n22                     clientId: microsoftClientId,\n23                     clientSecret: microsoftClientSecret);\n24             }\n25 \n26             var twitterConsumerKey = WebConfigurationManager.AppSettings[\"twitterConsumerKey\"];\n27             var twitterConsumerSecret = WebConfigurationManager.AppSettings[\"twitterConsumerSecret\"];\n28             if (!string.IsNullOrEmpty(twitterConsumerKey) && !string.IsNullOrEmpty(twitterConsumerSecret))\n29             {\n30                 OAuthWebSecurity.RegisterTwitterClient(\n31                     consumerKey: twitterConsumerKey,\n32                     consumerSecret: twitterConsumerSecret);\n33             }\n34 \n35             var facebookAppId = WebConfigurationManager.AppSettings[\"facebookAppId\"];\n36             var facebookAppSecret = WebConfigurationManager.AppSettings[\"facebookAppSecret\"];\n37             if (!string.IsNullOrEmpty(facebookAppId) && !string.IsNullOrEmpty(facebookAppSecret))\n38             {\n39                 OAuthWebSecurity.RegisterFacebookClient(\n40                     appId: facebookAppId,\n41                     appSecret: facebookAppSecret);\n42             }\n43 \n44             OAuthWebSecurity.RegisterGoogleClient();\n45         }\n"
-        lineNumber: 10
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
-          symbol: AuthConfig
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
-        message: |
-          DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
-          Use ASP.NET Core's built-in OAuth authentication instead.
-
-          Migration actions:
-          - Replace DotNetOpenAuth OAuth implementation with ASP.NET Core OAuth providers
-          - Use AddAuthentication().AddOAuth() for custom OAuth providers
-          - Use built-in providers (AddGoogle, AddFacebook, etc.) for common providers
-          - Implement IAuthenticationHandler for custom authentication schemes if needed
-        codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Optimization;\n2 \n3 namespace NerdDinner\n4 {\n5     public class BundleConfig\n6     {\n7         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725\n8         public static void RegisterBundles(BundleCollection bundles)\n9         {\n10             bundles.Add(new ScriptBundle(\"~/bundles/jquery\").Include(\n11                         \"~/Scripts/jquery-{version}.js\"));\n12 \n13             bundles.Add(new ScriptBundle(\"~/bundles/jqueryui\").Include(\n14                         \"~/Scripts/jquery-ui-{version}.js\"));\n15 \n16             bundles.Add(new ScriptBundle(\"~/bundles/jqueryval\").Include(\n17                         \"~/Scripts/jquery.unobtrusive*\",\n18                         \"~/Scripts/jquery.validate*\"));\n19 \n20             bundles.Add(new ScriptBundle(\"~/bundles/jquerymobile\").Include(\n21                         \"~/Scripts/jquery.mobile-{version}.js\"));\n22 \n23             // Use the development version of Modernizr to develop with and learn from. Then, when you're\n24             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.\n25             bundles.Add(new ScriptBundle(\"~/bundles/modernizr\").Include(\n26                         \"~/Scripts/modernizr-*\"));\n27 \n28             bundles.Add(new ScriptBundle(\"~/bundles/knockout\").Include(\n29                         \"~/Scripts/knockout-*\"));\n30 \n31             bundles.Add(new ScriptBundle(\"~/bundles/yepnope\").Include(\n32                         \"~/Scripts/yepnope.{version}.js\"));\n33 \n34             bundles.Add(new StyleBundle(\"~/Content/css\").Include(\"~/Content/site.css\"));\n35 \n36             bundles.Add(new StyleBundle(\"~/Content/themes/base/css\").Include(\n37                         \"~/Content/themes/base/jquery.ui.core.css\",\n38                         \"~/Content/themes/base/jquery.ui.resizable.css\",\n39                         \"~/Content/themes/base/jquery.ui.selectable.css\",\n40                         \"~/Content/themes/base/jquery.ui.accordion.css\",\n41                         \"~/Content/themes/base/jquery.ui.autocomplete.css\",\n42                         \"~/Content/themes/base/jquery.ui.button.css\",\n43                         \"~/Content/themes/base/jquery.ui.dialog.css\",\n44                         \"~/Content/themes/base/jquery.ui.slider.css\",\n45                         \"~/Content/themes/base/jquery.ui.tabs.css\",\n46                         \"~/Content/themes/base/jquery.ui.datepicker.css\",\n47                         \"~/Content/themes/base/jquery.ui.progressbar.css\",\n48                         \"~/Content/themes/base/jquery.ui.theme.css\"));\n49 \n50             bundles.Add(new StyleBundle(\"~/Content/jquerymobile\").Include(\n51                         \"~/Content/jquery.mobile-{version}.css\",\n52                         \"~/Content/jquery.mobile.structure-{version}.css\",\n53                         \"~/Content/jquery.mobile.theme-{version}.css\"));\n54         }\n55     }\n56 }\n"
-        lineNumber: 5
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
-          symbol: BundleConfig
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
-        message: |
-          DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
-          Use ASP.NET Core's built-in OAuth authentication instead.
-
-          Migration actions:
-          - Replace DotNetOpenAuth OAuth implementation with ASP.NET Core OAuth providers
-          - Use AddAuthentication().AddOAuth() for custom OAuth providers
-          - Use built-in providers (AddGoogle, AddFacebook, etc.) for common providers
-          - Implement IAuthenticationHandler for custom authentication schemes if needed
-        codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Mvc;\n2 \n3 namespace NerdDinner\n4 {\n5     public class FilterConfig\n6     {\n7         public static void RegisterGlobalFilters(GlobalFilterCollection filters)\n8         {\n9             filters.Add(new HandleErrorAttribute());\n10         }\n11     }\n12 }\n"
-        lineNumber: 5
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
-          symbol: FilterConfig
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
-        message: |
-          DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
-          Use ASP.NET Core's built-in OAuth authentication instead.
-
-          Migration actions:
-          - Replace DotNetOpenAuth OAuth implementation with ASP.NET Core OAuth providers
-          - Use AddAuthentication().AddOAuth() for custom OAuth providers
-          - Use built-in providers (AddGoogle, AddFacebook, etc.) for common providers
-          - Implement IAuthenticationHandler for custom authentication schemes if needed
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 using System.Web.Routing;\n6 \n7 namespace NerdDinner\n8 {\n9     public class RouteConfig\n10     {\n11         public static void RegisterRoutes(RouteCollection routes)\n12         {\n13             routes.IgnoreRoute(\"{resource}.axd/{*pathInfo}\");\n14 \n15             routes.MapRoute(\n16                     \"PrettyDetails\",\n17                     \"{Id}\",\n18                         new { controller = \"Dinners\", action = \"Details\" },\n19                         new { Id = @\"\\d+\" }\n20                     );\n21 \n22             routes.MapRoute(\n23                 name: \"Default\",\n24                 url: \"{controller}/{action}/{id}\",\n25                 defaults: new { controller = \"Home\", action = \"Index\", id = UrlParameter.Optional }\n26             );\n27         }\n28     }\n"
-        lineNumber: 9
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
-          symbol: RouteConfig
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
-        message: |
-          DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
-          Use ASP.NET Core's built-in OAuth authentication instead.
-
-          Migration actions:
-          - Replace DotNetOpenAuth OAuth implementation with ASP.NET Core OAuth providers
-          - Use AddAuthentication().AddOAuth() for custom OAuth providers
-          - Use built-in providers (AddGoogle, AddFacebook, etc.) for common providers
-          - Implement IAuthenticationHandler for custom authentication schemes if needed
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web.Http;\n4 \n5 namespace NerdDinner\n6 {\n7     public static class WebApiConfig\n8     {\n9         public static void Register(HttpConfiguration config)\n10         {\n11             config.Routes.MapHttpRoute(\n12                 name: \"DefaultApi\",\n13                 routeTemplate: \"api/{controller}/{id}\",\n14                 defaults: new { id = RouteParameter.Optional }\n15             );\n16         }\n17     }\n18 }\n"
-        lineNumber: 7
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
-          symbol: WebApiConfig
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-        message: |
-          DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
-          Use ASP.NET Core's built-in OAuth authentication instead.
-
-          Migration actions:
-          - Replace DotNetOpenAuth OAuth implementation with ASP.NET Core OAuth providers
-          - Use AddAuthentication().AddOAuth() for custom OAuth providers
-          - Use built-in providers (AddGoogle, AddFacebook, etc.) for common providers
-          - Implement IAuthenticationHandler for custom authentication schemes if needed
-        codeSnip: "5 using System.Web.Http;\n6 using System.Web.Mvc;\n7 using System.Web.Optimization;\n8 using System.Web.Routing;\n9 \n10 namespace NerdDinner\n11 {\n12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n21             WebApiConfig.Register(GlobalConfiguration.Configuration);\n22             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n23             RouteConfig.RegisterRoutes(RouteTable.Routes);\n24             BundleConfig.RegisterBundles(BundleTable.Bundles);\n25             AuthConfig.RegisterAuth();\n26 \n27             ModelBinderProviders.BinderProviders.Add(new EFModelBinderProvider());\n28 \n29             Version version = Assembly.GetExecutingAssembly().GetName().Version;\n30             Application[\"Version\"] = string.Format(\"{0}.{1}\", version.Major, version.Minor);\n31         }\n"
-        lineNumber: 15
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          symbol: MvcApplication
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
-        message: |
-          DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
-          Use ASP.NET Core's built-in OAuth authentication instead.
-
-          Migration actions:
-          - Replace DotNetOpenAuth OAuth implementation with ASP.NET Core OAuth providers
-          - Use AddAuthentication().AddOAuth() for custom OAuth providers
-          - Use built-in providers (AddGoogle, AddFacebook, etc.) for common providers
-          - Implement IAuthenticationHandler for custom authentication schemes if needed
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data.Spatial;\n3 using System.Linq;\n4 using System.Web;\n5 using System.Web.Mvc;\n6 \n7 namespace NerdDinner\n8 {\n9     public class DbGeographyModelBinder : DefaultModelBinder\n10     {\n11         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)\n12         {\n13             var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);\n14             if (valueProviderResult != null)\n15             {\n16                 string[] latLongStr = valueProviderResult.AttemptedValue.Split(',');\n17                 string point = string.Format(\"POINT ({0} {1})\", latLongStr[1], latLongStr[0]);\n18                 //4326 format puts LONGITUDE first then LATITUDE\n19                 DbGeography result = DbGeography.FromText(point, 4326);\n20                 return result;\n21             }\n22             return null;\n23         }\n24     }\n"
-        lineNumber: 9
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
-          symbol: DbGeographyModelBinder
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
-        message: |
-          DotNetOpenAuth is not compatible with .NET Core and there is no direct replacement.
-          Use ASP.NET Core's built-in OAuth authentication instead.
-
-          Migration actions:
-          - Replace DotNetOpenAuth OAuth implementation with ASP.NET Core OAuth providers
-          - Use AddAuthentication().AddOAuth() for custom OAuth providers
-          - Use built-in providers (AddGoogle, AddFacebook, etc.) for common providers
-          - Implement IAuthenticationHandler for custom authentication schemes if needed
-        codeSnip: "16                 string[] latLongStr = valueProviderResult.AttemptedValue.Split(',');\n17                 string point = string.Format(\"POINT ({0} {1})\", latLongStr[1], latLongStr[0]);\n18                 //4326 format puts LONGITUDE first then LATITUDE\n19                 DbGeography result = DbGeography.FromText(point, 4326);\n20                 return result;\n21             }\n22             return null;\n23         }\n24     }\n25 \n26     public class EFModelBinderProvider : IModelBinderProvider\n27     {\n28         public IModelBinder GetBinder(Type modelType)\n29         {\n30             if (modelType == typeof(DbGeography))\n31             {\n32                 return new DbGeographyModelBinder();\n33             }\n34             return null;\n35         }\n"
-        lineNumber: 26
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
-          symbol: EFModelBinderProvider
-          syntax_type: class_def
-      links:
-      - url: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/
-        title: External OAuth authentication providers
-      effort: 8
     dotnet-core-ef-dbcontext-01:
       description: System.Data.Entity.DbContext must be replaced with Entity Framework Core
       category: mandatory
@@ -260,384 +121,6 @@
       - url: https://learn.microsoft.com/en-us/ef/core/querying/related-data/lazy
         title: Lazy loading in EF Core
       effort: 3
-    dotnet-core-httpruntime-01:
-      description: HttpRuntime is not available in ASP.NET Core
-      category: optional
-      labels:
-      - konveyor.io/source=dotnet
-      - konveyor.io/target=dotnet-core
-      incidents:
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
-        message: |
-          HttpRuntime class is not available in ASP.NET Core.
-          Various HttpRuntime members have different replacements in ASP.NET Core.
-
-          Migration actions:
-          - HttpRuntime.Cache: Replace with IMemoryCache or IDistributedCache
-            * Inject IMemoryCache via DI
-            * Register with services.AddMemoryCache() in Startup.ConfigureServices
-          - HttpRuntime.AppDomainAppPath: Use IWebHostEnvironment.ContentRootPath
-          - HttpRuntime.AppDomainAppVirtualPath: Use IWebHostEnvironment or path configuration
-          - HttpRuntime.BinDirectory: Use AppContext.BaseDirectory or IWebHostEnvironment
-          - HttpRuntime.IsOnServer: Not needed in ASP.NET Core (always server-side)
-          - HttpRuntime.UnloadAppDomain: Not supported, use process restart
-          - Review all HttpRuntime usages and migrate to appropriate ASP.NET Core APIs
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Text;\n4 using Microsoft.Web.WebPages.OAuth;\n5 using NerdDinner.Models;\n6 using System.Web.Configuration;\n7 \n8 namespace NerdDinner\n9 {\n10     public static class AuthConfig\n11     {\n12         public static void RegisterAuth()\n13         {\n14             // To let users of this site log in using their accounts from other sites such as Microsoft, Facebook, and Twitter,\n15             // you must update this site. For more information visit http://go.microsoft.com/fwlink/?LinkID=252166\n16 \n17             var microsoftClientId = WebConfigurationManager.AppSettings[\"microsoftClientId\"];\n18             var microsoftClientSecret = WebConfigurationManager.AppSettings[\"microsoftClientSecret\"];\n19             if (!string.IsNullOrEmpty(microsoftClientId) && !string.IsNullOrEmpty(microsoftClientSecret))\n20             {\n21                 OAuthWebSecurity.RegisterMicrosoftClient(\n22                     clientId: microsoftClientId,\n23                     clientSecret: microsoftClientSecret);\n24             }\n25 \n26             var twitterConsumerKey = WebConfigurationManager.AppSettings[\"twitterConsumerKey\"];\n27             var twitterConsumerSecret = WebConfigurationManager.AppSettings[\"twitterConsumerSecret\"];\n28             if (!string.IsNullOrEmpty(twitterConsumerKey) && !string.IsNullOrEmpty(twitterConsumerSecret))\n29             {\n30                 OAuthWebSecurity.RegisterTwitterClient(\n31                     consumerKey: twitterConsumerKey,\n32                     consumerSecret: twitterConsumerSecret);\n33             }\n34 \n35             var facebookAppId = WebConfigurationManager.AppSettings[\"facebookAppId\"];\n36             var facebookAppSecret = WebConfigurationManager.AppSettings[\"facebookAppSecret\"];\n37             if (!string.IsNullOrEmpty(facebookAppId) && !string.IsNullOrEmpty(facebookAppSecret))\n38             {\n39                 OAuthWebSecurity.RegisterFacebookClient(\n40                     appId: facebookAppId,\n41                     appSecret: facebookAppSecret);\n42             }\n43 \n44             OAuthWebSecurity.RegisterGoogleClient();\n45         }\n"
-        lineNumber: 10
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
-          symbol: AuthConfig
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
-        message: |
-          HttpRuntime class is not available in ASP.NET Core.
-          Various HttpRuntime members have different replacements in ASP.NET Core.
-
-          Migration actions:
-          - HttpRuntime.Cache: Replace with IMemoryCache or IDistributedCache
-            * Inject IMemoryCache via DI
-            * Register with services.AddMemoryCache() in Startup.ConfigureServices
-          - HttpRuntime.AppDomainAppPath: Use IWebHostEnvironment.ContentRootPath
-          - HttpRuntime.AppDomainAppVirtualPath: Use IWebHostEnvironment or path configuration
-          - HttpRuntime.BinDirectory: Use AppContext.BaseDirectory or IWebHostEnvironment
-          - HttpRuntime.IsOnServer: Not needed in ASP.NET Core (always server-side)
-          - HttpRuntime.UnloadAppDomain: Not supported, use process restart
-          - Review all HttpRuntime usages and migrate to appropriate ASP.NET Core APIs
-        codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Optimization;\n2 \n3 namespace NerdDinner\n4 {\n5     public class BundleConfig\n6     {\n7         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725\n8         public static void RegisterBundles(BundleCollection bundles)\n9         {\n10             bundles.Add(new ScriptBundle(\"~/bundles/jquery\").Include(\n11                         \"~/Scripts/jquery-{version}.js\"));\n12 \n13             bundles.Add(new ScriptBundle(\"~/bundles/jqueryui\").Include(\n14                         \"~/Scripts/jquery-ui-{version}.js\"));\n15 \n16             bundles.Add(new ScriptBundle(\"~/bundles/jqueryval\").Include(\n17                         \"~/Scripts/jquery.unobtrusive*\",\n18                         \"~/Scripts/jquery.validate*\"));\n19 \n20             bundles.Add(new ScriptBundle(\"~/bundles/jquerymobile\").Include(\n21                         \"~/Scripts/jquery.mobile-{version}.js\"));\n22 \n23             // Use the development version of Modernizr to develop with and learn from. Then, when you're\n24             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.\n25             bundles.Add(new ScriptBundle(\"~/bundles/modernizr\").Include(\n26                         \"~/Scripts/modernizr-*\"));\n27 \n28             bundles.Add(new ScriptBundle(\"~/bundles/knockout\").Include(\n29                         \"~/Scripts/knockout-*\"));\n30 \n31             bundles.Add(new ScriptBundle(\"~/bundles/yepnope\").Include(\n32                         \"~/Scripts/yepnope.{version}.js\"));\n33 \n34             bundles.Add(new StyleBundle(\"~/Content/css\").Include(\"~/Content/site.css\"));\n35 \n36             bundles.Add(new StyleBundle(\"~/Content/themes/base/css\").Include(\n37                         \"~/Content/themes/base/jquery.ui.core.css\",\n38                         \"~/Content/themes/base/jquery.ui.resizable.css\",\n39                         \"~/Content/themes/base/jquery.ui.selectable.css\",\n40                         \"~/Content/themes/base/jquery.ui.accordion.css\",\n41                         \"~/Content/themes/base/jquery.ui.autocomplete.css\",\n42                         \"~/Content/themes/base/jquery.ui.button.css\",\n43                         \"~/Content/themes/base/jquery.ui.dialog.css\",\n44                         \"~/Content/themes/base/jquery.ui.slider.css\",\n45                         \"~/Content/themes/base/jquery.ui.tabs.css\",\n46                         \"~/Content/themes/base/jquery.ui.datepicker.css\",\n47                         \"~/Content/themes/base/jquery.ui.progressbar.css\",\n48                         \"~/Content/themes/base/jquery.ui.theme.css\"));\n49 \n50             bundles.Add(new StyleBundle(\"~/Content/jquerymobile\").Include(\n51                         \"~/Content/jquery.mobile-{version}.css\",\n52                         \"~/Content/jquery.mobile.structure-{version}.css\",\n53                         \"~/Content/jquery.mobile.theme-{version}.css\"));\n54         }\n55     }\n56 }\n"
-        lineNumber: 5
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
-          symbol: BundleConfig
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
-        message: |
-          HttpRuntime class is not available in ASP.NET Core.
-          Various HttpRuntime members have different replacements in ASP.NET Core.
-
-          Migration actions:
-          - HttpRuntime.Cache: Replace with IMemoryCache or IDistributedCache
-            * Inject IMemoryCache via DI
-            * Register with services.AddMemoryCache() in Startup.ConfigureServices
-          - HttpRuntime.AppDomainAppPath: Use IWebHostEnvironment.ContentRootPath
-          - HttpRuntime.AppDomainAppVirtualPath: Use IWebHostEnvironment or path configuration
-          - HttpRuntime.BinDirectory: Use AppContext.BaseDirectory or IWebHostEnvironment
-          - HttpRuntime.IsOnServer: Not needed in ASP.NET Core (always server-side)
-          - HttpRuntime.UnloadAppDomain: Not supported, use process restart
-          - Review all HttpRuntime usages and migrate to appropriate ASP.NET Core APIs
-        codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Mvc;\n2 \n3 namespace NerdDinner\n4 {\n5     public class FilterConfig\n6     {\n7         public static void RegisterGlobalFilters(GlobalFilterCollection filters)\n8         {\n9             filters.Add(new HandleErrorAttribute());\n10         }\n11     }\n12 }\n"
-        lineNumber: 5
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
-          symbol: FilterConfig
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
-        message: |
-          HttpRuntime class is not available in ASP.NET Core.
-          Various HttpRuntime members have different replacements in ASP.NET Core.
-
-          Migration actions:
-          - HttpRuntime.Cache: Replace with IMemoryCache or IDistributedCache
-            * Inject IMemoryCache via DI
-            * Register with services.AddMemoryCache() in Startup.ConfigureServices
-          - HttpRuntime.AppDomainAppPath: Use IWebHostEnvironment.ContentRootPath
-          - HttpRuntime.AppDomainAppVirtualPath: Use IWebHostEnvironment or path configuration
-          - HttpRuntime.BinDirectory: Use AppContext.BaseDirectory or IWebHostEnvironment
-          - HttpRuntime.IsOnServer: Not needed in ASP.NET Core (always server-side)
-          - HttpRuntime.UnloadAppDomain: Not supported, use process restart
-          - Review all HttpRuntime usages and migrate to appropriate ASP.NET Core APIs
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 using System.Web.Routing;\n6 \n7 namespace NerdDinner\n8 {\n9     public class RouteConfig\n10     {\n11         public static void RegisterRoutes(RouteCollection routes)\n12         {\n13             routes.IgnoreRoute(\"{resource}.axd/{*pathInfo}\");\n14 \n15             routes.MapRoute(\n16                     \"PrettyDetails\",\n17                     \"{Id}\",\n18                         new { controller = \"Dinners\", action = \"Details\" },\n19                         new { Id = @\"\\d+\" }\n20                     );\n21 \n22             routes.MapRoute(\n23                 name: \"Default\",\n24                 url: \"{controller}/{action}/{id}\",\n25                 defaults: new { controller = \"Home\", action = \"Index\", id = UrlParameter.Optional }\n26             );\n27         }\n28     }\n"
-        lineNumber: 9
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
-          symbol: RouteConfig
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
-        message: |
-          HttpRuntime class is not available in ASP.NET Core.
-          Various HttpRuntime members have different replacements in ASP.NET Core.
-
-          Migration actions:
-          - HttpRuntime.Cache: Replace with IMemoryCache or IDistributedCache
-            * Inject IMemoryCache via DI
-            * Register with services.AddMemoryCache() in Startup.ConfigureServices
-          - HttpRuntime.AppDomainAppPath: Use IWebHostEnvironment.ContentRootPath
-          - HttpRuntime.AppDomainAppVirtualPath: Use IWebHostEnvironment or path configuration
-          - HttpRuntime.BinDirectory: Use AppContext.BaseDirectory or IWebHostEnvironment
-          - HttpRuntime.IsOnServer: Not needed in ASP.NET Core (always server-side)
-          - HttpRuntime.UnloadAppDomain: Not supported, use process restart
-          - Review all HttpRuntime usages and migrate to appropriate ASP.NET Core APIs
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web.Http;\n4 \n5 namespace NerdDinner\n6 {\n7     public static class WebApiConfig\n8     {\n9         public static void Register(HttpConfiguration config)\n10         {\n11             config.Routes.MapHttpRoute(\n12                 name: \"DefaultApi\",\n13                 routeTemplate: \"api/{controller}/{id}\",\n14                 defaults: new { id = RouteParameter.Optional }\n15             );\n16         }\n17     }\n18 }\n"
-        lineNumber: 7
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
-          symbol: WebApiConfig
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-        message: |
-          HttpRuntime class is not available in ASP.NET Core.
-          Various HttpRuntime members have different replacements in ASP.NET Core.
-
-          Migration actions:
-          - HttpRuntime.Cache: Replace with IMemoryCache or IDistributedCache
-            * Inject IMemoryCache via DI
-            * Register with services.AddMemoryCache() in Startup.ConfigureServices
-          - HttpRuntime.AppDomainAppPath: Use IWebHostEnvironment.ContentRootPath
-          - HttpRuntime.AppDomainAppVirtualPath: Use IWebHostEnvironment or path configuration
-          - HttpRuntime.BinDirectory: Use AppContext.BaseDirectory or IWebHostEnvironment
-          - HttpRuntime.IsOnServer: Not needed in ASP.NET Core (always server-side)
-          - HttpRuntime.UnloadAppDomain: Not supported, use process restart
-          - Review all HttpRuntime usages and migrate to appropriate ASP.NET Core APIs
-        codeSnip: "5 using System.Web.Http;\n6 using System.Web.Mvc;\n7 using System.Web.Optimization;\n8 using System.Web.Routing;\n9 \n10 namespace NerdDinner\n11 {\n12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n21             WebApiConfig.Register(GlobalConfiguration.Configuration);\n22             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n23             RouteConfig.RegisterRoutes(RouteTable.Routes);\n24             BundleConfig.RegisterBundles(BundleTable.Bundles);\n25             AuthConfig.RegisterAuth();\n26 \n27             ModelBinderProviders.BinderProviders.Add(new EFModelBinderProvider());\n28 \n29             Version version = Assembly.GetExecutingAssembly().GetName().Version;\n30             Application[\"Version\"] = string.Format(\"{0}.{1}\", version.Major, version.Minor);\n31         }\n"
-        lineNumber: 15
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          symbol: MvcApplication
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
-        message: |
-          HttpRuntime class is not available in ASP.NET Core.
-          Various HttpRuntime members have different replacements in ASP.NET Core.
-
-          Migration actions:
-          - HttpRuntime.Cache: Replace with IMemoryCache or IDistributedCache
-            * Inject IMemoryCache via DI
-            * Register with services.AddMemoryCache() in Startup.ConfigureServices
-          - HttpRuntime.AppDomainAppPath: Use IWebHostEnvironment.ContentRootPath
-          - HttpRuntime.AppDomainAppVirtualPath: Use IWebHostEnvironment or path configuration
-          - HttpRuntime.BinDirectory: Use AppContext.BaseDirectory or IWebHostEnvironment
-          - HttpRuntime.IsOnServer: Not needed in ASP.NET Core (always server-side)
-          - HttpRuntime.UnloadAppDomain: Not supported, use process restart
-          - Review all HttpRuntime usages and migrate to appropriate ASP.NET Core APIs
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data.Spatial;\n3 using System.Linq;\n4 using System.Web;\n5 using System.Web.Mvc;\n6 \n7 namespace NerdDinner\n8 {\n9     public class DbGeographyModelBinder : DefaultModelBinder\n10     {\n11         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)\n12         {\n13             var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);\n14             if (valueProviderResult != null)\n15             {\n16                 string[] latLongStr = valueProviderResult.AttemptedValue.Split(',');\n17                 string point = string.Format(\"POINT ({0} {1})\", latLongStr[1], latLongStr[0]);\n18                 //4326 format puts LONGITUDE first then LATITUDE\n19                 DbGeography result = DbGeography.FromText(point, 4326);\n20                 return result;\n21             }\n22             return null;\n23         }\n24     }\n"
-        lineNumber: 9
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
-          symbol: DbGeographyModelBinder
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
-        message: |
-          HttpRuntime class is not available in ASP.NET Core.
-          Various HttpRuntime members have different replacements in ASP.NET Core.
-
-          Migration actions:
-          - HttpRuntime.Cache: Replace with IMemoryCache or IDistributedCache
-            * Inject IMemoryCache via DI
-            * Register with services.AddMemoryCache() in Startup.ConfigureServices
-          - HttpRuntime.AppDomainAppPath: Use IWebHostEnvironment.ContentRootPath
-          - HttpRuntime.AppDomainAppVirtualPath: Use IWebHostEnvironment or path configuration
-          - HttpRuntime.BinDirectory: Use AppContext.BaseDirectory or IWebHostEnvironment
-          - HttpRuntime.IsOnServer: Not needed in ASP.NET Core (always server-side)
-          - HttpRuntime.UnloadAppDomain: Not supported, use process restart
-          - Review all HttpRuntime usages and migrate to appropriate ASP.NET Core APIs
-        codeSnip: "16                 string[] latLongStr = valueProviderResult.AttemptedValue.Split(',');\n17                 string point = string.Format(\"POINT ({0} {1})\", latLongStr[1], latLongStr[0]);\n18                 //4326 format puts LONGITUDE first then LATITUDE\n19                 DbGeography result = DbGeography.FromText(point, 4326);\n20                 return result;\n21             }\n22             return null;\n23         }\n24     }\n25 \n26     public class EFModelBinderProvider : IModelBinderProvider\n27     {\n28         public IModelBinder GetBinder(Type modelType)\n29         {\n30             if (modelType == typeof(DbGeography))\n31             {\n32                 return new DbGeographyModelBinder();\n33             }\n34             return null;\n35         }\n"
-        lineNumber: 26
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
-          symbol: EFModelBinderProvider
-          syntax_type: class_def
-      links:
-      - url: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/app-state
-        title: App state in ASP.NET Core
-      - url: https://learn.microsoft.com/en-us/aspnet/core/performance/caching/memory
-        title: Caching in ASP.NET Core
-      effort: 3
-    dotnet-core-machinekey-01:
-      description: MachineKey is not available in ASP.NET Core
-      category: mandatory
-      labels:
-      - konveyor.io/source=dotnet
-      - konveyor.io/target=dotnet-core
-      incidents:
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
-        message: |
-          MachineKey class is not available in ASP.NET Core.
-          Encryption and validation functions are replaced by the Data Protection API.
-
-          Migration actions:
-          - Replace MachineKey.Protect with IDataProtector.Protect
-          - Replace MachineKey.Unprotect with IDataProtector.Unprotect
-          - Replace MachineKey.Encode with IDataProtectionProvider
-          - Replace MachineKey.Decode with IDataProtectionProvider
-          - Add Microsoft.AspNetCore.DataProtection NuGet package if needed
-          - Inject IDataProtectionProvider via dependency injection
-          - Create purpose-specific protectors: var protector = provider.CreateProtector("purpose")
-          - Configure data protection in Startup.ConfigureServices with AddDataProtection()
-          - For cross-app compatibility, configure key storage and application name
-          - Review key management and rotation policies
-          - Update any custom encryption/decryption code
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Text;\n4 using Microsoft.Web.WebPages.OAuth;\n5 using NerdDinner.Models;\n6 using System.Web.Configuration;\n7 \n8 namespace NerdDinner\n9 {\n10     public static class AuthConfig\n11     {\n12         public static void RegisterAuth()\n13         {\n14             // To let users of this site log in using their accounts from other sites such as Microsoft, Facebook, and Twitter,\n15             // you must update this site. For more information visit http://go.microsoft.com/fwlink/?LinkID=252166\n16 \n17             var microsoftClientId = WebConfigurationManager.AppSettings[\"microsoftClientId\"];\n18             var microsoftClientSecret = WebConfigurationManager.AppSettings[\"microsoftClientSecret\"];\n19             if (!string.IsNullOrEmpty(microsoftClientId) && !string.IsNullOrEmpty(microsoftClientSecret))\n20             {\n21                 OAuthWebSecurity.RegisterMicrosoftClient(\n22                     clientId: microsoftClientId,\n23                     clientSecret: microsoftClientSecret);\n24             }\n25 \n26             var twitterConsumerKey = WebConfigurationManager.AppSettings[\"twitterConsumerKey\"];\n27             var twitterConsumerSecret = WebConfigurationManager.AppSettings[\"twitterConsumerSecret\"];\n28             if (!string.IsNullOrEmpty(twitterConsumerKey) && !string.IsNullOrEmpty(twitterConsumerSecret))\n29             {\n30                 OAuthWebSecurity.RegisterTwitterClient(\n31                     consumerKey: twitterConsumerKey,\n32                     consumerSecret: twitterConsumerSecret);\n33             }\n34 \n35             var facebookAppId = WebConfigurationManager.AppSettings[\"facebookAppId\"];\n36             var facebookAppSecret = WebConfigurationManager.AppSettings[\"facebookAppSecret\"];\n37             if (!string.IsNullOrEmpty(facebookAppId) && !string.IsNullOrEmpty(facebookAppSecret))\n38             {\n39                 OAuthWebSecurity.RegisterFacebookClient(\n40                     appId: facebookAppId,\n41                     appSecret: facebookAppSecret);\n42             }\n43 \n44             OAuthWebSecurity.RegisterGoogleClient();\n45         }\n"
-        lineNumber: 10
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
-          symbol: AuthConfig
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
-        message: |
-          MachineKey class is not available in ASP.NET Core.
-          Encryption and validation functions are replaced by the Data Protection API.
-
-          Migration actions:
-          - Replace MachineKey.Protect with IDataProtector.Protect
-          - Replace MachineKey.Unprotect with IDataProtector.Unprotect
-          - Replace MachineKey.Encode with IDataProtectionProvider
-          - Replace MachineKey.Decode with IDataProtectionProvider
-          - Add Microsoft.AspNetCore.DataProtection NuGet package if needed
-          - Inject IDataProtectionProvider via dependency injection
-          - Create purpose-specific protectors: var protector = provider.CreateProtector("purpose")
-          - Configure data protection in Startup.ConfigureServices with AddDataProtection()
-          - For cross-app compatibility, configure key storage and application name
-          - Review key management and rotation policies
-          - Update any custom encryption/decryption code
-        codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Optimization;\n2 \n3 namespace NerdDinner\n4 {\n5     public class BundleConfig\n6     {\n7         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725\n8         public static void RegisterBundles(BundleCollection bundles)\n9         {\n10             bundles.Add(new ScriptBundle(\"~/bundles/jquery\").Include(\n11                         \"~/Scripts/jquery-{version}.js\"));\n12 \n13             bundles.Add(new ScriptBundle(\"~/bundles/jqueryui\").Include(\n14                         \"~/Scripts/jquery-ui-{version}.js\"));\n15 \n16             bundles.Add(new ScriptBundle(\"~/bundles/jqueryval\").Include(\n17                         \"~/Scripts/jquery.unobtrusive*\",\n18                         \"~/Scripts/jquery.validate*\"));\n19 \n20             bundles.Add(new ScriptBundle(\"~/bundles/jquerymobile\").Include(\n21                         \"~/Scripts/jquery.mobile-{version}.js\"));\n22 \n23             // Use the development version of Modernizr to develop with and learn from. Then, when you're\n24             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.\n25             bundles.Add(new ScriptBundle(\"~/bundles/modernizr\").Include(\n26                         \"~/Scripts/modernizr-*\"));\n27 \n28             bundles.Add(new ScriptBundle(\"~/bundles/knockout\").Include(\n29                         \"~/Scripts/knockout-*\"));\n30 \n31             bundles.Add(new ScriptBundle(\"~/bundles/yepnope\").Include(\n32                         \"~/Scripts/yepnope.{version}.js\"));\n33 \n34             bundles.Add(new StyleBundle(\"~/Content/css\").Include(\"~/Content/site.css\"));\n35 \n36             bundles.Add(new StyleBundle(\"~/Content/themes/base/css\").Include(\n37                         \"~/Content/themes/base/jquery.ui.core.css\",\n38                         \"~/Content/themes/base/jquery.ui.resizable.css\",\n39                         \"~/Content/themes/base/jquery.ui.selectable.css\",\n40                         \"~/Content/themes/base/jquery.ui.accordion.css\",\n41                         \"~/Content/themes/base/jquery.ui.autocomplete.css\",\n42                         \"~/Content/themes/base/jquery.ui.button.css\",\n43                         \"~/Content/themes/base/jquery.ui.dialog.css\",\n44                         \"~/Content/themes/base/jquery.ui.slider.css\",\n45                         \"~/Content/themes/base/jquery.ui.tabs.css\",\n46                         \"~/Content/themes/base/jquery.ui.datepicker.css\",\n47                         \"~/Content/themes/base/jquery.ui.progressbar.css\",\n48                         \"~/Content/themes/base/jquery.ui.theme.css\"));\n49 \n50             bundles.Add(new StyleBundle(\"~/Content/jquerymobile\").Include(\n51                         \"~/Content/jquery.mobile-{version}.css\",\n52                         \"~/Content/jquery.mobile.structure-{version}.css\",\n53                         \"~/Content/jquery.mobile.theme-{version}.css\"));\n54         }\n55     }\n56 }\n"
-        lineNumber: 5
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/BundleConfig.cs
-          symbol: BundleConfig
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
-        message: |
-          MachineKey class is not available in ASP.NET Core.
-          Encryption and validation functions are replaced by the Data Protection API.
-
-          Migration actions:
-          - Replace MachineKey.Protect with IDataProtector.Protect
-          - Replace MachineKey.Unprotect with IDataProtector.Unprotect
-          - Replace MachineKey.Encode with IDataProtectionProvider
-          - Replace MachineKey.Decode with IDataProtectionProvider
-          - Add Microsoft.AspNetCore.DataProtection NuGet package if needed
-          - Inject IDataProtectionProvider via dependency injection
-          - Create purpose-specific protectors: var protector = provider.CreateProtector("purpose")
-          - Configure data protection in Startup.ConfigureServices with AddDataProtection()
-          - For cross-app compatibility, configure key storage and application name
-          - Review key management and rotation policies
-          - Update any custom encryption/decryption code
-        codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Mvc;\n2 \n3 namespace NerdDinner\n4 {\n5     public class FilterConfig\n6     {\n7         public static void RegisterGlobalFilters(GlobalFilterCollection filters)\n8         {\n9             filters.Add(new HandleErrorAttribute());\n10         }\n11     }\n12 }\n"
-        lineNumber: 5
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
-          symbol: FilterConfig
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
-        message: |
-          MachineKey class is not available in ASP.NET Core.
-          Encryption and validation functions are replaced by the Data Protection API.
-
-          Migration actions:
-          - Replace MachineKey.Protect with IDataProtector.Protect
-          - Replace MachineKey.Unprotect with IDataProtector.Unprotect
-          - Replace MachineKey.Encode with IDataProtectionProvider
-          - Replace MachineKey.Decode with IDataProtectionProvider
-          - Add Microsoft.AspNetCore.DataProtection NuGet package if needed
-          - Inject IDataProtectionProvider via dependency injection
-          - Create purpose-specific protectors: var protector = provider.CreateProtector("purpose")
-          - Configure data protection in Startup.ConfigureServices with AddDataProtection()
-          - For cross-app compatibility, configure key storage and application name
-          - Review key management and rotation policies
-          - Update any custom encryption/decryption code
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 using System.Web.Routing;\n6 \n7 namespace NerdDinner\n8 {\n9     public class RouteConfig\n10     {\n11         public static void RegisterRoutes(RouteCollection routes)\n12         {\n13             routes.IgnoreRoute(\"{resource}.axd/{*pathInfo}\");\n14 \n15             routes.MapRoute(\n16                     \"PrettyDetails\",\n17                     \"{Id}\",\n18                         new { controller = \"Dinners\", action = \"Details\" },\n19                         new { Id = @\"\\d+\" }\n20                     );\n21 \n22             routes.MapRoute(\n23                 name: \"Default\",\n24                 url: \"{controller}/{action}/{id}\",\n25                 defaults: new { controller = \"Home\", action = \"Index\", id = UrlParameter.Optional }\n26             );\n27         }\n28     }\n"
-        lineNumber: 9
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
-          symbol: RouteConfig
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
-        message: |
-          MachineKey class is not available in ASP.NET Core.
-          Encryption and validation functions are replaced by the Data Protection API.
-
-          Migration actions:
-          - Replace MachineKey.Protect with IDataProtector.Protect
-          - Replace MachineKey.Unprotect with IDataProtector.Unprotect
-          - Replace MachineKey.Encode with IDataProtectionProvider
-          - Replace MachineKey.Decode with IDataProtectionProvider
-          - Add Microsoft.AspNetCore.DataProtection NuGet package if needed
-          - Inject IDataProtectionProvider via dependency injection
-          - Create purpose-specific protectors: var protector = provider.CreateProtector("purpose")
-          - Configure data protection in Startup.ConfigureServices with AddDataProtection()
-          - For cross-app compatibility, configure key storage and application name
-          - Review key management and rotation policies
-          - Update any custom encryption/decryption code
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web.Http;\n4 \n5 namespace NerdDinner\n6 {\n7     public static class WebApiConfig\n8     {\n9         public static void Register(HttpConfiguration config)\n10         {\n11             config.Routes.MapHttpRoute(\n12                 name: \"DefaultApi\",\n13                 routeTemplate: \"api/{controller}/{id}\",\n14                 defaults: new { id = RouteParameter.Optional }\n15             );\n16         }\n17     }\n18 }\n"
-        lineNumber: 7
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
-          symbol: WebApiConfig
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-        message: |
-          MachineKey class is not available in ASP.NET Core.
-          Encryption and validation functions are replaced by the Data Protection API.
-
-          Migration actions:
-          - Replace MachineKey.Protect with IDataProtector.Protect
-          - Replace MachineKey.Unprotect with IDataProtector.Unprotect
-          - Replace MachineKey.Encode with IDataProtectionProvider
-          - Replace MachineKey.Decode with IDataProtectionProvider
-          - Add Microsoft.AspNetCore.DataProtection NuGet package if needed
-          - Inject IDataProtectionProvider via dependency injection
-          - Create purpose-specific protectors: var protector = provider.CreateProtector("purpose")
-          - Configure data protection in Startup.ConfigureServices with AddDataProtection()
-          - For cross-app compatibility, configure key storage and application name
-          - Review key management and rotation policies
-          - Update any custom encryption/decryption code
-        codeSnip: "5 using System.Web.Http;\n6 using System.Web.Mvc;\n7 using System.Web.Optimization;\n8 using System.Web.Routing;\n9 \n10 namespace NerdDinner\n11 {\n12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n21             WebApiConfig.Register(GlobalConfiguration.Configuration);\n22             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n23             RouteConfig.RegisterRoutes(RouteTable.Routes);\n24             BundleConfig.RegisterBundles(BundleTable.Bundles);\n25             AuthConfig.RegisterAuth();\n26 \n27             ModelBinderProviders.BinderProviders.Add(new EFModelBinderProvider());\n28 \n29             Version version = Assembly.GetExecutingAssembly().GetName().Version;\n30             Application[\"Version\"] = string.Format(\"{0}.{1}\", version.Major, version.Minor);\n31         }\n"
-        lineNumber: 15
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          symbol: MvcApplication
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
-        message: |
-          MachineKey class is not available in ASP.NET Core.
-          Encryption and validation functions are replaced by the Data Protection API.
-
-          Migration actions:
-          - Replace MachineKey.Protect with IDataProtector.Protect
-          - Replace MachineKey.Unprotect with IDataProtector.Unprotect
-          - Replace MachineKey.Encode with IDataProtectionProvider
-          - Replace MachineKey.Decode with IDataProtectionProvider
-          - Add Microsoft.AspNetCore.DataProtection NuGet package if needed
-          - Inject IDataProtectionProvider via dependency injection
-          - Create purpose-specific protectors: var protector = provider.CreateProtector("purpose")
-          - Configure data protection in Startup.ConfigureServices with AddDataProtection()
-          - For cross-app compatibility, configure key storage and application name
-          - Review key management and rotation policies
-          - Update any custom encryption/decryption code
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data.Spatial;\n3 using System.Linq;\n4 using System.Web;\n5 using System.Web.Mvc;\n6 \n7 namespace NerdDinner\n8 {\n9     public class DbGeographyModelBinder : DefaultModelBinder\n10     {\n11         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)\n12         {\n13             var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);\n14             if (valueProviderResult != null)\n15             {\n16                 string[] latLongStr = valueProviderResult.AttemptedValue.Split(',');\n17                 string point = string.Format(\"POINT ({0} {1})\", latLongStr[1], latLongStr[0]);\n18                 //4326 format puts LONGITUDE first then LATITUDE\n19                 DbGeography result = DbGeography.FromText(point, 4326);\n20                 return result;\n21             }\n22             return null;\n23         }\n24     }\n"
-        lineNumber: 9
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
-          symbol: DbGeographyModelBinder
-          syntax_type: class_def
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
-        message: |
-          MachineKey class is not available in ASP.NET Core.
-          Encryption and validation functions are replaced by the Data Protection API.
-
-          Migration actions:
-          - Replace MachineKey.Protect with IDataProtector.Protect
-          - Replace MachineKey.Unprotect with IDataProtector.Unprotect
-          - Replace MachineKey.Encode with IDataProtectionProvider
-          - Replace MachineKey.Decode with IDataProtectionProvider
-          - Add Microsoft.AspNetCore.DataProtection NuGet package if needed
-          - Inject IDataProtectionProvider via dependency injection
-          - Create purpose-specific protectors: var protector = provider.CreateProtector("purpose")
-          - Configure data protection in Startup.ConfigureServices with AddDataProtection()
-          - For cross-app compatibility, configure key storage and application name
-          - Review key management and rotation policies
-          - Update any custom encryption/decryption code
-        codeSnip: "16                 string[] latLongStr = valueProviderResult.AttemptedValue.Split(',');\n17                 string point = string.Format(\"POINT ({0} {1})\", latLongStr[1], latLongStr[0]);\n18                 //4326 format puts LONGITUDE first then LATITUDE\n19                 DbGeography result = DbGeography.FromText(point, 4326);\n20                 return result;\n21             }\n22             return null;\n23         }\n24     }\n25 \n26     public class EFModelBinderProvider : IModelBinderProvider\n27     {\n28         public IModelBinder GetBinder(Type modelType)\n29         {\n30             if (modelType == typeof(DbGeography))\n31             {\n32                 return new DbGeographyModelBinder();\n33             }\n34             return null;\n35         }\n"
-        lineNumber: 26
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
-          symbol: EFModelBinderProvider
-          syntax_type: class_def
-      links:
-      - url: https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/introduction
-        title: Data Protection in ASP.NET Core
-      - url: https://learn.microsoft.com/en-us/aspnet/core/security/data-protection/compatibility/replacing-machinekey
-        title: Replace ASP.NET machineKey
-      effort: 5
     dotnet-core-oauth-01:
       description: Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core
       category: mandatory
@@ -1191,55 +674,6 @@
       - url: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/google-logins
         title: Google external login setup
       effort: 8
-    dotnet-core-webapi-controller-01:
-      description: System.Web.Http.ApiController must be replaced with ASP.NET Core API controller
-      category: mandatory
-      labels:
-      - konveyor.io/source=dotnet
-      - konveyor.io/target=dotnet-core
-      incidents:
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
-        message: |
-          System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
-
-          Migration actions:
-          - Change base class from ApiController to ControllerBase
-          - Change using from System.Web.Http to Microsoft.AspNetCore.Mvc
-          - Add [ApiController] attribute to controller classes
-          - Update response types to use ActionResult<T> pattern
-          - Review routing (Web API routing differs from ASP.NET Core)
-        codeSnip: "4 \n5 namespace NerdDinner\n6 {\n7     public static class WebApiConfig\n8     {\n9         public static void Register(HttpConfiguration config)\n10         {\n11             config.Routes.MapHttpRoute(\n12                 name: \"DefaultApi\",\n13                 routeTemplate: \"api/{controller}/{id}\",\n"
-        lineNumber: 14
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs
-          fqdn_class: RouteParameter
-          fqdn_field: Optional
-          fqdn_namespace: System.Web.Http
-          symbol: RouteParameter.Optional
-          syntax_type: field_reference
-      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-        message: |
-          System.Web.Http.ApiController is replaced by Microsoft.AspNetCore.Mvc.ControllerBase in ASP.NET Core.
-
-          Migration actions:
-          - Change base class from ApiController to ControllerBase
-          - Change using from System.Web.Http to Microsoft.AspNetCore.Mvc
-          - Add [ApiController] attribute to controller classes
-          - Update response types to use ActionResult<T> pattern
-          - Review routing (Web API routing differs from ASP.NET Core)
-        codeSnip: "11 {\n12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n"
-        lineNumber: 21
-        variables:
-          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
-          fqdn_class: GlobalConfiguration
-          fqdn_field: Configuration
-          fqdn_namespace: System.Web.Http
-          symbol: GlobalConfiguration.Configuration
-          syntax_type: field_reference
-      links:
-      - url: https://learn.microsoft.com/en-us/aspnet/core/migration/webapi
-        title: Migrate Web API to ASP.NET Core
-      effort: 3
     dotnet-core-websecurity-01:
       description: WebMatrix.WebData.WebSecurity is not available in .NET Core
       category: mandatory
@@ -1305,6 +739,38 @@
           - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
           - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
         codeSnip: |
+          71         [HttpPost]
+          72         [AllowAnonymous]
+          73         [ValidateAntiForgeryToken]
+          74         public ActionResult Register(RegisterModel model)
+          75         {
+          76             if (ModelState.IsValid)
+          77             {
+          78                 // Attempt to register the user
+          79                 try
+          80                 {
+        lineNumber: 81
+        variables:
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          fqdn_class: WebSecurity
+          fqdn_method: CreateUserAndAccount
+          fqdn_namespace: WebMatrix.WebData
+          symbol: WebSecurity.CreateUserAndAccount
+          syntax_type: method_reference
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+        message: |
+          WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
+
+          Migration actions:
+          - Add Microsoft.AspNetCore.Identity.EntityFrameworkCore NuGet package
+          - Create ApplicationUser class inheriting from IdentityUser
+          - Update DbContext to inherit from IdentityDbContext<ApplicationUser>
+          - Replace WebSecurity.Login with SignInManager.PasswordSignInAsync
+          - Replace WebSecurity.Logout with SignInManager.SignOutAsync
+          - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
+          - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
+          - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
+        codeSnip: |
           72         [AllowAnonymous]
           73         [ValidateAntiForgeryToken]
           74         public ActionResult Register(RegisterModel model)
@@ -1322,6 +788,148 @@
           fqdn_method: Login
           fqdn_namespace: WebMatrix.WebData
           symbol: WebSecurity.Login
+          syntax_type: method_reference
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+        message: |
+          WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
+
+          Migration actions:
+          - Add Microsoft.AspNetCore.Identity.EntityFrameworkCore NuGet package
+          - Create ApplicationUser class inheriting from IdentityUser
+          - Update DbContext to inherit from IdentityDbContext<ApplicationUser>
+          - Replace WebSecurity.Login with SignInManager.PasswordSignInAsync
+          - Replace WebSecurity.Logout with SignInManager.SignOutAsync
+          - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
+          - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
+          - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
+        codeSnip: "101         {\n102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n"
+        lineNumber: 111
+        variables:
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          fqdn_class: WebSecurity
+          fqdn_method: GetUserId
+          fqdn_namespace: WebMatrix.WebData
+          symbol: WebSecurity.GetUserId
+          syntax_type: method_reference
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+        message: |
+          WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
+
+          Migration actions:
+          - Add Microsoft.AspNetCore.Identity.EntityFrameworkCore NuGet package
+          - Create ApplicationUser class inheriting from IdentityUser
+          - Update DbContext to inherit from IdentityDbContext<ApplicationUser>
+          - Replace WebSecurity.Login with SignInManager.PasswordSignInAsync
+          - Replace WebSecurity.Logout with SignInManager.SignOutAsync
+          - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
+          - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
+          - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
+        codeSnip: "124         //\n125         // GET: /Account/Manage\n126 \n127         public ActionResult Manage(ManageMessageId? message)\n128         {\n129             ViewBag.StatusMessage =\n130                 message == ManageMessageId.ChangePasswordSuccess ? \"Your password has been changed.\"\n131                 : message == ManageMessageId.SetPasswordSuccess ? \"Your password has been set.\"\n132                 : message == ManageMessageId.RemoveLoginSuccess ? \"The external login was removed.\"\n133                 : \"\";\n"
+        lineNumber: 134
+        variables:
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          fqdn_class: WebSecurity
+          fqdn_method: GetUserId
+          fqdn_namespace: WebMatrix.WebData
+          symbol: WebSecurity.GetUserId
+          syntax_type: method_reference
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+        message: |
+          WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
+
+          Migration actions:
+          - Add Microsoft.AspNetCore.Identity.EntityFrameworkCore NuGet package
+          - Create ApplicationUser class inheriting from IdentityUser
+          - Update DbContext to inherit from IdentityDbContext<ApplicationUser>
+          - Replace WebSecurity.Login with SignInManager.PasswordSignInAsync
+          - Replace WebSecurity.Logout with SignInManager.SignOutAsync
+          - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
+          - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
+          - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
+        codeSnip: "136             return View();\n137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n"
+        lineNumber: 146
+        variables:
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          fqdn_class: WebSecurity
+          fqdn_method: GetUserId
+          fqdn_namespace: WebMatrix.WebData
+          symbol: WebSecurity.GetUserId
+          syntax_type: method_reference
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+        message: |
+          WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
+
+          Migration actions:
+          - Add Microsoft.AspNetCore.Identity.EntityFrameworkCore NuGet package
+          - Create ApplicationUser class inheriting from IdentityUser
+          - Update DbContext to inherit from IdentityDbContext<ApplicationUser>
+          - Replace WebSecurity.Login with SignInManager.PasswordSignInAsync
+          - Replace WebSecurity.Logout with SignInManager.SignOutAsync
+          - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
+          - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
+          - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
+        codeSnip: |
+          147             ViewBag.HasLocalPassword = hasLocalAccount;
+          148             ViewBag.ReturnUrl = Url.Action("Manage");
+          149             if (hasLocalAccount)
+          150             {
+          151                 if (ModelState.IsValid)
+          152                 {
+          153                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.
+          154                     bool changePasswordSucceeded;
+          155                     try
+          156                     {
+        lineNumber: 157
+        variables:
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          fqdn_class: WebSecurity
+          fqdn_method: ChangePassword
+          fqdn_namespace: WebMatrix.WebData
+          symbol: WebSecurity.ChangePassword
+          syntax_type: method_reference
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+        message: |
+          WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
+
+          Migration actions:
+          - Add Microsoft.AspNetCore.Identity.EntityFrameworkCore NuGet package
+          - Create ApplicationUser class inheriting from IdentityUser
+          - Update DbContext to inherit from IdentityDbContext<ApplicationUser>
+          - Replace WebSecurity.Login with SignInManager.PasswordSignInAsync
+          - Replace WebSecurity.Logout with SignInManager.SignOutAsync
+          - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
+          - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
+          - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
+        codeSnip: "178                 ModelState state = ModelState[\"OldPassword\"];\n179                 if (state != null)\n180                 {\n181                     state.Errors.Clear();\n182                 }\n183 \n184                 if (ModelState.IsValid)\n185                 {\n186                     try\n187                     {\n"
+        lineNumber: 188
+        variables:
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          fqdn_class: WebSecurity
+          fqdn_method: CreateAccount
+          fqdn_namespace: WebMatrix.WebData
+          symbol: WebSecurity.CreateAccount
+          syntax_type: method_reference
+      - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+        message: |
+          WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
+
+          Migration actions:
+          - Add Microsoft.AspNetCore.Identity.EntityFrameworkCore NuGet package
+          - Create ApplicationUser class inheriting from IdentityUser
+          - Update DbContext to inherit from IdentityDbContext<ApplicationUser>
+          - Replace WebSecurity.Login with SignInManager.PasswordSignInAsync
+          - Replace WebSecurity.Logout with SignInManager.SignOutAsync
+          - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
+          - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
+          - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
+        codeSnip: "316                 AuthenticationClientData clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider);\n317 \n318                 externalLogins.Add(new ExternalLogin\n319                 {\n320                     Provider = account.Provider,\n321                     ProviderDisplayName = clientData.DisplayName,\n322                     ProviderUserId = account.ProviderUserId,\n323                 });\n324             }\n325 \n"
+        lineNumber: 326
+        variables:
+          file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
+          fqdn_class: WebSecurity
+          fqdn_method: GetUserId
+          fqdn_namespace: WebMatrix.WebData
+          symbol: WebSecurity.GetUserId
           syntax_type: method_reference
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
         message: |
@@ -2549,6 +2157,7 @@
   - dotnet-core-childaction-01
   - dotnet-core-configmanager-01
   - dotnet-core-connectionstrings-01
+  - dotnet-core-dotnetopenauth-01
   - dotnet-core-ef-dbset-01
   - dotnet-core-ef-initializer-01
   - dotnet-core-ef-spatial-01
@@ -2557,7 +2166,9 @@
   - dotnet-core-globalfilters-01
   - dotnet-core-httpapplication-01
   - dotnet-core-httpcontext-current-01
+  - dotnet-core-httpruntime-01
   - dotnet-core-install-01
+  - dotnet-core-machinekey-01
   - dotnet-core-membership-01
   - dotnet-core-modelbinder-01
   - dotnet-core-multimodule-assembly-01
@@ -2572,6 +2183,7 @@
   - dotnet-core-thread-abort-01
   - dotnet-core-transactionscope-01
   - dotnet-core-wcf-01
+  - dotnet-core-webapi-controller-01
   - dotnet-core-webconfig-01
   - dotnet-core-webforms-01
   - dotnet-core-winforms-01

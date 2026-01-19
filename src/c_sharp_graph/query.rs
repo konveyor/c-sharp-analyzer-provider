@@ -165,6 +165,25 @@ pub(crate) fn get_fqdn(node: Handle<Node>, graph: &StackGraph) -> Option<Fqdn> {
     }
 }
 
+impl Fqdn {
+    pub(crate) fn get_full_symbol(&self) -> String {
+        let mut s = String::new();
+        if let Some(n) = self.namespace.as_ref() {
+            s.push_str(n)
+        }
+        if let Some(c) = self.class.as_ref() {
+            s.push_str(&format!(".{}", c));
+        }
+        if let Some(m) = self.method.as_ref() {
+            s.push_str(&format!(".{}", m));
+        }
+        if let Some(f) = self.field.as_ref() {
+            s.push_str(&format!(".{}", f));
+        }
+
+        s
+    }
+}
 pub enum QueryType<'graph> {
     All {
         graph: &'graph StackGraph,
@@ -196,7 +215,6 @@ impl Query for QueryType<'_> {
                 q.query(query)
             }
             QueryType::Method { graph, source_type } => {
-                info!("running method search");
                 let q = Querier {
                     graph,
                     source_type,
@@ -1322,6 +1340,14 @@ mod tests {
         assert!(!search.match_namespace(""));
     }
 
+    #[test]
+    fn test_match_namespace_invalid_match() {
+        let search = Search::create_search("*.ValidateAntiForgeryToken.*".to_string()).unwrap();
+        assert!(!search.match_namespace("DotNetOpenAuth.IAssociateSuccessfulResponseRelyingParthContract.DotNetOpenAuth#Messaging#IMessage#ExtraData"));
+        assert!(!search.match_namespace("DotNetOpenAuth.IAssociateSuccessfulResponseRelyingParthContract.DotNetOpenAuth#Messaging#IMessage#Version"));
+        assert!(!search.match_namespace("DotNetOpenAuth.Logger.InfoCard"));
+        assert!(!search.match_namespace("PagedList.BasePagedList`1.Count"));
+    }
     // Tests for Search::match_symbol()
 
     #[test]

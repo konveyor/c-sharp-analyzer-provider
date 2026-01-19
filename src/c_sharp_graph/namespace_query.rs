@@ -6,7 +6,7 @@ use stack_graphs::{
     arena::Handle,
     graph::{Node, StackGraph},
 };
-use tracing::trace;
+use tracing::{info, trace};
 
 use crate::c_sharp_graph::{
     class_query::ClassSymbols,
@@ -73,20 +73,21 @@ impl NamespaceSymbols {
             && field_symbol.is_err()
             && method_symbols.is_err()
         {
+            info!("no searchable nodes found");
             return Err(anyhow!(NotFoundError {}));
         }
-        trace!(
-            "nodes found: \nclasses: {:?}\nmethods: {:?}\nfields: {:?}\nnamespaces: {:?}",
-            class_symbol,
-            field_symbol,
-            method_symbols,
-            results
+        let class_symbol = class_symbol.ok();
+        let method_symbols = method_symbols.ok();
+        let field_symbol = field_symbol.ok();
+        info!(
+            "searchable nodes found: \nclasses: {:?}\nmethods: {:?}\nfields: {:?}\nnamespaces: {:?}",
+            class_symbol, method_symbols, field_symbol, results
         );
 
         Ok(NamespaceSymbols {
-            classes: class_symbol.ok(),
-            fields: field_symbol.ok(),
-            methods: method_symbols.ok(),
+            classes: class_symbol,
+            fields: field_symbol,
+            methods: method_symbols,
             namespace: results,
         })
     }
@@ -99,6 +100,7 @@ impl SymbolMatcher for NamespaceSymbols {
             .iter()
             .any(|f| f.namespace.as_ref().is_some_and(|n| n == &symbol))
         {
+            trace!("matched namespace symbol: {:?}", symbol);
             return true;
         }
         if let Some(classes) = &self.classes {
@@ -301,7 +303,8 @@ mod tests {
     fn test_namespace_symbols_match_symbol_class() {
         let (graph, roots) = build_mock_namespace_graph();
         let search =
-            Search::create_search("Configuration.ConfigurationManager.*".to_string()).unwrap();
+            Search::create_search("System.Configuration.ConfigurationManager.*".to_string())
+                .unwrap();
         let ns_symbols = NamespaceSymbols::new(&graph, roots, &search).unwrap();
 
         // Should match class within namespace

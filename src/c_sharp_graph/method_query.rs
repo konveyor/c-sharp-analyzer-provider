@@ -5,7 +5,7 @@ use stack_graphs::{
     arena::Handle,
     graph::{Node, StackGraph},
 };
-use tracing::{debug, trace};
+use tracing::{debug, info, trace};
 
 use crate::c_sharp_graph::{
     namespace_query::NotFoundError,
@@ -50,9 +50,10 @@ impl MethodSymbols {
         }
 
         if methods.is_empty() {
+            info!("no searchable method nodes found");
             return Err(anyhow!(NotFoundError {}));
         }
-        trace!("method nodes found: {:?}", methods);
+        info!("searchable method nodes: {:?}", methods);
 
         Ok(MethodSymbols { methods })
     }
@@ -99,9 +100,11 @@ impl MethodSymbols {
                     None => continue,
                     Some(syntax_type) => {
                         if let SyntaxType::MethodName = SyntaxType::get(&graph[syntax_type]) {
-                            let fqdn_name = get_fqdn(edge.sink, graph)
-                                .expect("We should always get a FQDN for methods");
-                            methods.insert(fqdn_name, edge.sink);
+                            if let Some(fqdn_name) = get_fqdn(edge.sink, graph) {
+                                if search.match_namespace(&fqdn_name.get_full_symbol()) {
+                                    methods.insert(fqdn_name, edge.sink);
+                                }
+                            }
                         }
                     }
                 },
@@ -277,7 +280,7 @@ mod tests {
     fn test_method_symbols_with_search_filter() {
         let (graph, roots) = build_mock_graph_with_methods();
         // Only match "Format" not "Concat"
-        let search = Search::create_search("Format".to_string()).unwrap();
+        let search = Search::create_search("*.Format".to_string()).unwrap();
 
         let method_symbols = MethodSymbols::new(&graph, roots, &search).unwrap();
 
