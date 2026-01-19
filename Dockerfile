@@ -13,7 +13,7 @@ RUN --mount=type=cache,id=cagohome,uid=1001,gid=0,mode=0777,target=/root/.cargo 
 
 FROM registry.access.redhat.com/ubi9/ubi-minimal
 
-RUN microdnf install -y dotnet-sdk-8.0 dotnet-runtime-8.0 tar gzip findutils && \
+RUN microdnf install -y dotnet-sdk-9.0 dotnet-runtime-9.0 tar gzip findutils && \
     microdnf clean all && \
     rm -rf /var/cache/dnf
 RUN dotnet tool install --tool-path=/usr/local/bin Paket
