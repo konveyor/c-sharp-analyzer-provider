@@ -92,16 +92,17 @@ impl FieldSymbols {
             if !search.match_symbol(symbol) {
                 continue;
             }
-            trace!("got node: {:?}, symbol: {} matching", edge.sink, symbol,);
             match graph.source_info(edge.sink) {
                 None => continue,
                 Some(source_info) => match source_info.syntax_type.into_option() {
                     None => continue,
                     Some(syntax_type) => {
                         if let SyntaxType::FieldName = SyntaxType::get(&graph[syntax_type]) {
-                            let fqdn_name = get_fqdn(edge.sink, graph)
-                                .expect("We should always get a FQDN for methods");
-                            fields.insert(fqdn_name, edge.sink);
+                            if let Some(fqdn_name) = get_fqdn(edge.sink, graph) {
+                                if search.match_namespace(&fqdn_name.get_full_symbol()) {
+                                    fields.insert(fqdn_name, edge.sink);
+                                }
+                            }
                         } else {
                             trace!(
                                 "got node: {:?}, symbol: {} not matching syntax_type: {}",
@@ -283,7 +284,7 @@ mod tests {
     fn test_field_symbols_with_search_filter() {
         let (graph, roots) = build_mock_graph_with_fields();
         // Only match "Out" not "Error"
-        let search = Search::create_search("Out".to_string()).unwrap();
+        let search = Search::create_search("*.Out".to_string()).unwrap();
 
         let field_symbols = FieldSymbols::new(&graph, roots, &search).unwrap();
 

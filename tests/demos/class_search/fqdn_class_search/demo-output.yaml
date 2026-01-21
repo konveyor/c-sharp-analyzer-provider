@@ -1,90 +1,244 @@
 [
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 37,
-            "character": 38
-          },
-          "endPosition": {
-            "line": 37,
-            "character": 55
-          }
-        },
-        "LineNumber": "37",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "WebSecurity",
-          "fqdn_method": "Login",
-          "fqdn_namespace": "WebMatrix.WebData",
-          "symbol": "WebSecurity.Login",
-          "syntax_type": "method_reference"
-        }
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 111,
+        "character": 76
       },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 54,
-            "character": 12
-          },
-          "endPosition": {
-            "line": 54,
-            "character": 30
-          }
-        },
-        "LineNumber": "54",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "WebSecurity",
-          "fqdn_method": "Logout",
-          "fqdn_namespace": "WebMatrix.WebData",
-          "symbol": "WebSecurity.Logout",
-          "syntax_type": "method_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 82,
-            "character": 20
-          },
-          "endPosition": {
-            "line": 82,
-            "character": 37
-          }
-        },
-        "LineNumber": "82",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
-          "fqdn_class": "WebSecurity",
-          "fqdn_method": "Login",
-          "fqdn_namespace": "WebMatrix.WebData",
-          "symbol": "WebSecurity.Login",
-          "syntax_type": "method_reference"
-        }
-      },
-      {
-        "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
-        "codeLocation": {
-          "startPosition": {
-            "line": 40,
-            "character": 20
-          },
-          "endPosition": {
-            "line": 40,
-            "character": 60
-          }
-        },
-        "LineNumber": "40",
-        "variables": {
-          "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
-          "fqdn_class": "WebSecurity",
-          "fqdn_method": "InitializeDatabaseConnection",
-          "fqdn_namespace": "WebMatrix.WebData",
-          "symbol": "WebSecurity.InitializeDatabaseConnection",
-          "syntax_type": "method_reference"
-        }
+      "endPosition": {
+        "line": 111,
+        "character": 97
       }
-    ]
+    },
+    "LineNumber": "111",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "WebSecurity",
+      "fqdn_method": "GetUserId",
+      "fqdn_namespace": "WebMatrix.WebData",
+      "symbol": "WebSecurity.GetUserId",
+      "syntax_type": "method_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 134,
+        "character": 72
+      },
+      "endPosition": {
+        "line": 134,
+        "character": 93
+      }
+    },
+    "LineNumber": "134",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "WebSecurity",
+      "fqdn_method": "GetUserId",
+      "fqdn_namespace": "WebMatrix.WebData",
+      "symbol": "WebSecurity.GetUserId",
+      "syntax_type": "method_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 146,
+        "character": 68
+      },
+      "endPosition": {
+        "line": 146,
+        "character": 89
+      }
+    },
+    "LineNumber": "146",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "WebSecurity",
+      "fqdn_method": "GetUserId",
+      "fqdn_namespace": "WebMatrix.WebData",
+      "symbol": "WebSecurity.GetUserId",
+      "syntax_type": "method_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 157,
+        "character": 50
+      },
+      "endPosition": {
+        "line": 157,
+        "character": 76
+      }
+    },
+    "LineNumber": "157",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "WebSecurity",
+      "fqdn_method": "ChangePassword",
+      "fqdn_namespace": "WebMatrix.WebData",
+      "symbol": "WebSecurity.ChangePassword",
+      "syntax_type": "method_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 188,
+        "character": 24
+      },
+      "endPosition": {
+        "line": 188,
+        "character": 49
+      }
+    },
+    "LineNumber": "188",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "WebSecurity",
+      "fqdn_method": "CreateAccount",
+      "fqdn_namespace": "WebMatrix.WebData",
+      "symbol": "WebSecurity.CreateAccount",
+      "syntax_type": "method_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 326,
+        "character": 100
+      },
+      "endPosition": {
+        "line": 326,
+        "character": 121
+      }
+    },
+    "LineNumber": "326",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "WebSecurity",
+      "fqdn_method": "GetUserId",
+      "fqdn_namespace": "WebMatrix.WebData",
+      "symbol": "WebSecurity.GetUserId",
+      "syntax_type": "method_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 37,
+        "character": 38
+      },
+      "endPosition": {
+        "line": 37,
+        "character": 55
+      }
+    },
+    "LineNumber": "37",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "WebSecurity",
+      "fqdn_method": "Login",
+      "fqdn_namespace": "WebMatrix.WebData",
+      "symbol": "WebSecurity.Login",
+      "syntax_type": "method_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 54,
+        "character": 12
+      },
+      "endPosition": {
+        "line": 54,
+        "character": 30
+      }
+    },
+    "LineNumber": "54",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "WebSecurity",
+      "fqdn_method": "Logout",
+      "fqdn_namespace": "WebMatrix.WebData",
+      "symbol": "WebSecurity.Logout",
+      "syntax_type": "method_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 81,
+        "character": 20
+      },
+      "endPosition": {
+        "line": 81,
+        "character": 52
+      }
+    },
+    "LineNumber": "81",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "WebSecurity",
+      "fqdn_method": "CreateUserAndAccount",
+      "fqdn_namespace": "WebMatrix.WebData",
+      "symbol": "WebSecurity.CreateUserAndAccount",
+      "syntax_type": "method_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 82,
+        "character": 20
+      },
+      "endPosition": {
+        "line": 82,
+        "character": 37
+      }
+    },
+    "LineNumber": "82",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+      "fqdn_class": "WebSecurity",
+      "fqdn_method": "Login",
+      "fqdn_namespace": "WebMatrix.WebData",
+      "symbol": "WebSecurity.Login",
+      "syntax_type": "method_reference"
+    }
+  },
+  {
+    "fileURI": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+    "codeLocation": {
+      "startPosition": {
+        "line": 40,
+        "character": 20
+      },
+      "endPosition": {
+        "line": 40,
+        "character": 60
+      }
+    },
+    "LineNumber": "40",
+    "variables": {
+      "file": "file://<REPLACE_ME>/testdata/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+      "fqdn_class": "WebSecurity",
+      "fqdn_method": "InitializeDatabaseConnection",
+      "fqdn_namespace": "WebMatrix.WebData",
+      "symbol": "WebSecurity.InitializeDatabaseConnection",
+      "syntax_type": "method_reference"
+    }
+  }
+]

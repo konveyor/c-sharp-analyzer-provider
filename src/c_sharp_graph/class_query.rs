@@ -102,16 +102,17 @@ impl ClassSymbols {
             if !search.match_symbol(symbol) {
                 continue;
             }
-            trace!("got node: {:?}, symbol: {} matching", edge.sink, symbol,);
             match graph.source_info(edge.sink) {
                 None => continue,
                 Some(source_info) => match source_info.syntax_type.into_option() {
                     None => continue,
                     Some(syntax_type) => {
                         if let SyntaxType::ClassDef = SyntaxType::get(&graph[syntax_type]) {
-                            let fqdn_name = get_fqdn(edge.sink, graph)
-                                .expect("We should always get a FQDN for methods");
-                            classes.insert(fqdn_name, edge.sink);
+                            if let Some(fqdn_name) = get_fqdn(edge.sink, graph) {
+                                if search.match_namespace(&fqdn_name.get_full_symbol()) {
+                                    classes.insert(fqdn_name, edge.sink);
+                                }
+                            }
                         } else {
                             trace!(
                                 "got node: {:?}, symbol: {} not matching syntax_type: {}",
@@ -294,7 +295,7 @@ mod tests {
     fn test_class_symbols_with_search_filter() {
         let (graph, roots) = build_mock_graph_with_classes();
         // Only match "String" not "StringBuilder"
-        let search = Search::create_search("String".to_string()).unwrap();
+        let search = Search::create_search("System.String".to_string()).unwrap();
 
         let class_symbols = ClassSymbols::new(&graph, roots, &search).unwrap();
 
