@@ -492,8 +492,58 @@ impl ProviderService for CSharpProvider {
 
     async fn notify_file_changes(
         &self,
-        _: Request<NotifyFileChangesRequest>,
+        request: Request<NotifyFileChangesRequest>,
     ) -> Result<Response<NotifyFileChangesResponse>, Status> {
+        let changes = &request.get_ref().changes;
+
+        info!(
+            "notify_file_changes called with {} changes",
+            changes.len()
+        );
+
+        // Log all URIs for debugging
+        for change in changes.iter() {
+            info!("  File change: uri={}, saved={}", change.uri, change.saved);
+        }
+
+        // Check if any C# files were changed
+        let has_csharp_changes = changes
+            .iter()
+            .any(|change| change.uri.ends_with(".cs") || change.uri.ends_with(".csproj"));
+
+        if !has_csharp_changes {
+            info!("No C# file changes detected, skipping graph invalidation");
+            return Ok(Response::new(NotifyFileChangesResponse {
+                error: String::new(),
+            }));
+        }
+
+        info!(
+            "C# files changed ({}), invalidating graph cache",
+            changes.len()
+        );
+
+        // Invalidate the graph by clearing it - this forces a rebuild on next analysis
+        let project_guard = self.project.lock().await;
+        if let Some(project) = project_guard.as_ref() {
+            // Clear the graph
+            if let Ok(mut graph_guard) = project.graph.lock() {
+                *graph_guard = None;
+                info!("Graph cache invalidated");
+            }
+
+            // Delete the DB cache file to ensure fresh data
+            if project.db_path.exists() {
+                if let Err(e) = std::fs::remove_file(&project.db_path) {
+                    warn!("Failed to remove DB cache file: {}", e);
+                } else {
+                    info!("DB cache file removed: {:?}", project.db_path);
+                }
+            }
+        } else {
+            warn!("No project initialized, cannot invalidate graph");
+        }
+
         return Ok(Response::new(NotifyFileChangesResponse {
             error: String::new(),
         }));
