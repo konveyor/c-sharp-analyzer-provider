@@ -10,7 +10,7 @@ jobs:
     name: Verify PR contents
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
     - name: Check Title
       id: verifier
       uses: konveyor/release-tools/cmd/verify-pr@main
