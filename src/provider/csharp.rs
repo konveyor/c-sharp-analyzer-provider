@@ -503,15 +503,16 @@ impl ProviderService for CSharpProvider {
 
         // Log all URIs for debugging
         for change in changes.iter() {
-            info!("  File change: uri={}, saved={}", change.uri, change.saved);
+            debug!("  File change: uri={}, saved={}", change.uri, change.saved);
         }
 
         // Check if any C# files were changed
-        let has_csharp_changes = changes
+        let csharp_changes: Vec<_> = changes
             .iter()
-            .any(|change| change.uri.ends_with(".cs") || change.uri.ends_with(".csproj"));
+            .filter(|change| change.uri.ends_with(".cs") || change.uri.ends_with(".csproj"))
+            .collect();
 
-        if !has_csharp_changes {
+        if csharp_changes.is_empty() {
             info!("No C# file changes detected, skipping graph invalidation");
             return Ok(Response::new(NotifyFileChangesResponse {
                 error: String::new(),
@@ -520,24 +521,35 @@ impl ProviderService for CSharpProvider {
 
         info!(
             "C# files changed ({}), invalidating graph cache",
-            changes.len()
+            csharp_changes.len()
         );
 
         // Invalidate the graph by clearing it - this forces a rebuild on next analysis
         let project_guard = self.project.lock().await;
         if let Some(project) = project_guard.as_ref() {
-            // Clear the graph
-            if let Ok(mut graph_guard) = project.graph.lock() {
+            // Clear the graph 
+            {
+                let mut graph_guard = match project.graph.lock() {
+                    Ok(g) => g,
+                    Err(e) => {
+                        project.graph.clear_poison();
+                        e.into_inner()
+                    }
+                };
                 *graph_guard = None;
                 info!("Graph cache invalidated");
-            }
+            } 
 
             // Delete the DB cache file to ensure fresh data
-            if project.db_path.exists() {
-                if let Err(e) = std::fs::remove_file(&project.db_path) {
-                    warn!("Failed to remove DB cache file: {}", e);
-                } else {
+            match tokio::fs::remove_file(&project.db_path).await {
+                Ok(_) => {
                     info!("DB cache file removed: {:?}", project.db_path);
+                }
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
+                    // File doesn't exist, nothing to remove
+                }
+                Err(e) => {
+                    warn!("Failed to remove DB cache file: {}", e);
                 }
             }
         } else {
