@@ -374,7 +374,18 @@ impl ProviderService for CSharpProvider {
             }
         };
 
-        let graph = graph_option.as_ref().unwrap();
+        let graph = match graph_option.as_ref() {
+            Some(g) => g,
+            None => {
+                // Graph was invalidated (e.g., by notify_file_changes) and needs to be rebuilt.
+                // Return an error so the client knows to re-initialize the provider.
+                return Ok(Response::new(EvaluateResponse {
+                    error: "Graph cache was invalidated. Please re-run analysis to rebuild the graph.".to_string(),
+                    successful: false,
+                    response: None,
+                }));
+            }
+        };
 
         // As we are passing an unmutable reference, we can drop the guard here.
 
@@ -507,12 +518,12 @@ impl ProviderService for CSharpProvider {
         }
 
         // Check if any C# files were changed
-        let csharp_changes: Vec<_> = changes
+        let csharp_changes_count = changes
             .iter()
             .filter(|change| change.uri.ends_with(".cs") || change.uri.ends_with(".csproj"))
-            .collect();
+            .count();
 
-        if csharp_changes.is_empty() {
+        if csharp_changes_count == 0 {
             info!("No C# file changes detected, skipping graph invalidation");
             return Ok(Response::new(NotifyFileChangesResponse {
                 error: String::new(),
@@ -521,13 +532,15 @@ impl ProviderService for CSharpProvider {
 
         info!(
             "C# files changed ({}), invalidating graph cache",
-            csharp_changes.len()
+            csharp_changes_count
         );
 
         // Invalidate the graph by clearing it - this forces a rebuild on next analysis
         let project_guard = self.project.lock().await;
         if let Some(project) = project_guard.as_ref() {
-            // Clear the graph 
+            let db_path = project.db_path.clone();
+
+            // Clear the graph
             {
                 let mut graph_guard = match project.graph.lock() {
                     Ok(g) => g,
@@ -538,12 +551,15 @@ impl ProviderService for CSharpProvider {
                 };
                 *graph_guard = None;
                 info!("Graph cache invalidated");
-            } 
+            }
+
+            // Release project lock before async I/O
+            drop(project_guard);
 
             // Delete the DB cache file to ensure fresh data
-            match tokio::fs::remove_file(&project.db_path).await {
+            match tokio::fs::remove_file(&db_path).await {
                 Ok(_) => {
-                    info!("DB cache file removed: {:?}", project.db_path);
+                    info!("DB cache file removed: {:?}", db_path);
                 }
                 Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
                     // File doesn't exist, nothing to remove
