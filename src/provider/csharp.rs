@@ -8,6 +8,7 @@ use tokio::sync::Mutex;
 use tokio_stream::wrappers::ReceiverStream;
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info, warn};
+use url::Url;
 use utoipa::{OpenApi, ToSchema};
 
 use crate::c_sharp_graph::loader::load_and_store_file;
@@ -537,11 +538,20 @@ impl ProviderService for CSharpProvider {
             csharp_changes_count
         );
 
-        // Get the changed C# file paths
+        // Get the changed C# file paths, converting file:// URIs to filesystem paths
         let csharp_file_paths: Vec<PathBuf> = changes
             .iter()
             .filter(|change| change.uri.ends_with(".cs") || change.uri.ends_with(".csproj"))
-            .map(|change| PathBuf::from(&change.uri))
+            .filter_map(|change| {
+                // Parse the URI and convert to filesystem path
+                match Url::parse(&change.uri) {
+                    Ok(url) => url.to_file_path().ok(),
+                    Err(_) => {
+                        // Fallback: treat as a plain path if not a valid URL
+                        Some(PathBuf::from(&change.uri))
+                    }
+                }
+            })
             .collect();
 
         // Incrementally update the graph for changed files
@@ -585,6 +595,9 @@ impl ProviderService for CSharpProvider {
             }
             Err(e) => {
                 error!("  FAILED to reload graph: {}", e);
+                return Ok(Response::new(NotifyFileChangesResponse {
+                    error: format!("Failed to reload graph: {}", e),
+                }));
             }
         }
 
@@ -629,6 +642,17 @@ impl ProviderService for CSharpProvider {
                 graph.iter_symbols().count()
             );
 
+            // Open database once for all file operations
+            let mut db = match SQLiteWriter::open(&db_path) {
+                Ok(db) => db,
+                Err(e) => {
+                    error!("FAILED to open database for storing: {}", e);
+                    return Ok(Response::new(NotifyFileChangesResponse {
+                        error: format!("Failed to open database: {}", e),
+                    }));
+                }
+            };
+
             // Reload each changed file into the graph and store to DB
             for file_path in &csharp_file_paths {
                 // Check if file already exists in graph
@@ -641,7 +665,7 @@ impl ProviderService for CSharpProvider {
                     graph,
                     &language_config.language_config,
                     &source_type,
-                    &db_path,
+                    &mut db,
                 ) {
                     Ok(Some(_file_handle)) => {
                         error!("    SUCCESS reloaded and stored file: {:?}", file_path);

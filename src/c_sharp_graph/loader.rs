@@ -332,18 +332,18 @@ pub fn init_stack_graph(
 
 /// Loads a file into the graph and stores it to the database.
 /// This is useful for incremental updates when a file changes.
+/// Accepts a mutable SQLiteWriter reference to avoid opening a new connection per file.
 pub fn load_and_store_file(
     file_path: PathBuf,
     stack_graph: &mut StackGraph,
     language_config: &LanguageConfiguration,
     source_type: &SourceType,
-    db_path: &Path,
+    db: &mut SQLiteWriter,
 ) -> Result<Option<Handle<File>>, Error> {
     // First load the file into the graph
     match load_graph_for_file(file_path.clone(), stack_graph, language_config, source_type) {
         Ok(Some((file_handle, tag))) => {
-            // Now store it to the database
-            let mut db = SQLiteWriter::open(db_path)?;
+            // Store it to the database using the provided writer
             let mut partials = PartialPaths::new();
             let paths: Vec<PartialPath> = Vec::new();
 
