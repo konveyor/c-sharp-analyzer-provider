@@ -3,12 +3,14 @@ use std::sync::Arc;
 
 use anyhow::anyhow;
 use serde::Deserialize;
+use stack_graphs::storage::SQLiteWriter;
 use tokio::sync::Mutex;
 use tokio_stream::wrappers::ReceiverStream;
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info, warn};
 use utoipa::{OpenApi, ToSchema};
 
+use crate::c_sharp_graph::loader::load_and_store_file;
 use crate::c_sharp_graph::query::{Query, QueryType};
 use crate::c_sharp_graph::results::ResultNode;
 use crate::c_sharp_graph::NotFoundError;
@@ -380,7 +382,7 @@ impl ProviderService for CSharpProvider {
                 // Graph was invalidated (e.g., by notify_file_changes) and needs to be rebuilt.
                 // Return an error so the client knows to re-initialize the provider.
                 return Ok(Response::new(EvaluateResponse {
-                    error: "Graph cache was invalidated. Please re-run analysis to rebuild the graph.".to_string(),
+                    error: "No project initialized. Graph cache was invalidated.".to_string(),
                     successful: false,
                     response: None,
                 }));
@@ -507,14 +509,14 @@ impl ProviderService for CSharpProvider {
     ) -> Result<Response<NotifyFileChangesResponse>, Status> {
         let changes = &request.get_ref().changes;
 
-        info!(
+        error!(
             "notify_file_changes called with {} changes",
             changes.len()
         );
 
-        // Log all URIs for debugging
+        // Log all URIs for debugging (using error level so it shows up)
         for change in changes.iter() {
-            debug!("  File change: uri={}, saved={}", change.uri, change.saved);
+            error!("  File change: uri='{}', saved={}", change.uri, change.saved);
         }
 
         // Check if any C# files were changed
@@ -530,46 +532,135 @@ impl ProviderService for CSharpProvider {
             }));
         }
 
-        info!(
-            "C# files changed ({}), invalidating graph cache",
+        error!(
+            "C# files changed ({}), updating graph cache",
             csharp_changes_count
         );
 
-        // Invalidate the graph by clearing it - this forces a rebuild on next analysis
+        // Get the changed C# file paths
+        let csharp_file_paths: Vec<PathBuf> = changes
+            .iter()
+            .filter(|change| change.uri.ends_with(".cs") || change.uri.ends_with(".csproj"))
+            .map(|change| PathBuf::from(&change.uri))
+            .collect();
+
+        // Incrementally update the graph for changed files
         let project_guard = self.project.lock().await;
-        if let Some(project) = project_guard.as_ref() {
-            let db_path = project.db_path.clone();
+        let project = match project_guard.as_ref() {
+            Some(p) => p.clone(),
+            None => {
+                warn!("No project initialized, cannot update graph");
+                return Ok(Response::new(NotifyFileChangesResponse {
+                    error: "No project initialized".to_string(),
+                }));
+            }
+        };
+        drop(project_guard);
 
-            // Clear the graph
-            {
-                let mut graph_guard = match project.graph.lock() {
-                    Ok(g) => g,
-                    Err(e) => {
-                        project.graph.clear_poison();
-                        e.into_inner()
+        let db_path = project.db_path.clone();
+
+        // clean changed files from the SQLite database
+        error!("cleaning files from database at {:?}", db_path);
+        match SQLiteWriter::open(&db_path) {
+            Ok(mut db) => {
+                for file_path in &csharp_file_paths {
+                    error!("  Attempting to clean file: {:?}", file_path);
+                    if let Err(e) = db.clean_file(file_path) {
+                        error!("  FAILED to clean file {:?}: {}", file_path, e);
+                    } else {
+                        error!("  SUCCESS cleaned file {:?}", file_path);
                     }
-                };
-                *graph_guard = None;
-                info!("Graph cache invalidated");
-            }
-
-            // Release project lock before async I/O
-            drop(project_guard);
-
-            // Delete the DB cache file to ensure fresh data
-            match tokio::fs::remove_file(&db_path).await {
-                Ok(_) => {
-                    info!("DB cache file removed: {:?}", db_path);
-                }
-                Err(e) if e.kind() == std::io::ErrorKind::NotFound => {
-                    // File doesn't exist, nothing to remove
-                }
-                Err(e) => {
-                    warn!("Failed to remove DB cache file: {}", e);
                 }
             }
+            Err(e) => {
+                error!("FAILED to open database for cleaning: {}", e);
+            }
+        }
+
+        // Reload the graph from the database (now without the cleaned files)
+        error!("Reloading graph from database");
+        match project.get_project_graph().await {
+            Ok(file_count) => {
+                error!("  SUCCESS reloaded graph with {} files", file_count);
+            }
+            Err(e) => {
+                error!("  FAILED to reload graph: {}", e);
+            }
+        }
+
+        // Get language config and source type for reloading files
+        let lc_guard = project.source_language_config.read().await;
+        let language_config = match lc_guard.as_ref() {
+            Some(lc) => lc,
+            None => {
+                warn!("No language configuration available, cannot reload files");
+                return Ok(Response::new(NotifyFileChangesResponse {
+                    error: "No language configuration available".to_string(),
+                }));
+            }
+        };
+
+        let source_type = match project.get_source_type().await {
+            Some(s) => s,
+            None => {
+                warn!("No source type available, cannot reload files");
+                return Ok(Response::new(NotifyFileChangesResponse {
+                    error: "No source type available".to_string(),
+                }));
+            }
+        };
+
+        // Acquire graph lock for modification
+        error!("Getting graph lock");
+        let mut graph_guard = match project.graph.lock() {
+            Ok(g) => g,
+            Err(e) => {
+                error!("  Graph lock was poisoned, recovering");
+                project.graph.clear_poison();
+                e.into_inner()
+            }
+        };
+
+        if let Some(ref mut graph) = *graph_guard {
+            error!("Reloading {} changed files into graph", csharp_file_paths.len());
+            error!("  Current graph has {} files, {} nodes, {} symbols",
+                graph.iter_files().count(),
+                graph.iter_nodes().count(),
+                graph.iter_symbols().count()
+            );
+
+            // Reload each changed file into the graph and store to DB
+            for file_path in &csharp_file_paths {
+                // Check if file already exists in graph
+                let file_path_str = file_path.to_string_lossy();
+                let already_exists = graph.get_file(&file_path_str).is_some();
+                error!("  Processing file: {:?}, already_in_graph={}", file_path, already_exists);
+
+                match load_and_store_file(
+                    file_path.clone(),
+                    graph,
+                    &language_config.language_config,
+                    &source_type,
+                    &db_path,
+                ) {
+                    Ok(Some(_file_handle)) => {
+                        error!("    SUCCESS reloaded and stored file: {:?}", file_path);
+                    }
+                    Ok(None) => {
+                        error!("    SKIPPED file (not C# or already exists): {:?}", file_path);
+                    }
+                    Err(e) => {
+                        error!("    FAILED to reload file {:?}: {}", file_path, e);
+                    }
+                }
+            }
+            error!("  After reload: graph has {} files, {} nodes, {} symbols",
+                graph.iter_files().count(),
+                graph.iter_nodes().count(),
+                graph.iter_symbols().count()
+            );
         } else {
-            warn!("No project initialized, cannot invalidate graph");
+            error!("No graph available, cannot reload files");
         }
 
         return Ok(Response::new(NotifyFileChangesResponse {

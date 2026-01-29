@@ -181,7 +181,7 @@ pub fn add_dir_to_graph(
     })
 }
 
-fn load_graph_for_file(
+pub fn load_graph_for_file(
     entry: PathBuf,
     stack_graph: &mut StackGraph,
     language_config: &LanguageConfiguration,
@@ -328,6 +328,39 @@ pub fn init_stack_graph(
         files_loaded,
         stack_graph,
     })
+}
+
+/// Loads a file into the graph and stores it to the database.
+/// This is useful for incremental updates when a file changes.
+pub fn load_and_store_file(
+    file_path: PathBuf,
+    stack_graph: &mut StackGraph,
+    language_config: &LanguageConfiguration,
+    source_type: &SourceType,
+    db_path: &Path,
+) -> Result<Option<Handle<File>>, Error> {
+    // First load the file into the graph
+    match load_graph_for_file(file_path.clone(), stack_graph, language_config, source_type) {
+        Ok(Some((file_handle, tag))) => {
+            // Now store it to the database
+            let mut db = SQLiteWriter::open(db_path)?;
+            let mut partials = PartialPaths::new();
+            let paths: Vec<PartialPath> = Vec::new();
+
+            match db.store_result_for_file(stack_graph, file_handle, &tag, &mut partials, &paths) {
+                Ok(_) => {
+                    debug!("Stored file to database: {:?}", file_path);
+                    Ok(Some(file_handle))
+                }
+                Err(err) => {
+                    error!("Failed to store file to database: {}", err);
+                    Err(anyhow!(err))
+                }
+            }
+        }
+        Ok(None) => Ok(None),
+        Err(e) => Err(e),
+    }
 }
 
 fn sha1(source: &str) -> String {
