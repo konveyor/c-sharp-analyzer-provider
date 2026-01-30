@@ -8,9 +8,11 @@ use prost_types::{Struct, Value};
 use serde::Deserialize;
 use walkdir::WalkDir;
 
-use c_sharp_analyzer_provider_cli::analyzer_service::IncidentContext;
 use c_sharp_analyzer_provider_cli::analyzer_service::{
     provider_service_client::ProviderServiceClient, Config, EvaluateRequest,
+};
+use c_sharp_analyzer_provider_cli::analyzer_service::{
+    FileChange, IncidentContext, NotifyFileChangesRequest,
 };
 use c_sharp_analyzer_provider_cli::c_sharp_graph::results::ResultNode;
 
@@ -386,6 +388,7 @@ async fn integration_test_net8() {
         result
     );
 
+    let mut file_uri: String = String::new();
     match result.response {
         None => panic!("No response from evaluate"),
         Some(response) => {
@@ -404,8 +407,25 @@ async fn integration_test_net8() {
                 response.incident_contexts.len()
             );
             println!("✓ {} references in Program.cs", program_incidents.len());
+            file_uri = program_incidents.first().unwrap().clone().file_uri.clone();
         }
     }
+
+    // Notify File Change for Program and make sure that System.Console is still found
+    let result = client
+        .notify_file_changes(NotifyFileChangesRequest {
+            changes: vec![FileChange {
+                uri: file_uri,
+                content: "".to_string(),
+                saved: true,
+            }],
+            id: 2,
+        })
+        .await
+        .unwrap()
+        .into_inner();
+
+    println!("notify_file_changes: {:?}", result);
 
     let request = EvaluateRequest {
         id: 1,
