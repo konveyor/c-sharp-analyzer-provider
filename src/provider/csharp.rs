@@ -3,12 +3,16 @@ use std::sync::Arc;
 
 use anyhow::anyhow;
 use serde::Deserialize;
+use stack_graphs::graph::StackGraph;
+use stack_graphs::storage::SQLiteWriter;
 use tokio::sync::Mutex;
 use tokio_stream::wrappers::ReceiverStream;
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info, warn};
+use url::Url;
 use utoipa::{OpenApi, ToSchema};
 
+use crate::c_sharp_graph::loader::load_and_store_file;
 use crate::c_sharp_graph::query::{Query, QueryType};
 use crate::c_sharp_graph::results::ResultNode;
 use crate::c_sharp_graph::NotFoundError;
@@ -20,7 +24,7 @@ use crate::{
         provider_service_server::ProviderService, CapabilitiesResponse, Capability, Config,
         DependencyDagResponse, DependencyResponse, EvaluateRequest, EvaluateResponse,
         IncidentContext, InitResponse, NotifyFileChangesRequest, NotifyFileChangesResponse,
-        PrepareRequest, PrepareResponse, PrepareProgressRequest, ProgressEvent, ProgressEventType,
+        PrepareProgressRequest, PrepareRequest, PrepareResponse, ProgressEvent, ProgressEventType,
         ProviderEvaluateResponse, ServiceRequest,
     },
     provider::Project,
@@ -302,12 +306,15 @@ impl ProviderService for CSharpProvider {
 
         // Send a single progress event and close the stream
         tokio::spawn(async move {
-            if let Err(e) = tx.send(Ok(ProgressEvent {
-                r#type: ProgressEventType::Prepare as i32,
-                provider_name: "c-sharp".to_string(),
-                files_processed: 0,
-                total_files: 0,
-            })).await {
+            if let Err(e) = tx
+                .send(Ok(ProgressEvent {
+                    r#type: ProgressEventType::Prepare as i32,
+                    provider_name: "c-sharp".to_string(),
+                    files_processed: 0,
+                    total_files: 0,
+                }))
+                .await
+            {
                 error!(
                     "Failed to send Prepare progress event for c-sharp provider: {:?}",
                     e
@@ -374,7 +381,18 @@ impl ProviderService for CSharpProvider {
             }
         };
 
-        let graph = graph_option.as_ref().unwrap();
+        let graph = match graph_option.as_ref() {
+            Some(g) => g,
+            None => {
+                // Graph was invalidated (e.g., by notify_file_changes) and needs to be rebuilt.
+                // Return an error so the client knows to re-initialize the provider.
+                return Ok(Response::new(EvaluateResponse {
+                    error: "No project initialized. Graph cache was invalidated.".to_string(),
+                    successful: false,
+                    response: None,
+                }));
+            }
+        };
 
         // As we are passing an unmutable reference, we can drop the guard here.
 
@@ -492,11 +510,141 @@ impl ProviderService for CSharpProvider {
 
     async fn notify_file_changes(
         &self,
-        _: Request<NotifyFileChangesRequest>,
+        request: Request<NotifyFileChangesRequest>,
     ) -> Result<Response<NotifyFileChangesResponse>, Status> {
-        return Ok(Response::new(NotifyFileChangesResponse {
-            error: String::new(),
-        }));
+        let changes = &request.get_ref().changes;
+
+        debug!("notify_file_changes called with {} changes", changes.len());
+
+        // Log all URIs for debugging (using error level so it shows up)
+        for change in changes.iter() {
+            debug!(
+                "  File change: uri='{}', saved={}",
+                change.uri, change.saved
+            );
+        }
+
+        // Get the changed C# file paths, converting file:// URIs to filesystem paths
+        let csharp_file_paths: Vec<PathBuf> = changes
+            .iter()
+            .filter(|change| change.uri.ends_with(".cs") || change.uri.ends_with(".csproj"))
+            .filter_map(|change| {
+                // Parse the URI and convert to filesystem path
+                match Url::parse(&change.uri) {
+                    Ok(url) => url.to_file_path().ok(),
+                    Err(_) => {
+                        // Fallback: treat as a plain path if not a valid URL
+                        Some(PathBuf::from(&change.uri))
+                    }
+                }
+            })
+            .collect();
+
+        if csharp_file_paths.len() == 0 {
+            info!("No C# file changes detected, skipping graph invalidation");
+            return Ok(Response::new(NotifyFileChangesResponse {
+                error: String::new(),
+            }));
+        }
+
+        debug!(
+            "C# files changed ({}), updating graph cache",
+            csharp_file_paths.len(),
+        );
+
+        // Incrementally update the graph for changed files
+        let project_guard = self.project.lock().await;
+        let project = match project_guard.as_ref() {
+            Some(p) => p.clone(),
+            None => {
+                warn!("No project initialized, cannot update graph");
+                return Ok(Response::new(NotifyFileChangesResponse {
+                    error: "No project initialized".to_string(),
+                }));
+            }
+        };
+
+        let source_type = match project.get_source_type().await {
+            Some(s) => s,
+            None => {
+                debug!("No source type available, cannot reload files");
+                return Ok(Response::new(NotifyFileChangesResponse {
+                    error: "No source type available".to_string(),
+                }));
+            }
+        };
+
+        // Get language config and source type for reloading files
+        let lc_guard = project.source_language_config.read().await;
+        let language_config = match lc_guard.as_ref() {
+            Some(lc) => lc,
+            None => {
+                warn!("No language configuration available, cannot reload files");
+                return Ok(Response::new(NotifyFileChangesResponse {
+                    error: "No language configuration available".to_string(),
+                }));
+            }
+        };
+        let db_path = project.db_path.clone();
+
+        // clean changed files from the SQLite database
+        debug!("cleaning files from database at {:?}", db_path);
+        let mut db = match SQLiteWriter::open(&db_path) {
+            Ok(db) => db,
+            Err(e) => {
+                error!("FAILED to open database for storing: {}", e);
+                return Ok(Response::new(NotifyFileChangesResponse {
+                    error: format!("Failed to open database: {}", e),
+                }));
+            }
+        };
+        let mut stack_graph = StackGraph::new();
+        let _ = stack_graph.add_from_graph(&language_config.language_config.builtins);
+        for file_path in &csharp_file_paths {
+            debug!("  Attempting to clean file: {:?}", file_path);
+            if let Err(e) = db.clean_file(file_path) {
+                error!("  FAILED to clean file {:?}: {}", file_path, e);
+                return Ok(Response::new(NotifyFileChangesResponse {
+                    error: "unable to update file changes".to_string(),
+                }));
+            } else {
+                debug!("  SUCCESS cleaned file {:?}", file_path);
+            }
+            match load_and_store_file(
+                file_path.clone(),
+                &mut stack_graph,
+                &language_config.language_config,
+                &source_type,
+                &mut db,
+            ) {
+                Ok(Some(_file_handle)) => {
+                    debug!("    SUCCESS reloaded and stored file: {:?}", file_path);
+                }
+                Ok(None) => {
+                    error!("SKIPPED file (not C# or already exists): {:?}", file_path);
+                }
+                Err(e) => {
+                    error!("FAILED to reload file {:?}: {}", file_path, e);
+                }
+            }
+        }
+
+        // Reload the graph from the database (now without the cleaned files)
+        info!("reloading graph from database");
+        match project.get_project_graph().await {
+            Ok(file_count) => {
+                debug!("SUCCESS reloaded graph with {} files", file_count);
+                Ok(Response::new(NotifyFileChangesResponse {
+                    error: String::new(),
+                }))
+            }
+            Err(e) => {
+                error!("  FAILED to reload graph: {}", e);
+                Ok(Response::new(NotifyFileChangesResponse {
+                    error: format!("Failed to reload graph: {}", e),
+                }))
+            }
+        }
     }
 }
 
