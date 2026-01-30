@@ -589,26 +589,6 @@ impl ProviderService for CSharpProvider {
 
         // clean changed files from the SQLite database
         debug!("cleaning files from database at {:?}", db_path);
-        match SQLiteWriter::open(&db_path) {
-            Ok(mut db) => {
-                for file_path in &csharp_file_paths {
-                    debug!("  Attempting to clean file: {:?}", file_path);
-                    if let Err(e) = db.clean_file(file_path) {
-                        error!("  FAILED to clean file {:?}: {}", file_path, e);
-                        return Ok(Response::new(NotifyFileChangesResponse {
-                            error: "unable to update file changes".to_string(),
-                        }));
-                    } else {
-                        debug!("  SUCCESS cleaned file {:?}", file_path);
-                    }
-                }
-            }
-            Err(e) => {
-                error!("FAILED to open database for cleaning: {}", e);
-            }
-        }
-
-        // Open database once for all file operations
         let mut db = match SQLiteWriter::open(&db_path) {
             Ok(db) => db,
             Err(e) => {
@@ -618,14 +598,18 @@ impl ProviderService for CSharpProvider {
                 }));
             }
         };
-
         let mut stack_graph = StackGraph::new();
         let _ = stack_graph.add_from_graph(&language_config.language_config.builtins);
-        // Reload each changed file into the graph and store to DB
         for file_path in &csharp_file_paths {
-            // Check if file already exists in graph
-            debug!("  Processing file: {:?}", file_path);
-
+            debug!("  Attempting to clean file: {:?}", file_path);
+            if let Err(e) = db.clean_file(file_path) {
+                error!("  FAILED to clean file {:?}: {}", file_path, e);
+                return Ok(Response::new(NotifyFileChangesResponse {
+                    error: "unable to update file changes".to_string(),
+                }));
+            } else {
+                debug!("  SUCCESS cleaned file {:?}", file_path);
+            }
             match load_and_store_file(
                 file_path.clone(),
                 &mut stack_graph,
@@ -644,8 +628,9 @@ impl ProviderService for CSharpProvider {
                 }
             }
         }
+
         // Reload the graph from the database (now without the cleaned files)
-        info!("Reloading graph from database");
+        info!("reloading graph from database");
         match project.get_project_graph().await {
             Ok(file_count) => {
                 debug!("SUCCESS reloaded graph with {} files", file_count);
