@@ -28,6 +28,7 @@ use crate::c_sharp_graph::loader::add_dir_to_graph;
 use crate::c_sharp_graph::loader::AsyncInitializeGraph;
 use crate::c_sharp_graph::loader::SourceType;
 use crate::provider::project::Tools;
+use crate::provider::target_framework::TargetFrameworkHelper;
 use crate::provider::AnalysisMode;
 use crate::provider::Project;
 
@@ -368,7 +369,9 @@ impl Project {
             info!("SDK path exists: {}", sdk_path.exists());
             if sdk_path.exists() {
                 info!("Loading SDK graphs from: {:?}", sdk_path);
-                if let Err(e) = db_reader.load_graphs_for_file_or_directory(&sdk_path, &NoCancellation) {
+                if let Err(e) =
+                    db_reader.load_graphs_for_file_or_directory(&sdk_path, &NoCancellation)
+                {
                     error!("Failed to load SDK graphs: {}", e);
                 } else {
                     info!("Successfully loaded SDK graphs from database");
@@ -852,5 +855,41 @@ impl Project {
             success_count
         );
         Ok(success_count)
+    }
+
+    /// Load SDK XML files from a given SDK path for a target framework
+    /// This is a convenience method that finds and loads SDK XML files in one call
+    pub(crate) async fn load_sdk_from_path(
+        &self,
+        sdk_path: &std::path::Path,
+        target_framework: &crate::provider::target_framework::TargetFramework,
+    ) -> Result<usize, Error> {
+        info!(
+            "Loading SDK from path {:?} for TFM {}",
+            sdk_path,
+            target_framework.as_str()
+        );
+
+        let xml_files =
+            TargetFrameworkHelper::find_sdk_xml_files(&sdk_path.to_path_buf(), target_framework)?;
+
+        if xml_files.is_empty() {
+            info!("No SDK XML files found at {:?}", sdk_path);
+            return Ok(0);
+        }
+
+        info!(
+            "Found {} SDK XML files, loading into database",
+            xml_files.len()
+        );
+
+        let result = self.load_sdk_xml_files_to_database(xml_files).await;
+
+        // Store the SDK path for later use (e.g., notify_file_changes reload)
+        if result.is_ok() {
+            self.set_sdk_path(sdk_path.to_path_buf());
+        }
+
+        result
     }
 }

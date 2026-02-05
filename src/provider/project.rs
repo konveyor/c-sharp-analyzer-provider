@@ -13,7 +13,7 @@ use stack_graphs::{
     storage::SQLiteReader, NoCancellation,
 };
 use tokio::sync::{Mutex as TokioMutex, RwLock};
-use tracing::{debug, warn};
+use tracing::{debug, info, warn};
 use which::which;
 
 use crate::c_sharp_graph::language_config::SourceNodeLanguageConfiguration;
@@ -30,6 +30,7 @@ pub struct Project {
     pub analysis_mode: AnalysisMode,
     pub tools: Tools,
     target_framework: Arc<Mutex<Option<TargetFramework>>>,
+    sdk_path: Arc<Mutex<Option<PathBuf>>>,
 }
 
 #[derive(Eq, PartialEq, Debug, Deserialize)]
@@ -82,12 +83,14 @@ pub struct Tools {
     pub ilspy_cmd: PathBuf,
     pub paket_cmd: PathBuf,
     pub dotnet_install_cmd: Option<PathBuf>,
+    pub dotnet_sdk_path: Option<PathBuf>,
 }
 
 impl Project {
     const ILSPY_CMD_LOC_KEY: &str = "ilspy_cmd";
     const PAKET_CMD_LOC_KEY: &str = "paket_cmd";
     const DOTNET_INSTALL_CMD_LOC_KEY: &str = "dotnet_install_cmd";
+    const DOTNET_SDK_PATH_KEY: &str = "dotnet_sdk_path";
     const ILSPY_CMD: &str = "ilspy";
     const PAKET_CMD: &str = "paket";
     #[cfg(windows)]
@@ -109,6 +112,7 @@ impl Project {
             analysis_mode,
             tools,
             target_framework: Arc::new(Mutex::new(None)),
+            sdk_path: Arc::new(Mutex::new(None)),
         }
     }
 
@@ -118,10 +122,22 @@ impl Project {
         }
     }
 
+    pub(crate) fn set_sdk_path(&self, path: PathBuf) {
+        if let Ok(mut guard) = self.sdk_path.lock() {
+            *guard = Some(path);
+        }
+    }
+
     pub fn get_sdk_path(&self) -> Option<PathBuf> {
+        // First check if we have an explicitly set SDK path
+        if let Ok(guard) = self.sdk_path.lock() {
+            if let Some(ref path) = *guard {
+                return Some(path.clone());
+            }
+        }
+        // Fall back to deriving from target framework (for backward compatibility)
         if let Ok(guard) = self.target_framework.lock() {
             if let Some(ref tfm) = *guard {
-                // Derive SDK path from target framework
                 return Some(std::env::temp_dir().join("dotnet-sdks").join(tfm.as_str()));
             }
         }
@@ -192,10 +208,36 @@ impl Project {
                         None
                     }
                 };
+                let dotnet_sdk_path = match specific_provider_config
+                    .fields
+                    .get(Self::DOTNET_SDK_PATH_KEY)
+                {
+                    Some(Value {
+                        kind: Some(prost_types::value::Kind::StringValue(s)),
+                    }) => {
+                        let p = PathBuf::from_str(s)?;
+                        if p.exists() {
+                            info!("Using configured .NET SDK path: {:?}", p);
+                            Some(p)
+                        } else {
+                            warn!(
+                                "Configured dotnet_sdk_path {} does not exist, will try auto-detection",
+                                p.display()
+                            );
+                            None
+                        }
+                    }
+                    None => None,
+                    _ => {
+                        warn!("Invalid dotnet_sdk_path configuration");
+                        None
+                    }
+                };
                 Ok(Tools {
                     ilspy_cmd,
                     paket_cmd,
                     dotnet_install_cmd,
+                    dotnet_sdk_path,
                 })
             }
             None => {
@@ -210,6 +252,7 @@ impl Project {
                     ilspy_cmd: which(Self::ILSPY_CMD)?,
                     paket_cmd: which(Self::PAKET_CMD)?,
                     dotnet_install_cmd,
+                    dotnet_sdk_path: None,
                 })
             }
         }

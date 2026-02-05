@@ -1,7 +1,6 @@
 use std::path::PathBuf;
 use std::sync::Arc;
 
-use anyhow::anyhow;
 use serde::Deserialize;
 use stack_graphs::graph::StackGraph;
 use stack_graphs::storage::SQLiteWriter;
@@ -17,6 +16,7 @@ use crate::c_sharp_graph::query::{Query, QueryType};
 use crate::c_sharp_graph::results::ResultNode;
 use crate::c_sharp_graph::NotFoundError;
 //use crate::c_sharp_graph::find_node::FindNode;
+use crate::provider::sdk_detection::{SdkDetector, SdkSource};
 use crate::provider::target_framework;
 use crate::provider::AnalysisMode;
 use crate::{
@@ -156,64 +156,65 @@ impl ProviderService for CSharpProvider {
                             "Modern .NET detected ({}), will attempt SDK installation",
                             target_framework.as_str()
                         );
-                        if project.tools.dotnet_install_cmd.is_none() {
-                            warn!("project '{}' has target framework '{}' but no dotnet-install script is available.",
-                                    project.location.display(), target_framework);
-                        }
-                        // Spawn a task to handle SDK installation and XML processing
-                        // This avoids blocking the init process on SDK download
+
+                        let sdk_source = SdkDetector::find_sdk(
+                            project.tools.dotnet_sdk_path.as_deref(),
+                            &target_framework,
+                        );
+
                         let project_clone = project.clone();
                         let dotnet_install_cmd = project.tools.dotnet_install_cmd.clone();
-                        info!(
-                            "Spawning SDK installation task with script: {:?}",
-                            dotnet_install_cmd
-                        );
-                        Some(tokio::spawn(async move {
-                            info!("SDK installation task started in background");
 
-                            let install_result = match dotnet_install_cmd {
-                                Some(ref script_path) => {
-                                    info!("Installing SDK using script: {:?}", script_path);
-                                    target_framework.install_sdk(script_path)
-                                }
-                                None => {
-                                    warn!("No dotnet-install script available, skipping SDK installation. SDK XML files may not be available for dependency analysis.");
-                                    // Return error to skip SDK installation; caught and treated as non-fatal below
-                                    Err(anyhow!("dotnet-install script not available"))
-                                }
-                            };
-
-                            match install_result {
-                                Ok(sdk_path) => {
-                                    info!("Successfully installed .NET SDK at: {:?}", sdk_path);
-
-                                    // Find and load SDK XML files
-                                    let xml_files = match target_framework::TargetFrameworkHelper::find_sdk_xml_files(&sdk_path, &target_framework) {
-                                    Ok(files) => files,
-                                    Err(e) => {
-                                        error!("Failed to find SDK XML files: {}", e);
-                                        return Err(e);
-                                    }
-                                };
-
-                                    if !xml_files.is_empty() {
-                                        project_clone
-                                            .load_sdk_xml_files_to_database(xml_files)
-                                            .await
-                                    } else {
-                                        info!("No SDK XML files found");
-                                        Ok(0)
-                                    }
-                                }
-                                Err(e) => {
-                                    info!(
-                                    "Could not install .NET SDK for {}: {}. Continuing without SDK XML files.",
-                                    target_framework, e
+                        match sdk_source {
+                            SdkSource::Found {
+                                path: sdk_path,
+                                source,
+                            } => {
+                                info!("Using {} SDK at: {:?}", source, sdk_path);
+                                Some(tokio::spawn(async move {
+                                    project_clone
+                                        .load_sdk_from_path(&sdk_path, &target_framework)
+                                        .await
+                                }))
+                            }
+                            SdkSource::NotFound => {
+                                info!(
+                                    "No existing SDK found, falling back to dotnet-install script"
                                 );
-                                    Err(e)
+                                if let Some(script_path) = dotnet_install_cmd {
+                                    Some(tokio::spawn(async move {
+                                        info!("Installing SDK using script: {:?}", script_path);
+                                        let install_result =
+                                            target_framework.install_sdk(&script_path);
+
+                                        match install_result {
+                                            Ok(sdk_path) => {
+                                                info!(
+                                                    "Successfully installed .NET SDK at: {:?}",
+                                                    sdk_path
+                                                );
+                                                project_clone
+                                                    .load_sdk_from_path(
+                                                        &sdk_path,
+                                                        &target_framework,
+                                                    )
+                                                    .await
+                                            }
+                                            Err(e) => {
+                                                info!(
+                                                    "Could not install .NET SDK for {}: {}. Continuing without SDK XML files.",
+                                                    target_framework, e
+                                                );
+                                                Err(e)
+                                            }
+                                        }
+                                    }))
+                                } else {
+                                    warn!("No SDK found and no dotnet-install script available");
+                                    None
                                 }
                             }
-                        }))
+                        }
                     } else {
                         info!(
                             "Skipping SDK installation for old .NET Framework target: {}",
