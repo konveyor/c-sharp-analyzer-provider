@@ -1,10 +1,11 @@
 use std::path::PathBuf;
 use std::sync::Arc;
 
+use anyhow::anyhow;
 use serde::Deserialize;
 use stack_graphs::graph::StackGraph;
 use stack_graphs::storage::SQLiteWriter;
-use tokio::sync::Mutex;
+use tokio::sync::{Mutex, RwLock};
 use tokio_stream::wrappers::ReceiverStream;
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info, warn};
@@ -57,7 +58,7 @@ struct CSharpCondition {
 pub struct CSharpProvider {
     pub db_path: PathBuf,
     pub config: Arc<Mutex<Option<Config>>>,
-    pub project: Arc<Mutex<Option<Arc<Project>>>>,
+    pub project: Arc<RwLock<Option<Project>>>,
     pub context_lines: usize,
 }
 
@@ -66,7 +67,7 @@ impl CSharpProvider {
         CSharpProvider {
             db_path,
             config: Arc::new(Mutex::new(None)),
-            project: Arc::new(Mutex::new(None)),
+            project: Arc::new(RwLock::new(None)),
             context_lines,
         }
     }
@@ -110,27 +111,23 @@ impl ProviderService for CSharpProvider {
         let location = PathBuf::from(saved_config.location.clone());
         let tools = Project::get_tools(&saved_config.provider_specific_config)
             .map_err(|e| Status::invalid_argument(format!("unalble to find tools: {}", e)))?;
-        let project = Arc::new(Project::new(
+        let project = Project::new(
             location,
             self.db_path.clone(),
             analysis_mode,
             tools,
-        ));
-        let project_lock = self.project.clone();
-        let mut project_guard = project_lock.lock().await;
-        let _ = project_guard.replace(project.clone());
-        drop(project_guard);
+        );
+        
+        // Store the project in the shared state
+        {
+            let mut project_guard = self.project.write().await;
+            *project_guard = Some(project);
+        }
         drop(config_guard);
 
-        let project_guard = project_lock.lock().await;
-        let project = match project_guard.as_ref() {
-            Some(x) => x,
-            None => {
-                return Err(Status::internal(
-                    "unable to create language configuration for project",
-                ));
-            }
-        };
+        let project_guard = Arc::clone(&self.project).read_owned().await;
+        let project = project_guard.as_ref()
+            .ok_or_else(|| Status::internal("unable to create language configuration for project"))?;
 
         info!("getting the dotnet target framework for the project");
 
@@ -167,7 +164,7 @@ impl ProviderService for CSharpProvider {
                             &target_framework,
                         );
 
-                        let project_clone = project.clone();
+                        let project_arc = self.project.clone();
                         let dotnet_install_cmd = project.tools.dotnet_install_cmd.clone();
                         let is_netstandard = target_framework.is_netstandard();
 
@@ -177,10 +174,12 @@ impl ProviderService for CSharpProvider {
                                 source,
                             } => {
                                 info!("Using {} SDK at: {:?}", source, sdk_path);
+                                let project_arc = project_arc.clone();
                                 Some(tokio::spawn(async move {
-                                    project_clone
-                                        .load_sdk_from_path(&sdk_path, &target_framework)
-                                        .await
+                                    let guard = project_arc.read().await;
+                                    let project = guard.as_ref()
+                                        .ok_or_else(|| anyhow!("Project not initialized"))?;
+                                    project.load_sdk_from_path(&sdk_path, &target_framework).await
                                 }))
                             }
                             SdkSource::NotFound => {
@@ -208,8 +207,10 @@ impl ProviderService for CSharpProvider {
                                                         "Successfully installed .NET SDK at: {:?}",
                                                         sdk_path
                                                     );
-                                                    project_clone
-                                                        .load_sdk_from_path(
+                                                    let guard = project_arc.read().await;
+                                                    let project = guard.as_ref()
+                                                        .ok_or_else(|| anyhow!("Project not initialized"))?;
+                                                    project.load_sdk_from_path(
                                                             &sdk_path,
                                                             &target_framework,
                                                         )
@@ -364,7 +365,7 @@ impl ProviderService for CSharpProvider {
             })?;
 
         debug!("condition: {:?}", condition);
-        let project_guard = self.project.lock().await;
+        let project_guard = self.project.read().await;
         let project = match project_guard.as_ref() {
             Some(x) => x,
             None => {
@@ -570,9 +571,9 @@ impl ProviderService for CSharpProvider {
         );
 
         // Incrementally update the graph for changed files
-        let project_guard = self.project.lock().await;
+        let project_guard = self.project.read().await;
         let project = match project_guard.as_ref() {
-            Some(p) => p.clone(),
+            Some(p) => p,
             None => {
                 warn!("No project initialized, cannot update graph");
                 return Ok(Response::new(NotifyFileChangesResponse {

@@ -258,15 +258,14 @@ impl Project {
         }
     }
 
-    pub async fn validate_language_configuration(self: &Arc<Self>) -> Result<(), Error> {
-        let clone = self.clone();
+    pub async fn validate_language_configuration(&self) -> Result<(), Error> {
         let lc = SourceNodeLanguageConfiguration::new(&tree_sitter_stack_graphs::NoCancellation)?;
-        let mut lc_guard = clone.source_language_config.write().await;
+        let mut lc_guard = self.source_language_config.write().await;
         lc_guard.replace(lc);
         Ok(())
     }
 
-    pub async fn get_project_graph(self: &Arc<Self>) -> Result<usize, Error> {
+    pub async fn get_project_graph(&self) -> Result<usize, Error> {
         if self.db_path.exists() {
             debug!("trying to load from existing db: {:?}", &self.db_path);
             // Load the stack_graph.
@@ -333,9 +332,8 @@ impl Project {
         Ok(initialized_results.files_loaded)
     }
 
-    pub async fn get_source_type(self: &Arc<Self>) -> Option<Arc<SourceType>> {
-        let clone = self.source_language_config.clone();
-        let lc_guard = clone.read().await;
+    pub async fn get_source_type(&self) -> Option<Arc<SourceType>> {
+        let lc_guard = self.source_language_config.read().await;
 
         match lc_guard.as_ref() {
             Some(x) => match self.analysis_mode {
