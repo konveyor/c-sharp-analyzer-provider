@@ -101,7 +101,9 @@ impl ProviderService for CSharpProvider {
         let mut config_guard = self.config.lock().await;
         let saved_config = config_guard.insert(r.get_ref().clone());
 
-        let analysis_mode = AnalysisMode::from(saved_config.analysis_mode.clone());
+        // Hard-code analysis_mode to SourceOnly to always run source-analysis
+        // TODO: fetch analysis_mode from config when we get a real use case for full analysis
+        let analysis_mode = AnalysisMode::SourceOnly;
         let location = PathBuf::from(saved_config.location.clone());
         let tools = Project::get_tools(&saved_config.provider_specific_config)
             .map_err(|e| Status::invalid_argument(format!("unalble to find tools: {}", e)))?;
