@@ -169,6 +169,7 @@ impl ProviderService for CSharpProvider {
 
                         let project_clone = project.clone();
                         let dotnet_install_cmd = project.tools.dotnet_install_cmd.clone();
+                        let is_netstandard = target_framework.is_netstandard();
 
                         match sdk_source {
                             SdkSource::Found {
@@ -183,40 +184,50 @@ impl ProviderService for CSharpProvider {
                                 }))
                             }
                             SdkSource::NotFound => {
-                                info!(
-                                    "No existing SDK found, falling back to dotnet-install script"
-                                );
-                                if let Some(script_path) = dotnet_install_cmd {
-                                    Some(tokio::spawn(async move {
-                                        info!("Installing SDK using script: {:?}", script_path);
-                                        let install_result =
-                                            target_framework.install_sdk(&script_path);
-
-                                        match install_result {
-                                            Ok(sdk_path) => {
-                                                info!(
-                                                    "Successfully installed .NET SDK at: {:?}",
-                                                    sdk_path
-                                                );
-                                                project_clone
-                                                    .load_sdk_from_path(
-                                                        &sdk_path,
-                                                        &target_framework,
-                                                    )
-                                                    .await
-                                            }
-                                            Err(e) => {
-                                                info!(
-                                                    "Could not install .NET SDK for {}: {}. Continuing without SDK XML files.",
-                                                    target_framework, e
-                                                );
-                                                Err(e)
-                                            }
-                                        }
-                                    }))
-                                } else {
-                                    warn!("No SDK found and no dotnet-install script available");
+                                if is_netstandard {
+                                    info!(
+                                        "No NETStandard.Library.Ref found for {}. \
+                                         dotnet-install cannot install netstandard reference packs. \
+                                         Continuing without SDK XML files.",
+                                        target_framework
+                                    );
                                     None
+                                } else {
+                                    info!(
+                                        "No existing SDK found, falling back to dotnet-install script"
+                                    );
+                                    if let Some(script_path) = dotnet_install_cmd {
+                                        Some(tokio::spawn(async move {
+                                            info!("Installing SDK using script: {:?}", script_path);
+                                            let install_result =
+                                                target_framework.install_sdk(&script_path);
+
+                                            match install_result {
+                                                Ok(sdk_path) => {
+                                                    info!(
+                                                        "Successfully installed .NET SDK at: {:?}",
+                                                        sdk_path
+                                                    );
+                                                    project_clone
+                                                        .load_sdk_from_path(
+                                                            &sdk_path,
+                                                            &target_framework,
+                                                        )
+                                                        .await
+                                                }
+                                                Err(e) => {
+                                                    info!(
+                                                        "Could not install .NET SDK for {}: {}. Continuing without SDK XML files.",
+                                                        target_framework, e
+                                                    );
+                                                    Err(e)
+                                                }
+                                            }
+                                        }))
+                                    } else {
+                                        warn!("No SDK found and no dotnet-install script available");
+                                        None
+                                    }
                                 }
                             }
                         }

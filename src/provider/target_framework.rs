@@ -115,6 +115,11 @@ impl TargetFramework {
         &self.0
     }
 
+    /// Check if this TFM targets .NET Standard
+    pub(crate) fn is_netstandard(&self) -> bool {
+        self.0.starts_with("netstandard")
+    }
+
     /// Convert TFM to dotnet-install channel format
     /// The dotnet-install script expects version numbers, not TFM format
     ///
@@ -417,10 +422,11 @@ impl TargetFrameworkHelper {
 
     /// Find and collect XML documentation files from the SDK reference packs
     /// Looks in SDK_PATH/packs/ for:
-    /// - Microsoft.NETCore.App.Ref/<version>/ref/<tfm>
-    /// - Microsoft.AspNetCore.App.Ref/<version>/ref/<tfm>
+    /// - Microsoft.NETCore.App.Ref/<version>/ref/<tfm> (for .NET Core / modern .NET)
+    /// - Microsoft.AspNetCore.App.Ref/<version>/ref/<tfm> (for .NET Core / modern .NET)
+    /// - NETStandard.Library.Ref/<version>/ref/<tfm> (for netstandard TFMs)
     ///
-    /// Skips OS-specific packs and NetStandard directories
+    /// Skips OS-specific packs
     pub(crate) fn find_sdk_xml_files(
         sdk_path: &PathBuf,
         tfm: &TargetFramework,
@@ -435,8 +441,12 @@ impl TargetFrameworkHelper {
             return Ok(xml_files);
         }
 
-        // Reference pack names to search (skip OS-specific and NetStandard)
-        let ref_packs = vec!["Microsoft.NETCore.App.Ref", "Microsoft.AspNetCore.App.Ref"];
+        // Reference pack names to search (skip OS-specific packs)
+        let ref_packs = if tfm.is_netstandard() {
+            vec!["NETStandard.Library.Ref"]
+        } else {
+            vec!["Microsoft.NETCore.App.Ref", "Microsoft.AspNetCore.App.Ref"]
+        };
 
         for pack_name in ref_packs {
             let pack_dir = packs_dir.join(pack_name);
@@ -987,5 +997,109 @@ mod tests {
         // So this tests the internal logic
         let invalid_tfm = TargetFramework("invalid".to_string());
         assert!(invalid_tfm.to_channel().is_err());
+    }
+
+    #[test]
+    fn test_find_sdk_xml_files_netstandard() {
+        use std::sync::atomic::{AtomicUsize, Ordering};
+        static COUNTER: AtomicUsize = AtomicUsize::new(0);
+
+        let id = COUNTER.fetch_add(1, Ordering::SeqCst);
+        let test_dir = std::env::temp_dir()
+            .join("find_xml_tests")
+            .join(format!("test_{}", id));
+        let _ = std::fs::remove_dir_all(&test_dir);
+
+        // Create NETStandard.Library.Ref structure with XML files
+        let ref_dir = test_dir
+            .join("packs")
+            .join("NETStandard.Library.Ref")
+            .join("2.1.0")
+            .join("ref")
+            .join("netstandard2.1");
+        std::fs::create_dir_all(&ref_dir).unwrap();
+        std::fs::write(ref_dir.join("netstandard.xml"), "<doc/>").unwrap();
+        std::fs::write(ref_dir.join("netstandard.dll"), "").unwrap();
+
+        let tfm = TargetFramework::from_str("netstandard2.1").unwrap();
+        let xml_files = TargetFrameworkHelper::find_sdk_xml_files(&test_dir, &tfm).unwrap();
+
+        assert_eq!(xml_files.len(), 1);
+        assert!(xml_files[0].to_string_lossy().contains("netstandard.xml"));
+
+        let _ = std::fs::remove_dir_all(&test_dir);
+    }
+
+    #[test]
+    fn test_find_sdk_xml_files_netstandard_ignores_netcore_packs() {
+        use std::sync::atomic::{AtomicUsize, Ordering};
+        static COUNTER: AtomicUsize = AtomicUsize::new(0);
+
+        let id = COUNTER.fetch_add(1, Ordering::SeqCst);
+        let test_dir = std::env::temp_dir()
+            .join("find_xml_tests_ignore")
+            .join(format!("test_{}", id));
+        let _ = std::fs::remove_dir_all(&test_dir);
+
+        // Create NETCore pack (should be ignored for netstandard TFMs)
+        let netcore_ref = test_dir
+            .join("packs")
+            .join("Microsoft.NETCore.App.Ref")
+            .join("8.0.0")
+            .join("ref")
+            .join("net8.0");
+        std::fs::create_dir_all(&netcore_ref).unwrap();
+        std::fs::write(netcore_ref.join("System.Runtime.xml"), "<doc/>").unwrap();
+
+        let tfm = TargetFramework::from_str("netstandard2.1").unwrap();
+        let xml_files = TargetFrameworkHelper::find_sdk_xml_files(&test_dir, &tfm).unwrap();
+
+        // Should find nothing - netstandard looks for NETStandard.Library.Ref only
+        assert_eq!(xml_files.len(), 0);
+
+        let _ = std::fs::remove_dir_all(&test_dir);
+    }
+
+    #[test]
+    fn test_find_sdk_xml_files_net80_ignores_netstandard_packs() {
+        use std::sync::atomic::{AtomicUsize, Ordering};
+        static COUNTER: AtomicUsize = AtomicUsize::new(0);
+
+        let id = COUNTER.fetch_add(1, Ordering::SeqCst);
+        let test_dir = std::env::temp_dir()
+            .join("find_xml_tests_net80")
+            .join(format!("test_{}", id));
+        let _ = std::fs::remove_dir_all(&test_dir);
+
+        // Create NETCore pack with XML files
+        let netcore_ref = test_dir
+            .join("packs")
+            .join("Microsoft.NETCore.App.Ref")
+            .join("8.0.0")
+            .join("ref")
+            .join("net8.0");
+        std::fs::create_dir_all(&netcore_ref).unwrap();
+        std::fs::write(netcore_ref.join("System.Runtime.xml"), "<doc/>").unwrap();
+
+        // Also create NETStandard pack (should be ignored for net8.0)
+        let netstandard_ref = test_dir
+            .join("packs")
+            .join("NETStandard.Library.Ref")
+            .join("2.1.0")
+            .join("ref")
+            .join("netstandard2.1");
+        std::fs::create_dir_all(&netstandard_ref).unwrap();
+        std::fs::write(netstandard_ref.join("netstandard.xml"), "<doc/>").unwrap();
+
+        let tfm = TargetFramework::from_str("net8.0").unwrap();
+        let xml_files = TargetFrameworkHelper::find_sdk_xml_files(&test_dir, &tfm).unwrap();
+
+        // Should only find the NETCore XML file, not the NETStandard one
+        assert_eq!(xml_files.len(), 1);
+        assert!(xml_files[0]
+            .to_string_lossy()
+            .contains("System.Runtime.xml"));
+
+        let _ = std::fs::remove_dir_all(&test_dir);
     }
 }
