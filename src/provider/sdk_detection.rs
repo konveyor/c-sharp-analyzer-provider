@@ -141,35 +141,42 @@ impl SdkDetector {
             return false;
         }
 
-        // Look for Microsoft.NETCore.App.Ref pack
-        let netcore_pack = packs_path.join("Microsoft.NETCore.App.Ref");
-        if !netcore_pack.exists() {
-            debug!("No Microsoft.NETCore.App.Ref found at {:?}", netcore_pack);
+        let tfm_str = target_framework.as_str();
+
+        // Determine which reference pack to look for based on TFM
+        let pack_name = if target_framework.is_netstandard() {
+            "NETStandard.Library.Ref"
+        } else {
+            "Microsoft.NETCore.App.Ref"
+        };
+
+        let pack_dir = packs_path.join(pack_name);
+        if !pack_dir.exists() {
+            debug!("No {} found at {:?}", pack_name, pack_dir);
             return false;
         }
 
         // Find available versions
-        let versions: Vec<String> = match std::fs::read_dir(&netcore_pack) {
+        let versions: Vec<String> = match std::fs::read_dir(&pack_dir) {
             Ok(entries) => entries
                 .filter_map(|e| e.ok())
                 .filter(|e| e.path().is_dir())
                 .filter_map(|e| e.file_name().to_str().map(|s| s.to_string()))
                 .collect(),
             Err(e) => {
-                debug!("Failed to read {:?}: {}", netcore_pack, e);
+                debug!("Failed to read {:?}: {}", pack_dir, e);
                 return false;
             }
         };
 
         if versions.is_empty() {
-            debug!("No SDK versions found in {:?}", netcore_pack);
+            debug!("No SDK versions found in {:?}", pack_dir);
             return false;
         }
 
         // Check if any version has the ref/<tfm> directory
-        let tfm_str = target_framework.as_str();
         for version in &versions {
-            let ref_path = netcore_pack.join(version).join("ref").join(tfm_str);
+            let ref_path = pack_dir.join(version).join("ref").join(tfm_str);
             if ref_path.exists() && ref_path.is_dir() {
                 debug!(
                     "Found compatible SDK at {:?} with version {} for TFM {}",
@@ -218,11 +225,21 @@ mod tests {
 
         /// Create a mock SDK structure for the given TFM
         fn create_sdk_structure(&self, tfm: &str) {
+            let pack_name = if tfm.starts_with("netstandard") {
+                "NETStandard.Library.Ref"
+            } else {
+                "Microsoft.NETCore.App.Ref"
+            };
+            let version = if tfm.starts_with("netstandard") {
+                "2.1.0"
+            } else {
+                "8.0.0"
+            };
             let packs = self
                 .path
                 .join("packs")
-                .join("Microsoft.NETCore.App.Ref")
-                .join("8.0.0")
+                .join(pack_name)
+                .join(version)
                 .join("ref")
                 .join(tfm);
             std::fs::create_dir_all(&packs).unwrap();
@@ -313,6 +330,66 @@ mod tests {
         assert!(matches!(
             result,
             SdkSource::NotFound | SdkSource::Found { .. }
+        ));
+    }
+
+    #[test]
+    fn test_validate_sdk_for_netstandard21() {
+        let test_dir = TestSdkDir::new();
+        test_dir.create_sdk_structure("netstandard2.1");
+
+        let tfm = TargetFramework::from_str("netstandard2.1").unwrap();
+        let result = SdkDetector::validate_sdk_for_tfm(test_dir.path(), &tfm);
+
+        assert!(result);
+    }
+
+    #[test]
+    fn test_validate_sdk_for_netstandard20_not_found() {
+        let test_dir = TestSdkDir::new();
+        // Create netstandard2.1 structure but query for netstandard2.0
+        test_dir.create_sdk_structure("netstandard2.1");
+
+        let tfm = TargetFramework::from_str("netstandard2.0").unwrap();
+        let result = SdkDetector::validate_sdk_for_tfm(test_dir.path(), &tfm);
+
+        assert!(!result);
+    }
+
+    #[test]
+    fn test_validate_sdk_netstandard_does_not_check_netcore_pack() {
+        let test_dir = TestSdkDir::new();
+        // Create a NETCore pack with net8.0 but no NETStandard pack
+        let netcore_packs = test_dir
+            .path
+            .join("packs")
+            .join("Microsoft.NETCore.App.Ref")
+            .join("8.0.0")
+            .join("ref")
+            .join("net8.0");
+        std::fs::create_dir_all(&netcore_packs).unwrap();
+
+        let tfm = TargetFramework::from_str("netstandard2.1").unwrap();
+        let result = SdkDetector::validate_sdk_for_tfm(test_dir.path(), &tfm);
+
+        // Should not find it - netstandard looks for NETStandard.Library.Ref, not NETCore
+        assert!(!result);
+    }
+
+    #[test]
+    fn test_find_sdk_with_netstandard_configured_path() {
+        let test_dir = TestSdkDir::new();
+        test_dir.create_sdk_structure("netstandard2.1");
+
+        let tfm = TargetFramework::from_str("netstandard2.1").unwrap();
+        let result = SdkDetector::find_sdk(Some(test_dir.path()), &tfm);
+
+        assert!(matches!(
+            result,
+            SdkSource::Found {
+                source: "configured",
+                ..
+            }
         ));
     }
 }
