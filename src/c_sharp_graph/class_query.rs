@@ -25,7 +25,7 @@ impl GetMatcher for ClassSymbolsGetter {
     where
         Self: std::marker::Sized,
     {
-        debug!("getting FieldSymbols matcher");
+        debug!("getting ClassSymbols matcher");
         ClassSymbols::new(stack_graphs, definition_root_nodes, search)
     }
 }
@@ -35,7 +35,7 @@ pub(crate) struct ClassSymbols {
     classes: BTreeMap<Fqdn, Handle<Node>>,
 }
 
-// Create exposed methods for NamesapceSymbols
+// Create exposed methods for ClassSymbols
 impl ClassSymbols {
     pub(crate) fn new(
         graph: &StackGraph,
@@ -60,7 +60,7 @@ impl ClassSymbols {
 }
 
 impl SymbolMatcher for ClassSymbols {
-    fn match_symbol(&self, symbol: String) -> bool {
+    fn match_symbol(&self, symbol: &str) -> bool {
         self.symbol_in_namespace(symbol)
     }
     fn match_fqdn(&self, fqdn: &Fqdn) -> bool {
@@ -76,7 +76,7 @@ impl SymbolMatcher for ClassSymbols {
     }
 }
 
-// Private methods for NamespaceSymbols
+// Private methods for ClassSymbols
 impl ClassSymbols {
     fn traverse_node(
         graph: &StackGraph,
@@ -137,9 +137,9 @@ impl ClassSymbols {
     // to get the actual "class" of the variable.
     // TODO: Consider scoped things for this(??)
     // TODO: Consider a edge from the var to the class symbol
-    fn symbol_in_namespace(&self, symbol: String) -> bool {
+    fn symbol_in_namespace(&self, symbol: &str) -> bool {
         self.classes.keys().any(|fqdn| {
-            let class = fqdn.class.clone().unwrap_or("".to_string());
+            let class = fqdn.class.as_deref().unwrap_or("");
             class == symbol
         })
     }
@@ -220,9 +220,9 @@ mod tests {
         let search = Search::create_search("*".to_string()).unwrap();
         let class_symbols = ClassSymbols::new(&graph, roots, &search).unwrap();
 
-        assert!(class_symbols.match_symbol("String".to_string()));
-        assert!(class_symbols.match_symbol("StringBuilder".to_string()));
-        assert!(!class_symbols.match_symbol("NonExistent".to_string()));
+        assert!(class_symbols.match_symbol("String"));
+        assert!(class_symbols.match_symbol("StringBuilder"));
+        assert!(!class_symbols.match_symbol("NonExistent"));
     }
 
     #[test]
@@ -301,7 +301,7 @@ mod tests {
 
         // Should only have String, not StringBuilder
         assert_eq!(class_symbols.classes.len(), 1);
-        assert!(class_symbols.match_symbol("String".to_string()));
-        assert!(!class_symbols.match_symbol("StringBuilder".to_string()));
+        assert!(class_symbols.match_symbol("String"));
+        assert!(!class_symbols.match_symbol("StringBuilder"));
     }
 }

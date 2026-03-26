@@ -1,7 +1,6 @@
 use std::{
     collections::{BTreeMap, BTreeSet},
     path::Path,
-    vec,
 };
 
 use anyhow::{Error, Ok};
@@ -56,7 +55,7 @@ impl SyntaxType {
             &_ => Self::Name,
         }
     }
-    pub(crate) fn to_string(&self) -> &str {
+    pub(crate) fn as_str(&self) -> &str {
         match self {
             Self::Import => "import",
             Self::CompUnit => "comp_unit",
@@ -97,7 +96,7 @@ pub(crate) fn get_fqdn(node: Handle<Node>, graph: &StackGraph) -> Option<Fqdn> {
         .into_option()
         .expect("FQDN nodes must have a syntax type")];
     let syntax_type = SyntaxType::get(syntax_type);
-    // if this node that is from a FQDN does not have a symobl something is
+    // if this node that is from a FQDN does not have a symbol something is
     // very wrong in the TSG.
     let symbol_handle = n.symbol().unwrap();
     let symbol = graph[symbol_handle].to_string();
@@ -134,28 +133,28 @@ pub(crate) fn get_fqdn(node: Handle<Node>, graph: &StackGraph) -> Option<Fqdn> {
                 SyntaxType::NamespaceDeclaration => {
                     f.namespace = f.namespace.map_or_else(
                         || Some(symbol.clone()),
-                        |n| Some(format!("{}.{}", n, symbol.clone())),
+                        |n| Some(format!("{}.{}", n, &symbol)),
                     );
                     Some(f)
                 }
                 SyntaxType::MethodName => {
                     f.method = f.method.map_or_else(
                         || Some(symbol.clone()),
-                        |m| Some(format!("{}.{}", m, symbol.clone())),
+                        |m| Some(format!("{}.{}", m, &symbol)),
                     );
                     Some(f)
                 }
                 SyntaxType::ClassDef => {
                     f.class = f.class.map_or_else(
                         || Some(symbol.clone()),
-                        |c| Some(format!("{}.{}", c, symbol.clone())),
+                        |c| Some(format!("{}.{}", c, &symbol)),
                     );
                     Some(f)
                 }
                 SyntaxType::FieldName => {
                     f.field = f.field.map_or_else(
                         || Some(symbol.clone()),
-                        |field| Some(format!("{}.{}", field, symbol.clone())),
+                        |field| Some(format!("{}.{}", field, &symbol)),
                     );
                     Some(f)
                 }
@@ -395,7 +394,7 @@ impl<T: GetMatcher> Querier<'_, T> {
                     used_nodes.insert(node_handle);
                     continue;
                 }
-            } else if !symbol_matcher.match_symbol(symbol.to_string()) {
+            } else if !symbol_matcher.match_symbol(symbol) {
                 used_nodes.insert(node_handle);
                 continue;
             }
@@ -570,7 +569,7 @@ impl<T: GetMatcher> Querier<'_, T> {
         imports
     }
 
-    // Note: This function will only work, on the memeber_access_expresssion
+    // Note: This function will only work, on the member_access_expression
     fn get_type_with_symbol(
         &self,
         node: Handle<Node>,
@@ -835,7 +834,7 @@ impl<T: GetMatcher> Query for Querier<'_, T> {
                 Some(x) => x,
                 None => {
                     error!(
-                        "unable to find compulation unit for file: {}",
+                        "unable to find compilation unit for file: {}",
                         file.display(self.graph)
                     );
                     continue;
@@ -847,17 +846,17 @@ impl<T: GetMatcher> Query for Querier<'_, T> {
                 && !self.graph.nodes_for_file(*file).any(|node_handle| {
                     let node = &self.graph[node_handle];
 
-                    let symobl_handle = symbol_handle.unwrap();
+                    let symbol_handle = symbol_handle.unwrap();
                     if let Some(sh) = node.symbol() {
                         // This compares the source_type symbol handle to the nodes symbol
                         // as symbols are de-duplicated, this will check that the symbol for the
                         // given node is the one that we set for the source_type in the graph.
-                        if sh.as_usize() == symobl_handle.as_usize() {
-                            if self.source_type.get_string() != self.graph[sh] {
+                        if sh.as_usize() == symbol_handle.as_usize() {
+                            if *self.source_type.as_str() != self.graph[sh] {
                                 error!("SOMETHING IS VERY WRONG!!!!");
                             }
-                            // We need to make sure that the compulation unit for the file is
-                            // actually has an edge from teh source_type node.
+                            // We need to make sure that the compilation unit for the file is
+                            // actually has an edge from the source_type node.
                             let edges: Vec<Edge> = self.graph.outgoing_edges(node_handle).collect();
                             for edge in edges {
                                 if edge.sink == *comp_unit_node_handle {
@@ -875,7 +874,7 @@ impl<T: GetMatcher> Query for Querier<'_, T> {
             let mut file_str = f.name().to_string();
             let file_path = Path::new(f.name());
             if !file_path.is_absolute() {
-                file_str = format!("/{}", file_str).clone();
+                file_str = format!("/{}", file_str);
             }
             let file_url = Url::from_file_path(&file_str);
             if file_url.is_err() {
@@ -957,7 +956,7 @@ pub(crate) trait GetMatcher {
 }
 
 pub(crate) trait SymbolMatcher {
-    fn match_symbol(&self, symbol: String) -> bool;
+    fn match_symbol(&self, symbol: &str) -> bool;
     fn match_fqdn(&self, fqdn: &Fqdn) -> bool;
 }
 
@@ -1068,31 +1067,27 @@ impl Search {
                                 // We then need to match the Mvc part with the Mvc Symbol;
                                 part_index += 2;
                                 continue;
-                            } else {
-                                // if it was a star regex for the part, then this would match.
-                                // This means we need to continue to see if we match later.
-                                continue;
                             }
-                        } else {
-                            // ending Star regex, everthing has matched before this is valid.
-                            return part.matches(symbol);
+                            // if it was a star regex for the part, then this would match.
+                            // This means we need to continue to see if we match later.
+                            continue;
                         }
+                        // ending Star regex, everthing has matched before this is valid.
+                        return part.matches(symbol);
                     } else if part.matches(symbol) {
                         part_index += 1;
                         symbol_index += 1;
                         continue;
-                    } else {
-                        return false;
                     }
+                    return false;
                 }
                 (Some(_), None) => {
                     // Here we no longer have parts but have symbols.
                     // check if the last part is star regex, if it is match.
                     if let Some(part) = self.parts.last() {
                         return part.regex.is_some() && part.part == "*";
-                    } else {
-                        return false;
                     }
+                    return false;
                 }
                 (None, Some(_)) => {
                     // If we have parts but no more symbols

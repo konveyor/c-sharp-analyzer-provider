@@ -35,7 +35,7 @@ pub(crate) struct FieldSymbols {
     fields: BTreeMap<Fqdn, Handle<Node>>,
 }
 
-// Create exposed methods for NamesapceSymbols
+// Create exposed methods for FieldSymbols
 impl FieldSymbols {
     pub(crate) fn new(
         graph: &StackGraph,
@@ -58,7 +58,7 @@ impl FieldSymbols {
 }
 
 impl SymbolMatcher for FieldSymbols {
-    fn match_symbol(&self, symbol: String) -> bool {
+    fn match_symbol(&self, symbol: &str) -> bool {
         self.symbol_in_namespace(symbol)
     }
     fn match_fqdn(&self, fqdn: &Fqdn) -> bool {
@@ -66,7 +66,7 @@ impl SymbolMatcher for FieldSymbols {
     }
 }
 
-// Private methods for NamespaceSymbols
+// Private methods for FieldSymbols
 impl FieldSymbols {
     fn traverse_node(
         graph: &StackGraph,
@@ -121,28 +121,22 @@ impl FieldSymbols {
         }
     }
 
-    // Symbol here must be of <thing>.<method_name>.
+    // Symbol here must be of <thing>.<field_name>.
     // <thing> may be a class or a variable.
     // if a variable, we may have to enhance this method
     // to get the actual "class" of the variable.
     // TODO: Consider scoped things for this(??)
     // TODO: Consider a edge from the var to the class symbol
-    fn symbol_in_namespace(&self, symbol: String) -> bool {
+    fn symbol_in_namespace(&self, symbol: &str) -> bool {
         let parts: Vec<&str> = symbol.split(".").collect();
         if parts.len() != 2 {
             return false;
         }
-        let field_part = parts
-            .last()
-            .expect("unable to get method part for symbol")
-            .to_string();
-        let class_part = parts
-            .first()
-            .expect("unable to get class part for symbol")
-            .to_string();
+        let field_part = *parts.last().expect("unable to get field part for symbol");
+        let class_part = *parts.first().expect("unable to get class part for symbol");
         self.fields.keys().any(|fqdn| {
-            let field = fqdn.field.clone().unwrap_or("".to_string());
-            let class = fqdn.class.clone().unwrap_or("".to_string());
+            let field = fqdn.field.as_deref().unwrap_or("");
+            let class = fqdn.class.as_deref().unwrap_or("");
             field == field_part && class == class_part
         })
     }
@@ -231,8 +225,8 @@ mod tests {
         let field_symbols = FieldSymbols::new(&graph, roots, &search).unwrap();
 
         // Valid format: Class.Field
-        assert!(field_symbols.match_symbol("Console.Out".to_string()));
-        assert!(field_symbols.match_symbol("Console.Error".to_string()));
+        assert!(field_symbols.match_symbol("Console.Out"));
+        assert!(field_symbols.match_symbol("Console.Error"));
     }
 
     #[test]
@@ -242,10 +236,10 @@ mod tests {
         let field_symbols = FieldSymbols::new(&graph, roots, &search).unwrap();
 
         // Invalid formats
-        assert!(!field_symbols.match_symbol("Out".to_string())); // No class
-        assert!(!field_symbols.match_symbol("System.Console.Out".to_string())); // Too many parts
-        assert!(!field_symbols.match_symbol("Console.NonExistent".to_string())); // Wrong field
-        assert!(!field_symbols.match_symbol("WrongClass.Out".to_string())); // Wrong class
+        assert!(!field_symbols.match_symbol("Out")); // No class
+        assert!(!field_symbols.match_symbol("System.Console.Out")); // Too many parts
+        assert!(!field_symbols.match_symbol("Console.NonExistent")); // Wrong field
+        assert!(!field_symbols.match_symbol("WrongClass.Out")); // Wrong class
     }
 
     #[test]
@@ -290,7 +284,7 @@ mod tests {
 
         // Should only have Out
         assert_eq!(field_symbols.fields.len(), 1);
-        assert!(field_symbols.match_symbol("Console.Out".to_string()));
-        assert!(!field_symbols.match_symbol("Console.Error".to_string()));
+        assert!(field_symbols.match_symbol("Console.Out"));
+        assert!(!field_symbols.match_symbol("Console.Error"));
     }
 }

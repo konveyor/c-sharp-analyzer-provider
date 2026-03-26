@@ -35,7 +35,7 @@ pub(crate) struct MethodSymbols {
     methods: BTreeMap<Fqdn, Handle<Node>>,
 }
 
-// Create exposed methods for NamesapceSymbols
+// Create exposed methods for MethodSymbols
 impl MethodSymbols {
     pub(crate) fn new(
         graph: &StackGraph,
@@ -60,7 +60,7 @@ impl MethodSymbols {
 }
 
 impl SymbolMatcher for MethodSymbols {
-    fn match_symbol(&self, symbol: String) -> bool {
+    fn match_symbol(&self, symbol: &str) -> bool {
         self.symbol_in_namespace(symbol)
     }
     fn match_fqdn(&self, fqdn: &Fqdn) -> bool {
@@ -68,7 +68,7 @@ impl SymbolMatcher for MethodSymbols {
     }
 }
 
-// Private methods for NamespaceSymbols
+// Private methods for MethodSymbols
 impl MethodSymbols {
     fn traverse_node(
         graph: &StackGraph,
@@ -122,23 +122,17 @@ impl MethodSymbols {
     // to get the actual "class" of the variable.
     // TODO: Consider scoped things for this(??)
     // TODO: Consider a edge from the var to the class symbol
-    fn symbol_in_namespace(&self, symbol: String) -> bool {
+    fn symbol_in_namespace(&self, symbol: &str) -> bool {
         trace!("checking symbol: {}", symbol);
         let parts: Vec<&str> = symbol.split(".").collect();
         if parts.len() != 2 {
             return false;
         }
-        let method_part = parts
-            .last()
-            .expect("unable to get method part for symbol")
-            .to_string();
-        let class_part = parts
-            .first()
-            .expect("unable to get class part for symbol")
-            .to_string();
+        let method_part = *parts.last().expect("unable to get method part for symbol");
+        let class_part = *parts.first().expect("unable to get class part for symbol");
         self.methods.keys().any(|fqdn| {
-            let method = fqdn.method.clone().unwrap_or("".to_string());
-            let class = fqdn.class.clone().unwrap_or("".to_string());
+            let method = fqdn.method.as_deref().unwrap_or("");
+            let class = fqdn.class.as_deref().unwrap_or("");
             method == method_part && class == class_part
         })
     }
@@ -227,8 +221,8 @@ mod tests {
         let method_symbols = MethodSymbols::new(&graph, roots, &search).unwrap();
 
         // Valid format: Class.Method
-        assert!(method_symbols.match_symbol("String.Format".to_string()));
-        assert!(method_symbols.match_symbol("String.Concat".to_string()));
+        assert!(method_symbols.match_symbol("String.Format"));
+        assert!(method_symbols.match_symbol("String.Concat"));
     }
 
     #[test]
@@ -238,10 +232,10 @@ mod tests {
         let method_symbols = MethodSymbols::new(&graph, roots, &search).unwrap();
 
         // Invalid formats
-        assert!(!method_symbols.match_symbol("Format".to_string())); // No class
-        assert!(!method_symbols.match_symbol("System.String.Format".to_string())); // Too many parts
-        assert!(!method_symbols.match_symbol("String.NonExistent".to_string())); // Wrong method
-        assert!(!method_symbols.match_symbol("WrongClass.Format".to_string())); // Wrong class
+        assert!(!method_symbols.match_symbol("Format")); // No class
+        assert!(!method_symbols.match_symbol("System.String.Format")); // Too many parts
+        assert!(!method_symbols.match_symbol("String.NonExistent")); // Wrong method
+        assert!(!method_symbols.match_symbol("WrongClass.Format")); // Wrong class
     }
 
     #[test]
@@ -286,7 +280,7 @@ mod tests {
 
         // Should only have Format
         assert_eq!(method_symbols.methods.len(), 1);
-        assert!(method_symbols.match_symbol("String.Format".to_string()));
-        assert!(!method_symbols.match_symbol("String.Concat".to_string()));
+        assert!(method_symbols.match_symbol("String.Format"));
+        assert!(!method_symbols.match_symbol("String.Concat"));
     }
 }

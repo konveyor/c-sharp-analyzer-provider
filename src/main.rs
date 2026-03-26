@@ -96,13 +96,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             let id = ATOMIC_ID.fetch_add(1, Ordering::SeqCst);
             format!("worker-{}", id)
         })
-        .worker_threads(32)
+        // Use available parallelism, capped at 32 threads
+        .worker_threads(std::thread::available_parallelism().map_or(4, |n| n.get().min(32)))
         .enable_all()
         .build()?;
 
     let db_path = args
         .db_path
-        .map_or(temp_dir().join("c_sharp_provider.db"), |x| x);
+        .unwrap_or_else(|| temp_dir().join("c_sharp_provider.db"));
     let provider = Arc::new(CSharpProvider::new(
         db_path,
         args.context_lines.unwrap_or(10),
@@ -112,14 +113,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .build_v1alpha()
         .unwrap();
 
-    if args.port.is_some() {
-        let s = format!("[::]:{}", args.port.unwrap());
+    if let Some(port) = args.port {
+        let s = format!("[::]:{}", port);
         info!("Using gRPC over HTTP/2 on port {}", s);
 
         let addr = s.parse()?;
 
         rt.block_on(async {
-            let _ = Server::builder()
+            if let Err(e) = Server::builder()
                 .http2_max_pending_accept_reset_streams(Some(30))
                 .add_service(ProviderServiceServer::from_arc(provider.clone()))
                 .add_service(ProviderCodeLocationServiceServer::from_arc(
@@ -128,7 +129,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .add_service(service)
                 .serve(addr)
                 .with_current_subscriber()
-                .await;
+                .await
+            {
+                tracing::error!("gRPC server error: {}", e);
+            }
         });
     } else {
         info!("using uds");
@@ -140,15 +144,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 use tokio::net::UnixListener;
                 use tokio_stream::wrappers::UnixListenerStream;
 
-                let uds = UnixListener::bind(args.socket.unwrap());
-                if let Err(err) = uds {
-                    use tracing_log::log::error;
-
-                    error!("unable to get listener: {err}");
-                    return;
-                }
-                let uds_stream = UnixListenerStream::new(uds.unwrap());
-                let _ = Server::builder()
+                let socket_path = args.socket.expect("either --port or --socket must be specified");
+                let uds = match UnixListener::bind(socket_path) {
+                    Ok(listener) => listener,
+                    Err(err) => {
+                        tracing::error!("unable to bind listener: {err}");
+                        return;
+                    }
+                };
+                let uds_stream = UnixListenerStream::new(uds);
+                if let Err(e) = Server::builder()
                     .http2_keepalive_timeout(Some(Duration::new(20, 0)))
                     .http2_keepalive_interval(Some(Duration::new(7200, 0)))
                     .tcp_keepalive(Some(Duration::new(7200, 0)))
@@ -159,7 +164,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     .add_service(service)
                     .serve_with_incoming(uds_stream)
                     .with_current_subscriber()
-                    .await;
+                    .await
+                {
+                    tracing::error!("gRPC server error: {}", e);
+                }
             });
         }
         #[cfg(target_os = "windows")]
@@ -167,7 +175,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             debug!("Using Windows OS");
             use crate::pipe_stream::get_named_pipe_connection_stream;
             rt.block_on(async {
-                let _ = Server::builder()
+                if let Err(e) = Server::builder()
                     .http2_keepalive_timeout(Some(Duration::new(20, 0)))
                     .http2_keepalive_interval(Some(Duration::new(7200, 0)))
                     .tcp_keepalive(Some(Duration::new(7200, 0)))
@@ -178,7 +186,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     .add_service(service)
                     .serve_with_incoming(get_named_pipe_connection_stream(args.socket.unwrap()))
                     .with_current_subscriber()
-                    .await;
+                    .await
+                {
+                    tracing::error!("gRPC server error: {}", e);
+                }
             });
         }
     }

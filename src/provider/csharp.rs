@@ -10,13 +10,12 @@ use tokio_stream::wrappers::ReceiverStream;
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info, warn};
 use url::Url;
-use utoipa::{OpenApi, ToSchema};
+use utoipa::ToSchema;
 
 use crate::c_sharp_graph::loader::load_and_store_file;
 use crate::c_sharp_graph::query::{Query, QueryType};
 use crate::c_sharp_graph::results::ResultNode;
 use crate::c_sharp_graph::NotFoundError;
-//use crate::c_sharp_graph::find_node::FindNode;
 use crate::provider::sdk_detection::{SdkDetector, SdkSource};
 use crate::provider::target_framework;
 use crate::provider::AnalysisMode;
@@ -77,25 +76,12 @@ impl CSharpProvider {
 impl ProviderService for CSharpProvider {
     type StreamPrepareProgressStream = ReceiverStream<Result<ProgressEvent, Status>>;
     async fn capabilities(&self, _: Request<()>) -> Result<Response<CapabilitiesResponse>, Status> {
-        // Add Referenced
-
-        #[derive(OpenApi)]
-        struct ApiDoc;
-
-        let openapi = ApiDoc::openapi();
-        let json = openapi.to_pretty_json();
-        if json.is_err() {
-            return Err(Status::from_error(Box::new(json.err().unwrap())));
-        }
-
-        debug!("returning refernced capability: {:?}", json.ok());
-
-        return Ok(Response::new(CapabilitiesResponse {
+        Ok(Response::new(CapabilitiesResponse {
             capabilities: vec![Capability {
                 name: "referenced".to_string(),
                 template_context: None,
             }],
-        }));
+        }))
     }
 
     async fn init(&self, r: Request<Config>) -> Result<Response<InitResponse>, Status> {
@@ -110,7 +96,7 @@ impl ProviderService for CSharpProvider {
         }
         let location = PathBuf::from(saved_config.location.clone());
         let tools = Project::get_tools(&saved_config.provider_specific_config)
-            .map_err(|e| Status::invalid_argument(format!("unalble to find tools: {}", e)))?;
+            .map_err(|e| Status::invalid_argument(format!("unable to find tools: {}", e)))?;
         let project = Project::new(
             location,
             self.db_path.clone(),
@@ -147,11 +133,11 @@ impl ProviderService for CSharpProvider {
                     let tfm_str = target_framework.as_str();
                     let is_modern_dotnet = tfm_str.starts_with("netcoreapp")
                         || tfm_str.starts_with("netstandard")
-                        || tfm_str.starts_with("net")
+                        || (tfm_str.starts_with("net")
                             && !tfm_str.starts_with("net4")
                             && !tfm_str.starts_with("net3")
                             && !tfm_str.starts_with("net2")
-                            && !tfm_str.starts_with("net1");
+                            && !tfm_str.starts_with("net1"));
 
                     if is_modern_dotnet {
                         info!(
@@ -292,19 +278,19 @@ impl ProviderService for CSharpProvider {
             }
         }
 
-        info!("adding depdencies to stack graph database");
+        info!("adding dependencies to stack graph database");
         let res = project.load_to_database().await;
         debug!(
             "loading project to database: {:?} -- project: {:?}",
             res, project
         );
 
-        return Ok(Response::new(InitResponse {
+        Ok(Response::new(InitResponse {
             error: String::new(),
             successful: true,
             id: 4,
             builtin_config: None,
-        }));
+        }))
     }
 
     async fn prepare(
@@ -487,43 +473,38 @@ impl ProviderService for CSharpProvider {
                 }
             }
         };
-        if results.response.is_some()
-            && !results
-                .response
-                .as_ref()
-                .unwrap()
-                .incident_contexts
-                .is_empty()
-        {
-            info!("returning results: {:?}", results);
+        if let Some(ref response) = results.response {
+            if !response.incident_contexts.is_empty() {
+                info!("returning results: {:?}", results);
+            }
         }
-        return Ok(Response::new(results));
+        Ok(Response::new(results))
     }
 
     async fn stop(&self, _: Request<ServiceRequest>) -> Result<Response<()>, Status> {
-        return Ok(Response::new(()));
+        Ok(Response::new(()))
     }
 
     async fn get_dependencies(
         &self,
         _: Request<ServiceRequest>,
     ) -> Result<Response<DependencyResponse>, Status> {
-        return Ok(Response::new(DependencyResponse {
+        Ok(Response::new(DependencyResponse {
             successful: true,
             error: String::new(),
             file_dep: vec![],
-        }));
+        }))
     }
 
     async fn get_dependencies_dag(
         &self,
         _: Request<ServiceRequest>,
     ) -> Result<Response<DependencyDagResponse>, Status> {
-        return Ok(Response::new(DependencyDagResponse {
+        Ok(Response::new(DependencyDagResponse {
             successful: true,
             error: String::new(),
             file_dag_dep: vec![],
-        }));
+        }))
     }
 
     async fn notify_file_changes(

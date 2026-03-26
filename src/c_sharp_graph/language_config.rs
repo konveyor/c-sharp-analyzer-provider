@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use std::borrow::Cow;
 use std::sync::Arc;
 
@@ -33,7 +32,7 @@ const BUILTINS_FILENAME: &str = "<builtins>";
 pub struct SourceNodeLanguageConfiguration {
     pub language_config: LanguageConfiguration,
     pub source_type_node_info: Arc<SourceType>,
-    pub dependnecy_type_node_info: Arc<SourceType>,
+    pub dependency_type_node_info: Arc<SourceType>,
 }
 
 impl SourceNodeLanguageConfiguration {
@@ -51,7 +50,7 @@ impl SourceNodeLanguageConfiguration {
             tsg: Cow::from(STACK_GRAPHS_TSG_SOURCE),
         })?;
         let mut builtins = StackGraph::new();
-        let (source_type_node_info, dependnecy_type_node_info) =
+        let (source_type_node_info, dependency_type_node_info) =
             SourceType::load_symbols_into_graph(&mut builtins);
         let mut builtins_globals = Variables::new();
 
@@ -64,7 +63,7 @@ impl SourceNodeLanguageConfiguration {
         let file = builtins.add_file(BUILTINS_FILENAME).unwrap();
         let source_type_node_id = source_type_node_info.load_node_to_graph(&mut builtins, file)?;
         let dependency_type_node_id =
-            dependnecy_type_node_info.load_node_to_graph(&mut builtins, file)?;
+            dependency_type_node_info.load_node_to_graph(&mut builtins, file)?;
         let _ = match builtins.add_pop_symbol_node(
             source_type_node_id,
             source_type_node_info.get_symbol_handle(),
@@ -77,7 +76,7 @@ impl SourceNodeLanguageConfiguration {
         };
         let _ = match builtins.add_pop_symbol_node(
             dependency_type_node_id,
-            dependnecy_type_node_info.get_symbol_handle(),
+            dependency_type_node_info.get_symbol_handle(),
             false,
         ) {
             Some(x) => x,
@@ -90,19 +89,10 @@ impl SourceNodeLanguageConfiguration {
             sgl.builder_into_stack_graph(&mut builtins, file, STACK_GRAPHS_BUILTINS_SOURCE);
         let graph_node =
             builder.inject_node(NodeID::new_in_file(file, source_type_node_id.local_id()));
-        match builtins_globals.get(&SOURCE_TYPE_NODE.into()) {
-            Some(_) => {
-                builtins_globals.remove(&SOURCE_TYPE_NODE.into());
-                builtins_globals
-                    .add(SOURCE_TYPE_NODE.into(), graph_node.into())
-                    .unwrap_or_default();
-            }
-            None => {
-                builtins_globals
-                    .add(SOURCE_TYPE_NODE.into(), graph_node.into())
-                    .unwrap_or_default();
-            }
-        };
+        builtins_globals.remove(&SOURCE_TYPE_NODE.into());
+        builtins_globals
+            .add(SOURCE_TYPE_NODE.into(), graph_node.into())
+            .unwrap_or_default();
 
         sgl.build_stack_graph_into(
             &mut builtins,
@@ -128,11 +118,10 @@ impl SourceNodeLanguageConfiguration {
             special_files: FileAnalyzers::new(),
             no_similar_paths_in_file: false,
         };
-        //let loader = Loader::from_language_configurations(vec![lc], None)?;
         Ok(SourceNodeLanguageConfiguration {
             language_config: lc,
             source_type_node_info: Arc::new(source_type_node_info),
-            dependnecy_type_node_info: Arc::new(dependnecy_type_node_info),
+            dependency_type_node_info: Arc::new(dependency_type_node_info),
         })
     }
 }

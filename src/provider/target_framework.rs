@@ -40,7 +40,7 @@ impl TargetFramework {
 
         loop {
             match reader.read_event_into(&mut buf) {
-                Ok(Event::Start(e)) | Ok(Event::Empty(e)) => {
+                Ok(Event::Start(e) | Event::Empty(e)) => {
                     let name = e.name();
                     match name.as_ref() {
                         b"PropertyGroup" => {
@@ -181,7 +181,11 @@ impl TargetFramework {
     /// Returns the path to the installed SDK directory
     pub(crate) fn install_sdk(&self, dotnet_install_script: &PathBuf) -> Result<PathBuf, Error> {
         info!("install_sdk() called for target framework: {}", self.0);
-        info!("Script path: {:?}, exists: {}", dotnet_install_script, dotnet_install_script.exists());
+        info!(
+            "Script path: {:?}, exists: {}",
+            dotnet_install_script,
+            dotnet_install_script.exists()
+        );
 
         // Convert TFM to channel format for dotnet-install script
         let channel = self.to_channel()?;
@@ -199,7 +203,10 @@ impl TargetFramework {
         );
 
         // Run the installation script
-        info!("Running dotnet-install for channel {} to {:?}", channel, install_dir);
+        info!(
+            "Running dotnet-install for channel {} to {:?}",
+            channel, install_dir
+        );
         let output = if cfg!(windows) {
             Command::new("powershell")
                 .arg("-ExecutionPolicy")
@@ -220,7 +227,10 @@ impl TargetFramework {
                 .output()?
         };
 
-        info!("dotnet-install script completed with status: {:?}", output.status);
+        info!(
+            "dotnet-install script completed with status: {:?}",
+            output.status
+        );
         info!("Script stdout: {}", String::from_utf8_lossy(&output.stdout));
         info!("Script stderr: {}", String::from_utf8_lossy(&output.stderr));
 
@@ -230,7 +240,11 @@ impl TargetFramework {
                 output.status,
                 String::from_utf8_lossy(&output.stderr)
             );
-            return Err(anyhow!("Failed to install .NET SDK for {}: {}", self.0, String::from_utf8_lossy(&output.stderr)));
+            return Err(anyhow!(
+                "Failed to install .NET SDK for {}: {}",
+                self.0,
+                String::from_utf8_lossy(&output.stderr)
+            ));
         }
 
         info!("Successfully installed .NET SDK to {:?}", install_dir);
@@ -270,13 +284,12 @@ impl TargetFramework {
                     trimmed, base_framework
                 );
                 return Ok(base_framework.to_string());
-            } else {
-                return Err(anyhow!(
-                    "Invalid base TFM '{}' in platform-specific TFM '{}'",
-                    base_framework,
-                    trimmed
-                ));
             }
+            return Err(anyhow!(
+                "Invalid base TFM '{}' in platform-specific TFM '{}'",
+                base_framework,
+                trimmed
+            ));
         }
 
         // Validate and pass through modern TFMs
