@@ -9,8 +9,8 @@ use anyhow::{anyhow, Error};
 use prost_types::{Struct, Value};
 use serde::Deserialize;
 use stack_graphs::{
-    graph::StackGraph, serde::StackGraph as serialize_stack_graph, stitching::ForwardCandidates,
-    storage::SQLiteReader, NoCancellation,
+    graph::StackGraph, serde::StackGraph as SerializableStackGraph,
+    stitching::ForwardCandidates, storage::SQLiteReader, NoCancellation,
 };
 use tokio::sync::{Mutex as TokioMutex, RwLock};
 use tracing::{debug, info, warn};
@@ -48,22 +48,16 @@ impl From<&str> for AnalysisMode {
         }
     }
 }
+
 impl From<&String> for AnalysisMode {
     fn from(value: &String) -> Self {
-        match value.as_str() {
-            "full" => AnalysisMode::Full,
-            "source-only" => AnalysisMode::SourceOnly,
-            _ => AnalysisMode::Full,
-        }
+        AnalysisMode::from(value.as_str())
     }
 }
+
 impl From<String> for AnalysisMode {
     fn from(value: String) -> Self {
-        match value.as_str() {
-            "full" => AnalysisMode::Full,
-            "source-only" => AnalysisMode::SourceOnly,
-            _ => AnalysisMode::Full,
-        }
+        AnalysisMode::from(value.as_str())
     }
 }
 
@@ -117,8 +111,9 @@ impl Project {
     }
 
     pub(crate) fn set_target_framework(&self, tfm: TargetFramework) {
-        if let Ok(mut guard) = self.target_framework.lock() {
-            *guard = Some(tfm);
+        match self.target_framework.lock() {
+            Ok(mut guard) => *guard = Some(tfm),
+            Err(e) => tracing::warn!("Failed to set target framework: {}", e),
         }
     }
 
@@ -136,10 +131,13 @@ impl Project {
             }
         }
         // Fall back to deriving from target framework (for backward compatibility)
-        if let Ok(guard) = self.target_framework.lock() {
-            if let Some(ref tfm) = *guard {
-                return Some(std::env::temp_dir().join("dotnet-sdks").join(tfm.as_str()));
+        match self.target_framework.lock() {
+            Ok(guard) => {
+                if let Some(ref tfm) = *guard {
+                    return Some(std::env::temp_dir().join("dotnet-sdks").join(tfm.as_str()));
+                }
             }
+            Err(e) => tracing::warn!("Failed to read target framework: {}", e),
         }
         None
     }
@@ -171,7 +169,7 @@ impl Project {
                         if p.exists() {
                             p
                         } else {
-                            return Err(anyhow!("not valid ilspycmd"));
+                            return Err(anyhow!("not valid paket_cmd"));
                         }
                     }
                     None => which::which(Self::PAKET_CMD)?,
@@ -292,10 +290,10 @@ impl Project {
                 stack_graph.iter_files().count()
             );
             debug!("starting serialize_stack_graph");
-            let serialize_stack_graph = serialize_stack_graph::from_graph(stack_graph);
+            let serializable_graph = SerializableStackGraph::from_graph(stack_graph);
             let mut graph = StackGraph::new();
             debug!("loading graph");
-            if let Err(e) = serialize_stack_graph.load_into(&mut graph) {
+            if let Err(e) = serializable_graph.load_into(&mut graph) {
                 debug!("unable to load graph: {}", e);
             }
             debug!("finish loading graph");
@@ -315,7 +313,7 @@ impl Project {
 
         let lc_guard = self.source_language_config.read().await;
         // If the databse is present we should consider use that and load into the graph
-        let lc = lc_guard.as_ref().expect("unable to get read lock");
+        let lc = lc_guard.as_ref().ok_or_else(|| anyhow::anyhow!("language configuration not initialized"))?;
         let initialized_results = match init_stack_graph(
             &self.location,
             &self.db_path,
@@ -338,7 +336,7 @@ impl Project {
         match lc_guard.as_ref() {
             Some(x) => match self.analysis_mode {
                 AnalysisMode::SourceOnly => Some(x.source_type_node_info.clone()),
-                AnalysisMode::Full => Some(x.dependnecy_type_node_info.clone()),
+                AnalysisMode::Full => Some(x.dependency_type_node_info.clone()),
             },
             None => None,
         }

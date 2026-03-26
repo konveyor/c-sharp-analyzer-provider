@@ -32,7 +32,7 @@ use crate::provider::target_framework::TargetFrameworkHelper;
 use crate::provider::AnalysisMode;
 use crate::provider::Project;
 
-const REFERNCE_ASSEMBLIES_NAME: &str = "Microsoft.NETFramework.ReferenceAssemblies";
+const REFERENCE_ASSEMBLIES_NAME: &str = "Microsoft.NETFramework.ReferenceAssemblies";
 pub struct Dependencies {
     pub location: PathBuf,
     #[allow(dead_code)]
@@ -57,7 +57,7 @@ impl Debug for Dependencies {
 impl Dependencies {
     pub async fn decompile(
         &self,
-        reference_assmblies: PathBuf,
+        reference_assemblies: PathBuf,
         restriction: String,
         tools: &Tools,
     ) -> Result<(), Error> {
@@ -89,13 +89,13 @@ impl Dependencies {
             }
         };
         if to_decompile_locations.is_empty() {
-            trace!("no dll's found for dependnecy: {:?}", self);
+            trace!("no dll's found for dependency: {:?}", self);
         }
         let mut decompiled_files: HashSet<PathBuf> = HashSet::new();
         for file_to_decompile in to_decompile_locations {
             let decompiled_file = self
                 .decompile_file(
-                    &reference_assmblies,
+                    &reference_assemblies,
                     file_to_decompile,
                     tools.ilspy_cmd.clone(),
                 )
@@ -104,7 +104,7 @@ impl Dependencies {
         }
 
         info!(
-            "deompiled {} files for dependnecy: {:?}",
+            "decompiled {} files for dependency: {:?}",
             decompiled_files.len(),
             self
         );
@@ -128,12 +128,11 @@ impl Dependencies {
         file: PathBuf,
         restriction: String,
     ) -> Result<Vec<PathBuf>, Error> {
-        let file = File::open(file).await;
-        if let Err(e) = file {
-            error!("unable to find error: {:?}", e);
-            return Err(anyhow!(e));
-        }
-        let reader = BufReader::new(file.ok().unwrap());
+        let file = File::open(file).await.map_err(|e| {
+            error!("unable to open file: {:?}", e);
+            anyhow!(e)
+        })?;
+        let reader = BufReader::new(file);
         let mut lines = reader.lines();
         let mut dlls: Vec<String> = vec![];
         let top_of_version = format!("D: /lib/{}", restriction);
@@ -172,7 +171,7 @@ impl Dependencies {
 
     async fn decompile_file(
         &self,
-        reference_assmblies: &PathBuf,
+        reference_assemblies: &PathBuf,
         file_to_decompile: PathBuf,
         ilspycmd: PathBuf,
     ) -> Result<PathBuf, Error> {
@@ -194,7 +193,7 @@ impl Dependencies {
             .arg("-o")
             .arg(&decompile_out_name)
             .arg("-r")
-            .arg(reference_assmblies)
+            .arg(reference_assemblies)
             .arg("--no-dead-code")
             .arg("--no-dead-stores")
             .arg("-lv")
@@ -238,7 +237,7 @@ impl Dependencies {
             }
         };
         if to_decompile_locations.is_empty() {
-            trace!("no dll's found for dependnecy: {:?}", self);
+            trace!("no dll's found for dependency: {:?}", self);
             return Ok(vec![]);
         }
         let new_locations = to_decompile_locations
@@ -257,10 +256,10 @@ impl Project {
     pub async fn resolve(&self) -> Result<(), Error> {
         // determine if the paket.dependencies already exists, if it does then we don't need to
         // convert.
-        let paket_deps_file = self.location.clone().join("paket.dependencies");
+        let paket_deps_file = self.location.join("paket.dependencies");
 
         if !paket_deps_file.exists() {
-            // Fsourcoirst need to run packet.
+            // First need to run paket.
             // Need to convert and download all DLL's
             //TODO: Add paket location as a provider specific config.
             let paket_output = Command::new(&self.tools.paket_cmd)
@@ -294,11 +293,11 @@ impl Project {
         let mut set = JoinSet::new();
         if self.analysis_mode == AnalysisMode::Full {
             for d in deps {
-                let reference_assmblies = reference_assembly_path.clone();
+                let reference_assemblies = reference_assembly_path.clone();
                 let restriction = highest_restriction.clone();
                 let tools = self.tools.clone();
                 set.spawn(async move {
-                    let decomp = d.decompile(reference_assmblies, restriction, &tools).await;
+                    let decomp = d.decompile(reference_assemblies, restriction, &tools).await;
                     if let Err(e) = decomp {
                         error!("could not decompile - {:?}", e);
                     }
@@ -406,7 +405,7 @@ impl Project {
         let mut set = JoinSet::new();
 
         if let Some(ref mut vec) = *x {
-            // For each dependnecy in the list we will try and load the decompiled files
+            // For each dependency in the list we will try and load the decompiled files
             // Into the stack graph database.
             for d in vec {
                 // Look up the location of the xml file.
@@ -445,7 +444,7 @@ impl Project {
                             FileAnalyzers::new().with(file_name, DepXMLFileAnalyzer {});
                         let mut graph = add_dir_to_graph(
                             &file,
-                            &source_lc.dependnecy_type_node_info,
+                            &source_lc.dependency_type_node_info,
                             &source_lc.language_config,
                             graph,
                         )?;
@@ -453,10 +452,7 @@ impl Project {
                             let node = &graph.stack_graph[*n];
                             node.is_root()
                         });
-                        if root_node.is_none() {
-                            error!("unable to find root node");
-                        }
-                        let root_node = root_node.unwrap();
+                        let root_node = root_node.ok_or_else(|| anyhow!("unable to find root node"))?;
                         let dep_source_type_node = graph.stack_graph.iter_nodes().find(|n| {
                             let node = &graph.stack_graph[*n];
                             let symbol = node.symbol();
@@ -493,7 +489,7 @@ impl Project {
                                 &mut partials,
                                 &paths,
                             )?;
-                            trace!("stats for stitiching: {:?} - paths: {}", stats, paths.len(),);
+                            trace!("stats for stitching: {:?} - paths: {}", stats, paths.len(),);
                         }
                         info!(
                             "stats for dependency: {:?}, files indexed {:?}",
@@ -514,7 +510,7 @@ impl Project {
         let mut x = shared_deps.lock().await;
         let mut set: JoinSet<Result<(AsyncInitializeGraph, String), Error>> = JoinSet::new();
         if let Some(ref mut vec) = *x {
-            // For each dependnecy in the list we will try and load the decompiled files
+            // For each dependency in the list we will try and load the decompiled files
             // Into the stack graph database.
             for d in vec {
                 let size = d.decompiled_size.lock().unwrap().unwrap_or_default();
@@ -548,7 +544,7 @@ impl Project {
 
                         let graph = add_dir_to_graph(
                             &file,
-                            &lc.dependnecy_type_node_info,
+                            &lc.dependency_type_node_info,
                             &lc.language_config,
                             graph,
                         )?;
@@ -578,7 +574,7 @@ impl Project {
                                 &mut partials,
                                 &paths,
                             )?;
-                            trace!("stats for stitiching: {:?} - paths: {}", stats, paths.len(),);
+                            trace!("stats for stitching: {:?} - paths: {}", stats, paths.len(),);
                         }
                         debug!(
                             "stats for dependency: {:?}, files indexed {:?}",
@@ -596,14 +592,13 @@ impl Project {
         &self,
         paket_deps_file: &Path,
     ) -> Result<(PathBuf, String, Vec<Dependencies>), Error> {
-        let file = File::open(paket_deps_file).await;
-        if let Err(e) = file {
-            error!("unable to find error: {:?}", e);
-            return Err(anyhow!(e));
-        }
-        let reader = BufReader::new(file.ok().unwrap());
+        let file = File::open(paket_deps_file).await.map_err(|e| {
+            error!("unable to open file: {:?}", e);
+            anyhow!(e)
+        })?;
+        let reader = BufReader::new(file);
         let mut lines = reader.lines();
-        let mut smallest_framework = "zzzzzzzzzzzzzzz".to_string();
+        let mut smallest_framework: Option<String> = None;
         let mut deps: Vec<Dependencies> = vec![];
         while let Some(line) = lines.next_line().await? {
             if !line.contains("restriction") {
@@ -648,18 +643,16 @@ impl Project {
                 let n = ref_name.to_string();
                 if let Some(framework) = n.split_whitespace().last() {
                     let framework_string = framework.to_string();
-                    if framework_string < smallest_framework {
-                        smallest_framework = framework_string;
+                    if smallest_framework.as_ref().map_or(true, |sf| framework_string < *sf) {
+                        smallest_framework = Some(framework_string);
                     }
                 }
             }
         }
-        drop(lines);
-
         let deps: Vec<Dependencies> = deps
             .into_iter()
             .map(|mut d| {
-                d.highest_restriction = smallest_framework.clone();
+                d.highest_restriction = smallest_framework.clone().unwrap_or_default();
                 d
             })
             .collect();
@@ -668,8 +661,8 @@ impl Project {
             return Ok((PathBuf::new(), String::new(), deps));
         }
 
-        // Now we we have the framework, we need to get the reference_assmblies
-        let base_name = format!("{}.{}", REFERNCE_ASSEMBLIES_NAME, smallest_framework);
+        // Now we we have the framework, we need to get the reference_assemblies
+        let base_name = format!("{}.{}", REFERENCE_ASSEMBLIES_NAME, smallest_framework.as_deref().unwrap_or_default());
         let paket_reference_output = Command::new(&self.tools.paket_cmd)
             .args(["add", base_name.as_str()])
             .current_dir(&self.location)
@@ -686,12 +679,11 @@ impl Project {
             }
         };
         // Read the paket_install to find the directory of the DLL's
-        let file = File::open(paket_install.join("paket-installmodel.cache")).await;
-        if let Err(e) = file {
-            error!("unable to find error: {:?}", e);
-            return Err(anyhow!(e));
-        }
-        let reader = BufReader::new(file.ok().unwrap());
+        let file = File::open(paket_install.join("paket-installmodel.cache")).await.map_err(|e| {
+            error!("unable to open file: {:?}", e);
+            anyhow!(e)
+        })?;
+        let reader = BufReader::new(file);
         let mut lines = reader.lines();
         while let Some(line) = lines.next_line().await? {
             if line.contains("build/.NETFramework/") && line.contains("D: /") {
@@ -703,7 +695,7 @@ impl Project {
                 };
                 debug!("path_str: {}", path_str);
                 let path = paket_install.join(path_str);
-                return Ok((paket_install.join(path), smallest_framework, deps));
+                return Ok((path, smallest_framework.unwrap_or_default(), deps));
             }
         }
 
@@ -772,7 +764,7 @@ impl Project {
             info!("Indexing SDK XML file: {:?} into graph", file);
             match add_dir_to_graph(
                 file,
-                &source_lc.dependnecy_type_node_info,
+                &source_lc.dependency_type_node_info,
                 &source_lc.language_config,
                 current_graph,
             ) {
@@ -803,11 +795,10 @@ impl Project {
             node.is_root()
         });
 
-        if root_node.is_none() {
+        let root_node = root_node.ok_or_else(|| {
             error!("Unable to find root node in combined graph");
-            return Err(anyhow!("unable to find root node"));
-        }
-        let root_node = root_node.unwrap();
+            anyhow!("unable to find root node")
+        })?;
 
         let dep_source_type_node_handle = current_graph.iter_nodes().find(|n| {
             let node = &current_graph[*n];
