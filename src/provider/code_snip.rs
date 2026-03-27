@@ -11,90 +11,87 @@ use crate::{
     provider::CSharpProvider,
 };
 use tonic::{async_trait, Request, Response, Status};
-use tracing::{info, trace};
+use tracing::{info, instrument, trace};
+use tracing_opentelemetry::OpenTelemetrySpanExt;
 use url::Url;
+
+use crate::provider::telemetry::{self, METRICS};
 
 #[async_trait]
 impl ProviderCodeLocationService for CSharpProvider {
+    #[instrument(skip_all, name = "grpc.get_code_snip")]
     async fn get_code_snip(
         &self,
         request: Request<GetCodeSnipRequest>,
     ) -> Result<Response<GetCodeSnipResponse>, Status> {
+        tracing::Span::current().set_parent(telemetry::extract_context(request.metadata()));
         trace!("request: {:#?}", request);
+        let _timer = METRICS.grpc_request_duration_seconds
+            .with_label_values(&["get_code_snip"]).start_timer();
         let code_snip_request = request.into_inner();
-        if code_snip_request.code_location.is_none() {
-            return Err(Status::invalid_argument("no code location sent"));
-        }
-        let code_location = code_snip_request.code_location.unwrap();
-        if code_location.start_position.is_none() {
-            return Err(Status::invalid_argument(
-                "no code location start position sent",
-            ));
-        }
-        let start_position = code_location.start_position.unwrap();
-        if code_location.end_position.is_none() {
-            return Err(Status::invalid_argument(
-                "no code location end position sent",
-            ));
-        }
-        let end_position = code_location.end_position.unwrap();
+
+        let code_location = code_snip_request
+            .code_location
+            .ok_or_else(|| Status::invalid_argument("no code location sent"))?;
+
+        let start_position = code_location
+            .start_position
+            .ok_or_else(|| Status::invalid_argument("no code location start position sent"))?;
+
+        let end_position = code_location
+            .end_position
+            .ok_or_else(|| Status::invalid_argument("no code location end position sent"))?;
 
         info!(file=%code_snip_request.uri, "getting code snip for {:?}", code_location);
-        let file_uri = Url::parse(code_snip_request.uri.clone().as_str());
-        if let Err(e) = file_uri {
-            return Err(Status::invalid_argument(format!(
-                "could not find file requested: {} -- {}",
-                e,
-                code_snip_request.uri.clone()
-            )));
-        }
 
-        let file_uri = file_uri.unwrap();
+        let file_uri = Url::parse(&code_snip_request.uri)
+            .map_err(|e| Status::invalid_argument(format!(
+                "could not parse file URI: {} -- {}", e, code_snip_request.uri
+            )))?;
+
         if file_uri.path().is_empty() {
             return Err(Status::invalid_argument(format!(
-                "could not find file requested: {}",
-                file_uri
+                "could not find file requested: {}", file_uri
             )));
         }
 
-        let file_path = file_uri.to_file_path();
-        if file_path.is_err() {
-            return Err(Status::invalid_argument(format!(
-                "could not find file requested: {:?}",
-                &file_path
-            )));
-        }
-        let file_path = file_path.unwrap();
+        let file_path = file_uri.to_file_path()
+            .map_err(|_| Status::invalid_argument(format!(
+                "could not convert URI to file path: {}", file_uri
+            )))?;
 
-        let file = File::open(&file_path);
-        if file.is_err() {
-            return Err(Status::invalid_argument(format!(
-                "could not find file requested: {:?}",
-                &file_path
-            )));
-        }
-        let file = file.unwrap();
-        let file = BufReader::new(file);
+        let context_lines = self.context_lines;
+        let skip_lines = (start_position.line as usize).saturating_sub(context_lines);
+        let take = (end_position.line - start_position.line) as usize + context_lines;
 
-        let mut skip_lines: usize = 0;
-        if start_position.line as usize >= self.context_lines {
-            skip_lines = start_position.line as usize - self.context_lines;
-        }
-        let take: usize = (end_position.line - start_position.line) as usize + self.context_lines;
-        let code_snip_lines: String = file
-            .lines()
-            .skip(skip_lines)
-            .take(take)
-            .enumerate()
-            .map(|(index, s)| {
-                if s.is_err() {
-                    "".to_string()
-                } else {
-                    let s = s.unwrap();
-                    format!("{} {}\n", skip_lines + index, s)
-                }
-            })
-            .collect();
+        // Run blocking file I/O on a dedicated thread to avoid blocking the tokio runtime
+        let span = tracing::Span::current();
+        let code_snip_lines = tokio::task::spawn_blocking(move || -> Result<String, Status> {
+            let _guard = span.enter();
+            let file = File::open(&file_path)
+                .map_err(|_| Status::invalid_argument(format!(
+                    "could not open file: {:?}", file_path
+                )))?;
+            let reader = BufReader::new(file);
+
+            let result: String = reader
+                .lines()
+                .skip(skip_lines)
+                .take(take)
+                .enumerate()
+                .map(|(index, s)| match s {
+                    Ok(line) => format!("{} {}\n", skip_lines + index, line),
+                    Err(_) => String::new(),
+                })
+                .collect();
+
+            Ok(result)
+        })
+        .await
+        .map_err(|e| Status::internal(format!("code snip task panicked: {}", e)))??;
+
+        METRICS.grpc_requests_total.with_label_values(&["get_code_snip", "ok"]).inc();
+
         Ok(Response::new(GetCodeSnipResponse {
             snip: code_snip_lines,
         }))

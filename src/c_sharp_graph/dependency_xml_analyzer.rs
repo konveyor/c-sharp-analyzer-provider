@@ -28,13 +28,6 @@ pub struct NodeInfo {
     syntax_type: SyntaxType,
 }
 
-#[derive(Debug, PartialEq, Eq)]
-pub struct EdgeInfo {
-    source: NodeInfo,
-    sink: NodeInfo,
-    precedence: i32,
-}
-
 impl FileAnalyzer for DepXMLFileAnalyzer {
     #[allow(clippy::needless_lifetimes)]
     fn build_stack_graph_into<'a>(
@@ -61,17 +54,17 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                 Ok(Event::Eof) => {
                     break;
                 }
-                Ok(Event::Start(e)) | Ok(Event::Empty(e)) => {
+                Ok(Event::Start(e) | Event::Empty(e)) => {
                     if e.name() == MEMBER_NAME {
                         // Look specifically for the "name" attribute for deterministic behavior
                         let member_name = e.attributes().find(|attr| match attr {
                             Ok(a) => a.key == QName(b"name"),
                             Err(_) => false,
                         });
-                        if member_name.is_none() {
+                        let Some(member_name) = member_name else {
                             continue;
-                        }
-                        let member_name = member_name.unwrap().unwrap();
+                        };
+                        let member_name = member_name.unwrap();
                         let member_name = String::from_utf8_lossy(&member_name.value).to_string();
                         let parts: Vec<&str> = member_name.split(":").collect();
                         if parts.len() != 2 {
@@ -97,14 +90,13 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
         let id = stack_graph.new_node_id(file);
         let symbol = stack_graph.add_symbol(path.to_string_lossy().as_ref());
         let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
-        if node_handle.is_none() {
+        let Some(comp_unit_node_handle) = node_handle else {
             error!(file=?path, "node_handle is none???");
             return Err(BuildError::UnknownSymbolType(
                 "unable to handle comp unit".to_string(),
             ));
-        }
-        let comp_unit_node_handle = node_handle.unwrap();
-        let syntax_type = stack_graph.add_string(SyntaxType::CompUnit.to_string());
+        };
+        let syntax_type = stack_graph.add_string(SyntaxType::CompUnit.as_str());
         let source_info = stack_graph.source_info_mut(comp_unit_node_handle);
         source_info.syntax_type = syntax_type.into();
 
@@ -118,24 +110,20 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
         for nodes in inter_node_info {
             match nodes.len() {
                 1 => {
-                    let namespace_node = nodes.first();
-                    if namespace_node.is_none() {
+                    let Some(namespace_node) = nodes.first() else {
                         continue;
-                    }
-                    let namespace_node = namespace_node.unwrap();
+                    };
                     // If the list is size of one, then we only have the namespace declartion.
                     if namespace_node_map.contains_key(&namespace_node.symbol) {
                         continue;
                     }
                     let id = stack_graph.new_node_id(file);
                     let symbol = stack_graph.add_symbol(&namespace_node.symbol);
-                    let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
-                    if node_handle.is_none() {
+                    let Some(node_handle) = stack_graph.add_pop_symbol_node(id, symbol, true)
+                    else {
                         continue;
-                    }
-                    let node_handle = node_handle.unwrap();
-                    let syntax_type =
-                        stack_graph.add_string(&namespace_node.syntax_type.to_string());
+                    };
+                    let syntax_type = stack_graph.add_string(namespace_node.syntax_type.as_str());
                     let source_info = stack_graph.source_info_mut(node_handle);
                     source_info.syntax_type = syntax_type.into();
                     node_tracking_number += 1;
@@ -147,50 +135,44 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                 2 => {
                     // When there are two nodes, then it must be a class and namespace node.
                     // the list is <class_node, namespace_node>
-                    let namespace_node = nodes.last();
-                    if namespace_node.is_none() {
+                    let Some(namespace_node) = nodes.last() else {
                         continue;
-                    }
-                    let namespace_node = namespace_node.unwrap();
-                    let namespace_node_handle =
-                        if namespace_node_map.contains_key(&namespace_node.symbol) {
-                            *namespace_node_map.get(&namespace_node.symbol).unwrap()
-                        } else {
-                            let id = stack_graph.new_node_id(file);
-                            let symbol = stack_graph.add_symbol(&namespace_node.symbol);
-                            let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
-                            if node_handle.is_none() {
-                                continue;
-                            }
-                            let node_handle = node_handle.unwrap();
-                            let syntax_type =
-                                stack_graph.add_string(&namespace_node.syntax_type.to_string());
-                            let source_info = stack_graph.source_info_mut(node_handle);
-                            source_info.syntax_type = syntax_type.into();
-                            node_tracking_number += 1;
-
-                            stack_graph.add_edge(comp_unit_node_handle, node_handle, 0);
-                            edge_tracking_number += 1;
-                            namespace_node_map.insert(namespace_node.symbol.clone(), node_handle);
-                            node_handle
+                    };
+                    let namespace_node_handle = if namespace_node_map
+                        .contains_key(&namespace_node.symbol)
+                    {
+                        *namespace_node_map.get(&namespace_node.symbol).unwrap()
+                    } else {
+                        let id = stack_graph.new_node_id(file);
+                        let symbol = stack_graph.add_symbol(&namespace_node.symbol);
+                        let Some(node_handle) = stack_graph.add_pop_symbol_node(id, symbol, true)
+                        else {
+                            continue;
                         };
-                    let class_node = nodes.first();
-                    if class_node.is_none() {
+                        let syntax_type =
+                            stack_graph.add_string(namespace_node.syntax_type.as_str());
+                        let source_info = stack_graph.source_info_mut(node_handle);
+                        source_info.syntax_type = syntax_type.into();
+                        node_tracking_number += 1;
+
+                        stack_graph.add_edge(comp_unit_node_handle, node_handle, 0);
+                        edge_tracking_number += 1;
+                        namespace_node_map.insert(namespace_node.symbol.clone(), node_handle);
+                        node_handle
+                    };
+                    let Some(class_node) = nodes.first() else {
                         continue;
-                    }
-                    let class_node = class_node.unwrap();
+                    };
                     let class_node_handle = if type_node_map.contains_key(&class_node.symbol) {
                         *type_node_map.get(&class_node.symbol).unwrap()
                     } else {
                         let id = stack_graph.new_node_id(file);
                         let symbol = stack_graph.add_symbol(&class_node.symbol);
-                        let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
-                        if node_handle.is_none() {
+                        let Some(node_handle) = stack_graph.add_pop_symbol_node(id, symbol, true)
+                        else {
                             continue;
-                        }
-                        let node_handle = node_handle.unwrap();
-                        let syntax_type =
-                            stack_graph.add_string(&class_node.syntax_type.to_string());
+                        };
+                        let syntax_type = stack_graph.add_string(class_node.syntax_type.as_str());
                         let source_info = stack_graph.source_info_mut(node_handle);
                         source_info.syntax_type = syntax_type.into();
                         node_tracking_number += 1;
@@ -204,38 +186,34 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                 3 => {
                     // When there are three nodes, then it must be a property(field or method), class and namespace nodes.
                     // the list is <property_node, class_node, namespace_node>
-                    let namespace_node = nodes.last();
-                    if namespace_node.is_none() {
+                    let Some(namespace_node) = nodes.last() else {
                         continue;
-                    }
-                    let namespace_node = namespace_node.unwrap();
-                    let namespace_node_handle =
-                        if namespace_node_map.contains_key(&namespace_node.symbol) {
-                            *namespace_node_map.get(&namespace_node.symbol).unwrap()
-                        } else {
-                            let id = stack_graph.new_node_id(file);
-                            let symbol = stack_graph.add_symbol(&namespace_node.symbol);
-                            let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
-                            if node_handle.is_none() {
-                                continue;
-                            }
-                            node_tracking_number += 1;
-                            let node_handle = node_handle.unwrap();
-                            let syntax_type =
-                                stack_graph.add_string(&namespace_node.syntax_type.to_string());
-                            let source_info = stack_graph.source_info_mut(node_handle);
-                            source_info.syntax_type = syntax_type.into();
-
-                            stack_graph.add_edge(comp_unit_node_handle, node_handle, 0);
-                            edge_tracking_number += 1;
-                            namespace_node_map.insert(namespace_node.symbol.clone(), node_handle);
-                            node_handle
+                    };
+                    let namespace_node_handle = if namespace_node_map
+                        .contains_key(&namespace_node.symbol)
+                    {
+                        *namespace_node_map.get(&namespace_node.symbol).unwrap()
+                    } else {
+                        let id = stack_graph.new_node_id(file);
+                        let symbol = stack_graph.add_symbol(&namespace_node.symbol);
+                        let Some(node_handle) = stack_graph.add_pop_symbol_node(id, symbol, true)
+                        else {
+                            continue;
                         };
-                    let class_node = nodes.get(1);
-                    if class_node.is_none() {
+                        node_tracking_number += 1;
+                        let syntax_type =
+                            stack_graph.add_string(namespace_node.syntax_type.as_str());
+                        let source_info = stack_graph.source_info_mut(node_handle);
+                        source_info.syntax_type = syntax_type.into();
+
+                        stack_graph.add_edge(comp_unit_node_handle, node_handle, 0);
+                        edge_tracking_number += 1;
+                        namespace_node_map.insert(namespace_node.symbol.clone(), node_handle);
+                        node_handle
+                    };
+                    let Some(class_node) = nodes.get(1) else {
                         continue;
-                    }
-                    let class_node = class_node.unwrap();
+                    };
                     let class_node_handle = if type_node_map.contains_key(&class_node.symbol) {
                         *type_node_map.get(&class_node.symbol).unwrap()
                     } else {
@@ -243,12 +221,10 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                         let symbol = stack_graph.add_symbol(&class_node.symbol);
                         let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
                         node_tracking_number += 1;
-                        if node_handle.is_none() {
+                        let Some(node_handle) = node_handle else {
                             continue;
-                        }
-                        let node_handle = node_handle.unwrap();
-                        let syntax_type =
-                            stack_graph.add_string(&class_node.syntax_type.to_string());
+                        };
+                        let syntax_type = stack_graph.add_string(class_node.syntax_type.as_str());
                         let source_info = stack_graph.source_info_mut(node_handle);
                         source_info.syntax_type = syntax_type.into();
                         type_node_map.insert(class_node.symbol.clone(), node_handle);
@@ -258,19 +234,16 @@ impl FileAnalyzer for DepXMLFileAnalyzer {
                         edge_tracking_number += 2;
                         node_handle
                     };
-                    let prop_node = nodes.first();
-                    if prop_node.is_none() {
+                    let Some(prop_node) = nodes.first() else {
                         continue;
-                    }
-                    let prop_node = prop_node.unwrap();
+                    };
                     let id = stack_graph.new_node_id(file);
                     let symbol = stack_graph.add_symbol(&prop_node.symbol);
-                    let node_handle = stack_graph.add_pop_symbol_node(id, symbol, true);
-                    if node_handle.is_none() {
+                    let Some(node_handle) = stack_graph.add_pop_symbol_node(id, symbol, true)
+                    else {
                         continue;
-                    }
-                    let node_handle = node_handle.unwrap();
-                    let syntax_type = stack_graph.add_string(&prop_node.syntax_type.to_string());
+                    };
+                    let syntax_type = stack_graph.add_string(prop_node.syntax_type.as_str());
                     let source_info = stack_graph.source_info_mut(node_handle);
                     source_info.syntax_type = syntax_type.into();
                     node_tracking_number += 1;
@@ -313,12 +286,11 @@ impl DepXMLFileAnalyzer {
                 }
                 let mut parts = name.split('.');
                 let mut nodes: Vec<NodeInfo> = vec![];
-                let part = parts.next_back();
-                if part.is_none() {
+                let Some(part) = parts.next_back() else {
                     return nodes;
-                }
+                };
                 let type_name = NodeInfo {
-                    symbol: part.unwrap().to_string(),
+                    symbol: part.to_string(),
                     syntax_type: SyntaxType::ClassDef,
                 };
                 nodes.push(type_name.clone());
@@ -336,11 +308,11 @@ impl DepXMLFileAnalyzer {
                         format!("{}.{}", acc, t)
                     }
                 });
-                let namesapce_node = NodeInfo {
+                let namespace_node = NodeInfo {
                     symbol: namespace_symbol.clone(),
                     syntax_type: SyntaxType::NamespaceDeclaration,
                 };
-                nodes.push(namesapce_node.clone());
+                nodes.push(namespace_node.clone());
                 nodes
             }
             "F" | "P" => {
@@ -349,21 +321,19 @@ impl DepXMLFileAnalyzer {
                 }
                 let mut parts = name.split('.');
                 let mut nodes: Vec<NodeInfo> = vec![];
-                let part = parts.next_back();
-                if part.is_none() {
+                let Some(part) = parts.next_back() else {
                     return vec![];
-                }
+                };
                 let field_name = NodeInfo {
-                    symbol: part.unwrap().to_string(),
+                    symbol: part.to_string(),
                     syntax_type: SyntaxType::FieldName,
                 };
                 nodes.push(field_name.clone());
-                let part = parts.next_back();
-                if part.is_none() {
+                let Some(part) = parts.next_back() else {
                     return vec![];
-                }
+                };
                 let type_name = NodeInfo {
-                    symbol: part.unwrap().to_string(),
+                    symbol: part.to_string(),
                     syntax_type: SyntaxType::ClassDef,
                 };
                 nodes.push(type_name.clone());
@@ -374,11 +344,11 @@ impl DepXMLFileAnalyzer {
                         format!("{}.{}", acc, p)
                     }
                 });
-                let namesapce_node = NodeInfo {
+                let namespace_node = NodeInfo {
                     symbol: namespace_symbol.clone(),
                     syntax_type: SyntaxType::NamespaceDeclaration,
                 };
-                nodes.push(namesapce_node.clone());
+                nodes.push(namespace_node.clone());
                 nodes
             }
             "M" => {
@@ -388,33 +358,30 @@ impl DepXMLFileAnalyzer {
                 let mut new_name = name;
                 if name.contains('(') {
                     let mut x = name.split('(');
-                    let x = x.nth(0);
+                    let x = x.next();
                     new_name = x.unwrap();
                 }
                 let mut parts = new_name.split('.');
                 let mut nodes: Vec<NodeInfo> = vec![];
-                let part = parts.next_back();
-                if part.is_none() {
+                let Some(part) = parts.next_back() else {
                     return vec![];
-                }
+                };
                 // Handle the name of the method here.
                 // if #ctor means constructor.
                 // for now we can ignore the parameters.
-                let part = part.unwrap();
                 let method_node: NodeInfo;
                 let type_name: NodeInfo;
                 if part.contains("#ctor") {
                     // Get the next back Symbol and that will be the symbol.
-                    let part = parts.next_back();
-                    if part.is_none() {
+                    let Some(part) = parts.next_back() else {
                         return vec![];
-                    }
+                    };
                     method_node = NodeInfo {
-                        symbol: part.unwrap().to_string(),
+                        symbol: part.to_string(),
                         syntax_type: SyntaxType::MethodName,
                     };
                     type_name = NodeInfo {
-                        symbol: part.unwrap().to_string(),
+                        symbol: part.to_string(),
                         syntax_type: SyntaxType::ClassDef,
                     };
                 } else {
@@ -422,12 +389,11 @@ impl DepXMLFileAnalyzer {
                         symbol: part.to_string(),
                         syntax_type: SyntaxType::MethodName,
                     };
-                    let part = parts.next_back();
-                    if part.is_none() {
+                    let Some(part) = parts.next_back() else {
                         return vec![];
-                    }
+                    };
                     type_name = NodeInfo {
-                        symbol: part.unwrap().to_string(),
+                        symbol: part.to_string(),
                         syntax_type: SyntaxType::ClassDef,
                     };
                 };
@@ -440,11 +406,11 @@ impl DepXMLFileAnalyzer {
                         format!("{}.{}", acc, p)
                     }
                 });
-                let namesapce_node = NodeInfo {
+                let namespace_node = NodeInfo {
                     symbol: namespace_symbol.clone(),
                     syntax_type: SyntaxType::NamespaceDeclaration,
                 };
-                nodes.push(namesapce_node.clone());
+                nodes.push(namespace_node.clone());
                 nodes
             }
             _ => {

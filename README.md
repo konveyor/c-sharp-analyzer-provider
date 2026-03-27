@@ -64,6 +64,8 @@ grpcurl -plaintext -d '{
 - **gRPC Service**: Standard gRPC interface for integration
 - **Multiple Transports**: HTTP/2, Unix domain sockets, or Windows named pipes
 - **Persistent Caching**: SQLite-based stack graph storage for fast startup
+- **Distributed Tracing**: Optional OpenTelemetry OTLP trace export for Jaeger, Tempo, etc.
+- **Prometheus Metrics**: Optional `/metrics` endpoint for monitoring request latency, query performance, and resource usage
 
 ## Documentation
 
@@ -142,7 +144,7 @@ cargo build
 cargo clippy
 
 # Run tests
-make run-demo
+make run-tests
 
 # Run specific test
 cargo test -- --nocapture
@@ -152,9 +154,16 @@ cargo test -- --nocapture
 
 ```
 src/
-├── main.rs                  # Server entry point
+├── main.rs                  # Server entry point, telemetry wiring
 ├── analyzer_service/        # gRPC service definitions
 ├── provider/                # Provider implementation
+│   ├── csharp.rs           # gRPC handler (init, evaluate, etc.)
+│   ├── project.rs          # Project state management
+│   ├── dependency_resolution.rs  # .NET dependency handling
+│   ├── telemetry.rs        # OpenTelemetry + Prometheus (opt-in)
+│   ├── sdk_detection.rs    # .NET SDK path resolution
+│   ├── target_framework.rs # TFM parsing, SDK management
+│   └── code_snip.rs        # Code snippet service
 ├── c_sharp_graph/          # Stack graph query engine
 └── pipe_stream/            # Named pipe support (Windows)
 
@@ -184,7 +193,7 @@ The project uses integration tests that run against a live server instance:
 
 ```bash
 # Full test suite with server management
-make run-demo
+make run-tests
 
 # Manual testing
 cargo run -- --port 9000 --name c-sharp  # Terminal 1
@@ -239,10 +248,12 @@ Options:
 
 ### Environment Variables
 
-- `RUST_LOG`: Set log level (debug, info, warn, error)
-  ```bash
-  RUST_LOG=debug cargo run -- --port 9000
-  ```
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `RUST_LOG` | Log level filter (e.g., `debug`, `info`, `c_sharp_analyzer_provider_cli=debug`) | `info` (via `-v` flag) |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | Enable OTLP trace export (e.g., `http://localhost:4317`) | unset (disabled) |
+| `OTEL_SERVICE_NAME` | Service name in traces | `c-sharp-provider` |
+| `METRICS_PORT` | Enable Prometheus metrics HTTP server on this port | unset (disabled) |
 
 ## Performance
 
@@ -260,7 +271,7 @@ Options:
 
 ## License
 
-[Add your license here]
+Apache-2.0
 
 ## Related Projects
 
@@ -268,6 +279,7 @@ Options:
 - [tree-sitter](https://tree-sitter.github.io/) - Parser generator and incremental parsing library
 - [stack-graphs](https://github.com/github/stack-graphs) - Code navigation using stack graphs
 - [tree-sitter-c-sharp](https://github.com/tree-sitter/tree-sitter-c-sharp) - C# grammar for tree-sitter
+- [OpenTelemetry](https://opentelemetry.io/) - Observability framework for traces and metrics
 
 ## Support
 

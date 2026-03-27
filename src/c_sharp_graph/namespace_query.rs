@@ -51,7 +51,7 @@ pub(crate) struct NamespaceSymbols {
     namespace: Vec<Fqdn>,
 }
 
-// Create exposed methods for NamesapceSymbols
+// Create exposed methods for NamespaceSymbols
 impl NamespaceSymbols {
     pub(crate) fn new(
         graph: &StackGraph,
@@ -94,27 +94,27 @@ impl NamespaceSymbols {
 }
 
 impl SymbolMatcher for NamespaceSymbols {
-    fn match_symbol(&self, symbol: String) -> bool {
+    fn match_symbol(&self, symbol: &str) -> bool {
         if self
             .namespace
             .iter()
-            .any(|f| f.namespace.as_ref().is_some_and(|n| n == &symbol))
+            .any(|f| f.namespace.as_ref().is_some_and(|n| n == symbol))
         {
             trace!("matched namespace symbol: {:?}", symbol);
             return true;
         }
         if let Some(classes) = &self.classes {
-            if classes.match_symbol(symbol.clone()) {
+            if classes.match_symbol(symbol) {
                 return true;
             }
         }
         if let Some(methods) = &self.methods {
-            if methods.match_symbol(symbol.clone()) {
+            if methods.match_symbol(symbol) {
                 return true;
             }
         }
         if let Some(fields) = &self.fields {
-            if fields.match_symbol(symbol.clone()) {
+            if fields.match_symbol(symbol) {
                 return true;
             }
         }
@@ -158,7 +158,7 @@ impl NamespaceSymbols {
                     if let SyntaxType::NamespaceDeclaration = SyntaxType::get(&db[syntax_type]) {
                         if let Some(fqdn) = get_fqdn(node, db) {
                             if fqdn.namespace.is_some()
-                                && search.match_namespace(&fqdn.namespace.clone().unwrap())
+                                && search.match_namespace(fqdn.namespace.as_deref().unwrap())
                             {
                                 results.push(fqdn);
                             }
@@ -296,7 +296,7 @@ mod tests {
         let ns_symbols = NamespaceSymbols::new(&graph, roots, &search).unwrap();
 
         // Should match the namespace itself
-        assert!(ns_symbols.match_symbol("System.Configuration".to_string()));
+        assert!(ns_symbols.match_symbol("System.Configuration"));
     }
 
     #[test]
@@ -308,7 +308,7 @@ mod tests {
         let ns_symbols = NamespaceSymbols::new(&graph, roots, &search).unwrap();
 
         // Should match class within namespace
-        assert!(ns_symbols.match_symbol("ConfigurationManager".to_string()));
+        assert!(ns_symbols.match_symbol("ConfigurationManager"));
     }
 
     #[test]
@@ -318,7 +318,7 @@ mod tests {
         let ns_symbols = NamespaceSymbols::new(&graph, roots, &search).unwrap();
 
         // Should match method (Class.Method format)
-        assert!(ns_symbols.match_symbol("ConfigurationManager.GetSection".to_string()));
+        assert!(ns_symbols.match_symbol("ConfigurationManager.GetSection"));
     }
 
     #[test]
@@ -328,7 +328,7 @@ mod tests {
         let ns_symbols = NamespaceSymbols::new(&graph, roots, &search).unwrap();
 
         // Should match field (Class.Field format)
-        assert!(ns_symbols.match_symbol("ConfigurationManager.AppSettings".to_string()));
+        assert!(ns_symbols.match_symbol("ConfigurationManager.AppSettings"));
     }
 
     #[test]
@@ -337,9 +337,9 @@ mod tests {
         let search = Search::create_search("System.Configuration.*".to_string()).unwrap();
         let ns_symbols = NamespaceSymbols::new(&graph, roots, &search).unwrap();
 
-        assert!(ns_symbols.match_symbol("System.Configuration.Web".to_string()));
-        assert!(ns_symbols.match_symbol("System.Configuration.File".to_string()));
-        assert!(ns_symbols.match_symbol("System.Configuration".to_string()));
+        assert!(ns_symbols.match_symbol("System.Configuration.Web"));
+        assert!(ns_symbols.match_symbol("System.Configuration.File"));
+        assert!(ns_symbols.match_symbol("System.Configuration"));
     }
 
     #[test]
@@ -349,9 +349,9 @@ mod tests {
         let ns_symbols = NamespaceSymbols::new(&graph, roots, &search).unwrap();
 
         // Should match field (Class.Field format)
-        assert!(!ns_symbols.match_symbol("System.Configuration.Web".to_string()));
-        assert!(!ns_symbols.match_symbol("System.Configuration.File".to_string()));
-        assert!(ns_symbols.match_symbol("System.Configuration".to_string()));
+        assert!(!ns_symbols.match_symbol("System.Configuration.Web"));
+        assert!(!ns_symbols.match_symbol("System.Configuration.File"));
+        assert!(ns_symbols.match_symbol("System.Configuration"));
     }
 
     #[test]
@@ -360,8 +360,8 @@ mod tests {
         let search = Search::create_search("*".to_string()).unwrap();
         let ns_symbols = NamespaceSymbols::new(&graph, roots, &search).unwrap();
 
-        assert!(!ns_symbols.match_symbol("NonExistent".to_string()));
-        assert!(!ns_symbols.match_symbol("Other.Namespace".to_string()));
+        assert!(!ns_symbols.match_symbol("NonExistent"));
+        assert!(!ns_symbols.match_symbol("Other.Namespace"));
     }
 
     #[test]
@@ -453,6 +453,6 @@ mod tests {
         let search = Search::create_search("System.*.Web".to_string()).unwrap();
         let ns_symbols = NamespaceSymbols::new(&graph, roots, &search).unwrap();
         // Should return error when no namespace is found
-        assert!(ns_symbols.match_symbol("System.Configuration.Web".to_string()));
+        assert!(ns_symbols.match_symbol("System.Configuration.Web"));
     }
 }

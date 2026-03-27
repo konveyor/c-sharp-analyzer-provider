@@ -4,6 +4,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
+use crate::provider::telemetry::METRICS;
 use anyhow::{anyhow, Error, Result};
 use base64::Engine;
 use sha1::{Digest, Sha1};
@@ -13,7 +14,7 @@ use stack_graphs::{
     partial::{PartialPath, PartialPaths},
     storage::SQLiteWriter,
 };
-use tracing::{debug, error, info, trace};
+use tracing::{debug, error, info, instrument, trace};
 use tree_sitter_stack_graphs::{
     loader::{FileReader, LanguageConfiguration},
     NoCancellation, Variables, FILE_PATH_VAR, ROOT_PATH_VAR,
@@ -47,17 +48,9 @@ impl SourceType {
     const SOURCE_STRING: &str = "konveyor.io/source_type=source";
     const DEPENDENCY_STRING: &str = "konveyor.io/source_type=dependency";
 
-    pub fn get_source_string() -> String {
-        Self::SOURCE_STRING.to_string()
-    }
-
-    pub fn get_dependency_string() -> String {
-        Self::DEPENDENCY_STRING.to_string()
-    }
-
     pub fn load_symbols_into_graph(graph: &mut StackGraph) -> (Self, Self) {
-        let source_type_symbol_handle = graph.add_symbol(&Self::get_source_string());
-        let dependency_type_symbol_handle = graph.add_symbol(&Self::get_dependency_string());
+        let source_type_symbol_handle = graph.add_symbol(Self::SOURCE_STRING);
+        let dependency_type_symbol_handle = graph.add_symbol(Self::DEPENDENCY_STRING);
         (
             Self::Source {
                 symbol_handle: source_type_symbol_handle,
@@ -76,10 +69,10 @@ impl SourceType {
         }
     }
 
-    pub fn get_string(&self) -> String {
+    pub fn as_str(&self) -> &'static str {
         match self {
-            SourceType::Source { symbol_handle: _ } => Self::get_source_string(),
-            SourceType::Dependency { symbol_handle: _ } => Self::get_dependency_string(),
+            SourceType::Source { symbol_handle: _ } => Self::SOURCE_STRING,
+            SourceType::Dependency { symbol_handle: _ } => Self::DEPENDENCY_STRING,
         }
     }
 
@@ -92,7 +85,7 @@ impl SourceType {
         //Verify symbol handle is in graph.
         if !graph
             .iter_symbols()
-            .any(|s| s == symbol_handle && graph[s] == self.get_string())
+            .any(|s| s == symbol_handle && graph[s] == *self.as_str())
         {
             return Err(anyhow!("unable to load graph"));
         }
@@ -120,6 +113,7 @@ pub struct AsyncInitializeGraph {
     pub file_to_tag: HashMap<PathBuf, String>,
 }
 
+#[instrument(skip_all, name = "graph.add_dir", fields(dir = %source_location.display()))]
 pub fn add_dir_to_graph(
     source_location: &Path,
     source_type: &SourceType,
@@ -139,7 +133,7 @@ pub fn add_dir_to_graph(
             }
             Err(err) => return Err(Error::new(err)),
         };
-        let entry_path = entry.to_owned().into_path();
+        let entry_path = entry.into_path();
         let entry_path_str = match entry_path.to_str() {
             Some(path) => path,
             None => {
@@ -206,15 +200,14 @@ pub fn load_graph_for_file(
         )
         .expect("failed to add root path variable");
 
-    let file_name = entry.file_name();
-    if file_name.is_none() {
+    let Some(file_name) = entry.file_name() else {
         return Ok(None);
-    }
-    let file_name = file_name.unwrap().to_string_lossy().to_string();
-    let analyzer_bulder = language_config.special_files.get(&file_name);
+    };
+    let file_name = file_name.to_string_lossy().to_string();
+    let analyzer_builder = language_config.special_files.get(&file_name);
     let matches_file = language_config.matches_file(&entry, &mut file_reader)?;
 
-    if analyzer_bulder.is_none() && !matches_file {
+    if analyzer_builder.is_none() && !matches_file {
         return Ok(None);
     }
 
@@ -235,10 +228,9 @@ pub fn load_graph_for_file(
         }
     };
 
-    if analyzer_bulder.is_some() {
+    if let Some(analyzer_builder) = analyzer_builder {
         info!("trying to build with xml analyzer");
-        let analyzer_bulder = analyzer_bulder.unwrap();
-        analyzer_bulder.build_stack_graph_into(
+        analyzer_builder.build_stack_graph_into(
             stack_graph,
             file,
             &entry,
@@ -266,12 +258,14 @@ pub fn load_graph_for_file(
     }
 }
 
+#[instrument(skip_all, name = "graph.init_stack_graph", fields(location = %source_location.display()))]
 pub fn init_stack_graph(
     source_location: &Path,
     db_path: &Path,
     source_type: &SourceType,
     language_config: &LanguageConfiguration,
 ) -> Result<InitializedGraph, Error> {
+    let _timer = METRICS.graph_build_duration_seconds.start_timer();
     let mut db: SQLiteWriter = SQLiteWriter::open(db_path)?;
 
     let mut files_loaded = 0;
@@ -294,7 +288,7 @@ pub fn init_stack_graph(
             }
             Err(err) => return Err(Error::new(err)),
         };
-        let entry_path = entry.to_owned().into_path();
+        let entry_path = entry.into_path();
         match load_graph_for_file(
             entry_path.clone(),
             &mut stack_graph,

@@ -1,21 +1,24 @@
 use std::path::PathBuf;
 use std::sync::Arc;
 
+use anyhow::anyhow;
 use serde::Deserialize;
 use stack_graphs::graph::StackGraph;
 use stack_graphs::storage::SQLiteWriter;
-use tokio::sync::Mutex;
+use tokio::sync::{Mutex, RwLock};
 use tokio_stream::wrappers::ReceiverStream;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error, info, warn};
+use tracing::{debug, error, info, instrument, warn};
+use tracing_opentelemetry::OpenTelemetrySpanExt;
 use url::Url;
-use utoipa::{OpenApi, ToSchema};
+use utoipa::ToSchema;
 
 use crate::c_sharp_graph::loader::load_and_store_file;
+use crate::provider::telemetry::{self, METRICS};
+
 use crate::c_sharp_graph::query::{Query, QueryType};
 use crate::c_sharp_graph::results::ResultNode;
 use crate::c_sharp_graph::NotFoundError;
-//use crate::c_sharp_graph::find_node::FindNode;
 use crate::provider::sdk_detection::{SdkDetector, SdkSource};
 use crate::provider::target_framework;
 use crate::provider::AnalysisMode;
@@ -57,7 +60,7 @@ struct CSharpCondition {
 pub struct CSharpProvider {
     pub db_path: PathBuf,
     pub config: Arc<Mutex<Option<Config>>>,
-    pub project: Arc<Mutex<Option<Arc<Project>>>>,
+    pub project: Arc<RwLock<Option<Project>>>,
     pub context_lines: usize,
 }
 
@@ -66,7 +69,7 @@ impl CSharpProvider {
         CSharpProvider {
             db_path,
             config: Arc::new(Mutex::new(None)),
-            project: Arc::new(Mutex::new(None)),
+            project: Arc::new(RwLock::new(None)),
             context_lines,
         }
     }
@@ -75,30 +78,24 @@ impl CSharpProvider {
 #[tonic::async_trait]
 impl ProviderService for CSharpProvider {
     type StreamPrepareProgressStream = ReceiverStream<Result<ProgressEvent, Status>>;
-    async fn capabilities(&self, _: Request<()>) -> Result<Response<CapabilitiesResponse>, Status> {
-        // Add Referenced
-
-        #[derive(OpenApi)]
-        struct ApiDoc;
-
-        let openapi = ApiDoc::openapi();
-        let json = openapi.to_pretty_json();
-        if json.is_err() {
-            return Err(Status::from_error(Box::new(json.err().unwrap())));
-        }
-
-        debug!("returning refernced capability: {:?}", json.ok());
-
-        return Ok(Response::new(CapabilitiesResponse {
+    #[instrument(skip_all, name = "grpc.capabilities")]
+    async fn capabilities(&self, r: Request<()>) -> Result<Response<CapabilitiesResponse>, Status> {
+        tracing::Span::current().set_parent(telemetry::extract_context(r.metadata()));
+        Ok(Response::new(CapabilitiesResponse {
             capabilities: vec![Capability {
                 name: "referenced".to_string(),
                 template_context: None,
             }],
-        }));
+        }))
     }
 
+    #[instrument(skip_all, name = "grpc.init")]
     async fn init(&self, r: Request<Config>) -> Result<Response<InitResponse>, Status> {
+        tracing::Span::current().set_parent(telemetry::extract_context(r.metadata()));
         let mut config_guard = self.config.lock().await;
+        let _timer = METRICS.grpc_request_duration_seconds
+            .with_label_values(&["init"]).start_timer();
+        let init_timer = METRICS.init_duration_seconds.start_timer();
         let saved_config = config_guard.insert(r.get_ref().clone());
 
         let analysis_mode = AnalysisMode::from(&saved_config.analysis_mode);
@@ -109,28 +106,24 @@ impl ProviderService for CSharpProvider {
         }
         let location = PathBuf::from(saved_config.location.clone());
         let tools = Project::get_tools(&saved_config.provider_specific_config)
-            .map_err(|e| Status::invalid_argument(format!("unalble to find tools: {}", e)))?;
-        let project = Arc::new(Project::new(
+            .map_err(|e| Status::invalid_argument(format!("unable to find tools: {}", e)))?;
+        let project = Project::new(
             location,
             self.db_path.clone(),
             analysis_mode,
             tools,
-        ));
-        let project_lock = self.project.clone();
-        let mut project_guard = project_lock.lock().await;
-        let _ = project_guard.replace(project.clone());
-        drop(project_guard);
+        );
+        
+        // Store the project in the shared state
+        {
+            let mut project_guard = self.project.write().await;
+            *project_guard = Some(project);
+        }
         drop(config_guard);
 
-        let project_guard = project_lock.lock().await;
-        let project = match project_guard.as_ref() {
-            Some(x) => x,
-            None => {
-                return Err(Status::internal(
-                    "unable to create language configuration for project",
-                ));
-            }
-        };
+        let project_guard = Arc::clone(&self.project).read_owned().await;
+        let project = project_guard.as_ref()
+            .ok_or_else(|| Status::internal("unable to create language configuration for project"))?;
 
         info!("getting the dotnet target framework for the project");
 
@@ -150,11 +143,11 @@ impl ProviderService for CSharpProvider {
                     let tfm_str = target_framework.as_str();
                     let is_modern_dotnet = tfm_str.starts_with("netcoreapp")
                         || tfm_str.starts_with("netstandard")
-                        || tfm_str.starts_with("net")
+                        || (tfm_str.starts_with("net")
                             && !tfm_str.starts_with("net4")
                             && !tfm_str.starts_with("net3")
                             && !tfm_str.starts_with("net2")
-                            && !tfm_str.starts_with("net1");
+                            && !tfm_str.starts_with("net1"));
 
                     if is_modern_dotnet {
                         info!(
@@ -167,7 +160,7 @@ impl ProviderService for CSharpProvider {
                             &target_framework,
                         );
 
-                        let project_clone = project.clone();
+                        let project_arc = self.project.clone();
                         let dotnet_install_cmd = project.tools.dotnet_install_cmd.clone();
                         let is_netstandard = target_framework.is_netstandard();
 
@@ -177,10 +170,12 @@ impl ProviderService for CSharpProvider {
                                 source,
                             } => {
                                 info!("Using {} SDK at: {:?}", source, sdk_path);
+                                let project_arc = project_arc.clone();
                                 Some(tokio::spawn(async move {
-                                    project_clone
-                                        .load_sdk_from_path(&sdk_path, &target_framework)
-                                        .await
+                                    let guard = project_arc.read().await;
+                                    let project = guard.as_ref()
+                                        .ok_or_else(|| anyhow!("Project not initialized"))?;
+                                    project.load_sdk_from_path(&sdk_path, &target_framework).await
                                 }))
                             }
                             SdkSource::NotFound => {
@@ -197,10 +192,16 @@ impl ProviderService for CSharpProvider {
                                         "No existing SDK found, falling back to dotnet-install script"
                                     );
                                     if let Some(script_path) = dotnet_install_cmd {
+                                        let project_arc = project_arc.clone();
                                         Some(tokio::spawn(async move {
-                                            info!("Installing SDK using script: {:?}", script_path);
-                                            let install_result =
-                                                target_framework.install_sdk(&script_path);
+                                            // Run blocking SDK installation on a dedicated thread
+                                            let tf_clone = target_framework.clone();
+                                            let span = tracing::info_span!("deps.install_sdk");
+                                            let install_result = tokio::task::spawn_blocking(move || {
+                                                let _guard = span.enter();
+                                                info!("Installing SDK using script: {:?}", script_path);
+                                                tf_clone.install_sdk(&script_path)
+                                            }).await.map_err(|e| anyhow!("SDK install task panicked: {}", e))?;
 
                                             match install_result {
                                                 Ok(sdk_path) => {
@@ -208,8 +209,10 @@ impl ProviderService for CSharpProvider {
                                                         "Successfully installed .NET SDK at: {:?}",
                                                         sdk_path
                                                     );
-                                                    project_clone
-                                                        .load_sdk_from_path(
+                                                    let guard = project_arc.read().await;
+                                                    let project = guard.as_ref()
+                                                        .ok_or_else(|| anyhow!("Project not initialized"))?;
+                                                    project.load_sdk_from_path(
                                                             &sdk_path,
                                                             &target_framework,
                                                         )
@@ -291,25 +294,30 @@ impl ProviderService for CSharpProvider {
             }
         }
 
-        info!("adding depdencies to stack graph database");
+        info!("adding dependencies to stack graph database");
         let res = project.load_to_database().await;
         debug!(
             "loading project to database: {:?} -- project: {:?}",
             res, project
         );
 
-        return Ok(Response::new(InitResponse {
+        METRICS.grpc_requests_total.with_label_values(&["init", "ok"]).inc();
+        init_timer.observe_duration();
+
+        Ok(Response::new(InitResponse {
             error: String::new(),
             successful: true,
             id: 4,
             builtin_config: None,
-        }));
+        }))
     }
 
+    #[instrument(skip_all, name = "grpc.prepare")]
     async fn prepare(
         &self,
-        _r: Request<PrepareRequest>,
+        r: Request<PrepareRequest>,
     ) -> Result<Response<PrepareResponse>, Status> {
+        tracing::Span::current().set_parent(telemetry::extract_context(r.metadata()));
         Result::Ok(Response::new(PrepareResponse {
             error: String::new(),
         }))
@@ -342,11 +350,15 @@ impl ProviderService for CSharpProvider {
         Ok(Response::new(ReceiverStream::new(rx)))
     }
 
+    #[instrument(skip_all, name = "grpc.evaluate")]
     async fn evaluate(
         &self,
         r: Request<EvaluateRequest>,
     ) -> Result<Response<EvaluateResponse>, Status> {
+        tracing::Span::current().set_parent(telemetry::extract_context(r.metadata()));
         info!("request: {:?}", r);
+        let _timer = METRICS.grpc_request_duration_seconds
+            .with_label_values(&["evaluate"]).start_timer();
         let evaluate_request = r.get_ref();
         debug!("evaluate request: {:?}", evaluate_request.condition_info);
 
@@ -364,7 +376,7 @@ impl ProviderService for CSharpProvider {
             })?;
 
         debug!("condition: {:?}", condition);
-        let project_guard = self.project.lock().await;
+        let project_guard = self.project.read().await;
         let project = match project_guard.as_ref() {
             Some(x) => x,
             None => {
@@ -375,7 +387,7 @@ impl ProviderService for CSharpProvider {
                 }));
             }
         };
-        let graph_guard = project.graph.clone();
+        let graph_arc = project.graph.clone();
 
         let source_type = match project.get_source_type().await {
             Some(s) => s,
@@ -387,142 +399,143 @@ impl ProviderService for CSharpProvider {
                 }));
             }
         };
-        // Release the project lock, so other evaluate calls can continue
+        // Release the project lock before the blocking query
         drop(project_guard);
-        let graph = graph_guard.lock();
-        let graph_option = match graph {
-            Ok(g) => g,
-            Err(e) => {
-                graph_guard.clear_poison();
-                e.into_inner()
-            }
-        };
 
-        let graph = match graph_option.as_ref() {
-            Some(g) => g,
-            None => {
-                // Graph was invalidated (e.g., by notify_file_changes) and needs to be rebuilt.
-                // Return an error so the client knows to re-initialize the provider.
-                return Ok(Response::new(EvaluateResponse {
-                    error: "No project initialized. Graph cache was invalidated.".to_string(),
+        let location = condition.referenced.location.clone();
+        let pattern = condition.referenced.pattern.clone();
+
+        // Run the graph lock acquisition, query, and deduplication on the blocking
+        // thread pool. These are CPU-intensive (regex matching + graph traversal)
+        // and would starve the tokio worker pool under concurrent load.
+        let span = tracing::Span::current();
+        let results = tokio::task::spawn_blocking(move || {
+            let _guard = span.enter();
+            let graph_guard = graph_arc.lock().unwrap_or_else(|e| {
+                graph_arc.clear_poison();
+                e.into_inner()
+            });
+
+            let Some(ref graph) = *graph_guard else {
+                return EvaluateResponse {
+                    error: "graph not initialized".to_string(),
                     successful: false,
                     response: None,
-                }));
-            }
-        };
+                };
+            };
 
-        // As we are passing an unmutable reference, we can drop the guard here.
+            let query = match location {
+                Locations::All => QueryType::All {
+                    graph,
+                    source_type: &source_type,
+                },
+                Locations::Method => QueryType::Method {
+                    graph,
+                    source_type: &source_type,
+                },
+                Locations::Field => QueryType::Field {
+                    graph,
+                    source_type: &source_type,
+                },
+                Locations::Class => QueryType::Class {
+                    graph,
+                    source_type: &source_type,
+                },
+            };
 
-        let query = match condition.referenced.location {
-            Locations::All => QueryType::All {
-                graph,
-                source_type: &source_type,
-            },
-            Locations::Method => QueryType::Method {
-                graph,
-                source_type: &source_type,
-            },
-            Locations::Field => QueryType::Field {
-                graph,
-                source_type: &source_type,
-            },
-            Locations::Class => QueryType::Class {
-                graph,
-                source_type: &source_type,
-            },
-        };
-        let results = query.query(condition.referenced.pattern.clone());
-        let results = match results {
-            Err(e) => {
-                if let Some(_e) = e.downcast_ref::<NotFoundError>() {
+            match query.query(pattern) {
+                Err(e) => {
+                    if e.downcast_ref::<NotFoundError>().is_some() {
+                        EvaluateResponse {
+                            error: String::new(),
+                            successful: true,
+                            response: Some(ProviderEvaluateResponse {
+                                matched: false,
+                                incident_contexts: vec![],
+                                template_context: None,
+                            }),
+                        }
+                    } else {
+                        EvaluateResponse {
+                            error: e.to_string(),
+                            successful: false,
+                            response: None,
+                        }
+                    }
+                }
+                Ok(res) => {
+                    let new_results = deduplicate_results(&res);
+                    METRICS.evaluate_results_total.inc_by(new_results.len() as u64);
+                    info!("found {} results for search", res.len());
+                    let mut incidents: Vec<IncidentContext> =
+                        new_results.into_iter().map(Into::into).collect();
+                    incidents
+                        .sort_by_key(|i| format!("{}-{:?}", i.file_uri, i.line_number()));
+
+                    if !incidents.is_empty() {
+                        info!("Returning {} incidents", incidents.len());
+                        for (idx, incident) in incidents.iter().enumerate() {
+                            debug!(
+                                "  Incident[{}]: {} line {}",
+                                idx,
+                                incident.file_uri,
+                                incident.line_number.unwrap_or(0)
+                            );
+                        }
+                    }
                     EvaluateResponse {
                         error: String::new(),
                         successful: true,
                         response: Some(ProviderEvaluateResponse {
-                            matched: false,
-                            incident_contexts: vec![],
+                            matched: !incidents.is_empty(),
+                            incident_contexts: incidents,
                             template_context: None,
                         }),
                     }
-                } else {
-                    EvaluateResponse {
-                        error: e.to_string(),
-                        successful: false,
-                        response: None,
-                    }
                 }
             }
-            Ok(res) => {
-                // Deduplicate: group by file+line and keep the one with smallest span
-                let new_results = deduplicate_results(&res);
-                info!("found {} results for search: {:?}", res.len(), &condition);
-                let mut i: Vec<IncidentContext> = new_results.into_iter().map(Into::into).collect();
-                i.sort_by_key(|i| format!("{}-{:?}", i.file_uri, i.line_number()));
+        })
+        .await
+        .map_err(|e| Status::internal(format!("evaluate task panicked: {}", e)))?;
 
-                // Log detailed results for debugging non-determinism
-                if !i.is_empty() {
-                    info!(
-                        "Returning {} incidents for pattern '{:?}':",
-                        i.len(),
-                        &condition
-                    );
-                    for (idx, incident) in i.iter().enumerate() {
-                        debug!(
-                            "  Incident[{}]: {} line {}",
-                            idx,
-                            incident.file_uri,
-                            incident.line_number.unwrap_or(0)
-                        );
-                    }
-                }
-                EvaluateResponse {
-                    error: String::new(),
-                    successful: true,
-                    response: Some(ProviderEvaluateResponse {
-                        matched: !i.is_empty(),
-                        incident_contexts: i,
-                        template_context: None,
-                    }),
-                }
+        METRICS.grpc_requests_total.with_label_values(&["evaluate", "ok"]).inc();
+
+        if let Some(ref response) = results.response {
+            if !response.incident_contexts.is_empty() {
+                info!("returning results: {:?}", results);
             }
-        };
-        if results.response.is_some()
-            && !results
-                .response
-                .as_ref()
-                .unwrap()
-                .incident_contexts
-                .is_empty()
-        {
-            info!("returning results: {:?}", results);
         }
-        return Ok(Response::new(results));
+        Ok(Response::new(results))
     }
 
-    async fn stop(&self, _: Request<ServiceRequest>) -> Result<Response<()>, Status> {
-        return Ok(Response::new(()));
+    #[instrument(skip_all, name = "grpc.stop")]
+    async fn stop(&self, r: Request<ServiceRequest>) -> Result<Response<()>, Status> {
+        tracing::Span::current().set_parent(telemetry::extract_context(r.metadata()));
+        Ok(Response::new(()))
     }
 
+    #[instrument(skip_all, name = "grpc.get_dependencies")]
     async fn get_dependencies(
         &self,
-        _: Request<ServiceRequest>,
+        r: Request<ServiceRequest>,
     ) -> Result<Response<DependencyResponse>, Status> {
-        return Ok(Response::new(DependencyResponse {
+        tracing::Span::current().set_parent(telemetry::extract_context(r.metadata()));
+        Ok(Response::new(DependencyResponse {
             successful: true,
             error: String::new(),
             file_dep: vec![],
-        }));
+        }))
     }
 
     async fn get_dependencies_dag(
         &self,
         _: Request<ServiceRequest>,
     ) -> Result<Response<DependencyDagResponse>, Status> {
-        return Ok(Response::new(DependencyDagResponse {
+        Ok(Response::new(DependencyDagResponse {
             successful: true,
             error: String::new(),
             file_dag_dep: vec![],
-        }));
+        }))
     }
 
     async fn notify_file_changes(
@@ -557,7 +570,7 @@ impl ProviderService for CSharpProvider {
             })
             .collect();
 
-        if csharp_file_paths.len() == 0 {
+        if csharp_file_paths.is_empty() {
             info!("No C# file changes detected, skipping graph invalidation");
             return Ok(Response::new(NotifyFileChangesResponse {
                 error: String::new(),
@@ -570,9 +583,9 @@ impl ProviderService for CSharpProvider {
         );
 
         // Incrementally update the graph for changed files
-        let project_guard = self.project.lock().await;
+        let project_guard = self.project.read().await;
         let project = match project_guard.as_ref() {
-            Some(p) => p.clone(),
+            Some(p) => p,
             None => {
                 warn!("No project initialized, cannot update graph");
                 return Ok(Response::new(NotifyFileChangesResponse {
