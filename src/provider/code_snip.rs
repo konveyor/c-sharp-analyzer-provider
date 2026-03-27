@@ -11,16 +11,23 @@ use crate::{
     provider::CSharpProvider,
 };
 use tonic::{async_trait, Request, Response, Status};
-use tracing::{info, trace};
+use tracing::{info, instrument, trace};
+use tracing_opentelemetry::OpenTelemetrySpanExt;
 use url::Url;
+
+use crate::provider::telemetry::{self, METRICS};
 
 #[async_trait]
 impl ProviderCodeLocationService for CSharpProvider {
+    #[instrument(skip_all, name = "grpc.get_code_snip")]
     async fn get_code_snip(
         &self,
         request: Request<GetCodeSnipRequest>,
     ) -> Result<Response<GetCodeSnipResponse>, Status> {
+        tracing::Span::current().set_parent(telemetry::extract_context(request.metadata()));
         trace!("request: {:#?}", request);
+        let _timer = METRICS.grpc_request_duration_seconds
+            .with_label_values(&["get_code_snip"]).start_timer();
         let code_snip_request = request.into_inner();
 
         let code_location = code_snip_request
@@ -53,25 +60,37 @@ impl ProviderCodeLocationService for CSharpProvider {
                 "could not convert URI to file path: {}", file_uri
             )))?;
 
-        let file = File::open(&file_path)
-            .map_err(|_| Status::invalid_argument(format!(
-                "could not open file: {:?}", file_path
-            )))?;
-        let file = BufReader::new(file);
+        let context_lines = self.context_lines;
+        let skip_lines = (start_position.line as usize).saturating_sub(context_lines);
+        let take = (end_position.line - start_position.line) as usize + context_lines;
 
-        let skip_lines = (start_position.line as usize).saturating_sub(self.context_lines);
-        let take = (end_position.line - start_position.line) as usize + self.context_lines;
+        // Run blocking file I/O on a dedicated thread to avoid blocking the tokio runtime
+        let span = tracing::Span::current();
+        let code_snip_lines = tokio::task::spawn_blocking(move || -> Result<String, Status> {
+            let _guard = span.enter();
+            let file = File::open(&file_path)
+                .map_err(|_| Status::invalid_argument(format!(
+                    "could not open file: {:?}", file_path
+                )))?;
+            let reader = BufReader::new(file);
 
-        let code_snip_lines: String = file
-            .lines()
-            .skip(skip_lines)
-            .take(take)
-            .enumerate()
-            .map(|(index, s)| match s {
-                Ok(line) => format!("{} {}\n", skip_lines + index, line),
-                Err(_) => String::new(),
-            })
-            .collect();
+            let result: String = reader
+                .lines()
+                .skip(skip_lines)
+                .take(take)
+                .enumerate()
+                .map(|(index, s)| match s {
+                    Ok(line) => format!("{} {}\n", skip_lines + index, line),
+                    Err(_) => String::new(),
+                })
+                .collect();
+
+            Ok(result)
+        })
+        .await
+        .map_err(|e| Status::internal(format!("code snip task panicked: {}", e)))??;
+
+        METRICS.grpc_requests_total.with_label_values(&["get_code_snip", "ok"]).inc();
 
         Ok(Response::new(GetCodeSnipResponse {
             snip: code_snip_lines,

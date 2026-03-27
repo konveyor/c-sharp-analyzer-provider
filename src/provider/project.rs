@@ -13,7 +13,8 @@ use stack_graphs::{
     stitching::ForwardCandidates, storage::SQLiteReader, NoCancellation,
 };
 use tokio::sync::{Mutex as TokioMutex, RwLock};
-use tracing::{debug, info, warn};
+use tracing::{debug, info, instrument, warn};
+use crate::provider::telemetry::METRICS;
 use which::which;
 
 use crate::c_sharp_graph::language_config::SourceNodeLanguageConfiguration;
@@ -29,8 +30,8 @@ pub struct Project {
     pub source_language_config: Arc<RwLock<Option<SourceNodeLanguageConfiguration>>>,
     pub analysis_mode: AnalysisMode,
     pub tools: Tools,
-    target_framework: Arc<Mutex<Option<TargetFramework>>>,
-    sdk_path: Arc<Mutex<Option<PathBuf>>>,
+    target_framework: Mutex<Option<TargetFramework>>,
+    sdk_path: Mutex<Option<PathBuf>>,
 }
 
 #[derive(Eq, PartialEq, Debug, Deserialize)]
@@ -105,8 +106,8 @@ impl Project {
             source_language_config: Arc::new(RwLock::new(None)),
             analysis_mode,
             tools,
-            target_framework: Arc::new(Mutex::new(None)),
-            sdk_path: Arc::new(Mutex::new(None)),
+            target_framework: Mutex::new(None),
+            sdk_path: Mutex::new(None),
         }
     }
 
@@ -263,73 +264,94 @@ impl Project {
         Ok(())
     }
 
+    #[instrument(skip_all, name = "project.get_graph")]
     pub async fn get_project_graph(&self) -> Result<usize, Error> {
         if self.db_path.exists() {
             debug!("trying to load from existing db: {:?}", &self.db_path);
-            // Load the stack_graph.
-            let mut db_reader = match SQLiteReader::open(&self.db_path) {
-                Ok(db_reader) => db_reader,
-                Err(e) => {
-                    return Err(anyhow!(e));
+
+            // Run blocking SQLite + graph deserialization on the blocking pool
+            let db_path = self.db_path.clone();
+            let location = self.location.clone();
+            let graph_arc = self.graph.clone();
+            let sdk_path = self.get_sdk_path();
+
+            let span = tracing::info_span!("project.load_from_db");
+            let result = tokio::task::spawn_blocking(move || -> Result<Option<usize>, Error> {
+                let _guard = span.enter();
+                let mut db_reader = SQLiteReader::open(&db_path).map_err(|e| anyhow!(e))?;
+                db_reader
+                    .load_graphs_for_file_or_directory(&location, &NoCancellation)?;
+
+                // Also load SDK XML files if target framework is set
+                if let Some(sdk_path) = sdk_path {
+                    debug!("Loading SDK graphs from: {:?}", sdk_path);
+                    let _ = db_reader
+                        .load_graphs_for_file_or_directory(&sdk_path, &NoCancellation);
                 }
-            };
 
-            // Load graphs from project location
-            db_reader.load_graphs_for_file_or_directory(&self.location, &NoCancellation)?;
+                let (stack_graph, _, _) = db_reader.get_graph_partials_and_db();
+                let file_count = stack_graph.iter_files().count();
+                debug!("got stack graph from db with {} files", file_count);
 
-            // Also load SDK XML files if target framework is set
-            if let Some(sdk_path) = self.get_sdk_path() {
-                debug!("Loading SDK graphs from: {:?}", sdk_path);
-                // Ignore errors here - SDK might not be installed yet
-                let _ = db_reader.load_graphs_for_file_or_directory(&sdk_path, &NoCancellation);
-            }
-
-            let (stack_graph, _, _) = db_reader.get_graph_partials_and_db();
-            debug!(
-                "got stack graph from db with file: {}",
-                stack_graph.iter_files().count()
-            );
-            debug!("starting serialize_stack_graph");
-            let serializable_graph = SerializableStackGraph::from_graph(stack_graph);
-            let mut graph = StackGraph::new();
-            debug!("loading graph");
-            if let Err(e) = serializable_graph.load_into(&mut graph) {
-                debug!("unable to load graph: {}", e);
-            }
-            debug!("finish loading graph");
-            if graph.iter_symbols().count() == 0 {
-                debug!("unable to load graph");
-            } else {
-                debug!("trying to get guard");
-                if let Ok(mut graph_guard) = self.graph.lock() {
-                    graph_guard.replace(graph);
-                    drop(graph_guard);
-                    debug!("setting graph on project");
-                    return Ok(stack_graph.iter_files().count());
+                let serializable_graph = SerializableStackGraph::from_graph(stack_graph);
+                let mut graph = StackGraph::new();
+                if let Err(e) = serializable_graph.load_into(&mut graph) {
+                    debug!("unable to load graph: {}", e);
                 }
+
+                if graph.iter_symbols().count() == 0 {
+                    debug!("unable to load graph from db, will build from source");
+                    return Ok(None);
+                }
+
+                let mut graph_guard = graph_arc.lock()
+                    .unwrap_or_else(|e| e.into_inner());
+                graph_guard.replace(graph);
+                debug!("loaded graph from existing db");
+                Ok(Some(file_count))
+            })
+            .await
+            .map_err(|e| anyhow!("db loading task panicked: {}", e))??;
+
+            if let Some(file_count) = result {
+                METRICS.files_indexed.set(file_count as i64);
+                return Ok(file_count);
             }
-            drop(graph);
         }
 
-        let lc_guard = self.source_language_config.read().await;
-        // If the databse is present we should consider use that and load into the graph
-        let lc = lc_guard.as_ref().ok_or_else(|| anyhow::anyhow!("language configuration not initialized"))?;
-        let initialized_results = match init_stack_graph(
-            &self.location,
-            &self.db_path,
-            &lc.source_type_node_info,
-            &lc.language_config,
-        ) {
-            Ok(i) => i,
-            Err(e) => return Err(anyhow!(e)),
-        };
+        // No existing DB or it was empty -- build from source.
+        // Acquire an owned read guard so it can be sent to spawn_blocking.
+        let lc_guard = Arc::clone(&self.source_language_config).read_owned().await;
+        let graph_arc = self.graph.clone();
+        let location = self.location.clone();
+        let db_path = self.db_path.clone();
 
-        if let Ok(mut graph_guard) = self.graph.lock() {
+        let span = tracing::info_span!("project.build_from_source");
+        let files_loaded = tokio::task::spawn_blocking(move || -> Result<usize, Error> {
+            let _guard = span.enter();
+            let lc = lc_guard.as_ref()
+                .ok_or_else(|| anyhow::anyhow!("language configuration not initialized"))?;
+
+            let initialized_results = init_stack_graph(
+                &location,
+                &db_path,
+                &lc.source_type_node_info,
+                &lc.language_config,
+            ).map_err(|e| anyhow!(e))?;
+
+            let mut graph_guard = graph_arc.lock()
+                .unwrap_or_else(|e| e.into_inner());
             graph_guard.replace(initialized_results.stack_graph);
-        }
-        Ok(initialized_results.files_loaded)
+            METRICS.files_indexed.set(initialized_results.files_loaded as i64);
+            Ok(initialized_results.files_loaded)
+        })
+        .await
+        .map_err(|e| anyhow!("init_stack_graph task panicked: {}", e))??;
+
+        Ok(files_loaded)
     }
 
+    #[instrument(skip_all, name = "project.get_source_type")]
     pub async fn get_source_type(&self) -> Option<Arc<SourceType>> {
         let lc_guard = self.source_language_config.read().await;
 

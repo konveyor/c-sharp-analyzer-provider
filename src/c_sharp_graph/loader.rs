@@ -4,6 +4,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
+use crate::provider::telemetry::METRICS;
 use anyhow::{anyhow, Error, Result};
 use base64::Engine;
 use sha1::{Digest, Sha1};
@@ -13,7 +14,7 @@ use stack_graphs::{
     partial::{PartialPath, PartialPaths},
     storage::SQLiteWriter,
 };
-use tracing::{debug, error, info, trace};
+use tracing::{debug, error, info, instrument, trace};
 use tree_sitter_stack_graphs::{
     loader::{FileReader, LanguageConfiguration},
     NoCancellation, Variables, FILE_PATH_VAR, ROOT_PATH_VAR,
@@ -112,6 +113,7 @@ pub struct AsyncInitializeGraph {
     pub file_to_tag: HashMap<PathBuf, String>,
 }
 
+#[instrument(skip_all, name = "graph.add_dir", fields(dir = %source_location.display()))]
 pub fn add_dir_to_graph(
     source_location: &Path,
     source_type: &SourceType,
@@ -256,12 +258,14 @@ pub fn load_graph_for_file(
     }
 }
 
+#[instrument(skip_all, name = "graph.init_stack_graph", fields(location = %source_location.display()))]
 pub fn init_stack_graph(
     source_location: &Path,
     db_path: &Path,
     source_type: &SourceType,
     language_config: &LanguageConfiguration,
 ) -> Result<InitializedGraph, Error> {
+    let _timer = METRICS.graph_build_duration_seconds.start_timer();
     let mut db: SQLiteWriter = SQLiteWriter::open(db_path)?;
 
     let mut files_loaded = 0;

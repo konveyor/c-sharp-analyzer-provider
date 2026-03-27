@@ -10,7 +10,7 @@ use stack_graphs::{
     arena::Handle,
     graph::{Edge, File, Node, StackGraph},
 };
-use tracing::{debug, error, info, trace};
+use tracing::{debug, error, info, instrument, trace};
 use url::Url;
 
 use crate::c_sharp_graph::{
@@ -203,6 +203,7 @@ pub enum QueryType<'graph> {
 }
 
 impl Query for QueryType<'_> {
+    #[instrument(skip_all, name = "graph.query", fields(pattern = %query))]
     fn query(self, query: String) -> anyhow::Result<Vec<ResultNode>, Error> {
         match self {
             QueryType::All { graph, source_type } => {
@@ -334,6 +335,7 @@ impl<T: GetMatcher> Querier<'_, T> {
         }
     }
 
+    #[instrument(skip_all, name = "graph.search_nodes")]
     pub(crate) fn search_nodes(
         &self,
         file: Handle<File>,
