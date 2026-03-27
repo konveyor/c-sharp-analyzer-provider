@@ -152,6 +152,14 @@ make run-analyzer-integration CONTAINER_RUNTIME=docker TAG=v0.1.0
 make run-analyzer-integration IMG_ANALYZER=quay.io/konveyor/analyzer-lsp:latest
 ```
 
+**Override container user (for volume permission issues):**
+```bash
+make run-analyzer-integration CONTAINER_USER=$(id -u)
+```
+
+The `CONTAINER_USER` variable (default: current host user) is passed as `--user` to all
+`podman run` commands to ensure consistent file ownership across volume mounts.
+
 ## Manual Testing (Debugging/Legacy)
 
 > **Note**: Manual server management is now legacy. Integration tests automatically manage the server lifecycle. Use this approach only for debugging or manual exploration.
@@ -257,6 +265,30 @@ RUST_LOG=trace make run-tests
 
 # Or capture to a file
 make run-tests 2>&1 | tee test-run.log
+```
+
+### Tracing Test Runs with Jaeger
+
+For debugging test failures with distributed tracing:
+
+```bash
+# Start Jaeger
+podman run -d --name jaeger -p 4317:4317 -p 16686:16686 jaegertracing/all-in-one:latest
+
+# Run tests with OTLP tracing
+OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 make run-tests
+
+# View traces at http://localhost:16686
+```
+
+For container-based tests, pass OTEL env vars to the provider container:
+```bash
+podman run --pod analyzer-c-sharp --name c-sharp -d \
+  -e OTEL_EXPORTER_OTLP_ENDPOINT=http://host.containers.internal:4317 \
+  -e OTEL_SERVICE_NAME=c-sharp-provider \
+  -e METRICS_PORT=9090 \
+  -v test-data:/analyzer-lsp/examples:U,z \
+  c-sharp-provider:latest --port 14651
 ```
 
 ### Debug a Single Test

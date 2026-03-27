@@ -53,13 +53,16 @@ The C# Analyzer Provider is a gRPC service that analyzes C# codebases to find re
 
 The main binary sets up the server infrastructure:
 
-- **Multi-threaded Runtime**: Configures Tokio with 6 worker threads
+- **Multi-threaded Runtime**: Configures Tokio with dynamic worker threads (`available_parallelism()`, capped at 32)
 - **Transport Layer**: Supports multiple transport modes:
   - HTTP/2 with gRPC (via `--port` flag)
   - Unix Domain Sockets on Unix-like systems (via `--socket` flag)
   - Named Pipes on Windows (via `--socket` flag)
 - **Logging**: Environment-based log filtering with tracing
 - **Reflection**: Includes gRPC reflection for service discovery
+- **Telemetry**: Optional OpenTelemetry OTLP tracing layer (enabled via `OTEL_EXPORTER_OTLP_ENDPOINT`)
+- **Metrics**: Optional Prometheus metrics HTTP server (enabled via `METRICS_PORT`)
+- **Shutdown**: Graceful OTel tracer flush on exit
 
 ### 2. Provider Service (`src/analyzer_service/provider.rs`, `src/provider/csharp.rs`)
 
@@ -228,6 +231,34 @@ Defines the tree-sitter-stack-graphs configuration for C#:
 
 This is essentially the "rules" for how to interpret C# code semantically.
 
+### 7. Telemetry (`src/provider/telemetry.rs`)
+
+Opt-in observability infrastructure:
+
+- **OTLP Traces**: Batch span exporter to any OTLP-compatible backend (Jaeger, Tempo, etc.)
+- **Prometheus Metrics**: Lightweight HTTP server serving `/metrics` in text format
+- **W3C TraceContext**: Extracts `traceparent` from gRPC metadata for cross-service tracing
+- **Span Propagation**: Captures and re-enters tracing spans in `spawn_blocking` closures
+
+### 8. SDK Detection (`src/provider/sdk_detection.rs`)
+
+Locates existing .NET SDK installations before falling back to download:
+- Checks configured `dotnet_sdk_path`
+- Probes system dotnet installations
+- Returns `SdkSource::Found` or `SdkSource::NotFound`
+
+### 9. Target Framework (`src/provider/target_framework.rs`)
+
+Manages .NET target framework detection and SDK installation:
+- Parses TFMs from `.csproj` files
+- Installs SDK versions via official `dotnet-install.sh`
+- Discovers SDK XML reference files for dependency analysis
+
+### 10. Code Snippet Service (`src/provider/code_snip.rs`)
+
+Implements `ProviderCodeLocationService` gRPC interface for returning source code
+snippets at given file locations with configurable context lines.
+
 ## Data Flow
 
 ### Initialization Flow
@@ -236,6 +267,10 @@ This is essentially the "rules" for how to interpret C# code semantically.
 Client Init Request
     ↓
 Validate Tools (ilspycmd, paket)
+    ↓
+Detect Target Framework (.csproj parsing)
+    ↓
+[If Modern .NET] Find/Install SDK (spawn_blocking)
     ↓
 [If Full Mode] Resolve Dependencies
     ↓           ↓
@@ -298,14 +333,53 @@ Namespace  Class Query  Method Query  Field Query
 
 ## Threading Model
 
-- **Main Thread**: Handles command-line parsing and runtime setup
-- **Tokio Runtime**: 6 worker threads handle async I/O
-- **Thread Safety**:
-  - `Arc<Mutex<...>>` for stack graph (rare mutations)
-  - `Arc<TokioMutex<...>>` for async-accessible state
-  - `Arc<RwLock<...>>` for read-heavy structures
+The system uses two thread pools managed by the Tokio runtime:
 
-The stack graph is built once during `init()` and then used read-only during `evaluate()` calls, so contention is minimal.
+### Async Worker Pool
+- **Size**: Dynamic via `std::thread::available_parallelism()`, capped at 32
+- **Purpose**: Handles gRPC requests, async I/O, channel operations, task coordination
+- **Contract**: Code between `.await` points must complete quickly (< ~10ms)
+
+### Blocking Thread Pool
+- **Size**: Auto-scaling (default max: 512), managed by `tokio::task::spawn_blocking`
+- **Purpose**: Runs heavy blocking work that would starve the async pool
+- **Operations offloaded**:
+  - Graph queries (regex matching + graph traversal) in `evaluate()`
+  - Stack graph initialization (WalkDir + tree-sitter parsing + SQLite) in `get_project_graph()`
+  - Per-dependency graph builds in `load_to_database_source_only()` / `load_to_database_full_analysis()`
+  - SDK XML file processing in `load_sdk_xml_files_to_database()`
+  - File I/O in `get_code_snip()`
+  - SDK installation subprocesses in `init()`
+
+### Span Propagation Across Thread Pools
+
+`spawn_blocking` closures run on the blocking pool and don't inherit the caller's tracing span.
+The codebase uses explicit span capture to maintain trace continuity:
+
+```rust
+let span = tracing::Span::current();
+tokio::task::spawn_blocking(move || {
+    let _guard = span.enter();
+    // blocking work -- spans created here are children of the captured span
+})
+```
+
+When blocking work needs data from a `tokio::sync::RwLock`, `read_owned()` produces
+a `'static + Send` guard that can be moved into the closure:
+
+```rust
+let guard = Arc::clone(&rw_lock).read_owned().await;
+tokio::task::spawn_blocking(move || {
+    let data = guard.as_ref().unwrap();
+    // use data inside the blocking task
+})
+```
+
+### Thread Safety
+- `Arc<Mutex<...>>` for stack graph (std::sync -- cannot be held across `.await`)
+- `Arc<TokioMutex<...>>` for async-accessible state (dependency list)
+- `Arc<RwLock<...>>` for read-heavy structures (language config, project)
+- Mutex poison recovery via `unwrap_or_else(|e| e.into_inner())` to avoid cascading panics
 
 ## Storage
 

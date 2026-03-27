@@ -112,7 +112,7 @@ Quick reference:
 cargo test -- --nocapture
 
 # Run with demo server
-make run-demo
+make run-tests
 
 # Run specific test
 cargo test integration_tests -- --nocapture
@@ -123,7 +123,7 @@ cargo test integration_tests -- --nocapture
 ```
 c-sharp-analyzer-provider-cli/
 ├── src/
-│   ├── main.rs                      # Entry point, server setup
+│   ├── main.rs                      # Entry point, server setup, telemetry wiring
 │   ├── lib.rs                       # Library exports
 │   ├── analyzer_service/            # gRPC service definitions
 │   │   ├── mod.rs                   # Generated proto code
@@ -132,13 +132,18 @@ c-sharp-analyzer-provider-cli/
 │   │   ├── mod.rs                   # Module exports
 │   │   ├── csharp.rs               # CSharpProvider service impl
 │   │   ├── project.rs              # Project state management
-│   │   └── dependency_resolution.rs # Dependency handling
+│   │   ├── dependency_resolution.rs # Dependency handling
+│   │   ├── code_snip.rs            # Code snippet service
+│   │   ├── telemetry.rs            # OpenTelemetry + Prometheus metrics
+│   │   ├── sdk_detection.rs        # .NET SDK path resolution
+│   │   └── target_framework.rs     # TFM parsing and SDK management
 │   ├── c_sharp_graph/              # Stack graph query engine
 │   │   ├── mod.rs                   # Module exports
 │   │   ├── loader.rs               # Graph building from source
 │   │   ├── query.rs                # Query trait and core logic
 │   │   ├── results.rs              # Result formatting
 │   │   ├── language_config.rs      # Tree-sitter config
+│   │   ├── dependency_xml_analyzer.rs # XML-based dependency graph building
 │   │   ├── namespace_query.rs      # Namespace queries
 │   │   ├── class_query.rs          # Class queries
 │   │   ├── method_query.rs         # Method queries
@@ -153,6 +158,7 @@ c-sharp-analyzer-provider-cli/
 ├── docs/                            # Documentation
 ├── build.rs                         # Build script (protoc)
 ├── Cargo.toml                       # Dependencies
+├── Dockerfile                       # Container image (UBI9 + .NET SDK 9 + runtime 8)
 └── Makefile                         # Common tasks
 ```
 
@@ -424,6 +430,40 @@ RUST_LOG=c_sharp_analyzer_provider_cli::c_sharp_graph=trace cargo run -- --port 
 RUST_LOG=c_sharp_analyzer_provider_cli=debug,tower=info cargo run -- --port 9000
 ```
 
+### Distributed Tracing with Jaeger
+
+For debugging complex request flows, enable OpenTelemetry tracing:
+
+```bash
+# Start Jaeger
+podman run -d --name jaeger -p 4317:4317 -p 16686:16686 jaegertracing/all-in-one:latest
+
+# Run the provider with OTLP export
+OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 \
+  OTEL_SERVICE_NAME=c-sharp-provider \
+  RUST_LOG=info \
+  cargo run -- --port 9000
+
+# View traces at http://localhost:16686
+# Select "c-sharp-provider" from the service dropdown
+```
+
+All gRPC handlers and key internal operations are instrumented with `#[instrument]`.
+Traces show the full request lifecycle including `spawn_blocking` offloaded work.
+
+### Prometheus Metrics
+
+Enable the metrics endpoint for monitoring during development:
+
+```bash
+METRICS_PORT=9090 cargo run -- --port 9000
+
+# Check metrics
+curl http://localhost:9090/metrics
+```
+
+Metrics include request counts, durations, files indexed, and decompilation timing.
+
 ### Debugging with VS Code
 
 Create `.vscode/launch.json`:
@@ -641,6 +681,35 @@ cargo build
 
 The build script runs during compilation.
 
+### 6. Blocking Work in Async Context
+
+Never run heavy operations (file I/O, subprocess execution, tree-sitter parsing, SQLite queries)
+directly on Tokio worker threads. This starves the async event loop and blocks all concurrent
+requests on that thread.
+
+**Wrong:**
+```rust
+async fn evaluate(&self, ...) {
+    let graph = self.graph.lock().unwrap();  // blocks worker thread
+    let results = query.query(pattern);       // CPU-intensive, blocks worker thread
+}
+```
+
+**Right:**
+```rust
+async fn evaluate(&self, ...) {
+    let graph_arc = self.graph.clone();
+    let span = tracing::Span::current();
+    let results = tokio::task::spawn_blocking(move || {
+        let _guard = span.enter();  // propagate tracing span
+        let graph = graph_arc.lock().unwrap_or_else(|e| e.into_inner());
+        query.query(pattern)
+    }).await?;
+}
+```
+
+See CLAUDE.md's "Async Patterns: Offloading Blocking Work" section for the full pattern inventory.
+
 ## Contributing
 
 ### Code Style
@@ -655,7 +724,7 @@ The build script runs during compilation.
 
 1. Create a feature branch
 2. Make changes with clear commit messages
-3. Run tests: `make run-demo`
+3. Run tests: `make run-tests`
 4. Run clippy: `cargo clippy`
 5. Format code: `cargo fmt`
 6. Create PR with description of changes
