@@ -10,6 +10,7 @@ MOUNT_OPT ?= :U,z
 TAG ?= latest
 IMAGE ?= c-sharp-provider:${TAG}
 IMG_ANALYZER ?= quay.io/konveyor/analyzer-lsp:$(TAG)
+CONTAINER_USER ?= $(shell id -u)
 
 .PHONY: all clean test download_proto build run build-image run-grpc-init-http run-grpc-ref-http wait-for-server reset-nerd-dinner-demo reset-demo-apps reset-demo-output run-tests run-tests-manual run-integration-tests get-konveyor-analyzer-local update-provider-settings-local run-test-local verify-output verify-e2e-results run-analyzer-integration-local run-c-sharp-pod stop-c-sharp-pod run-demo-c-sharp-pod run-analyzer-integration
 
@@ -224,9 +225,9 @@ run-analyzer-integration-local: get-konveyor-analyzer-local run-test-local verif
 ## Running analyzer integration test as you would in CI.
 run-c-sharp-pod:
 	$(CONTAINER_RUNTIME) volume create test-data
-	$(CONTAINER_RUNTIME) run --rm -v test-data:/target$(MOUNT_OPT) -v $(PWD)/testdata:/src/$(MOUNT_OPT) --entrypoint=cp alpine -a /src/. /target/
+	$(CONTAINER_RUNTIME) run --rm --user $(CONTAINER_USER):0 -v test-data:/target$(MOUNT_OPT) -v $(PWD)/testdata:/src/$(MOUNT_OPT) --entrypoint=cp alpine -a /src/. /target/
 	$(CONTAINER_RUNTIME) pod create --name=analyzer-c-sharp
-	$(CONTAINER_RUNTIME) run --pod analyzer-c-sharp --name c-sharp -d -v test-data:/analyzer-lsp/examples$(MOUNT_OPT) ${IMAGE} --port 14651
+	$(CONTAINER_RUNTIME) run --pod analyzer-c-sharp --name c-sharp -d --user $(CONTAINER_USER):0 -v test-data:/analyzer-lsp/examples$(MOUNT_OPT) ${IMAGE} --port 14651
 
 stop-c-sharp-pod:
 	$(CONTAINER_RUNTIME) pod kill analyzer-c-sharp || true
@@ -234,7 +235,7 @@ stop-c-sharp-pod:
 	$(CONTAINER_RUNTIME) volume rm test-data || true
 
 run-demo-c-sharp-pod:
-	$(CONTAINER_RUNTIME) run --entrypoint /usr/local/bin/konveyor-analyzer --pod=analyzer-c-sharp\
+	$(CONTAINER_RUNTIME) run --entrypoint /usr/local/bin/konveyor-analyzer --pod=analyzer-c-sharp --user $(CONTAINER_USER):0 \
 		-v test-data:/analyzer-lsp/examples$(MOUNT_OPT) \
 		-v $(PWD)/e2e-tests/demo-output.yaml:/analyzer-lsp/output.yaml$(MOUNT_OPT) \
 		-v $(PWD)/e2e-tests/provider_settings.json:/analyzer-lsp/provider_settings.json$(MOUNT_OPT) \

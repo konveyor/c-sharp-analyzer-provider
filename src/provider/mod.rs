@@ -4,6 +4,7 @@ mod dependency_resolution;
 mod project;
 pub(crate) mod sdk_detection;
 pub(crate) mod target_framework;
+pub mod telemetry;
 
 pub use csharp::CSharpProvider;
 pub use project::AnalysisMode;

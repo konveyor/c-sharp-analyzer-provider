@@ -2,7 +2,7 @@ use std::collections::HashSet;
 use std::fmt::Debug;
 use std::path::Path;
 use std::path::PathBuf;
-use std::process::Command;
+use tokio::process::Command;
 use std::sync::Arc;
 use std::sync::Mutex;
 
@@ -19,7 +19,8 @@ use stack_graphs::NoCancellation;
 use tokio::fs::{self, File};
 use tokio::io::{AsyncBufReadExt, BufReader};
 use tokio::task::JoinSet;
-use tracing::{debug, error, info, trace};
+use tracing::{debug, error, info, instrument, trace};
+use crate::provider::telemetry::METRICS;
 use tree_sitter_stack_graphs::loader::FileAnalyzers;
 
 use crate::c_sharp_graph::dependency_xml_analyzer::DepXMLFileAnalyzer;
@@ -31,6 +32,9 @@ use crate::provider::project::Tools;
 use crate::provider::target_framework::TargetFrameworkHelper;
 use crate::provider::AnalysisMode;
 use crate::provider::Project;
+
+/// Result type for JoinSet tasks that build graphs for individual dependencies.
+type GraphBuildResult = Result<(AsyncInitializeGraph, String), Error>;
 
 const REFERENCE_ASSEMBLIES_NAME: &str = "Microsoft.NETFramework.ReferenceAssemblies";
 pub struct Dependencies {
@@ -55,6 +59,7 @@ impl Debug for Dependencies {
 }
 
 impl Dependencies {
+    #[instrument(skip_all, name = "deps.decompile", fields(dep = %self.name))]
     pub async fn decompile(
         &self,
         reference_assemblies: PathBuf,
@@ -112,17 +117,20 @@ impl Dependencies {
         for dir_path in decompiled_files.iter() {
             dir_size += get_size(dir_path).unwrap_or_default();
         }
-        let mut size_guard = self.decompiled_size.lock().unwrap();
-        let _ = size_guard.insert(dir_size);
-        drop(size_guard);
+        match self.decompiled_size.lock() {
+            std::result::Result::Ok(mut guard) => { guard.replace(dir_size); }
+            Err(e) => error!("decompiled_size mutex poisoned: {}", e),
+        }
 
-        let mut guard = self.decompiled_location.lock().unwrap();
-        *guard = decompiled_files;
-        drop(guard);
+        match self.decompiled_location.lock() {
+            std::result::Result::Ok(mut guard) => { *guard = decompiled_files; }
+            Err(e) => error!("decompiled_location mutex poisoned: {}", e),
+        }
 
         Ok(())
     }
 
+    #[instrument(skip_all, name = "deps.read_cache_file")]
     async fn read_packet_cache_file(
         &self,
         file: PathBuf,
@@ -169,12 +177,14 @@ impl Dependencies {
         Ok(dll_paths)
     }
 
+    #[instrument(skip_all, name = "deps.decompile_file", fields(file = %file_to_decompile.display()))]
     async fn decompile_file(
         &self,
         reference_assemblies: &PathBuf,
         file_to_decompile: PathBuf,
         ilspycmd: PathBuf,
     ) -> Result<PathBuf, Error> {
+        let _timer = METRICS.decompile_duration_seconds.start_timer();
         let decompile_name = match self.location.as_path().file_name() {
             Some(n) => {
                 let mut x = n.to_owned().to_string_lossy().into_owned();
@@ -201,13 +211,15 @@ impl Dependencies {
             .arg("-p")
             .arg(&file_to_decompile)
             .current_dir(&self.location)
-            .output()?;
+            .output()
+            .await?;
 
         trace!("decompile output: {:?}", decompile_output);
 
         Ok(decompile_out_name)
     }
 
+    #[instrument(skip_all, name = "deps.get_xml_files")]
     pub async fn get_xml_files(&self) -> Result<Vec<PathBuf>, Error> {
         let dep_package_dir = self.location.to_owned();
         if !dep_package_dir.is_dir() || !dep_package_dir.exists() {
@@ -252,7 +264,7 @@ impl Dependencies {
 }
 
 impl Project {
-    #[tracing::instrument]
+    #[instrument(skip_all, name = "deps.resolve")]
     pub async fn resolve(&self) -> Result<(), Error> {
         // determine if the paket.dependencies already exists, if it does then we don't need to
         // convert.
@@ -265,7 +277,8 @@ impl Project {
             let paket_output = Command::new(&self.tools.paket_cmd)
                 .args(["convert-from-nuget", "-f"])
                 .current_dir(&self.location)
-                .output()?;
+                .output()
+                .await?;
             if !paket_output.status.success() {
                 //TODO: Consider a specific error type
                 debug!(
@@ -317,10 +330,9 @@ impl Project {
                 }
             }
             deps.sort_by(|x, y| {
-                y.decompiled_size
-                    .lock()
-                    .unwrap()
-                    .cmp(&x.decompiled_size.lock().unwrap())
+                let y_size = y.decompiled_size.lock().ok().and_then(|g| *g);
+                let x_size = x.decompiled_size.lock().ok().and_then(|g| *g);
+                y_size.cmp(&x_size)
             });
             let mut d = self.dependencies.lock().await;
             *d = Some(deps);
@@ -331,31 +343,14 @@ impl Project {
         Ok(())
     }
 
+    #[instrument(skip_all, name = "deps.load_to_database")]
     pub async fn load_to_database(&self) -> Result<(), Error> {
-        let set = if self.analysis_mode == AnalysisMode::Full {
-            self.load_to_database_full_analysis().await?
+        if self.analysis_mode == AnalysisMode::Full {
+            self.load_to_database_full_analysis().await?;
         } else {
-            self.load_to_database_source_only().await?
-        };
-        for res in set.join_all().await {
-            let (init_graph, dep_name) = match res {
-                std::result::Result::Ok((i, dep_name)) => (i, dep_name),
-                Err(e) => {
-                    return Err(anyhow!(
-                        "unable to get graph, project may not have been initialized: {}",
-                        e
-                    ));
-                }
-            };
-            info!(
-                "loaded {} files for dep: {:?} into database",
-                init_graph.files_loaded, dep_name
-            );
+            self.load_to_database_source_only().await?;
         }
-        let mut graph_guard = self
-            .graph
-            .lock()
-            .expect("project may not have been initialized");
+        // Perform all I/O and computation WITHOUT holding the graph lock
         info!("adding all dependency and source to graph");
         let mut db_reader = SQLiteReader::open(&self.db_path)?;
         // Load graphs from project location
@@ -365,7 +360,6 @@ impl Project {
         // Also load SDK XML files if target framework is set
         if let Some(sdk_path) = self.get_sdk_path() {
             info!("Target framework set, SDK path: {:?}", sdk_path);
-            info!("SDK path exists: {}", sdk_path.exists());
             if sdk_path.exists() {
                 info!("Loading SDK graphs from: {:?}", sdk_path);
                 if let Err(e) =
@@ -385,61 +379,58 @@ impl Project {
         // Once you read the data back from the DB, you will not get the source information
         // This is not currently stored in the database
         // There may be a way to re-attach this but for now we will relay code-snipper.
-        let (read_graph, partials, databse) = db_reader.get();
+        let (read_graph, partials, database) = db_reader.get();
         let read_graph = read_graph.to_serializable();
         let mut new_graph = StackGraph::new();
         read_graph.load_into(&mut new_graph)?;
         debug!(
             "new graph: {:?}",
-            databse.to_serializable(&new_graph, partials)
+            database.to_serializable(&new_graph, partials)
         );
-        let _ = graph_guard.insert(new_graph);
+
+        // Only acquire the lock to swap in the new graph
+        let mut graph_guard = self.graph.lock()
+            .unwrap_or_else(|e| e.into_inner());
+        graph_guard.replace(new_graph);
         Ok(())
     }
 
-    async fn load_to_database_source_only(
-        &self,
-    ) -> Result<JoinSet<Result<(AsyncInitializeGraph, String), Error>>, Error> {
+    #[instrument(skip_all, name = "deps.load_to_db_source_only")]
+    async fn load_to_database_source_only(&self) -> Result<(), Error> {
         let shared_deps = Arc::clone(&self.dependencies);
         let mut x = shared_deps.lock().await;
         let mut set = JoinSet::new();
 
         if let Some(ref mut vec) = *x {
-            // For each dependency in the list we will try and load the decompiled files
-            // Into the stack graph database.
             for d in vec {
-                // Look up the location of the xml file.
                 let xml_files = d.get_xml_files().await?;
                 for file in xml_files {
                     if !file.exists() {
-                        // Fallback to decompile.
                         error!("unable to find xml file: {:?}", file);
                         continue;
                     }
-                    // Use new type of loader, to handle this.
                     let db_path = self.db_path.clone();
                     let dep_name = d.name.clone();
-                    set.spawn(async move {
+                    let span = tracing::info_span!("deps.index_dep", dep = %dep_name);
+                    // Use spawn_blocking since this task does heavy blocking I/O
+                    // (filesystem traversal, tree-sitter parsing, SQLite writes)
+                    set.spawn_blocking(move || {
+                        let _guard = span.enter();
                         info!(
                             "indexing dep: {} with xml file: {:?} into a graph",
                             &dep_name, &file
                         );
                         let mut graph = StackGraph::new();
-                        // We need to make sure that the symols for source type are the first
-                        // symbols, so that they match what is in the builtins.
                         let (_, dep_source_type_node) =
                             SourceType::load_symbols_into_graph(&mut graph);
-                        // remove mutability
                         let graph = graph;
                         let mut source_lc = SourceNodeLanguageConfiguration::new(
                             &tree_sitter_stack_graphs::NoCancellation,
                         )?;
-                        let file_name = file.file_name();
-                        if file_name.is_none() {
+                        let Some(file_name) = file.file_name() else {
                             return Err(anyhow!("unable to handle file"));
-                        }
-                        let file_name = file_name.unwrap().to_string_lossy();
-                        let file_name = file_name.to_string();
+                        };
+                        let file_name = file_name.to_string_lossy().to_string();
                         source_lc.language_config.special_files =
                             FileAnalyzers::new().with(file_name, DepXMLFileAnalyzer {});
                         let mut graph = add_dir_to_graph(
@@ -500,94 +491,114 @@ impl Project {
                 }
             }
         }
-        Ok(set)
+        // Wait for all tasks and report results within this span
+        Self::join_graph_tasks(set).await
     }
 
-    async fn load_to_database_full_analysis(
-        &self,
-    ) -> Result<JoinSet<Result<(AsyncInitializeGraph, String), Error>>, Error> {
+    #[instrument(skip_all, name = "deps.load_to_db_full")]
+    async fn load_to_database_full_analysis(&self) -> Result<(), Error> {
         let shared_deps = Arc::clone(&self.dependencies);
         let mut x = shared_deps.lock().await;
-        let mut set: JoinSet<Result<(AsyncInitializeGraph, String), Error>> = JoinSet::new();
+        let mut set: JoinSet<GraphBuildResult> = JoinSet::new();
         if let Some(ref mut vec) = *x {
-            // For each dependency in the list we will try and load the decompiled files
-            // Into the stack graph database.
             for d in vec {
-                let size = d.decompiled_size.lock().unwrap().unwrap_or_default();
-                let decompiled_locations: Arc<Mutex<HashSet<PathBuf>>> =
-                    Arc::clone(&d.decompiled_location);
-                let decompiled_locations = decompiled_locations.lock().unwrap();
-                let decompiled_files = &(*decompiled_locations);
-                for decompiled_file in decompiled_files {
+                let size = d.decompiled_size.lock()
+                    .unwrap_or_else(|e| e.into_inner())
+                    .unwrap_or_default();
+                let decompiled_locations = d.decompiled_location.lock()
+                    .unwrap_or_else(|e| e.into_inner());
+                for decompiled_file in decompiled_locations.iter() {
                     let file = decompiled_file.clone();
                     let lc = self.source_language_config.clone();
                     let db_path = self.db_path.clone();
                     let dep_name = d.name.clone();
+                    let span = tracing::info_span!("deps.index_dep", dep = %dep_name, size = size);
+                    // Acquire an owned read guard in the async context, then move it
+                    // into spawn_blocking. OwnedRwLockReadGuard is Send + 'static,
+                    // and the read lock allows concurrent tasks to share access.
                     set.spawn(async move {
-                        info!(
-                            "indexing dep: {} with size: {} into a graph",
-                            dep_name, &size
-                        );
-                        let mut graph = StackGraph::new();
-                        // We need to make sure that the symols for source type are the first
-                        // symbols, so that they match what is in the builtins.
-                        let (_, _) = SourceType::load_symbols_into_graph(&mut graph);
-                        // remove mutability
-                        let graph = graph;
-                        let lc_guard = lc.read().await;
-                        let lc = match lc_guard.as_ref() {
-                            Some(x) => x,
-                            None => {
-                                return Err(anyhow!("unable to get source language config"));
-                            }
-                        };
+                        let lc_guard = Arc::clone(&lc).read_owned().await;
+                        tokio::task::spawn_blocking(move || {
+                            let _guard = span.enter();
+                            info!(
+                                "indexing dep: {} with size: {} into a graph",
+                                dep_name, &size
+                            );
+                            let lc = lc_guard.as_ref()
+                                .ok_or_else(|| anyhow!("unable to get source language config"))?;
 
-                        let graph = add_dir_to_graph(
-                            &file,
-                            &lc.dependency_type_node_info,
-                            &lc.language_config,
-                            graph,
-                        )?;
-                        drop(lc_guard);
-                        let mut db: SQLiteWriter = SQLiteWriter::open(db_path)?;
-                        for (file_path, tag) in graph.file_to_tag.clone() {
-                            let file_str = file_path.to_string_lossy();
-                            let file_handle = graph
-                                .stack_graph
-                                .get_file(&file_str)
-                                .ok_or(anyhow!("unable to get file"))?;
-                            let mut partials = PartialPaths::new();
-                            let mut paths: Vec<PartialPath> = vec![];
-                            let stats =
-                                ForwardPartialPathStitcher::find_minimal_partial_path_set_in_file(
-                                    &graph.stack_graph,
-                                    &mut partials,
-                                    file_handle,
-                                    StitcherConfig::default().with_collect_stats(true),
-                                    &NoCancellation,
-                                    |_, _, p| paths.push(p.clone()),
-                                )?;
-                            db.store_result_for_file(
-                                &graph.stack_graph,
-                                file_handle,
-                                &tag,
-                                &mut partials,
-                                &paths,
+                            let mut graph = StackGraph::new();
+                            let (_, _) = SourceType::load_symbols_into_graph(&mut graph);
+                            let graph = add_dir_to_graph(
+                                &file,
+                                &lc.dependency_type_node_info,
+                                &lc.language_config,
+                                graph,
                             )?;
-                            trace!("stats for stitching: {:?} - paths: {}", stats, paths.len(),);
-                        }
-                        debug!(
-                            "stats for dependency: {:?}, files indexed {:?}",
-                            dep_name, graph.files_loaded,
-                        );
-                        Ok((graph, dep_name))
+                            let mut db: SQLiteWriter = SQLiteWriter::open(db_path)?;
+                            for (file_path, tag) in graph.file_to_tag.clone() {
+                                let file_str = file_path.to_string_lossy();
+                                let file_handle = graph
+                                    .stack_graph
+                                    .get_file(&file_str)
+                                    .ok_or(anyhow!("unable to get file"))?;
+                                let mut partials = PartialPaths::new();
+                                let mut paths: Vec<PartialPath> = vec![];
+                                let stats =
+                                    ForwardPartialPathStitcher::find_minimal_partial_path_set_in_file(
+                                        &graph.stack_graph,
+                                        &mut partials,
+                                        file_handle,
+                                        StitcherConfig::default().with_collect_stats(true),
+                                        &NoCancellation,
+                                        |_, _, p| paths.push(p.clone()),
+                                    )?;
+                                db.store_result_for_file(
+                                    &graph.stack_graph,
+                                    file_handle,
+                                    &tag,
+                                    &mut partials,
+                                    &paths,
+                                )?;
+                                trace!("stats for stitching: {:?} - paths: {}", stats, paths.len(),);
+                            }
+                            debug!(
+                                "stats for dependency: {:?}, files indexed {:?}",
+                                dep_name, graph.files_loaded,
+                            );
+                            Ok((graph, dep_name))
+                        })
+                        .await
+                        .map_err(|e| anyhow!("blocking task panicked: {}", e))?
                     });
                 }
             }
         }
-        Ok(set)
+        // Wait for all tasks and report results within this span
+        Self::join_graph_tasks(set).await
     }
 
+    /// Wait for all graph build tasks and log results.
+    async fn join_graph_tasks(set: JoinSet<GraphBuildResult>) -> Result<(), Error> {
+        for res in set.join_all().await {
+            let (init_graph, dep_name) = match res {
+                std::result::Result::Ok((i, dep_name)) => (i, dep_name),
+                Err(e) => {
+                    return Err(anyhow!(
+                        "unable to get graph, project may not have been initialized: {}",
+                        e
+                    ));
+                }
+            };
+            info!(
+                "loaded {} files for dep: {:?} into database",
+                init_graph.files_loaded, dep_name
+            );
+        }
+        Ok(())
+    }
+
+    #[instrument(skip_all, name = "deps.read_packet_dep_file")]
     async fn read_packet_dependency_file(
         &self,
         paket_deps_file: &Path,
@@ -666,7 +677,8 @@ impl Project {
         let paket_reference_output = Command::new(&self.tools.paket_cmd)
             .args(["add", base_name.as_str()])
             .current_dir(&self.location)
-            .output()?;
+            .output()
+            .await?;
 
         debug!("paket_reference_output: {:?}", paket_reference_output);
 
@@ -702,9 +714,13 @@ impl Project {
         Err(anyhow!("unable to get reference assembly"))
     }
 
-    /// Load SDK XML files into the database
-    /// Processes all files in a single graph build and database write
-    /// Returns the count of successfully loaded files
+    /// Load SDK XML files into the database.
+    /// Processes all files in a single graph build and database write.
+    /// Returns the count of successfully loaded files.
+    ///
+    /// The heavy work (filesystem access, tree-sitter parsing, SQLite writes)
+    /// is offloaded to the blocking thread pool via `spawn_blocking`.
+    #[instrument(skip_all, name = "deps.load_sdk_xml", fields(file_count = xml_files.len()))]
     pub async fn load_sdk_xml_files_to_database(
         &self,
         xml_files: Vec<PathBuf>,
@@ -715,137 +731,140 @@ impl Project {
             return Ok(0);
         }
 
-        // Filter out non-existent files
-        let valid_files: Vec<PathBuf> = xml_files
-            .into_iter()
-            .filter(|file| {
-                if !file.exists() {
-                    error!("SDK XML file does not exist: {:?}", file);
-                    false
-                } else {
-                    true
-                }
-            })
-            .collect();
+        let db_path = self.db_path.clone();
+        let span = tracing::Span::current();
 
-        if valid_files.is_empty() {
-            return Ok(0);
-        }
+        tokio::task::spawn_blocking(move || -> Result<usize, Error> {
+            let _guard = span.enter();
+            // Filter out non-existent files
+            let valid_files: Vec<PathBuf> = xml_files
+                .into_iter()
+                .filter(|file| {
+                    if !file.exists() {
+                        error!("SDK XML file does not exist: {:?}", file);
+                        false
+                    } else {
+                        true
+                    }
+                })
+                .collect();
 
-        // Create a single graph for all XML files
-        let mut graph = StackGraph::new();
+            if valid_files.is_empty() {
+                return Ok(0);
+            }
 
-        // Load source type symbols into graph
-        let (_, dep_source_type_node) = SourceType::load_symbols_into_graph(&mut graph);
-        let graph = graph; // Remove mutability
+            // Create a single graph for all XML files
+            let mut graph = StackGraph::new();
+            let (_, dep_source_type_node) = SourceType::load_symbols_into_graph(&mut graph);
+            let graph = graph;
 
-        // Create language configuration with all XML file analyzers
-        let mut source_lc =
-            SourceNodeLanguageConfiguration::new(&tree_sitter_stack_graphs::NoCancellation)?;
+            // Create language configuration with all XML file analyzers
+            let mut source_lc =
+                SourceNodeLanguageConfiguration::new(&tree_sitter_stack_graphs::NoCancellation)?;
 
-        // Register all XML files with the analyzer
-        let mut file_analyzers = FileAnalyzers::new();
-        for file in &valid_files {
-            let file_name = file
-                .file_name()
-                .ok_or_else(|| anyhow!("unable to get file name for {:?}", file))?
-                .to_string_lossy()
-                .to_string();
-            file_analyzers = file_analyzers.with(file_name, DepXMLFileAnalyzer {});
-        }
-        source_lc.language_config.special_files = file_analyzers;
+            let mut file_analyzers = FileAnalyzers::new();
+            for file in &valid_files {
+                let file_name = file
+                    .file_name()
+                    .ok_or_else(|| anyhow!("unable to get file name for {:?}", file))?
+                    .to_string_lossy()
+                    .to_string();
+                file_analyzers = file_analyzers.with(file_name, DepXMLFileAnalyzer {});
+            }
+            source_lc.language_config.special_files = file_analyzers;
 
-        // Process all files into the same graph
-        let mut current_graph = graph;
-        let mut success_count = 0;
-        let mut combined_file_to_tag = std::collections::HashMap::new();
+            // Process all files into the same graph
+            let mut current_graph = graph;
+            let mut success_count = 0;
+            let mut combined_file_to_tag = std::collections::HashMap::new();
 
-        for file in &valid_files {
-            info!("Indexing SDK XML file: {:?} into graph", file);
-            match add_dir_to_graph(
-                file,
-                &source_lc.dependency_type_node_info,
-                &source_lc.language_config,
-                current_graph,
-            ) {
-                std::result::Result::Ok(result) => {
-                    success_count += result.files_loaded;
-                    current_graph = result.stack_graph;
-                    // Accumulate file_to_tag mappings
-                    for (path, tag) in result.file_to_tag {
-                        combined_file_to_tag.insert(path, tag);
+            for file in &valid_files {
+                info!("Indexing SDK XML file: {:?} into graph", file);
+                match add_dir_to_graph(
+                    file,
+                    &source_lc.dependency_type_node_info,
+                    &source_lc.language_config,
+                    current_graph,
+                ) {
+                    std::result::Result::Ok(result) => {
+                        success_count += result.files_loaded;
+                        current_graph = result.stack_graph;
+                        for (path, tag) in result.file_to_tag {
+                            combined_file_to_tag.insert(path, tag);
+                        }
+                    }
+                    Err(e) => {
+                        error!("Failed to add SDK XML file {:?} to graph: {}", file, e);
+                        current_graph = StackGraph::new();
+                        let (_, _) = SourceType::load_symbols_into_graph(&mut current_graph);
                     }
                 }
-                Err(e) => {
-                    error!("Failed to add SDK XML file {:?} to graph: {}", file, e);
-                    // Continue with the rest of the files - need to recreate a graph
-                    current_graph = StackGraph::new();
-                    let (_, _) = SourceType::load_symbols_into_graph(&mut current_graph);
-                }
             }
-        }
 
-        if success_count == 0 {
-            return Err(anyhow!("Failed to process any SDK XML files"));
-        }
+            if success_count == 0 {
+                return Err(anyhow!("Failed to process any SDK XML files"));
+            }
 
-        // Connect root node to dependency source type node
-        let root_node = current_graph.iter_nodes().find(|n| {
-            let node = &current_graph[*n];
-            node.is_root()
-        });
+            // Connect root node to dependency source type node
+            let root_node = current_graph.iter_nodes().find(|n| {
+                let node = &current_graph[*n];
+                node.is_root()
+            });
 
-        let root_node = root_node.ok_or_else(|| {
-            error!("Unable to find root node in combined graph");
-            anyhow!("unable to find root node")
-        })?;
+            let root_node = root_node.ok_or_else(|| {
+                error!("Unable to find root node in combined graph");
+                anyhow!("unable to find root node")
+            })?;
 
-        let dep_source_type_node_handle = current_graph.iter_nodes().find(|n| {
-            let node = &current_graph[*n];
-            let symbol = node.symbol();
-            symbol.is_some() && symbol.unwrap() == dep_source_type_node.get_symbol_handle()
-        });
+            let dep_source_type_node_handle = current_graph.iter_nodes().find(|n| {
+                let node = &current_graph[*n];
+                let symbol = node.symbol();
+                symbol.is_some() && symbol.unwrap() == dep_source_type_node.get_symbol_handle()
+            });
 
-        if let Some(dep_node) = dep_source_type_node_handle {
-            current_graph.add_edge(root_node, dep_node, 0);
-        }
+            if let Some(dep_node) = dep_source_type_node_handle {
+                current_graph.add_edge(root_node, dep_node, 0);
+            }
 
-        // Write all results to database in a single operation
-        info!("Writing {} SDK XML files to database", success_count);
-        let mut db: SQLiteWriter = SQLiteWriter::open(&self.db_path)?;
+            // Write all results to database
+            info!("Writing {} SDK XML files to database", success_count);
+            let mut db: SQLiteWriter = SQLiteWriter::open(&db_path)?;
 
-        for (file_path, tag) in combined_file_to_tag {
-            let file_str = file_path.to_string_lossy();
-            let file_handle = current_graph
-                .get_file(&file_str)
-                .ok_or_else(|| anyhow!("unable to get file"))?;
+            for (file_path, tag) in combined_file_to_tag {
+                let file_str = file_path.to_string_lossy();
+                let file_handle = current_graph
+                    .get_file(&file_str)
+                    .ok_or_else(|| anyhow!("unable to get file"))?;
 
-            let mut partials = PartialPaths::new();
-            let mut paths: Vec<PartialPath> = vec![];
-            let stats = ForwardPartialPathStitcher::find_minimal_partial_path_set_in_file(
-                &current_graph,
-                &mut partials,
-                file_handle,
-                StitcherConfig::default().with_collect_stats(true),
-                &NoCancellation,
-                |_, _, p| paths.push(p.clone()),
-            )?;
+                let mut partials = PartialPaths::new();
+                let mut paths: Vec<PartialPath> = vec![];
+                let stats = ForwardPartialPathStitcher::find_minimal_partial_path_set_in_file(
+                    &current_graph,
+                    &mut partials,
+                    file_handle,
+                    StitcherConfig::default().with_collect_stats(true),
+                    &NoCancellation,
+                    |_, _, p| paths.push(p.clone()),
+                )?;
 
-            db.store_result_for_file(&current_graph, file_handle, &tag, &mut partials, &paths)?;
+                db.store_result_for_file(&current_graph, file_handle, &tag, &mut partials, &paths)?;
 
-            trace!(
-                "Stats for stitching SDK XML {}: {:?} - paths: {}",
-                file_str,
-                stats,
-                paths.len()
+                trace!(
+                    "Stats for stitching SDK XML {}: {:?} - paths: {}",
+                    file_str,
+                    stats,
+                    paths.len()
+                );
+            }
+
+            info!(
+                "SDK XML loading complete: {} files successfully processed",
+                success_count
             );
-        }
-
-        info!(
-            "SDK XML loading complete: {} files successfully processed",
-            success_count
-        );
-        Ok(success_count)
+            Ok(success_count)
+        })
+        .await
+        .map_err(|e| anyhow!("SDK XML loading task panicked: {}", e))?
     }
 
     /// Load SDK XML files from a given SDK path for a target framework
