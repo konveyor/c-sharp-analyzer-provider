@@ -120,6 +120,7 @@ jobs:
           IMG_YQ_PROVIDER: quay.io/konveyor/yq-external-provider:latest
           IMG_ANALYZER: quay.io/konveyor/analyzer-lsp:latest
           MOUNT_OPT: ":z"
+          USER_ID: "0:0"
         run : |
           make run-external-providers-pod
           make run-demo-image
