@@ -65,11 +65,12 @@ jobs:
       - name: Run Provider test
         shell: bash
         run: |
+          CONTAINER_USER=$(id -u)
           podman volume create test-data
-          podman run --rm -v test-data:/target:z -v $(pwd)/testdata:/src/:z --entrypoint=cp alpine -a /src/. /target/
+          podman run --rm --user ${CONTAINER_USER}:0 -v test-data:/target:U,z -v $(pwd)/testdata:/src/:U,z --entrypoint=cp alpine -a /src/. /target/
           podman pod create --name=analyzer-c-sharp
-          podman run --pod analyzer-c-sharp --name c-sharp -d -v test-data:/analyzer-lsp/examples:U,z quay.io/konveyor/c-sharp-provider:${{ steps.set-tag.outputs.image_tag }} --port 14651
-          podman run --entrypoint /usr/local/bin/konveyor-analyzer --pod=analyzer-c-sharp \
+          podman run --pod analyzer-c-sharp --name c-sharp -d --user ${CONTAINER_USER}:0 -v test-data:/analyzer-lsp/examples:U,z quay.io/konveyor/c-sharp-provider:${{ steps.set-tag.outputs.image_tag }} --port 14651
+          podman run --entrypoint /usr/local/bin/konveyor-analyzer --pod=analyzer-c-sharp --user ${CONTAINER_USER}:0 \
             -v test-data:/analyzer-lsp/examples:U,z \
             -v $(pwd)/e2e-tests/demo-output.yaml:/analyzer-lsp/output.yaml:U,z \
             -v $(pwd)/e2e-tests/provider_settings.json:/analyzer-lsp/provider_settings.json:U,z \
