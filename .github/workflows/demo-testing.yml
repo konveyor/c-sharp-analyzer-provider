@@ -119,11 +119,9 @@ jobs:
           IMG_GENERIC_PROVIDER: quay.io/konveyor/generic-external-provider:latest
           IMG_YQ_PROVIDER: quay.io/konveyor/yq-external-provider:latest
           IMG_ANALYZER: quay.io/konveyor/analyzer-lsp:latest
-          MOUNT_OPT: ":z"
-          USER_ID: "0:0"
         run : |
-          make run-external-providers-pod
-          make run-demo-image
+          make run-external-providers-pod USER_ID="0:0" MOUNT_OPT=":z"
+          make run-demo-image USER_ID="0:0" MOUNT_OPT=":z"
       
       - name: install yq for testing
         run: go install github.com/mikefarah/yq/v4@latest
