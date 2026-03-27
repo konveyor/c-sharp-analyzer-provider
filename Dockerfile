@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi9/ubi as builder
+FROM registry.access.redhat.com/ubi10/ubi as builder
 
 RUN dnf install -y rust-toolset unzip
 
@@ -11,7 +11,7 @@ COPY src  /csharp-provider/src
 
 RUN --mount=type=cache,id=cagohome,uid=1001,gid=0,mode=0777,target=/root/.cargo cargo build --release
 
-FROM registry.access.redhat.com/ubi9/ubi-minimal
+FROM registry.access.redhat.com/ubi10/ubi-minimal
 
 RUN microdnf install -y dotnet-sdk-9.0 dotnet-runtime-9.0 tar gzip findutils && \
     microdnf clean all && \

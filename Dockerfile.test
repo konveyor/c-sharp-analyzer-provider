@@ -1,6 +1,6 @@
 from fullstorydev/grpcurl:latest as grpcurl
 
-from registry.access.redhat.com/ubi9/ubi
+from registry.access.redhat.com/ubi10/ubi
 
 # Install .NET SDK for dotnet tools and netcat for health checks
 RUN dnf install -y rust-toolset unzip dotnet-sdk-8.0 dotnet-runtime-8.0 nmap-ncat less
