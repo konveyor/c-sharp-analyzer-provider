@@ -17,7 +17,7 @@ RUN microdnf install -y dotnet-sdk-9.0 dotnet-runtime-9.0 tar gzip findutils && 
     microdnf clean all && \
     rm -rf /var/cache/dnf
 RUN dotnet tool install --tool-path=/usr/local/bin Paket
-RUN dotnet tool install --tool-path=/usr/local/bin ilspycmd
+RUN dotnet tool install --tool-path=/usr/local/bin ilspycmd --version 9.1.0.7988
 RUN chgrp -R 0 /home && chmod -R g=u /home
 USER 1001
 

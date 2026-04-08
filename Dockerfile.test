@@ -19,6 +19,6 @@ RUN PROTOC=$HOME/protoc/bin/protoc cargo build
 
 # Install required .NET tools
 RUN dotnet tool install --global Paket
-RUN dotnet tool install --global ilspycmd
+RUN dotnet tool install --global ilspycmd --version 9.1.0.7988
 
 ENTRYPOINT ["make", "run-demo-container"]
