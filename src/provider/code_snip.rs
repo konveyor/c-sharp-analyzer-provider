@@ -62,7 +62,8 @@ impl ProviderCodeLocationService for CSharpProvider {
 
         let context_lines = self.context_lines;
         let skip_lines = (start_position.line as usize).saturating_sub(context_lines);
-        let take = (end_position.line - start_position.line) as usize + context_lines;
+        // +1 to include end_position.line
+        let take = (end_position.line - start_position.line) as usize + context_lines + 1;
 
         // Run blocking file I/O on a dedicated thread to avoid blocking the tokio runtime
         let span = tracing::Span::current();
