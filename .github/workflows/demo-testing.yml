@@ -116,7 +116,9 @@ jobs:
         env:
           IMG_C_SHARP_PROVIDER: quay.io/konveyor/c-sharp-provider:${{ needs.local-analyzer-integration-test.outputs.image-tag }}
           IMG_JAVA_PROVIDER: quay.io/konveyor/java-external-provider:latest
-          IMG_GENERIC_PROVIDER: quay.io/konveyor/generic-external-provider:latest
+          IMG_GO_PROVIDER: quay.io/konveyor/go-external-provider:latest
+          IMG_PYTHON_PROVIDER: quay.io/konveyor/python-external-provider:latest
+          IMG_NODE_PROVIDER: quay.io/konveyor/nodejs-external-provider:latest
           IMG_YQ_PROVIDER: quay.io/konveyor/yq-external-provider:latest
           IMG_ANALYZER: quay.io/konveyor/analyzer-lsp:latest
         run : |
