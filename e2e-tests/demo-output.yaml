@@ -31,7 +31,7 @@
           - Update connection string configuration (moved from Web.config to appsettings.json)
           - Review LINQ queries - some EF6 features are not supported in EF Core
           - Test thoroughly as EF Core has different behavior in some scenarios
-        codeSnip: "17         public override void OnActionExecuting(ActionExecutingContext filterContext)\n18         {\n19             // Ensure ASP.NET Simple Membership is initialized only once per app start\n20             LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);\n21         }\n22 \n23         private class SimpleMembershipInitializer\n24         {\n25             public SimpleMembershipInitializer()\n26             {\n"
+        codeSnip: "17         public override void OnActionExecuting(ActionExecutingContext filterContext)\n18         {\n19             // Ensure ASP.NET Simple Membership is initialized only once per app start\n20             LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);\n21         }\n22 \n23         private class SimpleMembershipInitializer\n24         {\n25             public SimpleMembershipInitializer()\n26             {\n27                 Database.SetInitializer<UsersContext>(null);\n28 \n29                 try\n30                 {\n31                     using (var context = new UsersContext())\n32                     {\n33                         if (!context.Database.Exists())\n34                         {\n35                             // Create the SimpleMembership database without Entity Framework migration schema\n36                             ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();\n37                         }\n"
         lineNumber: 27
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
@@ -63,7 +63,7 @@
           - Call UseLazyLoadingProxies() in DbContext configuration
           - Or mark navigation properties as virtual and inject ILazyLoader
           - Consider using explicit loading or eager loading instead for better performance
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data;\n3 using System.Data.Entity;\n4 using System.Linq;\n5 using System.Web;\n6 using System.Web.Mvc;\n7 using NerdDinner.Models;\n8 using PagedList;\n9 \n"
+        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data;\n3 using System.Data.Entity;\n4 using System.Linq;\n5 using System.Web;\n6 using System.Web.Mvc;\n7 using NerdDinner.Models;\n8 using PagedList;\n9 \n10 namespace NerdDinner.Controllers\n11 {\n12     public class DinnersController : Controller\n13     {\n"
         lineNumber: 3
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
@@ -79,7 +79,7 @@
           - Call UseLazyLoadingProxies() in DbContext configuration
           - Or mark navigation properties as virtual and inject ILazyLoader
           - Consider using explicit loading or eager loading instead for better performance
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Data.Entity;\n2 using System.Data.Entity.Infrastructure;\n3 using System.Threading;\n4 using System.Web.Mvc;\n5 using WebMatrix.WebData;\n6 using NerdDinner.Models;\n7 \n8 namespace NerdDinner.Filters\n9 {\n"
+        codeSnip: "0 \uFEFFusing System;\n1 using System.Data.Entity;\n2 using System.Data.Entity.Infrastructure;\n3 using System.Threading;\n4 using System.Web.Mvc;\n5 using WebMatrix.WebData;\n6 using NerdDinner.Models;\n7 \n8 namespace NerdDinner.Filters\n9 {\n10     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]\n11     public sealed class InitializeSimpleMembershipAttribute : ActionFilterAttribute\n"
         lineNumber: 1
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
@@ -95,7 +95,7 @@
           - Call UseLazyLoadingProxies() in DbContext configuration
           - Or mark navigation properties as virtual and inject ILazyLoader
           - Consider using explicit loading or eager loading instead for better performance
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.ComponentModel.DataAnnotations;\n3 using System.ComponentModel.DataAnnotations.Schema;\n4 using System.Data.Entity;\n5 using System.Globalization;\n6 using System.Web.Security;\n7 \n8 namespace NerdDinner.Models\n9 {\n"
+        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.ComponentModel.DataAnnotations;\n3 using System.ComponentModel.DataAnnotations.Schema;\n4 using System.Data.Entity;\n5 using System.Globalization;\n6 using System.Web.Security;\n7 \n8 namespace NerdDinner.Models\n9 {\n10     public class UsersContext : DbContext\n11     {\n12         public UsersContext()\n13             : base(\"DefaultConnection\")\n14         {\n"
         lineNumber: 4
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
@@ -111,7 +111,7 @@
           - Call UseLazyLoadingProxies() in DbContext configuration
           - Or mark navigation properties as virtual and inject ILazyLoader
           - Consider using explicit loading or eager loading instead for better performance
-        codeSnip: "0 \uFEFFusing System.Data.Entity;\n1 \n2 namespace NerdDinner.Models\n3 {\n4     public class NerdDinnerContext : DbContext\n5     {\n6         // You can add custom code to this file. Changes will not be overwritten.\n7         // \n8         // If you want Entity Framework to drop and regenerate your database\n9         // automatically whenever you change your model schema, add the following\n"
+        codeSnip: "0 \uFEFFusing System.Data.Entity;\n1 \n2 namespace NerdDinner.Models\n3 {\n4     public class NerdDinnerContext : DbContext\n5     {\n6         // You can add custom code to this file. Changes will not be overwritten.\n7         // \n8         // If you want Entity Framework to drop and regenerate your database\n9         // automatically whenever you change your model schema, add the following\n10         // code to the Application_Start method in your Global.asax file.\n"
         lineNumber: 0
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/NerdDinnerContext.cs
@@ -141,7 +141,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "11     {\n12         public static void RegisterAuth()\n13         {\n14             // To let users of this site log in using their accounts from other sites such as Microsoft, Facebook, and Twitter,\n15             // you must update this site. For more information visit http://go.microsoft.com/fwlink/?LinkID=252166\n16 \n17             var microsoftClientId = WebConfigurationManager.AppSettings[\"microsoftClientId\"];\n18             var microsoftClientSecret = WebConfigurationManager.AppSettings[\"microsoftClientSecret\"];\n19             if (!string.IsNullOrEmpty(microsoftClientId) && !string.IsNullOrEmpty(microsoftClientSecret))\n20             {\n"
+        codeSnip: "11     {\n12         public static void RegisterAuth()\n13         {\n14             // To let users of this site log in using their accounts from other sites such as Microsoft, Facebook, and Twitter,\n15             // you must update this site. For more information visit http://go.microsoft.com/fwlink/?LinkID=252166\n16 \n17             var microsoftClientId = WebConfigurationManager.AppSettings[\"microsoftClientId\"];\n18             var microsoftClientSecret = WebConfigurationManager.AppSettings[\"microsoftClientSecret\"];\n19             if (!string.IsNullOrEmpty(microsoftClientId) && !string.IsNullOrEmpty(microsoftClientSecret))\n20             {\n21                 OAuthWebSecurity.RegisterMicrosoftClient(\n22                     clientId: microsoftClientId,\n23                     clientSecret: microsoftClientSecret);\n24             }\n25 \n26             var twitterConsumerKey = WebConfigurationManager.AppSettings[\"twitterConsumerKey\"];\n27             var twitterConsumerSecret = WebConfigurationManager.AppSettings[\"twitterConsumerSecret\"];\n28             if (!string.IsNullOrEmpty(twitterConsumerKey) && !string.IsNullOrEmpty(twitterConsumerSecret))\n29             {\n30                 OAuthWebSecurity.RegisterTwitterClient(\n31                     consumerKey: twitterConsumerKey,\n"
         lineNumber: 21
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
@@ -163,7 +163,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "20             {\n21                 OAuthWebSecurity.RegisterMicrosoftClient(\n22                     clientId: microsoftClientId,\n23                     clientSecret: microsoftClientSecret);\n24             }\n25 \n26             var twitterConsumerKey = WebConfigurationManager.AppSettings[\"twitterConsumerKey\"];\n27             var twitterConsumerSecret = WebConfigurationManager.AppSettings[\"twitterConsumerSecret\"];\n28             if (!string.IsNullOrEmpty(twitterConsumerKey) && !string.IsNullOrEmpty(twitterConsumerSecret))\n29             {\n"
+        codeSnip: "20             {\n21                 OAuthWebSecurity.RegisterMicrosoftClient(\n22                     clientId: microsoftClientId,\n23                     clientSecret: microsoftClientSecret);\n24             }\n25 \n26             var twitterConsumerKey = WebConfigurationManager.AppSettings[\"twitterConsumerKey\"];\n27             var twitterConsumerSecret = WebConfigurationManager.AppSettings[\"twitterConsumerSecret\"];\n28             if (!string.IsNullOrEmpty(twitterConsumerKey) && !string.IsNullOrEmpty(twitterConsumerSecret))\n29             {\n30                 OAuthWebSecurity.RegisterTwitterClient(\n31                     consumerKey: twitterConsumerKey,\n32                     consumerSecret: twitterConsumerSecret);\n33             }\n34 \n35             var facebookAppId = WebConfigurationManager.AppSettings[\"facebookAppId\"];\n36             var facebookAppSecret = WebConfigurationManager.AppSettings[\"facebookAppSecret\"];\n37             if (!string.IsNullOrEmpty(facebookAppId) && !string.IsNullOrEmpty(facebookAppSecret))\n38             {\n39                 OAuthWebSecurity.RegisterFacebookClient(\n40                     appId: facebookAppId,\n"
         lineNumber: 30
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
@@ -185,7 +185,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "29             {\n30                 OAuthWebSecurity.RegisterTwitterClient(\n31                     consumerKey: twitterConsumerKey,\n32                     consumerSecret: twitterConsumerSecret);\n33             }\n34 \n35             var facebookAppId = WebConfigurationManager.AppSettings[\"facebookAppId\"];\n36             var facebookAppSecret = WebConfigurationManager.AppSettings[\"facebookAppSecret\"];\n37             if (!string.IsNullOrEmpty(facebookAppId) && !string.IsNullOrEmpty(facebookAppSecret))\n38             {\n"
+        codeSnip: "29             {\n30                 OAuthWebSecurity.RegisterTwitterClient(\n31                     consumerKey: twitterConsumerKey,\n32                     consumerSecret: twitterConsumerSecret);\n33             }\n34 \n35             var facebookAppId = WebConfigurationManager.AppSettings[\"facebookAppId\"];\n36             var facebookAppSecret = WebConfigurationManager.AppSettings[\"facebookAppSecret\"];\n37             if (!string.IsNullOrEmpty(facebookAppId) && !string.IsNullOrEmpty(facebookAppSecret))\n38             {\n39                 OAuthWebSecurity.RegisterFacebookClient(\n40                     appId: facebookAppId,\n41                     appSecret: facebookAppSecret);\n42             }\n43 \n44             OAuthWebSecurity.RegisterGoogleClient();\n45         }\n46     }\n47 }\n"
         lineNumber: 39
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
@@ -207,7 +207,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "34 \n35             var facebookAppId = WebConfigurationManager.AppSettings[\"facebookAppId\"];\n36             var facebookAppSecret = WebConfigurationManager.AppSettings[\"facebookAppSecret\"];\n37             if (!string.IsNullOrEmpty(facebookAppId) && !string.IsNullOrEmpty(facebookAppSecret))\n38             {\n39                 OAuthWebSecurity.RegisterFacebookClient(\n40                     appId: facebookAppId,\n41                     appSecret: facebookAppSecret);\n42             }\n43 \n"
+        codeSnip: "34 \n35             var facebookAppId = WebConfigurationManager.AppSettings[\"facebookAppId\"];\n36             var facebookAppSecret = WebConfigurationManager.AppSettings[\"facebookAppSecret\"];\n37             if (!string.IsNullOrEmpty(facebookAppId) && !string.IsNullOrEmpty(facebookAppSecret))\n38             {\n39                 OAuthWebSecurity.RegisterFacebookClient(\n40                     appId: facebookAppId,\n41                     appSecret: facebookAppSecret);\n42             }\n43 \n44             OAuthWebSecurity.RegisterGoogleClient();\n45         }\n46     }\n47 }\n"
         lineNumber: 44
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
@@ -229,7 +229,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "92             return View(model);\n93         }\n94 \n95         //\n96         // POST: /Account/Disassociate\n97 \n98         [HttpPost]\n99         [ValidateAntiForgeryToken]\n100         public ActionResult Disassociate(string provider, string providerUserId)\n101         {\n"
+        codeSnip: "92             return View(model);\n93         }\n94 \n95         //\n96         // POST: /Account/Disassociate\n97 \n98         [HttpPost]\n99         [ValidateAntiForgeryToken]\n100         public ActionResult Disassociate(string provider, string providerUserId)\n101         {\n102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n111                     bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n112                     if (hasLocalAccount || OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name).Count > 1)\n"
         lineNumber: 102
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -251,7 +251,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "101         {\n102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n"
+        codeSnip: "101         {\n102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n111                     bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n112                     if (hasLocalAccount || OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name).Count > 1)\n113                     {\n114                         OAuthWebSecurity.DeleteAccount(provider, providerUserId);\n115                         scope.Complete();\n116                         message = ManageMessageId.RemoveLoginSuccess;\n117                     }\n118                 }\n119             }\n120 \n121             return RedirectToAction(\"Manage\", new { Message = message });\n"
         lineNumber: 111
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -273,7 +273,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n111                     bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n"
+        codeSnip: "102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n111                     bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n112                     if (hasLocalAccount || OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name).Count > 1)\n113                     {\n114                         OAuthWebSecurity.DeleteAccount(provider, providerUserId);\n115                         scope.Complete();\n116                         message = ManageMessageId.RemoveLoginSuccess;\n117                     }\n118                 }\n119             }\n120 \n121             return RedirectToAction(\"Manage\", new { Message = message });\n122         }\n"
         lineNumber: 112
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -295,7 +295,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n111                     bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n112                     if (hasLocalAccount || OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name).Count > 1)\n113                     {\n"
+        codeSnip: "104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n111                     bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n112                     if (hasLocalAccount || OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name).Count > 1)\n113                     {\n114                         OAuthWebSecurity.DeleteAccount(provider, providerUserId);\n115                         scope.Complete();\n116                         message = ManageMessageId.RemoveLoginSuccess;\n117                     }\n118                 }\n119             }\n120 \n121             return RedirectToAction(\"Manage\", new { Message = message });\n122         }\n123 \n124         //\n"
         lineNumber: 114
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -317,7 +317,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "124         //\n125         // GET: /Account/Manage\n126 \n127         public ActionResult Manage(ManageMessageId? message)\n128         {\n129             ViewBag.StatusMessage =\n130                 message == ManageMessageId.ChangePasswordSuccess ? \"Your password has been changed.\"\n131                 : message == ManageMessageId.SetPasswordSuccess ? \"Your password has been set.\"\n132                 : message == ManageMessageId.RemoveLoginSuccess ? \"The external login was removed.\"\n133                 : \"\";\n"
+        codeSnip: "124         //\n125         // GET: /Account/Manage\n126 \n127         public ActionResult Manage(ManageMessageId? message)\n128         {\n129             ViewBag.StatusMessage =\n130                 message == ManageMessageId.ChangePasswordSuccess ? \"Your password has been changed.\"\n131                 : message == ManageMessageId.SetPasswordSuccess ? \"Your password has been set.\"\n132                 : message == ManageMessageId.RemoveLoginSuccess ? \"The external login was removed.\"\n133                 : \"\";\n134             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n135             ViewBag.ReturnUrl = Url.Action(\"Manage\");\n136             return View();\n137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n"
         lineNumber: 134
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -339,7 +339,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "136             return View();\n137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n"
+        codeSnip: "136             return View();\n137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n146             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n147             ViewBag.HasLocalPassword = hasLocalAccount;\n148             ViewBag.ReturnUrl = Url.Action(\"Manage\");\n149             if (hasLocalAccount)\n150             {\n151                 if (ModelState.IsValid)\n152                 {\n153                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.\n154                     bool changePasswordSucceeded;\n155                     try\n156                     {\n"
         lineNumber: 146
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -361,7 +361,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "209         {\n210             return new ExternalLoginResult(provider, Url.Action(\"ExternalLoginCallback\", new { ReturnUrl = returnUrl }));\n211         }\n212 \n213         //\n214         // GET: /Account/ExternalLoginCallback\n215 \n216         [AllowAnonymous]\n217         public ActionResult ExternalLoginCallback(string returnUrl)\n218         {\n"
+        codeSnip: "209         {\n210             return new ExternalLoginResult(provider, Url.Action(\"ExternalLoginCallback\", new { ReturnUrl = returnUrl }));\n211         }\n212 \n213         //\n214         // GET: /Account/ExternalLoginCallback\n215 \n216         [AllowAnonymous]\n217         public ActionResult ExternalLoginCallback(string returnUrl)\n218         {\n219             AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action(\"ExternalLoginCallback\", new { ReturnUrl = returnUrl }));\n220             if (!result.IsSuccessful)\n221             {\n222                 return RedirectToAction(\"ExternalLoginFailure\");\n223             }\n224 \n225             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))\n226             {\n227                 return RedirectToLocal(returnUrl);\n228             }\n229 \n"
         lineNumber: 219
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -383,7 +383,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "215 \n216         [AllowAnonymous]\n217         public ActionResult ExternalLoginCallback(string returnUrl)\n218         {\n219             AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action(\"ExternalLoginCallback\", new { ReturnUrl = returnUrl }));\n220             if (!result.IsSuccessful)\n221             {\n222                 return RedirectToAction(\"ExternalLoginFailure\");\n223             }\n224 \n"
+        codeSnip: "215 \n216         [AllowAnonymous]\n217         public ActionResult ExternalLoginCallback(string returnUrl)\n218         {\n219             AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action(\"ExternalLoginCallback\", new { ReturnUrl = returnUrl }));\n220             if (!result.IsSuccessful)\n221             {\n222                 return RedirectToAction(\"ExternalLoginFailure\");\n223             }\n224 \n225             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))\n226             {\n227                 return RedirectToLocal(returnUrl);\n228             }\n229 \n230             if (User.Identity.IsAuthenticated)\n231             {\n232                 // If the current user is logged in add the new account\n233                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);\n234                 return RedirectToLocal(returnUrl);\n235             }\n"
         lineNumber: 225
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -405,7 +405,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "223             }\n224 \n225             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))\n226             {\n227                 return RedirectToLocal(returnUrl);\n228             }\n229 \n230             if (User.Identity.IsAuthenticated)\n231             {\n232                 // If the current user is logged in add the new account\n"
+        codeSnip: "223             }\n224 \n225             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))\n226             {\n227                 return RedirectToLocal(returnUrl);\n228             }\n229 \n230             if (User.Identity.IsAuthenticated)\n231             {\n232                 // If the current user is logged in add the new account\n233                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);\n234                 return RedirectToLocal(returnUrl);\n235             }\n236             else\n237             {\n238                 // User is new, ask for their desired membership name\n239                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);\n240                 ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;\n241                 ViewBag.ReturnUrl = returnUrl;\n242                 return View(\"ExternalLoginConfirmation\", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData });\n243             }\n"
         lineNumber: 233
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -427,7 +427,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "229 \n230             if (User.Identity.IsAuthenticated)\n231             {\n232                 // If the current user is logged in add the new account\n233                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);\n234                 return RedirectToLocal(returnUrl);\n235             }\n236             else\n237             {\n238                 // User is new, ask for their desired membership name\n"
+        codeSnip: "229 \n230             if (User.Identity.IsAuthenticated)\n231             {\n232                 // If the current user is logged in add the new account\n233                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);\n234                 return RedirectToLocal(returnUrl);\n235             }\n236             else\n237             {\n238                 // User is new, ask for their desired membership name\n239                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);\n240                 ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;\n241                 ViewBag.ReturnUrl = returnUrl;\n242                 return View(\"ExternalLoginConfirmation\", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData });\n243             }\n244         }\n245 \n246         //\n247         // POST: /Account/ExternalLoginConfirmation\n248 \n249         [HttpPost]\n"
         lineNumber: 239
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -449,17 +449,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: |
-          230             if (User.Identity.IsAuthenticated)
-          231             {
-          232                 // If the current user is logged in add the new account
-          233                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);
-          234                 return RedirectToLocal(returnUrl);
-          235             }
-          236             else
-          237             {
-          238                 // User is new, ask for their desired membership name
-          239                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
+        codeSnip: "230             if (User.Identity.IsAuthenticated)\n231             {\n232                 // If the current user is logged in add the new account\n233                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);\n234                 return RedirectToLocal(returnUrl);\n235             }\n236             else\n237             {\n238                 // User is new, ask for their desired membership name\n239                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);\n240                 ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;\n241                 ViewBag.ReturnUrl = returnUrl;\n242                 return View(\"ExternalLoginConfirmation\", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData });\n243             }\n244         }\n245 \n246         //\n247         // POST: /Account/ExternalLoginConfirmation\n248 \n249         [HttpPost]\n250         [AllowAnonymous]\n"
         lineNumber: 240
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -481,7 +471,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "247         // POST: /Account/ExternalLoginConfirmation\n248 \n249         [HttpPost]\n250         [AllowAnonymous]\n251         [ValidateAntiForgeryToken]\n252         public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)\n253         {\n254             string provider = null;\n255             string providerUserId = null;\n256 \n"
+        codeSnip: "247         // POST: /Account/ExternalLoginConfirmation\n248 \n249         [HttpPost]\n250         [AllowAnonymous]\n251         [ValidateAntiForgeryToken]\n252         public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)\n253         {\n254             string provider = null;\n255             string providerUserId = null;\n256 \n257             if (User.Identity.IsAuthenticated || !OAuthWebSecurity.TryDeserializeProviderUserId(model.ExternalLoginData, out provider, out providerUserId))\n258             {\n259                 return RedirectToAction(\"Manage\");\n260             }\n261 \n262             if (ModelState.IsValid)\n263             {\n264                 // Insert a new user into the database\n265                 using (UsersContext db = new UsersContext())\n266                 {\n267                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());\n"
         lineNumber: 257
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -503,7 +493,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "265                 using (UsersContext db = new UsersContext())\n266                 {\n267                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());\n268                     // Check if user already exists\n269                     if (user == null)\n270                     {\n271                         // Insert name into the profile table\n272                         db.UserProfiles.Add(new UserProfile { UserName = model.UserName });\n273                         db.SaveChanges();\n274 \n"
+        codeSnip: "265                 using (UsersContext db = new UsersContext())\n266                 {\n267                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());\n268                     // Check if user already exists\n269                     if (user == null)\n270                     {\n271                         // Insert name into the profile table\n272                         db.UserProfiles.Add(new UserProfile { UserName = model.UserName });\n273                         db.SaveChanges();\n274 \n275                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);\n276                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);\n277 \n278                         return RedirectToLocal(returnUrl);\n279                     }\n280                     else\n281                     {\n282                         ModelState.AddModelError(\"UserName\", \"User name already exists. Please enter a different user name.\");\n283                     }\n284                 }\n285             }\n"
         lineNumber: 275
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -525,7 +515,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "266                 {\n267                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());\n268                     // Check if user already exists\n269                     if (user == null)\n270                     {\n271                         // Insert name into the profile table\n272                         db.UserProfiles.Add(new UserProfile { UserName = model.UserName });\n273                         db.SaveChanges();\n274 \n275                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);\n"
+        codeSnip: "266                 {\n267                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());\n268                     // Check if user already exists\n269                     if (user == null)\n270                     {\n271                         // Insert name into the profile table\n272                         db.UserProfiles.Add(new UserProfile { UserName = model.UserName });\n273                         db.SaveChanges();\n274 \n275                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);\n276                         OAuthWebSecurity.Login(provider, providerUserId, createPersistentCookie: false);\n277 \n278                         return RedirectToLocal(returnUrl);\n279                     }\n280                     else\n281                     {\n282                         ModelState.AddModelError(\"UserName\", \"User name already exists. Please enter a different user name.\");\n283                     }\n284                 }\n285             }\n286 \n"
         lineNumber: 276
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -547,7 +537,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "277 \n278                         return RedirectToLocal(returnUrl);\n279                     }\n280                     else\n281                     {\n282                         ModelState.AddModelError(\"UserName\", \"User name already exists. Please enter a different user name.\");\n283                     }\n284                 }\n285             }\n286 \n"
+        codeSnip: "277 \n278                         return RedirectToLocal(returnUrl);\n279                     }\n280                     else\n281                     {\n282                         ModelState.AddModelError(\"UserName\", \"User name already exists. Please enter a different user name.\");\n283                     }\n284                 }\n285             }\n286 \n287             ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(provider).DisplayName;\n288             ViewBag.ReturnUrl = returnUrl;\n289             return View(model);\n290         }\n291 \n292         //\n293         // GET: /Account/ExternalLoginFailure\n294 \n295         [AllowAnonymous]\n296         public ActionResult ExternalLoginFailure()\n297         {\n"
         lineNumber: 287
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -569,7 +559,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "296         public ActionResult ExternalLoginFailure()\n297         {\n298             return View();\n299         }\n300 \n301         [AllowAnonymous]\n302         [ChildActionOnly]\n303         public ActionResult ExternalLoginsList(string returnUrl)\n304         {\n305             ViewBag.ReturnUrl = returnUrl;\n"
+        codeSnip: "296         public ActionResult ExternalLoginFailure()\n297         {\n298             return View();\n299         }\n300 \n301         [AllowAnonymous]\n302         [ChildActionOnly]\n303         public ActionResult ExternalLoginsList(string returnUrl)\n304         {\n305             ViewBag.ReturnUrl = returnUrl;\n306             return PartialView(\"_ExternalLoginsListPartial\", OAuthWebSecurity.RegisteredClientData);\n307         }\n308 \n309         [ChildActionOnly]\n310         public ActionResult RemoveExternalLogins()\n311         {\n312             ICollection<OAuthAccount> accounts = OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name);\n313             List<ExternalLogin> externalLogins = new List<ExternalLogin>();\n314             foreach (OAuthAccount account in accounts)\n315             {\n316                 AuthenticationClientData clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider);\n"
         lineNumber: 306
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -591,7 +581,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "302         [ChildActionOnly]\n303         public ActionResult ExternalLoginsList(string returnUrl)\n304         {\n305             ViewBag.ReturnUrl = returnUrl;\n306             return PartialView(\"_ExternalLoginsListPartial\", OAuthWebSecurity.RegisteredClientData);\n307         }\n308 \n309         [ChildActionOnly]\n310         public ActionResult RemoveExternalLogins()\n311         {\n"
+        codeSnip: "302         [ChildActionOnly]\n303         public ActionResult ExternalLoginsList(string returnUrl)\n304         {\n305             ViewBag.ReturnUrl = returnUrl;\n306             return PartialView(\"_ExternalLoginsListPartial\", OAuthWebSecurity.RegisteredClientData);\n307         }\n308 \n309         [ChildActionOnly]\n310         public ActionResult RemoveExternalLogins()\n311         {\n312             ICollection<OAuthAccount> accounts = OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name);\n313             List<ExternalLogin> externalLogins = new List<ExternalLogin>();\n314             foreach (OAuthAccount account in accounts)\n315             {\n316                 AuthenticationClientData clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider);\n317 \n318                 externalLogins.Add(new ExternalLogin\n319                 {\n320                     Provider = account.Provider,\n321                     ProviderDisplayName = clientData.DisplayName,\n322                     ProviderUserId = account.ProviderUserId,\n"
         lineNumber: 312
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -613,7 +603,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "306             return PartialView(\"_ExternalLoginsListPartial\", OAuthWebSecurity.RegisteredClientData);\n307         }\n308 \n309         [ChildActionOnly]\n310         public ActionResult RemoveExternalLogins()\n311         {\n312             ICollection<OAuthAccount> accounts = OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name);\n313             List<ExternalLogin> externalLogins = new List<ExternalLogin>();\n314             foreach (OAuthAccount account in accounts)\n315             {\n"
+        codeSnip: "306             return PartialView(\"_ExternalLoginsListPartial\", OAuthWebSecurity.RegisteredClientData);\n307         }\n308 \n309         [ChildActionOnly]\n310         public ActionResult RemoveExternalLogins()\n311         {\n312             ICollection<OAuthAccount> accounts = OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name);\n313             List<ExternalLogin> externalLogins = new List<ExternalLogin>();\n314             foreach (OAuthAccount account in accounts)\n315             {\n316                 AuthenticationClientData clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider);\n317 \n318                 externalLogins.Add(new ExternalLogin\n319                 {\n320                     Provider = account.Provider,\n321                     ProviderDisplayName = clientData.DisplayName,\n322                     ProviderUserId = account.ProviderUserId,\n323                 });\n324             }\n325 \n326             ViewBag.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n"
         lineNumber: 316
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -635,7 +625,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "316                 AuthenticationClientData clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider);\n317 \n318                 externalLogins.Add(new ExternalLogin\n319                 {\n320                     Provider = account.Provider,\n321                     ProviderDisplayName = clientData.DisplayName,\n322                     ProviderUserId = account.ProviderUserId,\n323                 });\n324             }\n325 \n"
+        codeSnip: "316                 AuthenticationClientData clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider);\n317 \n318                 externalLogins.Add(new ExternalLogin\n319                 {\n320                     Provider = account.Provider,\n321                     ProviderDisplayName = clientData.DisplayName,\n322                     ProviderUserId = account.ProviderUserId,\n323                 });\n324             }\n325 \n326             ViewBag.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n327             return PartialView(\"_RemoveExternalLoginsPartial\", externalLogins);\n328         }\n329 \n330         #region Helpers\n331         private ActionResult RedirectToLocal(string returnUrl)\n332         {\n333             if (Url.IsLocalUrl(returnUrl))\n334             {\n335                 return Redirect(returnUrl);\n336             }\n"
         lineNumber: 326
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -657,7 +647,7 @@
           - Configure external providers in Startup.ConfigureServices using AddAuthentication()
           - Add required NuGet packages (e.g., Microsoft.AspNetCore.Authentication.Google)
           - Update authentication flow to use ASP.NET Core Identity external login pattern
-        codeSnip: "353             {\n354                 Provider = provider;\n355                 ReturnUrl = returnUrl;\n356             }\n357 \n358             public string Provider { get; private set; }\n359             public string ReturnUrl { get; private set; }\n360 \n361             public override void ExecuteResult(ControllerContext context)\n362             {\n"
+        codeSnip: "353             {\n354                 Provider = provider;\n355                 ReturnUrl = returnUrl;\n356             }\n357 \n358             public string Provider { get; private set; }\n359             public string ReturnUrl { get; private set; }\n360 \n361             public override void ExecuteResult(ControllerContext context)\n362             {\n363                 OAuthWebSecurity.RequestAuthentication(Provider, ReturnUrl);\n364             }\n365         }\n366 \n367         private static string ErrorCodeToString(MembershipCreateStatus createStatus)\n368         {\n369             // See http://go.microsoft.com/fwlink/?LinkID=177550 for\n370             // a full list of status codes.\n371             switch (createStatus)\n372             {\n373                 case MembershipCreateStatus.DuplicateUserName:\n"
         lineNumber: 363
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -694,7 +684,7 @@
           - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
           - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
           - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
-        codeSnip: "27         }\n28 \n29         //\n30         // POST: /Account/Login\n31 \n32         [HttpPost]\n33         [AllowAnonymous]\n34         [ValidateAntiForgeryToken]\n35         public ActionResult Login(LoginModel model, string returnUrl)\n36         {\n"
+        codeSnip: "27         }\n28 \n29         //\n30         // POST: /Account/Login\n31 \n32         [HttpPost]\n33         [AllowAnonymous]\n34         [ValidateAntiForgeryToken]\n35         public ActionResult Login(LoginModel model, string returnUrl)\n36         {\n37             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))\n38             {\n39                 return RedirectToLocal(returnUrl);\n40             }\n41 \n42             // If we got this far, something failed, redisplay form\n43             ModelState.AddModelError(\"\", \"The user name or password provided is incorrect.\");\n44             return View(model);\n45         }\n46 \n47         //\n"
         lineNumber: 37
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -716,7 +706,7 @@
           - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
           - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
           - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
-        codeSnip: "44             return View(model);\n45         }\n46 \n47         //\n48         // POST: /Account/LogOff\n49 \n50         [HttpPost]\n51         [ValidateAntiForgeryToken]\n52         public ActionResult LogOff()\n53         {\n"
+        codeSnip: "44             return View(model);\n45         }\n46 \n47         //\n48         // POST: /Account/LogOff\n49 \n50         [HttpPost]\n51         [ValidateAntiForgeryToken]\n52         public ActionResult LogOff()\n53         {\n54             WebSecurity.Logout();\n55 \n56             return RedirectToAction(\"Index\", \"Home\");\n57         }\n58 \n59         //\n60         // GET: /Account/Register\n61 \n62         [AllowAnonymous]\n63         public ActionResult Register()\n64         {\n"
         lineNumber: 54
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -738,17 +728,7 @@
           - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
           - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
           - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
-        codeSnip: |
-          71         [HttpPost]
-          72         [AllowAnonymous]
-          73         [ValidateAntiForgeryToken]
-          74         public ActionResult Register(RegisterModel model)
-          75         {
-          76             if (ModelState.IsValid)
-          77             {
-          78                 // Attempt to register the user
-          79                 try
-          80                 {
+        codeSnip: "71         [HttpPost]\n72         [AllowAnonymous]\n73         [ValidateAntiForgeryToken]\n74         public ActionResult Register(RegisterModel model)\n75         {\n76             if (ModelState.IsValid)\n77             {\n78                 // Attempt to register the user\n79                 try\n80                 {\n81                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);\n82                     WebSecurity.Login(model.UserName, model.Password);\n83                     return RedirectToAction(\"Index\", \"Home\");\n84                 }\n85                 catch (MembershipCreateUserException e)\n86                 {\n87                     ModelState.AddModelError(\"\", ErrorCodeToString(e.StatusCode));\n88                 }\n89             }\n90 \n91             // If we got this far, something failed, redisplay form\n"
         lineNumber: 81
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -770,17 +750,7 @@
           - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
           - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
           - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
-        codeSnip: |
-          72         [AllowAnonymous]
-          73         [ValidateAntiForgeryToken]
-          74         public ActionResult Register(RegisterModel model)
-          75         {
-          76             if (ModelState.IsValid)
-          77             {
-          78                 // Attempt to register the user
-          79                 try
-          80                 {
-          81                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+        codeSnip: "72         [AllowAnonymous]\n73         [ValidateAntiForgeryToken]\n74         public ActionResult Register(RegisterModel model)\n75         {\n76             if (ModelState.IsValid)\n77             {\n78                 // Attempt to register the user\n79                 try\n80                 {\n81                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);\n82                     WebSecurity.Login(model.UserName, model.Password);\n83                     return RedirectToAction(\"Index\", \"Home\");\n84                 }\n85                 catch (MembershipCreateUserException e)\n86                 {\n87                     ModelState.AddModelError(\"\", ErrorCodeToString(e.StatusCode));\n88                 }\n89             }\n90 \n91             // If we got this far, something failed, redisplay form\n92             return View(model);\n"
         lineNumber: 82
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -802,7 +772,7 @@
           - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
           - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
           - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
-        codeSnip: "101         {\n102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n"
+        codeSnip: "101         {\n102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n111                     bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n112                     if (hasLocalAccount || OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name).Count > 1)\n113                     {\n114                         OAuthWebSecurity.DeleteAccount(provider, providerUserId);\n115                         scope.Complete();\n116                         message = ManageMessageId.RemoveLoginSuccess;\n117                     }\n118                 }\n119             }\n120 \n121             return RedirectToAction(\"Manage\", new { Message = message });\n"
         lineNumber: 111
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -824,7 +794,7 @@
           - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
           - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
           - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
-        codeSnip: "124         //\n125         // GET: /Account/Manage\n126 \n127         public ActionResult Manage(ManageMessageId? message)\n128         {\n129             ViewBag.StatusMessage =\n130                 message == ManageMessageId.ChangePasswordSuccess ? \"Your password has been changed.\"\n131                 : message == ManageMessageId.SetPasswordSuccess ? \"Your password has been set.\"\n132                 : message == ManageMessageId.RemoveLoginSuccess ? \"The external login was removed.\"\n133                 : \"\";\n"
+        codeSnip: "124         //\n125         // GET: /Account/Manage\n126 \n127         public ActionResult Manage(ManageMessageId? message)\n128         {\n129             ViewBag.StatusMessage =\n130                 message == ManageMessageId.ChangePasswordSuccess ? \"Your password has been changed.\"\n131                 : message == ManageMessageId.SetPasswordSuccess ? \"Your password has been set.\"\n132                 : message == ManageMessageId.RemoveLoginSuccess ? \"The external login was removed.\"\n133                 : \"\";\n134             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n135             ViewBag.ReturnUrl = Url.Action(\"Manage\");\n136             return View();\n137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n"
         lineNumber: 134
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -846,7 +816,7 @@
           - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
           - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
           - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
-        codeSnip: "136             return View();\n137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n"
+        codeSnip: "136             return View();\n137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n146             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n147             ViewBag.HasLocalPassword = hasLocalAccount;\n148             ViewBag.ReturnUrl = Url.Action(\"Manage\");\n149             if (hasLocalAccount)\n150             {\n151                 if (ModelState.IsValid)\n152                 {\n153                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.\n154                     bool changePasswordSucceeded;\n155                     try\n156                     {\n"
         lineNumber: 146
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -868,17 +838,7 @@
           - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
           - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
           - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
-        codeSnip: |
-          147             ViewBag.HasLocalPassword = hasLocalAccount;
-          148             ViewBag.ReturnUrl = Url.Action("Manage");
-          149             if (hasLocalAccount)
-          150             {
-          151                 if (ModelState.IsValid)
-          152                 {
-          153                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.
-          154                     bool changePasswordSucceeded;
-          155                     try
-          156                     {
+        codeSnip: "147             ViewBag.HasLocalPassword = hasLocalAccount;\n148             ViewBag.ReturnUrl = Url.Action(\"Manage\");\n149             if (hasLocalAccount)\n150             {\n151                 if (ModelState.IsValid)\n152                 {\n153                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.\n154                     bool changePasswordSucceeded;\n155                     try\n156                     {\n157                         changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);\n158                     }\n159                     catch (Exception)\n160                     {\n161                         changePasswordSucceeded = false;\n162                     }\n163 \n164                     if (changePasswordSucceeded)\n165                     {\n166                         return RedirectToAction(\"Manage\", new { Message = ManageMessageId.ChangePasswordSuccess });\n167                     }\n"
         lineNumber: 157
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -900,7 +860,7 @@
           - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
           - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
           - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
-        codeSnip: "178                 ModelState state = ModelState[\"OldPassword\"];\n179                 if (state != null)\n180                 {\n181                     state.Errors.Clear();\n182                 }\n183 \n184                 if (ModelState.IsValid)\n185                 {\n186                     try\n187                     {\n"
+        codeSnip: "178                 ModelState state = ModelState[\"OldPassword\"];\n179                 if (state != null)\n180                 {\n181                     state.Errors.Clear();\n182                 }\n183 \n184                 if (ModelState.IsValid)\n185                 {\n186                     try\n187                     {\n188                         WebSecurity.CreateAccount(User.Identity.Name, model.NewPassword);\n189                         return RedirectToAction(\"Manage\", new { Message = ManageMessageId.SetPasswordSuccess });\n190                     }\n191                     catch (Exception)\n192                     {\n193                         ModelState.AddModelError(\"\", String.Format(\"Unable to create local account. An account with the name \\\"{0}\\\" may already exist.\", User.Identity.Name));\n194                     }\n195                 }\n196             }\n197 \n198             // If we got this far, something failed, redisplay form\n"
         lineNumber: 188
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -922,7 +882,7 @@
           - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
           - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
           - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
-        codeSnip: "316                 AuthenticationClientData clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider);\n317 \n318                 externalLogins.Add(new ExternalLogin\n319                 {\n320                     Provider = account.Provider,\n321                     ProviderDisplayName = clientData.DisplayName,\n322                     ProviderUserId = account.ProviderUserId,\n323                 });\n324             }\n325 \n"
+        codeSnip: "316                 AuthenticationClientData clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider);\n317 \n318                 externalLogins.Add(new ExternalLogin\n319                 {\n320                     Provider = account.Provider,\n321                     ProviderDisplayName = clientData.DisplayName,\n322                     ProviderUserId = account.ProviderUserId,\n323                 });\n324             }\n325 \n326             ViewBag.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n327             return PartialView(\"_RemoveExternalLoginsPartial\", externalLogins);\n328         }\n329 \n330         #region Helpers\n331         private ActionResult RedirectToLocal(string returnUrl)\n332         {\n333             if (Url.IsLocalUrl(returnUrl))\n334             {\n335                 return Redirect(returnUrl);\n336             }\n"
         lineNumber: 326
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -944,7 +904,7 @@
           - Replace WebSecurity.CreateUserAndAccount with UserManager.CreateAsync
           - Replace WebSecurity.ChangePassword with UserManager.ChangePasswordAsync
           - Configure Identity in Startup.ConfigureServices with AddIdentity or AddDefaultIdentity
-        codeSnip: "30                 {\n31                     using (var context = new UsersContext())\n32                     {\n33                         if (!context.Database.Exists())\n34                         {\n35                             // Create the SimpleMembership database without Entity Framework migration schema\n36                             ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();\n37                         }\n38                     }\n39 \n"
+        codeSnip: "30                 {\n31                     using (var context = new UsersContext())\n32                     {\n33                         if (!context.Database.Exists())\n34                         {\n35                             // Create the SimpleMembership database without Entity Framework migration schema\n36                             ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();\n37                         }\n38                     }\n39 \n40                     WebSecurity.InitializeDatabaseConnection(\"DefaultConnection\", \"UserProfile\", \"UserId\", \"UserName\", autoCreateTables: true);\n41                 }\n42                 catch (Exception ex)\n43                 {\n44                     throw new InvalidOperationException(\"The ASP.NET Simple Membership database could not be initialized. For more information, please see http://go.microsoft.com/fwlink/?LinkId=256588\", ex);\n45                 }\n46             }\n47         }\n48     }\n49 }\n"
         lineNumber: 40
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
@@ -977,7 +937,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Mvc;\n2 \n3 namespace NerdDinner\n4 {\n5     public class FilterConfig\n6     {\n7         public static void RegisterGlobalFilters(GlobalFilterCollection filters)\n8         {\n9             filters.Add(new HandleErrorAttribute());\n"
+        codeSnip: "0 \uFEFFusing System.Web;\n1 using System.Web.Mvc;\n2 \n3 namespace NerdDinner\n4 {\n5     public class FilterConfig\n6     {\n7         public static void RegisterGlobalFilters(GlobalFilterCollection filters)\n8         {\n9             filters.Add(new HandleErrorAttribute());\n10         }\n11     }\n"
         lineNumber: 1
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
@@ -993,7 +953,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 using System.Web.Routing;\n6 \n7 namespace NerdDinner\n8 {\n9     public class RouteConfig\n"
+        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 using System.Web.Routing;\n6 \n7 namespace NerdDinner\n8 {\n9     public class RouteConfig\n10     {\n11         public static void RegisterRoutes(RouteCollection routes)\n12         {\n13             routes.IgnoreRoute(\"{resource}.axd/{*pathInfo}\");\n14 \n"
         lineNumber: 4
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
@@ -1009,7 +969,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "15             routes.MapRoute(\n16                     \"PrettyDetails\",\n17                     \"{Id}\",\n18                         new { controller = \"Dinners\", action = \"Details\" },\n19                         new { Id = @\"\\d+\" }\n20                     );\n21 \n22             routes.MapRoute(\n23                 name: \"Default\",\n24                 url: \"{controller}/{action}/{id}\",\n"
+        codeSnip: "15             routes.MapRoute(\n16                     \"PrettyDetails\",\n17                     \"{Id}\",\n18                         new { controller = \"Dinners\", action = \"Details\" },\n19                         new { Id = @\"\\d+\" }\n20                     );\n21 \n22             routes.MapRoute(\n23                 name: \"Default\",\n24                 url: \"{controller}/{action}/{id}\",\n25                 defaults: new { controller = \"Home\", action = \"Index\", id = UrlParameter.Optional }\n26             );\n27         }\n28     }\n29 }\n"
         lineNumber: 25
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
@@ -1133,7 +1093,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "96         // POST: /Account/Disassociate\n97 \n98         [HttpPost]\n99         [ValidateAntiForgeryToken]\n100         public ActionResult Disassociate(string provider, string providerUserId)\n101         {\n102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n"
+        codeSnip: "96         // POST: /Account/Disassociate\n97 \n98         [HttpPost]\n99         [ValidateAntiForgeryToken]\n100         public ActionResult Disassociate(string provider, string providerUserId)\n101         {\n102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n111                     bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n112                     if (hasLocalAccount || OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name).Count > 1)\n113                     {\n114                         OAuthWebSecurity.DeleteAccount(provider, providerUserId);\n115                         scope.Complete();\n116                         message = ManageMessageId.RemoveLoginSuccess;\n"
         lineNumber: 106
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1152,7 +1112,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "101         {\n102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n"
+        codeSnip: "101         {\n102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n111                     bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n112                     if (hasLocalAccount || OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name).Count > 1)\n113                     {\n114                         OAuthWebSecurity.DeleteAccount(provider, providerUserId);\n115                         scope.Complete();\n116                         message = ManageMessageId.RemoveLoginSuccess;\n117                     }\n118                 }\n119             }\n120 \n121             return RedirectToAction(\"Manage\", new { Message = message });\n"
         lineNumber: 111
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1171,7 +1131,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n111                     bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n"
+        codeSnip: "102             string ownerAccount = OAuthWebSecurity.GetUserName(provider, providerUserId);\n103             ManageMessageId? message = null;\n104 \n105             // Only disassociate the account if the currently logged in user is the owner\n106             if (ownerAccount == User.Identity.Name)\n107             {\n108                 // Use a transaction to prevent the user from deleting their last login credential\n109                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }))\n110                 {\n111                     bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n112                     if (hasLocalAccount || OAuthWebSecurity.GetAccountsFromUserName(User.Identity.Name).Count > 1)\n113                     {\n114                         OAuthWebSecurity.DeleteAccount(provider, providerUserId);\n115                         scope.Complete();\n116                         message = ManageMessageId.RemoveLoginSuccess;\n117                     }\n118                 }\n119             }\n120 \n121             return RedirectToAction(\"Manage\", new { Message = message });\n122         }\n"
         lineNumber: 112
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1190,7 +1150,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "119             }\n120 \n121             return RedirectToAction(\"Manage\", new { Message = message });\n122         }\n123 \n124         //\n125         // GET: /Account/Manage\n126 \n127         public ActionResult Manage(ManageMessageId? message)\n128         {\n"
+        codeSnip: "119             }\n120 \n121             return RedirectToAction(\"Manage\", new { Message = message });\n122         }\n123 \n124         //\n125         // GET: /Account/Manage\n126 \n127         public ActionResult Manage(ManageMessageId? message)\n128         {\n129             ViewBag.StatusMessage =\n130                 message == ManageMessageId.ChangePasswordSuccess ? \"Your password has been changed.\"\n131                 : message == ManageMessageId.SetPasswordSuccess ? \"Your password has been set.\"\n132                 : message == ManageMessageId.RemoveLoginSuccess ? \"The external login was removed.\"\n133                 : \"\";\n134             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n135             ViewBag.ReturnUrl = Url.Action(\"Manage\");\n136             return View();\n137         }\n138 \n139         //\n"
         lineNumber: 129
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1209,7 +1169,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "124         //\n125         // GET: /Account/Manage\n126 \n127         public ActionResult Manage(ManageMessageId? message)\n128         {\n129             ViewBag.StatusMessage =\n130                 message == ManageMessageId.ChangePasswordSuccess ? \"Your password has been changed.\"\n131                 : message == ManageMessageId.SetPasswordSuccess ? \"Your password has been set.\"\n132                 : message == ManageMessageId.RemoveLoginSuccess ? \"The external login was removed.\"\n133                 : \"\";\n"
+        codeSnip: "124         //\n125         // GET: /Account/Manage\n126 \n127         public ActionResult Manage(ManageMessageId? message)\n128         {\n129             ViewBag.StatusMessage =\n130                 message == ManageMessageId.ChangePasswordSuccess ? \"Your password has been changed.\"\n131                 : message == ManageMessageId.SetPasswordSuccess ? \"Your password has been set.\"\n132                 : message == ManageMessageId.RemoveLoginSuccess ? \"The external login was removed.\"\n133                 : \"\";\n134             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n135             ViewBag.ReturnUrl = Url.Action(\"Manage\");\n136             return View();\n137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n"
         lineNumber: 134
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1228,7 +1188,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "125         // GET: /Account/Manage\n126 \n127         public ActionResult Manage(ManageMessageId? message)\n128         {\n129             ViewBag.StatusMessage =\n130                 message == ManageMessageId.ChangePasswordSuccess ? \"Your password has been changed.\"\n131                 : message == ManageMessageId.SetPasswordSuccess ? \"Your password has been set.\"\n132                 : message == ManageMessageId.RemoveLoginSuccess ? \"The external login was removed.\"\n133                 : \"\";\n134             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n"
+        codeSnip: "125         // GET: /Account/Manage\n126 \n127         public ActionResult Manage(ManageMessageId? message)\n128         {\n129             ViewBag.StatusMessage =\n130                 message == ManageMessageId.ChangePasswordSuccess ? \"Your password has been changed.\"\n131                 : message == ManageMessageId.SetPasswordSuccess ? \"Your password has been set.\"\n132                 : message == ManageMessageId.RemoveLoginSuccess ? \"The external login was removed.\"\n133                 : \"\";\n134             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n135             ViewBag.ReturnUrl = Url.Action(\"Manage\");\n136             return View();\n137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n"
         lineNumber: 135
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1247,7 +1207,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "136             return View();\n137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n"
+        codeSnip: "136             return View();\n137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n146             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n147             ViewBag.HasLocalPassword = hasLocalAccount;\n148             ViewBag.ReturnUrl = Url.Action(\"Manage\");\n149             if (hasLocalAccount)\n150             {\n151                 if (ModelState.IsValid)\n152                 {\n153                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.\n154                     bool changePasswordSucceeded;\n155                     try\n156                     {\n"
         lineNumber: 146
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1266,7 +1226,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n146             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n"
+        codeSnip: "137         }\n138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n146             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n147             ViewBag.HasLocalPassword = hasLocalAccount;\n148             ViewBag.ReturnUrl = Url.Action(\"Manage\");\n149             if (hasLocalAccount)\n150             {\n151                 if (ModelState.IsValid)\n152                 {\n153                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.\n154                     bool changePasswordSucceeded;\n155                     try\n156                     {\n157                         changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);\n"
         lineNumber: 147
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1285,7 +1245,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n146             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n147             ViewBag.HasLocalPassword = hasLocalAccount;\n"
+        codeSnip: "138 \n139         //\n140         // POST: /Account/Manage\n141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n146             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n147             ViewBag.HasLocalPassword = hasLocalAccount;\n148             ViewBag.ReturnUrl = Url.Action(\"Manage\");\n149             if (hasLocalAccount)\n150             {\n151                 if (ModelState.IsValid)\n152                 {\n153                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.\n154                     bool changePasswordSucceeded;\n155                     try\n156                     {\n157                         changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);\n158                     }\n"
         lineNumber: 148
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1304,7 +1264,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n146             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n147             ViewBag.HasLocalPassword = hasLocalAccount;\n148             ViewBag.ReturnUrl = Url.Action(\"Manage\");\n149             if (hasLocalAccount)\n150             {\n"
+        codeSnip: "141 \n142         [HttpPost]\n143         [ValidateAntiForgeryToken]\n144         public ActionResult Manage(LocalPasswordModel model)\n145         {\n146             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));\n147             ViewBag.HasLocalPassword = hasLocalAccount;\n148             ViewBag.ReturnUrl = Url.Action(\"Manage\");\n149             if (hasLocalAccount)\n150             {\n151                 if (ModelState.IsValid)\n152                 {\n153                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.\n154                     bool changePasswordSucceeded;\n155                     try\n156                     {\n157                         changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);\n158                     }\n159                     catch (Exception)\n160                     {\n161                         changePasswordSucceeded = false;\n"
         lineNumber: 151
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1323,17 +1283,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: |
-          147             ViewBag.HasLocalPassword = hasLocalAccount;
-          148             ViewBag.ReturnUrl = Url.Action("Manage");
-          149             if (hasLocalAccount)
-          150             {
-          151                 if (ModelState.IsValid)
-          152                 {
-          153                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.
-          154                     bool changePasswordSucceeded;
-          155                     try
-          156                     {
+        codeSnip: "147             ViewBag.HasLocalPassword = hasLocalAccount;\n148             ViewBag.ReturnUrl = Url.Action(\"Manage\");\n149             if (hasLocalAccount)\n150             {\n151                 if (ModelState.IsValid)\n152                 {\n153                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.\n154                     bool changePasswordSucceeded;\n155                     try\n156                     {\n157                         changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);\n158                     }\n159                     catch (Exception)\n160                     {\n161                         changePasswordSucceeded = false;\n162                     }\n163 \n164                     if (changePasswordSucceeded)\n165                     {\n166                         return RedirectToAction(\"Manage\", new { Message = ManageMessageId.ChangePasswordSuccess });\n167                     }\n"
         lineNumber: 157
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1352,7 +1302,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "160                     {\n161                         changePasswordSucceeded = false;\n162                     }\n163 \n164                     if (changePasswordSucceeded)\n165                     {\n166                         return RedirectToAction(\"Manage\", new { Message = ManageMessageId.ChangePasswordSuccess });\n167                     }\n168                     else\n169                     {\n"
+        codeSnip: "160                     {\n161                         changePasswordSucceeded = false;\n162                     }\n163 \n164                     if (changePasswordSucceeded)\n165                     {\n166                         return RedirectToAction(\"Manage\", new { Message = ManageMessageId.ChangePasswordSuccess });\n167                     }\n168                     else\n169                     {\n170                         ModelState.AddModelError(\"\", \"The current password is incorrect or the new password is invalid.\");\n171                     }\n172                 }\n173             }\n174             else\n175             {\n176                 // User does not have a local password so remove any validation errors caused by a missing\n177                 // OldPassword field\n178                 ModelState state = ModelState[\"OldPassword\"];\n179                 if (state != null)\n180                 {\n"
         lineNumber: 170
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1371,17 +1321,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: |
-          171                     }
-          172                 }
-          173             }
-          174             else
-          175             {
-          176                 // User does not have a local password so remove any validation errors caused by a missing
-          177                 // OldPassword field
-          178                 ModelState state = ModelState["OldPassword"];
-          179                 if (state != null)
-          180                 {
+        codeSnip: "171                     }\n172                 }\n173             }\n174             else\n175             {\n176                 // User does not have a local password so remove any validation errors caused by a missing\n177                 // OldPassword field\n178                 ModelState state = ModelState[\"OldPassword\"];\n179                 if (state != null)\n180                 {\n181                     state.Errors.Clear();\n182                 }\n183 \n184                 if (ModelState.IsValid)\n185                 {\n186                     try\n187                     {\n188                         WebSecurity.CreateAccount(User.Identity.Name, model.NewPassword);\n189                         return RedirectToAction(\"Manage\", new { Message = ManageMessageId.SetPasswordSuccess });\n190                     }\n191                     catch (Exception)\n"
         lineNumber: 181
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1400,7 +1340,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "174             else\n175             {\n176                 // User does not have a local password so remove any validation errors caused by a missing\n177                 // OldPassword field\n178                 ModelState state = ModelState[\"OldPassword\"];\n179                 if (state != null)\n180                 {\n181                     state.Errors.Clear();\n182                 }\n183 \n"
+        codeSnip: "174             else\n175             {\n176                 // User does not have a local password so remove any validation errors caused by a missing\n177                 // OldPassword field\n178                 ModelState state = ModelState[\"OldPassword\"];\n179                 if (state != null)\n180                 {\n181                     state.Errors.Clear();\n182                 }\n183 \n184                 if (ModelState.IsValid)\n185                 {\n186                     try\n187                     {\n188                         WebSecurity.CreateAccount(User.Identity.Name, model.NewPassword);\n189                         return RedirectToAction(\"Manage\", new { Message = ManageMessageId.SetPasswordSuccess });\n190                     }\n191                     catch (Exception)\n192                     {\n193                         ModelState.AddModelError(\"\", String.Format(\"Unable to create local account. An account with the name \\\"{0}\\\" may already exist.\", User.Identity.Name));\n194                     }\n"
         lineNumber: 184
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1419,7 +1359,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "178                 ModelState state = ModelState[\"OldPassword\"];\n179                 if (state != null)\n180                 {\n181                     state.Errors.Clear();\n182                 }\n183 \n184                 if (ModelState.IsValid)\n185                 {\n186                     try\n187                     {\n"
+        codeSnip: "178                 ModelState state = ModelState[\"OldPassword\"];\n179                 if (state != null)\n180                 {\n181                     state.Errors.Clear();\n182                 }\n183 \n184                 if (ModelState.IsValid)\n185                 {\n186                     try\n187                     {\n188                         WebSecurity.CreateAccount(User.Identity.Name, model.NewPassword);\n189                         return RedirectToAction(\"Manage\", new { Message = ManageMessageId.SetPasswordSuccess });\n190                     }\n191                     catch (Exception)\n192                     {\n193                         ModelState.AddModelError(\"\", String.Format(\"Unable to create local account. An account with the name \\\"{0}\\\" may already exist.\", User.Identity.Name));\n194                     }\n195                 }\n196             }\n197 \n198             // If we got this far, something failed, redisplay form\n"
         lineNumber: 188
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1438,7 +1378,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "183 \n184                 if (ModelState.IsValid)\n185                 {\n186                     try\n187                     {\n188                         WebSecurity.CreateAccount(User.Identity.Name, model.NewPassword);\n189                         return RedirectToAction(\"Manage\", new { Message = ManageMessageId.SetPasswordSuccess });\n190                     }\n191                     catch (Exception)\n192                     {\n"
+        codeSnip: "183 \n184                 if (ModelState.IsValid)\n185                 {\n186                     try\n187                     {\n188                         WebSecurity.CreateAccount(User.Identity.Name, model.NewPassword);\n189                         return RedirectToAction(\"Manage\", new { Message = ManageMessageId.SetPasswordSuccess });\n190                     }\n191                     catch (Exception)\n192                     {\n193                         ModelState.AddModelError(\"\", String.Format(\"Unable to create local account. An account with the name \\\"{0}\\\" may already exist.\", User.Identity.Name));\n194                     }\n195                 }\n196             }\n197 \n198             // If we got this far, something failed, redisplay form\n199             return View(model);\n200         }\n201 \n202         //\n203         // POST: /Account/ExternalLogin\n"
         lineNumber: 193
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1457,7 +1397,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "200         }\n201 \n202         //\n203         // POST: /Account/ExternalLogin\n204 \n205         [HttpPost]\n206         [AllowAnonymous]\n207         [ValidateAntiForgeryToken]\n208         public ActionResult ExternalLogin(string provider, string returnUrl)\n209         {\n"
+        codeSnip: "200         }\n201 \n202         //\n203         // POST: /Account/ExternalLogin\n204 \n205         [HttpPost]\n206         [AllowAnonymous]\n207         [ValidateAntiForgeryToken]\n208         public ActionResult ExternalLogin(string provider, string returnUrl)\n209         {\n210             return new ExternalLoginResult(provider, Url.Action(\"ExternalLoginCallback\", new { ReturnUrl = returnUrl }));\n211         }\n212 \n213         //\n214         // GET: /Account/ExternalLoginCallback\n215 \n216         [AllowAnonymous]\n217         public ActionResult ExternalLoginCallback(string returnUrl)\n218         {\n219             AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action(\"ExternalLoginCallback\", new { ReturnUrl = returnUrl }));\n220             if (!result.IsSuccessful)\n"
         lineNumber: 210
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1476,7 +1416,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "209         {\n210             return new ExternalLoginResult(provider, Url.Action(\"ExternalLoginCallback\", new { ReturnUrl = returnUrl }));\n211         }\n212 \n213         //\n214         // GET: /Account/ExternalLoginCallback\n215 \n216         [AllowAnonymous]\n217         public ActionResult ExternalLoginCallback(string returnUrl)\n218         {\n"
+        codeSnip: "209         {\n210             return new ExternalLoginResult(provider, Url.Action(\"ExternalLoginCallback\", new { ReturnUrl = returnUrl }));\n211         }\n212 \n213         //\n214         // GET: /Account/ExternalLoginCallback\n215 \n216         [AllowAnonymous]\n217         public ActionResult ExternalLoginCallback(string returnUrl)\n218         {\n219             AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action(\"ExternalLoginCallback\", new { ReturnUrl = returnUrl }));\n220             if (!result.IsSuccessful)\n221             {\n222                 return RedirectToAction(\"ExternalLoginFailure\");\n223             }\n224 \n225             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))\n226             {\n227                 return RedirectToLocal(returnUrl);\n228             }\n229 \n"
         lineNumber: 219
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1495,7 +1435,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "220             if (!result.IsSuccessful)\n221             {\n222                 return RedirectToAction(\"ExternalLoginFailure\");\n223             }\n224 \n225             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))\n226             {\n227                 return RedirectToLocal(returnUrl);\n228             }\n229 \n"
+        codeSnip: "220             if (!result.IsSuccessful)\n221             {\n222                 return RedirectToAction(\"ExternalLoginFailure\");\n223             }\n224 \n225             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))\n226             {\n227                 return RedirectToLocal(returnUrl);\n228             }\n229 \n230             if (User.Identity.IsAuthenticated)\n231             {\n232                 // If the current user is logged in add the new account\n233                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);\n234                 return RedirectToLocal(returnUrl);\n235             }\n236             else\n237             {\n238                 // User is new, ask for their desired membership name\n239                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);\n240                 ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;\n"
         lineNumber: 230
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1514,7 +1454,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "223             }\n224 \n225             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))\n226             {\n227                 return RedirectToLocal(returnUrl);\n228             }\n229 \n230             if (User.Identity.IsAuthenticated)\n231             {\n232                 // If the current user is logged in add the new account\n"
+        codeSnip: "223             }\n224 \n225             if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))\n226             {\n227                 return RedirectToLocal(returnUrl);\n228             }\n229 \n230             if (User.Identity.IsAuthenticated)\n231             {\n232                 // If the current user is logged in add the new account\n233                 OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);\n234                 return RedirectToLocal(returnUrl);\n235             }\n236             else\n237             {\n238                 // User is new, ask for their desired membership name\n239                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);\n240                 ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;\n241                 ViewBag.ReturnUrl = returnUrl;\n242                 return View(\"ExternalLoginConfirmation\", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData });\n243             }\n"
         lineNumber: 233
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
@@ -1731,7 +1671,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data;\n3 using System.Data.Entity;\n4 using System.Linq;\n5 using System.Web;\n6 using System.Web.Mvc;\n7 using NerdDinner.Models;\n8 using PagedList;\n9 \n"
+        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data;\n3 using System.Data.Entity;\n4 using System.Linq;\n5 using System.Web;\n6 using System.Web.Mvc;\n7 using NerdDinner.Models;\n8 using PagedList;\n9 \n10 namespace NerdDinner.Controllers\n11 {\n12     public class DinnersController : Controller\n13     {\n14         private NerdDinnerContext db = new NerdDinnerContext();\n15 \n16         //\n"
         lineNumber: 6
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
@@ -1747,7 +1687,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "39 \n40         //\n41         // GET: /Dinners/Create\n42 \n43         [Authorize]\n44         public ActionResult Create()\n45         {\n46             var dinner = new Dinner()\n47             {\n48                 EventDate = DateTime.Now.AddDays(7),\n"
+        codeSnip: "39 \n40         //\n41         // GET: /Dinners/Create\n42 \n43         [Authorize]\n44         public ActionResult Create()\n45         {\n46             var dinner = new Dinner()\n47             {\n48                 EventDate = DateTime.Now.AddDays(7),\n49                 HostedBy = User.Identity.Name\n50             };\n51 \n52             return View(dinner);\n53         }\n54 \n55         //\n56         // POST: /Dinners/Create\n57 \n58         [HttpPost, Authorize, ValidateAntiForgeryToken]\n59         public ActionResult Create(Dinner dinner)\n"
         lineNumber: 49
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
@@ -1766,7 +1706,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "51 \n52             return View(dinner);\n53         }\n54 \n55         //\n56         // POST: /Dinners/Create\n57 \n58         [HttpPost, Authorize, ValidateAntiForgeryToken]\n59         public ActionResult Create(Dinner dinner)\n60         {\n"
+        codeSnip: "51 \n52             return View(dinner);\n53         }\n54 \n55         //\n56         // POST: /Dinners/Create\n57 \n58         [HttpPost, Authorize, ValidateAntiForgeryToken]\n59         public ActionResult Create(Dinner dinner)\n60         {\n61             if (ModelState.IsValid)\n62             {\n63                 dinner.HostedBy = User.Identity.Name;\n64 \n65                 RSVP rsvp = new RSVP();\n66                 rsvp.AttendeeName = User.Identity.Name;\n67 \n68                 dinner.RSVPs = new List<RSVP>();\n69                 dinner.RSVPs.Add(rsvp);\n70 \n71                 db.Dinners.Add(dinner);\n"
         lineNumber: 61
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
@@ -1785,7 +1725,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "53         }\n54 \n55         //\n56         // POST: /Dinners/Create\n57 \n58         [HttpPost, Authorize, ValidateAntiForgeryToken]\n59         public ActionResult Create(Dinner dinner)\n60         {\n61             if (ModelState.IsValid)\n62             {\n"
+        codeSnip: "53         }\n54 \n55         //\n56         // POST: /Dinners/Create\n57 \n58         [HttpPost, Authorize, ValidateAntiForgeryToken]\n59         public ActionResult Create(Dinner dinner)\n60         {\n61             if (ModelState.IsValid)\n62             {\n63                 dinner.HostedBy = User.Identity.Name;\n64 \n65                 RSVP rsvp = new RSVP();\n66                 rsvp.AttendeeName = User.Identity.Name;\n67 \n68                 dinner.RSVPs = new List<RSVP>();\n69                 dinner.RSVPs.Add(rsvp);\n70 \n71                 db.Dinners.Add(dinner);\n72                 db.SaveChanges();\n73                 return RedirectToAction(\"Index\");\n"
         lineNumber: 63
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
@@ -1804,7 +1744,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "56         // POST: /Dinners/Create\n57 \n58         [HttpPost, Authorize, ValidateAntiForgeryToken]\n59         public ActionResult Create(Dinner dinner)\n60         {\n61             if (ModelState.IsValid)\n62             {\n63                 dinner.HostedBy = User.Identity.Name;\n64 \n65                 RSVP rsvp = new RSVP();\n"
+        codeSnip: "56         // POST: /Dinners/Create\n57 \n58         [HttpPost, Authorize, ValidateAntiForgeryToken]\n59         public ActionResult Create(Dinner dinner)\n60         {\n61             if (ModelState.IsValid)\n62             {\n63                 dinner.HostedBy = User.Identity.Name;\n64 \n65                 RSVP rsvp = new RSVP();\n66                 rsvp.AttendeeName = User.Identity.Name;\n67 \n68                 dinner.RSVPs = new List<RSVP>();\n69                 dinner.RSVPs.Add(rsvp);\n70 \n71                 db.Dinners.Add(dinner);\n72                 db.SaveChanges();\n73                 return RedirectToAction(\"Index\");\n74             }\n75 \n76             return View(dinner);\n"
         lineNumber: 66
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
@@ -1823,7 +1763,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "80         // GET: /Dinners/Edit/5\n81 \n82         [Authorize]\n83         public ActionResult Edit(int id = 0)\n84         {\n85             Dinner dinner = db.Dinners.Find(id);\n86             if (dinner == null)\n87             {\n88                 return HttpNotFound();\n89             }\n"
+        codeSnip: "80         // GET: /Dinners/Edit/5\n81 \n82         [Authorize]\n83         public ActionResult Edit(int id = 0)\n84         {\n85             Dinner dinner = db.Dinners.Find(id);\n86             if (dinner == null)\n87             {\n88                 return HttpNotFound();\n89             }\n90             if (!dinner.IsHostedBy(User.Identity.Name))\n91             {\n92                 return View(\"InvalidOwner\");\n93             }\n94             return View(dinner);\n95         }\n96 \n97         //\n98         // POST: /Dinners/Edit/5\n99 \n100         [HttpPost, Authorize, ValidateAntiForgeryToken]\n"
         lineNumber: 90
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
@@ -1842,7 +1782,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "93             }\n94             return View(dinner);\n95         }\n96 \n97         //\n98         // POST: /Dinners/Edit/5\n99 \n100         [HttpPost, Authorize, ValidateAntiForgeryToken]\n101         public ActionResult Edit(Dinner dinner)\n102         {\n"
+        codeSnip: "93             }\n94             return View(dinner);\n95         }\n96 \n97         //\n98         // POST: /Dinners/Edit/5\n99 \n100         [HttpPost, Authorize, ValidateAntiForgeryToken]\n101         public ActionResult Edit(Dinner dinner)\n102         {\n103             if (!dinner.IsHostedBy(User.Identity.Name))\n104             {\n105                 return View(\"InvalidOwner\");\n106             }\n107 \n108             if (ModelState.IsValid)\n109             {\n110                 db.Entry(dinner).State = EntityState.Modified;\n111                 db.SaveChanges();\n112                 return RedirectToAction(\"Index\");\n113             }\n"
         lineNumber: 103
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
@@ -1861,7 +1801,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "98         // POST: /Dinners/Edit/5\n99 \n100         [HttpPost, Authorize, ValidateAntiForgeryToken]\n101         public ActionResult Edit(Dinner dinner)\n102         {\n103             if (!dinner.IsHostedBy(User.Identity.Name))\n104             {\n105                 return View(\"InvalidOwner\");\n106             }\n107 \n"
+        codeSnip: "98         // POST: /Dinners/Edit/5\n99 \n100         [HttpPost, Authorize, ValidateAntiForgeryToken]\n101         public ActionResult Edit(Dinner dinner)\n102         {\n103             if (!dinner.IsHostedBy(User.Identity.Name))\n104             {\n105                 return View(\"InvalidOwner\");\n106             }\n107 \n108             if (ModelState.IsValid)\n109             {\n110                 db.Entry(dinner).State = EntityState.Modified;\n111                 db.SaveChanges();\n112                 return RedirectToAction(\"Index\");\n113             }\n114             return View(dinner);\n115         }\n116 \n117         //\n118         // GET: /Dinners/Delete/5\n"
         lineNumber: 108
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
@@ -1880,7 +1820,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "118         // GET: /Dinners/Delete/5\n119 \n120         [Authorize]\n121         public ActionResult Delete(int id = 0)\n122         {\n123             Dinner dinner = db.Dinners.Find(id);\n124             if (dinner == null)\n125             {\n126                 return HttpNotFound();\n127             }\n"
+        codeSnip: "118         // GET: /Dinners/Delete/5\n119 \n120         [Authorize]\n121         public ActionResult Delete(int id = 0)\n122         {\n123             Dinner dinner = db.Dinners.Find(id);\n124             if (dinner == null)\n125             {\n126                 return HttpNotFound();\n127             }\n128             if (!dinner.IsHostedBy(User.Identity.Name))\n129             {\n130                 return View(\"InvalidOwner\");\n131             }\n132             return View(dinner);\n133         }\n134 \n135         //\n136         // POST: /Dinners/Delete/5\n137 \n138         [HttpPost, ActionName(\"Delete\"), Authorize, ValidateAntiForgeryToken]\n"
         lineNumber: 128
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
@@ -1899,7 +1839,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "133         }\n134 \n135         //\n136         // POST: /Dinners/Delete/5\n137 \n138         [HttpPost, ActionName(\"Delete\"), Authorize, ValidateAntiForgeryToken]\n139         public ActionResult DeleteConfirmed(int id)\n140         {\n141             Dinner dinner = db.Dinners.Find(id);\n142 \n"
+        codeSnip: "133         }\n134 \n135         //\n136         // POST: /Dinners/Delete/5\n137 \n138         [HttpPost, ActionName(\"Delete\"), Authorize, ValidateAntiForgeryToken]\n139         public ActionResult DeleteConfirmed(int id)\n140         {\n141             Dinner dinner = db.Dinners.Find(id);\n142 \n143             if (!dinner.IsHostedBy(User.Identity.Name))\n144             {\n145                 return View(\"InvalidOwner\");\n146             }\n147 \n148             db.Dinners.Remove(dinner);\n149             db.SaveChanges();\n150             return RedirectToAction(\"Index\");\n151         }\n152 \n153         protected override void Dispose(bool disposing)\n"
         lineNumber: 143
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
@@ -1918,7 +1858,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 \n6 namespace NerdDinner.Controllers\n7 {\n8     public class HomeController : Controller\n9     {\n"
+        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 \n6 namespace NerdDinner.Controllers\n7 {\n8     public class HomeController : Controller\n9     {\n10         public ActionResult Index()\n11         {\n12             ViewBag.Message = \"Organizing the world's nerds and helping them eat in packs.\";\n13 \n14             return View();\n"
         lineNumber: 4
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
@@ -1934,7 +1874,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 \n6 namespace NerdDinner.Controllers\n7 {\n8     public class HomeController : Controller\n9     {\n10         public ActionResult Index()\n11         {\n"
+        codeSnip: "2 using System.Linq;\n3 using System.Web;\n4 using System.Web.Mvc;\n5 \n6 namespace NerdDinner.Controllers\n7 {\n8     public class HomeController : Controller\n9     {\n10         public ActionResult Index()\n11         {\n12             ViewBag.Message = \"Organizing the world's nerds and helping them eat in packs.\";\n13 \n14             return View();\n15         }\n16 \n17         public ActionResult About()\n18         {\n19             return View();\n20         }\n21 }\n22 }\n"
         lineNumber: 12
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
@@ -1953,7 +1893,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Globalization;\n2 using System.Linq;\n3 using System.Web.Mvc;\n4 using NerdDinner.Helpers;\n5 using NerdDinner.Models;\n6 \n7 namespace NerdDinner.Controllers\n8 {\n9     public class RSVPController : Controller\n"
+        codeSnip: "0 \uFEFFusing System;\n1 using System.Globalization;\n2 using System.Linq;\n3 using System.Web.Mvc;\n4 using NerdDinner.Helpers;\n5 using NerdDinner.Models;\n6 \n7 namespace NerdDinner.Controllers\n8 {\n9     public class RSVPController : Controller\n10     {\n11         private NerdDinnerContext db = new NerdDinnerContext();\n12 \n13         //\n"
         lineNumber: 3
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
@@ -1969,7 +1909,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "25         public ActionResult RegisterAjax(int id)\n26         {\n27             RegisterForDinner(id);\n28             return Content(\"Thanks - we'll see you there!\");\n29         }\n30 \n31         private void RegisterForDinner(int id)\n32         {\n33             Dinner dinner = db.Dinners.Find(id);\n34 \n"
+        codeSnip: "25         public ActionResult RegisterAjax(int id)\n26         {\n27             RegisterForDinner(id);\n28             return Content(\"Thanks - we'll see you there!\");\n29         }\n30 \n31         private void RegisterForDinner(int id)\n32         {\n33             Dinner dinner = db.Dinners.Find(id);\n34 \n35             if (!dinner.IsUserRegistered(User.Identity.Name))\n36             {\n37                 RSVP rsvp = new RSVP();\n38                 rsvp.AttendeeName = User.Identity.Name;\n39 \n40                 dinner.RSVPs.Add(rsvp);\n41                 db.SaveChanges();\n42             }\n43         }\n44 \n45         //\n"
         lineNumber: 35
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
@@ -1988,7 +1928,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "28             return Content(\"Thanks - we'll see you there!\");\n29         }\n30 \n31         private void RegisterForDinner(int id)\n32         {\n33             Dinner dinner = db.Dinners.Find(id);\n34 \n35             if (!dinner.IsUserRegistered(User.Identity.Name))\n36             {\n37                 RSVP rsvp = new RSVP();\n"
+        codeSnip: "28             return Content(\"Thanks - we'll see you there!\");\n29         }\n30 \n31         private void RegisterForDinner(int id)\n32         {\n33             Dinner dinner = db.Dinners.Find(id);\n34 \n35             if (!dinner.IsUserRegistered(User.Identity.Name))\n36             {\n37                 RSVP rsvp = new RSVP();\n38                 rsvp.AttendeeName = User.Identity.Name;\n39 \n40                 dinner.RSVPs.Add(rsvp);\n41                 db.SaveChanges();\n42             }\n43         }\n44 \n45         //\n46         // AJAX: /RSVP/CancelAjax/1\n47 \n48         [Authorize, HttpPost]\n"
         lineNumber: 38
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
@@ -2007,7 +1947,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Data.Entity;\n2 using System.Data.Entity.Infrastructure;\n3 using System.Threading;\n4 using System.Web.Mvc;\n5 using WebMatrix.WebData;\n6 using NerdDinner.Models;\n7 \n8 namespace NerdDinner.Filters\n9 {\n"
+        codeSnip: "0 \uFEFFusing System;\n1 using System.Data.Entity;\n2 using System.Data.Entity.Infrastructure;\n3 using System.Threading;\n4 using System.Web.Mvc;\n5 using WebMatrix.WebData;\n6 using NerdDinner.Models;\n7 \n8 namespace NerdDinner.Filters\n9 {\n10     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]\n11     public sealed class InitializeSimpleMembershipAttribute : ActionFilterAttribute\n12     {\n13         private static SimpleMembershipInitializer _initializer;\n14         private static object _initializerLock = new object();\n"
         lineNumber: 4
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
@@ -2023,7 +1963,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Reflection;\n4 using System.Web;\n5 using System.Web.Http;\n6 using System.Web.Mvc;\n7 using System.Web.Optimization;\n8 using System.Web.Routing;\n9 \n"
+        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Linq;\n3 using System.Reflection;\n4 using System.Web;\n5 using System.Web.Http;\n6 using System.Web.Mvc;\n7 using System.Web.Optimization;\n8 using System.Web.Routing;\n9 \n10 namespace NerdDinner\n11 {\n12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n"
         lineNumber: 6
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
@@ -2039,7 +1979,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "9 \n10 namespace NerdDinner\n11 {\n12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n17         protected void Application_Start()\n18         {\n"
+        codeSnip: "9 \n10 namespace NerdDinner\n11 {\n12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n21             WebApiConfig.Register(GlobalConfiguration.Configuration);\n22             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n23             RouteConfig.RegisterRoutes(RouteTable.Routes);\n24             BundleConfig.RegisterBundles(BundleTable.Bundles);\n25             AuthConfig.RegisterAuth();\n26 \n27             ModelBinderProviders.BinderProviders.Add(new EFModelBinderProvider());\n28 \n29             Version version = Assembly.GetExecutingAssembly().GetName().Version;\n"
         lineNumber: 19
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
@@ -2058,7 +1998,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n21             WebApiConfig.Register(GlobalConfiguration.Configuration);\n"
+        codeSnip: "12     // Note: For instructions on enabling IIS6 or IIS7 classic mode, \n13     // visit http://go.microsoft.com/?LinkId=9394801\n14 \n15     public class MvcApplication : System.Web.HttpApplication\n16     {\n17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n21             WebApiConfig.Register(GlobalConfiguration.Configuration);\n22             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n23             RouteConfig.RegisterRoutes(RouteTable.Routes);\n24             BundleConfig.RegisterBundles(BundleTable.Bundles);\n25             AuthConfig.RegisterAuth();\n26 \n27             ModelBinderProviders.BinderProviders.Add(new EFModelBinderProvider());\n28 \n29             Version version = Assembly.GetExecutingAssembly().GetName().Version;\n30             Application[\"Version\"] = string.Format(\"{0}.{1}\", version.Major, version.Minor);\n31         }\n32     }\n"
         lineNumber: 22
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
@@ -2077,7 +2017,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n21             WebApiConfig.Register(GlobalConfiguration.Configuration);\n22             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n23             RouteConfig.RegisterRoutes(RouteTable.Routes);\n24             BundleConfig.RegisterBundles(BundleTable.Bundles);\n25             AuthConfig.RegisterAuth();\n26 \n"
+        codeSnip: "17         protected void Application_Start()\n18         {\n19             AreaRegistration.RegisterAllAreas();\n20 \n21             WebApiConfig.Register(GlobalConfiguration.Configuration);\n22             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);\n23             RouteConfig.RegisterRoutes(RouteTable.Routes);\n24             BundleConfig.RegisterBundles(BundleTable.Bundles);\n25             AuthConfig.RegisterAuth();\n26 \n27             ModelBinderProviders.BinderProviders.Add(new EFModelBinderProvider());\n28 \n29             Version version = Assembly.GetExecutingAssembly().GetName().Version;\n30             Application[\"Version\"] = string.Format(\"{0}.{1}\", version.Major, version.Minor);\n31         }\n32     }\n33 }\n"
         lineNumber: 27
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
@@ -2096,7 +2036,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data.Spatial;\n3 using System.Linq;\n4 using System.Web;\n5 using System.Web.Mvc;\n6 \n7 namespace NerdDinner\n8 {\n9     public class DbGeographyModelBinder : DefaultModelBinder\n"
+        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.Data.Spatial;\n3 using System.Linq;\n4 using System.Web;\n5 using System.Web.Mvc;\n6 \n7 namespace NerdDinner\n8 {\n9     public class DbGeographyModelBinder : DefaultModelBinder\n10     {\n11         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)\n12         {\n13             var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);\n14             if (valueProviderResult != null)\n15             {\n"
         lineNumber: 5
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
@@ -2112,7 +2052,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.ComponentModel.DataAnnotations;\n3 using System.ComponentModel.DataAnnotations.Schema;\n4 using System.Data.Spatial;\n5 using System.Linq;\n6 using System.Web;\n7 using System.Web.Mvc;\n8 \n9 namespace NerdDinner.Models\n"
+        codeSnip: "0 \uFEFFusing System;\n1 using System.Collections.Generic;\n2 using System.ComponentModel.DataAnnotations;\n3 using System.ComponentModel.DataAnnotations.Schema;\n4 using System.Data.Spatial;\n5 using System.Linq;\n6 using System.Web;\n7 using System.Web.Mvc;\n8 \n9 namespace NerdDinner.Models\n10 {\n11     public class Dinner\n12     {\n13         [HiddenInput(DisplayValue = false)]\n14         public int DinnerID { get; set; }\n15 \n16         [Required(ErrorMessage = \"Title is required\")]\n17         [StringLength(50, ErrorMessage = \"Title may not be longer than 50 characters\")]\n"
         lineNumber: 7
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
@@ -2128,7 +2068,7 @@
           - Replace System.Web.Http with ASP.NET Core Web API
           - Update controller base classes and routing
           - Migrate to ASP.NET Core middleware pipeline
-        codeSnip: "16         [Required(ErrorMessage = \"Title is required\")]\n17         [StringLength(50, ErrorMessage = \"Title may not be longer than 50 characters\")]\n18         public string Title { get; set; }\n19 \n20         [Required(ErrorMessage = \"Event Date is required\")]\n21         [Display(Name = \"Event Date\")]\n22         public DateTime EventDate { get; set; }\n23 \n24         [Required(ErrorMessage = \"Description is required\")]\n25         [StringLength(256, ErrorMessage = \"Description may not be longer than 256 characters\")]\n"
+        codeSnip: "16         [Required(ErrorMessage = \"Title is required\")]\n17         [StringLength(50, ErrorMessage = \"Title may not be longer than 50 characters\")]\n18         public string Title { get; set; }\n19 \n20         [Required(ErrorMessage = \"Event Date is required\")]\n21         [Display(Name = \"Event Date\")]\n22         public DateTime EventDate { get; set; }\n23 \n24         [Required(ErrorMessage = \"Description is required\")]\n25         [StringLength(256, ErrorMessage = \"Description may not be longer than 256 characters\")]\n26         [DataType(DataType.MultilineText)]\n27         public string Description { get; set; }\n28 \n29         [StringLength(20, ErrorMessage = \"Hosted By name may not be longer than 20 characters\")]\n30         [Display(Name = \"Host's Name\")]\n31         public string HostedBy { get; set; }\n32 \n33         [Required(ErrorMessage = \"Contact info is required\")]\n34         [StringLength(20, ErrorMessage = \"Contact info may not be longer than 20 characters\")]\n35         [Display(Name = \"Contact Info\")]\n36         public string ContactPhone { get; set; }\n"
         lineNumber: 26
         variables:
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
