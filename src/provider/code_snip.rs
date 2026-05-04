@@ -76,11 +76,9 @@ impl ProviderCodeLocationService for CSharpProvider {
         let file = file.unwrap();
         let file = BufReader::new(file);
 
-        let mut skip_lines: usize = 0;
-        if start_position.line as usize >= self.context_lines {
-            skip_lines = start_position.line as usize - self.context_lines;
-        }
-        let take: usize = (end_position.line - start_position.line) as usize + self.context_lines;
+        let context_lines = self.context_lines;
+        let skip_lines = (start_position.line as usize).saturating_sub(context_lines);
+        let take = (end_position.line as usize + context_lines) - skip_lines + 1;
         let code_snip_lines: String = file
             .lines()
             .skip(skip_lines)
