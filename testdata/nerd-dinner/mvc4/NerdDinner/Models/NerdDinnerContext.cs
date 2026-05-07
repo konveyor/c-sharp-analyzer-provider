@@ -1,4 +1,4 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace NerdDinner.Models
 {
@@ -13,7 +13,7 @@ namespace NerdDinner.Models
         // 
         // System.Data.Entity.Database.SetInitializer(new System.Data.Entity.DropCreateDatabaseIfModelChanges<NerdDinner.Models.NerdDinnerContext>());
 
-        public NerdDinnerContext() : base("name=NerdDinnerContext")
+        public NerdDinnerContext(DbContextOptions<NerdDinnerContext> options) : base(options)
         {
         }
 

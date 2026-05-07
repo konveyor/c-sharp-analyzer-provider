@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Spatial;
+using NetTopologySuite.Geometries;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace NerdDinner.Models
 {
@@ -45,7 +45,7 @@ namespace NerdDinner.Models
         public string Country { get; set; }
 
         [Display(Name = "Location")]
-        public DbGeography Location { get; set; }
+        public Point Location { get; set; }
 
         public virtual ICollection<RSVP> RSVPs { get; set; }
 
@@ -78,7 +78,7 @@ namespace NerdDinner.Models
     }
     public class LocationDetail
     {
-        public DbGeography Location;
+        public Point Location;
         public int Id;
         public string Title;
         public string Address;
