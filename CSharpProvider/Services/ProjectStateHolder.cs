@@ -9,12 +9,14 @@ public class ProjectStateHolder
 
     public ProjectState? Get()
     {
-        lock (_lock) { return _state; }
+        lock (_lock)
+        { return _state; }
     }
 
     public void Set(ProjectState? state)
     {
-        lock (_lock) { _state = state; }
+        lock (_lock)
+        { _state = state; }
     }
 
     public void Update(Func<ProjectState, ProjectState> updater)

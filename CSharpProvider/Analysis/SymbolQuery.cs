@@ -1,8 +1,10 @@
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Provider;
 
 namespace CSharpProvider.Analysis;
 
@@ -60,7 +62,8 @@ public static class SymbolQuery
                 .Select(e => e.GetString()!)
                 .Where(s => !string.IsNullOrEmpty(s))
                 .ToList();
-            if (filePaths.Count == 0) filePaths = null;
+            if (filePaths.Count == 0)
+                filePaths = null;
         }
 
         return new QueryCondition(new Regex(pattern), location, filePaths);
@@ -73,7 +76,8 @@ public static class SymbolQuery
 
         foreach (var tree in compilation.SyntaxTrees)
         {
-            if (string.IsNullOrEmpty(tree.FilePath)) continue;
+            if (string.IsNullOrEmpty(tree.FilePath))
+                continue;
 
             if (query.FilePaths != null && !query.FilePaths.Any(fp =>
                 tree.FilePath.Contains(fp, StringComparison.OrdinalIgnoreCase)))
@@ -114,7 +118,8 @@ public static class SymbolQuery
             foreach (var u in node.Usings)
             {
                 var ns = u.Name?.ToString();
-                if (ns != null) _usingNamespaces.Add(ns);
+                if (ns != null)
+                    _usingNamespaces.Add(ns);
             }
             base.VisitCompilationUnit(node);
         }
@@ -188,9 +193,11 @@ public static class SymbolQuery
             MemberAccessExpressionSyntax node, ISymbol symbol, bool isInvocation)
         {
             var fqdn = GetFqdn(symbol);
-            if (!_query.Pattern.IsMatch(fqdn)) return;
+            if (!_query.Pattern.IsMatch(fqdn))
+                return;
 
-            if (!MatchesLocationType(symbol)) return;
+            if (!MatchesLocationType(symbol))
+                return;
 
             string syntaxType;
             string? fqdnNs = null, fqdnClass = null, fqdnMethod = null, fqdnField = null;
@@ -253,7 +260,8 @@ public static class SymbolQuery
                 {
                     var syntaxType = isInvocation ? "method_reference" : "field_reference";
 
-                    if (!MatchesLocationTypeForSyntactic(syntaxType)) continue;
+                    if (!MatchesLocationTypeForSyntactic(syntaxType))
+                        continue;
 
                     var shortSymbol = $"{exprStr}.{nameStr}";
                     AddResult(node, shortSymbol, syntaxType,
@@ -328,5 +336,53 @@ public static class SymbolQuery
 
             return string.Join(".", parts);
         }
+    }
+
+    public static List<QueryResult> Deduplicate(List<QueryResult> results)
+    {
+        return results
+            .GroupBy(r => (r.FileUri, r.StartLine))
+            .Select(g => g
+                .OrderBy(r => (r.EndLine - r.StartLine) * 10000 + (r.EndChar - r.StartChar))
+                .First())
+            .ToList();
+    }
+
+    public static List<IncidentContext> ToIncidentContexts(List<QueryResult> results)
+    {
+        return results.Select(r =>
+        {
+            var variables = new Struct();
+            variables.Fields["file"] = Value.ForString(r.FileUri);
+            variables.Fields["symbol"] = Value.ForString(r.Symbol);
+            variables.Fields["syntax_type"] = Value.ForString(r.SyntaxType);
+
+            if (r.FqdnNamespace != null)
+                variables.Fields["fqdn_namespace"] = Value.ForString(r.FqdnNamespace);
+            if (r.FqdnClass != null)
+                variables.Fields["fqdn_class"] = Value.ForString(r.FqdnClass);
+            if (r.FqdnMethod != null)
+                variables.Fields["fqdn_method"] = Value.ForString(r.FqdnMethod);
+            if (r.FqdnField != null)
+                variables.Fields["fqdn_field"] = Value.ForString(r.FqdnField);
+
+            var startPos = new Position { Line = r.StartLine };
+            if (r.StartChar > 0)
+                startPos.Character = r.StartChar;
+
+            var endPos = new Position { Line = r.EndLine, Character = r.EndChar };
+
+            return new IncidentContext
+            {
+                FileURI = r.FileUri,
+                CodeLocation = new Provider.Location
+                {
+                    StartPosition = startPos,
+                    EndPosition = endPos,
+                },
+                LineNumber = r.StartLine,
+                Variables = variables,
+            };
+        }).ToList();
     }
 }

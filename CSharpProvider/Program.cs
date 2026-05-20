@@ -3,65 +3,90 @@ using System.Net;
 using CSharpProvider.Services;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
-var portOption = new Option<int>("--port", () => 14651, "TCP port for gRPC");
-var socketOption = new Option<string?>("--socket", "Unix socket path");
-var nameOption = new Option<string>("--name", () => "c-sharp", "Provider name");
-var contextLinesOption = new Option<int>("--context-lines", () => 10, "Context lines for code snippets");
-var logFileOption = new Option<string?>("--log-file", "Log file path");
+namespace CSharpProvider;
 
-var rootCommand = new RootCommand("C# Analyzer Provider (Roslyn)")
+public class Program
 {
-    portOption, socketOption, nameOption, contextLinesOption, logFileOption
-};
-
-rootCommand.SetHandler(async (int port, string? socket, string name, int contextLines, string? logFile) =>
-{
-    var builder = WebApplication.CreateBuilder();
-
-    if (logFile != null)
+    public static async Task<int> Main(string[] args)
     {
-        builder.Logging.AddFile(logFile);
+        var portOption = new Option<int>("--port", () => 14651, "TCP port for gRPC");
+        var socketOption = new Option<string?>("--socket", "Unix socket path");
+        var nameOption = new Option<string>("--name", () => "c-sharp", "Provider name");
+        var contextLinesOption = new Option<int>("--context-lines", () => 10, "Context lines for code snippets");
+        var logFileOption = new Option<string?>("--log-file", "Log file path");
+
+        var rootCommand = new RootCommand("C# Analyzer Provider (Roslyn)")
+        {
+            portOption, socketOption, nameOption, contextLinesOption, logFileOption
+        };
+
+        rootCommand.SetHandler(RunServer, portOption, socketOption, nameOption, contextLinesOption, logFileOption);
+
+        return await rootCommand.InvokeAsync(args);
     }
 
-    builder.WebHost.ConfigureKestrel(options =>
+    private static async Task RunServer(int port, string? socket, string name, int contextLines, string? logFile)
     {
-        if (socket != null)
+        // Using Grpc.AspNetCore so we get: 
+        // - Kestrel, an HTTP/2 server
+        // - Built-in dependency injection
+        // - Middleware pipeline for logging, error handling, etc.
+
+        // ASP.NET Setup Step 1 - DI container setup. "Here are the objects that
+        // exist and how to create them."
+
+        var builder = WebApplication.CreateBuilder();
+
+        if (logFile != null)
         {
-            options.ListenUnixSocket(socket, listenOptions =>
-            {
-                listenOptions.Protocols = HttpProtocols.Http2;
-            });
+            builder.Logging.AddFile(logFile);
         }
-        else
+
+        builder.WebHost.ConfigureKestrel(options =>
         {
-            options.Listen(IPAddress.Any, port, listenOptions =>
+            static void configure(ListenOptions listenOptions) => listenOptions.Protocols = HttpProtocols.Http2;
+
+            if (socket != null)
             {
-                listenOptions.Protocols = HttpProtocols.Http2;
-            });
-        }
-    });
+                options.ListenUnixSocket(socket, configure);
+            }
+            else
+            {
+                options.Listen(IPAddress.Any, port, configure);
+            }
+        });
 
-    builder.Services.AddGrpc();
-    builder.Services.AddGrpcReflection();
-    builder.Services.AddSingleton(new ProviderConfig(name, contextLines));
-    builder.Services.AddSingleton<ProjectStateHolder>();
+        builder.Services.AddGrpc();
+        // Lets you query the server to discover what services and methods it
+        // exposes at runtime, without knowing the proto file.
+        builder.Services.AddGrpcReflection();
+        // Every gRPC request is handled separately, so we need some singletons
+        // to hold shared state and configuration.
+        builder.Services.AddSingleton(new ProviderConfig(name, contextLines));
+        builder.Services.AddSingleton<ProjectStateHolder>();
 
-    var app = builder.Build();
+        // ASP.NET Setup Step 2 - Middleware pipeline setup. "When a request
+        // arrives at this path, send it here."
 
-    app.MapGrpcService<ProviderService>();
-    app.MapGrpcService<CodeLocationService>();
-    app.MapGrpcReflectionService();
+        var app = builder.Build();
 
-    Console.WriteLine($"C# Provider '{name}' listening on {(socket != null ? $"socket {socket}" : $"port {port}")}");
-    await app.RunAsync();
+        // These services map to the gRPC services defined in provider.proto.
+        app.MapGrpcService<ProviderService>();
+        app.MapGrpcService<CodeLocationService>();
+        // For runtime service discovery.
+        app.MapGrpcReflectionService(); 
 
-}, portOption, socketOption, nameOption, contextLinesOption, logFileOption);
-
-return await rootCommand.InvokeAsync(args);
+        Console.WriteLine($"C# Provider '{name}' listening on {(socket != null ? $"socket {socket}" : $"port {port}")}");
+        
+        await app.RunAsync();
+    }
+}
 
 public record ProviderConfig(string Name, int ContextLines);
 
-// Simple file logging provider
+// TODO: Switch to Serilog
+
+// Extension method to add our custom file logger to the logging pipeline.
 public static class FileLoggerExtensions
 {
     public static ILoggingBuilder AddFile(this ILoggingBuilder builder, string path)
@@ -71,6 +96,8 @@ public static class FileLoggerExtensions
     }
 }
 
+// A provider that creates file loggers. Used with
+// builder.Logging.AddProvider(...).
 public class FileLoggerProvider : ILoggerProvider
 {
     private readonly string _path;
@@ -86,6 +113,8 @@ public class FileLoggerProvider : ILoggerProvider
     public void Dispose() => _writer.Dispose();
 }
 
+// The actual logger that writes log messages to the file. Created by the
+// provider for each category.
 public class FileLogger : ILogger
 {
     private readonly StreamWriter _writer;
@@ -102,8 +131,10 @@ public class FileLogger : ILogger
 
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
-        if (!IsEnabled(logLevel)) return;
+        if (!IsEnabled(logLevel))
+            return;
         _writer.WriteLine($"[{DateTime.UtcNow:o}] [{logLevel}] [{_category}] {formatter(state, exception)}");
-        if (exception != null) _writer.WriteLine(exception.ToString());
+        if (exception != null)
+            _writer.WriteLine(exception.ToString());
     }
 }

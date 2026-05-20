@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Only generate server-side stubs from the protobuf -->
     <Protobuf Include="Protos/provider.proto" GrpcServices="Server" />
   </ItemGroup>
 

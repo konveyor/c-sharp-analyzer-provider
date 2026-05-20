@@ -1,7 +1,7 @@
+using Microsoft.Build.Locator;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.MSBuild;
-using Microsoft.Build.Locator;
 
 namespace CSharpProvider.Analysis;
 
@@ -18,7 +18,16 @@ public class ProjectLoader
 
     public async Task<CSharpCompilation> LoadAsync(string location, CancellationToken ct = default)
     {
-        // Mode A: try MSBuildWorkspace for SDK-style projects
+        var msbuildResult = await TryLoadViaMSBuild(location, ct);
+        if (msbuildResult != null)
+            return msbuildResult;
+
+        _logger.LogInformation("Using ad-hoc compilation for {Location}", location);
+        return LoadAdHoc(location);
+    }
+
+    private async Task<CSharpCompilation?> TryLoadViaMSBuild(string location, CancellationToken ct)
+    {
         var slnFiles = Directory.GetFiles(location, "*.sln", SearchOption.TopDirectoryOnly);
         if (slnFiles.Length > 0)
         {
@@ -34,28 +43,23 @@ public class ProjectLoader
         }
 
         var csprojFiles = Directory.GetFiles(location, "*.csproj", SearchOption.AllDirectories);
-        if (csprojFiles.Length > 0)
+        foreach (var csproj in csprojFiles)
         {
-            foreach (var csproj in csprojFiles)
+            if (!IsSdkStyle(csproj))
+                continue;
+
+            try
             {
-                if (IsSdkStyle(csproj))
-                {
-                    try
-                    {
-                        _logger.LogInformation("Found SDK-style .csproj, attempting MSBuildWorkspace: {Csproj}", csproj);
-                        return await LoadViaMSBuildAsync(csproj, isSolution: false, ct);
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogWarning(ex, "MSBuildWorkspace failed for .csproj, falling back");
-                    }
-                }
+                _logger.LogInformation("Found SDK-style .csproj, attempting MSBuildWorkspace: {Csproj}", csproj);
+                return await LoadViaMSBuildAsync(csproj, isSolution: false, ct);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "MSBuildWorkspace failed for .csproj, falling back");
             }
         }
 
-        // Mode B: ad-hoc compilation from raw .cs files
-        _logger.LogInformation("Using ad-hoc compilation for {Location}", location);
-        return LoadAdHoc(location);
+        return null;
     }
 
     private async Task<CSharpCompilation> LoadViaMSBuildAsync(string path, bool isSolution, CancellationToken ct)
@@ -171,7 +175,8 @@ public class ProjectLoader
             {
                 var refDir = Directory.GetDirectories(Path.Combine(versions, "ref"))
                     .FirstOrDefault();
-                if (refDir != null) return refDir;
+                if (refDir != null)
+                    return refDir;
             }
         }
 

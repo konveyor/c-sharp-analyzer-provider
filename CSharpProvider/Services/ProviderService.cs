@@ -1,10 +1,12 @@
+using CSharpProvider.Analysis;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Provider;
-using CSharpProvider.Analysis;
 
 namespace CSharpProvider.Services;
 
+// Provider.ProviderService.ProviderServiceBase is the base class generated from
+// provider.proto.
 public class ProviderService : Provider.ProviderService.ProviderServiceBase
 {
     private readonly ProviderConfig _config;
@@ -84,8 +86,8 @@ public class ProviderService : Provider.ProviderService.ProviderServiceBase
         {
             var query = SymbolQuery.ParseCondition(request.ConditionInfo);
             var results = SymbolQuery.Execute(state.Compilation, state.ProjectPath, query);
-            var deduplicated = ResultBuilder.Deduplicate(results);
-            var incidents = ResultBuilder.ToIncidentContexts(deduplicated);
+            var deduplicated = SymbolQuery.Deduplicate(results);
+            var incidents = SymbolQuery.ToIncidentContexts(deduplicated);
 
             var evalResponse = new ProviderEvaluateResponse { Matched = incidents.Count > 0 };
             evalResponse.IncidentContexts.Add(incidents);

@@ -3,6 +3,8 @@ using Provider;
 
 namespace CSharpProvider.Services;
 
+// Provider.ProviderCodeLocationService.ProviderCodeLocationServiceBase is the
+// base class generated from provider.proto.
 public class CodeLocationService : ProviderCodeLocationService.ProviderCodeLocationServiceBase
 {
     private readonly ProviderConfig _config;
