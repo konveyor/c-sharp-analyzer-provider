@@ -129,6 +129,11 @@ public static class SymbolQuery
 
         public override void VisitMemberAccessExpression(MemberAccessExpressionSyntax node)
         {
+            if (node.Parent is InvocationExpressionSyntax invocation && invocation.Expression == node)
+            {
+                base.VisitMemberAccessExpression(node);
+                return;
+            }
             TryResolveAndMatch(node);
             base.VisitMemberAccessExpression(node);
         }
@@ -139,7 +144,7 @@ public static class SymbolQuery
             {
                 TryResolveAndMatch(memberAccess, isInvocation: true);
             }
-            // Don't call base — we handle the member access above
+            base.VisitInvocationExpression(node);
         }
 
         public override void VisitClassDeclaration(ClassDeclarationSyntax node)
@@ -157,8 +162,163 @@ public static class SymbolQuery
                             fqdnClass: symbol.Name);
                     }
                 }
+
+                if (node.BaseList != null)
+                {
+                    foreach (var baseType in node.BaseList.Types)
+                        TryMatchType(baseType.Type, baseType, "type_reference");
+                }
             }
             base.VisitClassDeclaration(node);
+        }
+
+        public override void VisitStructDeclaration(StructDeclarationSyntax node)
+        {
+            if (node.BaseList != null)
+            {
+                foreach (var baseType in node.BaseList.Types)
+                    TryMatchType(baseType.Type, baseType, "type_reference");
+            }
+            base.VisitStructDeclaration(node);
+        }
+
+        public override void VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
+        {
+            if (node.BaseList != null)
+            {
+                foreach (var baseType in node.BaseList.Types)
+                    TryMatchType(baseType.Type, baseType, "type_reference");
+            }
+            base.VisitInterfaceDeclaration(node);
+        }
+
+        public override void VisitObjectCreationExpression(ObjectCreationExpressionSyntax node)
+        {
+            TryMatchType(node.Type, node, "object_creation");
+            base.VisitObjectCreationExpression(node);
+        }
+
+        public override void VisitVariableDeclaration(VariableDeclarationSyntax node)
+        {
+            if (node.Type is not PredefinedTypeSyntax)
+                TryMatchType(node.Type, node, "type_reference");
+            base.VisitVariableDeclaration(node);
+        }
+
+        public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
+        {
+            TryMatchType(node.Type, node, "type_reference");
+            base.VisitPropertyDeclaration(node);
+        }
+
+        public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
+        {
+            TryMatchType(node.Declaration.Type, node, "type_reference");
+            base.VisitFieldDeclaration(node);
+        }
+
+        public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
+        {
+            TryMatchType(node.ReturnType, node, "type_reference");
+            base.VisitMethodDeclaration(node);
+        }
+
+        public override void VisitParameter(ParameterSyntax node)
+        {
+            TryMatchType(node.Type, node, "type_reference");
+            base.VisitParameter(node);
+        }
+
+        public override void VisitCastExpression(CastExpressionSyntax node)
+        {
+            TryMatchType(node.Type, node, "type_reference");
+            base.VisitCastExpression(node);
+        }
+
+        public override void VisitIsPatternExpression(IsPatternExpressionSyntax node)
+        {
+            if (node.Pattern is DeclarationPatternSyntax declPattern)
+                TryMatchType(declPattern.Type, node, "type_reference");
+            else if (node.Pattern is TypePatternSyntax typePattern)
+                TryMatchType(typePattern.Type, node, "type_reference");
+            base.VisitIsPatternExpression(node);
+        }
+
+        public override void VisitTypeOfExpression(TypeOfExpressionSyntax node)
+        {
+            TryMatchType(node.Type, node, "type_reference");
+            base.VisitTypeOfExpression(node);
+        }
+
+        public override void VisitAttribute(AttributeSyntax node)
+        {
+            var symbol = _model.GetSymbolInfo(node).Symbol;
+            if (symbol != null)
+            {
+                var containingType = symbol.ContainingType;
+                if (containingType != null)
+                {
+                    var fqdn = GetTypeFqdn(containingType);
+                    if (_query.Pattern.IsMatch(fqdn))
+                    {
+                        AddResult(node, containingType.Name, "annotation",
+                            fqdnNamespace: containingType.ContainingNamespace?.ToDisplayString(),
+                            fqdnClass: containingType.Name);
+                    }
+                }
+            }
+            base.VisitAttribute(node);
+        }
+
+        public override void VisitIdentifierName(IdentifierNameSyntax node)
+        {
+            if (node.Parent is MemberAccessExpressionSyntax ma && ma.Name == node)
+            {
+                base.VisitIdentifierName(node);
+                return;
+            }
+
+            var symbol = _model.GetSymbolInfo(node).Symbol;
+            if (symbol is null or ILocalSymbol or IParameterSymbol or INamespaceSymbol or INamedTypeSymbol
+                || symbol.ContainingType == null)
+            {
+                base.VisitIdentifierName(node);
+                return;
+            }
+
+            var fqdn = GetFqdn(symbol);
+            if (_query.Pattern.IsMatch(fqdn) && MatchesLocationType(symbol))
+            {
+                string syntaxType = symbol switch
+                {
+                    IMethodSymbol => "method_reference",
+                    _ => "field_reference",
+                };
+                AddResult(node, symbol.Name, syntaxType,
+                    fqdnNamespace: symbol.ContainingNamespace?.ToDisplayString(),
+                    fqdnClass: symbol.ContainingType.Name,
+                    fqdnMethod: symbol is IMethodSymbol ? symbol.Name : null,
+                    fqdnField: symbol is IFieldSymbol or IPropertySymbol ? symbol.Name : null);
+            }
+            base.VisitIdentifierName(node);
+        }
+
+        public override void VisitArgument(ArgumentSyntax node)
+        {
+            TryMatchExpressionType(node.Expression, node, "type_usage");
+            base.VisitArgument(node);
+        }
+
+        public override void VisitReturnStatement(ReturnStatementSyntax node)
+        {
+            TryMatchExpressionType(node.Expression, node, "type_usage");
+            base.VisitReturnStatement(node);
+        }
+
+        public override void VisitAssignmentExpression(AssignmentExpressionSyntax node)
+        {
+            TryMatchExpressionType(node.Right, node, "type_usage");
+            base.VisitAssignmentExpression(node);
         }
 
         private void TryResolveAndMatch(MemberAccessExpressionSyntax node, bool isInvocation = false)
@@ -292,6 +452,85 @@ public static class SymbolQuery
                 fqdnNs, fqdnClass, fqdnMethod, fqdnField);
         }
 
+        private void TryMatchType(TypeSyntax? typeSyntax, SyntaxNode reportNode, string syntaxTypeLabel)
+        {
+            if (typeSyntax == null)
+                return;
+
+            var typeInfo = _model.GetTypeInfo(typeSyntax);
+            if (typeInfo.Type is not INamedTypeSymbol namedType)
+                return;
+
+            var fqdn = GetTypeFqdn(namedType);
+            if (_query.Pattern.IsMatch(fqdn))
+            {
+                AddResult(reportNode, namedType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat),
+                    syntaxTypeLabel,
+                    fqdnNamespace: namedType.ContainingNamespace?.ToDisplayString(),
+                    fqdnClass: namedType.Name);
+            }
+
+            foreach (var typeArg in namedType.TypeArguments)
+            {
+                if (typeArg is INamedTypeSymbol argType)
+                {
+                    var argFqdn = GetTypeFqdn(argType);
+                    if (_query.Pattern.IsMatch(argFqdn))
+                    {
+                        AddResult(reportNode, argType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat),
+                            syntaxTypeLabel,
+                            fqdnNamespace: argType.ContainingNamespace?.ToDisplayString(),
+                            fqdnClass: argType.Name);
+                    }
+                }
+            }
+        }
+
+        private void TryMatchExpressionType(ExpressionSyntax? expr, SyntaxNode reportNode, string syntaxTypeLabel)
+        {
+            if (expr == null)
+                return;
+
+            var typeInfo = _model.GetTypeInfo(expr);
+            var type = typeInfo.Type;
+            if (type == null || type.TypeKind == TypeKind.Error)
+                return;
+
+            var current = type;
+            while (current != null)
+            {
+                var fqdn = GetTypeFqdn(current);
+                if (_query.Pattern.IsMatch(fqdn))
+                {
+                    AddResult(reportNode, expr.ToString(), syntaxTypeLabel,
+                        fqdnNamespace: current.ContainingNamespace?.ToDisplayString(),
+                        fqdnClass: current.Name);
+                    return;
+                }
+                current = current.BaseType;
+            }
+
+            foreach (var iface in type.AllInterfaces)
+            {
+                var fqdn = GetTypeFqdn(iface);
+                if (_query.Pattern.IsMatch(fqdn))
+                {
+                    AddResult(reportNode, expr.ToString(), syntaxTypeLabel,
+                        fqdnNamespace: iface.ContainingNamespace?.ToDisplayString(),
+                        fqdnClass: iface.Name);
+                    return;
+                }
+            }
+        }
+
+        private static string GetTypeFqdn(ITypeSymbol type)
+        {
+            var ns = type.ContainingNamespace;
+            if (ns != null && !ns.IsGlobalNamespace)
+                return $"{ns.ToDisplayString()}.{type.Name}";
+            return type.Name;
+        }
+
         private bool MatchesLocationType(ISymbol symbol)
         {
             return _query.Location switch
@@ -347,10 +586,8 @@ public static class SymbolQuery
     public static List<QueryResult> Deduplicate(List<QueryResult> results)
     {
         return results
-            .GroupBy(r => (r.FileUri, r.StartLine))
-            .Select(g => g
-                .OrderBy(r => (r.EndLine - r.StartLine) * 10000 + (r.EndChar - r.StartChar))
-                .First())
+            .GroupBy(r => (r.FileUri, r.StartLine, r.StartChar, r.EndLine, r.EndChar))
+            .Select(g => g.First())
             .ToList();
     }
 

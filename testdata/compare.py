@@ -41,16 +41,16 @@ RUST_PATTERNS = {
 
 CSHARP_PATTERNS = {
     "nerd-dinner": [
-        r"System\.Web\.Mvc.*",
-        r"System\.Web\.Http.*",
-        r"System\.Data\.Entity.*",
-        r"NerdDinner\..*",
-        "System.Web.Mvc.Controller",
+        r"^System\.Web\.Mvc(\..*)?$",
+        r"^System\.Web\.Http(\..*)?$",
+        r"^System\.Data\.Entity(\..*)?$",
+        r"^NerdDinner\..*",
+        r"^System\.Web\.Mvc\.Controller$",
     ],
     "net8-sample": [
-        r"System\..*",
-        r"Net8Sample\..*",
-        "System.Console.WriteLine",
+        r"^System(\..*)?$",
+        r"^Net8Sample\..*",
+        r"^System\.Console\.WriteLine$",
     ],
 }
 

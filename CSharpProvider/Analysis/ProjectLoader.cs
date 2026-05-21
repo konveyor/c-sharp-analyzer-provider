@@ -98,6 +98,29 @@ public class ProjectLoader
                 "MSBuild produced a compilation with no references — framework assemblies are missing");
         }
 
+        var diagnostics = compilation.GetDiagnostics();
+        var errors = diagnostics.Where(d => d.Severity == DiagnosticSeverity.Error).ToList();
+        _logger.LogInformation("MSBuild compilation has {Count} references, {ErrorCount} compilation-level errors",
+            compilation.References.Count(), errors.Count);
+        var treeErrors = compilation.SyntaxTrees.Sum(t =>
+            compilation.GetSemanticModel(t).GetDiagnostics().Count(d =>
+                d.Severity == DiagnosticSeverity.Error));
+        _logger.LogInformation("Total semantic errors across all trees: {Count}", treeErrors);
+        if (errors.Count > 0)
+        {
+            var sample = errors.Take(5).Select(d => $"{d.Id}: {d.GetMessage()}");
+            _logger.LogWarning("Sample errors: {Errors}", string.Join("; ", sample));
+        }
+        var unresolvedTypes = errors.Count(d => d.Id == "CS0246" || d.Id == "CS0234");
+        if (unresolvedTypes > 0)
+        {
+            _logger.LogWarning(
+                "MSBuild compilation has {Count} unresolved type/namespace errors, falling back to ad-hoc",
+                unresolvedTypes);
+            throw new InvalidOperationException(
+                $"MSBuild compilation has {unresolvedTypes} unresolved type errors — NuGet packages likely missing");
+        }
+
         return compilation;
     }
 
