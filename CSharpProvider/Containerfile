@@ -1,0 +1,27 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS builder
+
+WORKDIR /build
+COPY CSharpProvider.csproj .
+RUN dotnet restore
+
+COPY . .
+RUN dotnet publish -c Release -o /app
+
+FROM registry.access.redhat.com/ubi10/ubi-minimal
+
+RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc && \
+    curl -sL https://packages.microsoft.com/config/rhel/10/prod.repo -o /etc/yum.repos.d/microsoft-prod.repo && \
+    microdnf install -y aspnetcore-runtime-9.0 && \
+    microdnf clean all && \
+    rm -rf /var/cache/dnf
+
+RUN chgrp -R 0 /home && chmod -R g=u /home
+USER 1001
+ENV HOME=/home
+
+WORKDIR /analyzer-lsp
+RUN chgrp -R 0 /analyzer-lsp && chmod -R g=u /analyzer-lsp
+
+COPY --from=builder /app /usr/local/lib/csharp-provider
+ENTRYPOINT ["dotnet", "/usr/local/lib/csharp-provider/CSharpProvider.dll"]
+CMD ["--name", "c-sharp", "--port", "14651"]
