@@ -1,5 +1,6 @@
 using System.CommandLine;
 using System.Net;
+using CSharpProvider.Analysis;
 using CSharpProvider.Services;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
@@ -63,6 +64,7 @@ public class Program
         // Every gRPC request is handled separately, so we need some singletons
         // to hold shared state and configuration.
         builder.Services.AddSingleton(new ProviderConfig(name, contextLines));
+        builder.Services.AddSingleton<PackageResolver>();
         builder.Services.AddSingleton<ProjectStateHolder>();
 
         // ASP.NET Setup Step 2 - Middleware pipeline setup. "When a request

@@ -11,12 +11,16 @@ public class ProviderService : Provider.ProviderService.ProviderServiceBase
 {
     private readonly ProviderConfig _config;
     private readonly ILogger<ProviderService> _logger;
+    private readonly PackageResolver _packageResolver;
     private readonly ProjectStateHolder _stateHolder;
 
-    public ProviderService(ProviderConfig config, ILogger<ProviderService> logger, ProjectStateHolder stateHolder)
+    public ProviderService(
+        ProviderConfig config, ILogger<ProviderService> logger,
+        PackageResolver packageResolver, ProjectStateHolder stateHolder)
     {
         _config = config;
         _logger = logger;
+        _packageResolver = packageResolver;
         _stateHolder = stateHolder;
     }
 
@@ -34,7 +38,7 @@ public class ProviderService : Provider.ProviderService.ProviderServiceBase
 
         try
         {
-            var loader = new ProjectLoader(_logger);
+            var loader = new ProjectLoader(_logger, _packageResolver);
             var compilation = await loader.LoadAsync(request.Location, context.CancellationToken);
 
             _stateHolder.Set(new ProjectState(compilation, request.Location));

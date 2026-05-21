@@ -99,7 +99,6 @@ public static class SymbolQuery
         private readonly string _projectPath;
         private readonly QueryCondition _query;
         private readonly List<QueryResult> _results;
-        private readonly List<string> _usingNamespaces = new();
 
         public SymbolWalker(
             SemanticModel model, SyntaxTree tree, string projectPath,
@@ -110,18 +109,6 @@ public static class SymbolQuery
             _projectPath = projectPath;
             _query = query;
             _results = results;
-        }
-
-        public override void VisitCompilationUnit(CompilationUnitSyntax node)
-        {
-            // Collect using directives first for syntactic fallback
-            foreach (var u in node.Usings)
-            {
-                var ns = u.Name?.ToString();
-                if (ns != null)
-                    _usingNamespaces.Add(ns);
-            }
-            base.VisitCompilationUnit(node);
         }
 
         public override void VisitUsingDirective(UsingDirectiveSyntax node)
@@ -183,10 +170,6 @@ public static class SymbolQuery
             {
                 MatchResolvedSymbol(node, symbol, isInvocation);
             }
-            else
-            {
-                MatchSyntactically(node, isInvocation);
-            }
         }
 
         private void MatchResolvedSymbol(
@@ -245,35 +228,6 @@ public static class SymbolQuery
                 fqdnNs, fqdnClass, fqdnMethod, fqdnField);
         }
 
-        private void MatchSyntactically(MemberAccessExpressionSyntax node, bool isInvocation)
-        {
-            // Syntactic fallback: try to resolve using using-directives
-            var exprStr = node.Expression.ToString();
-            var nameStr = node.Name.ToString();
-
-            // Try each using namespace as a prefix
-            foreach (var ns in _usingNamespaces)
-            {
-                // Check if the expression matches a known type in this namespace
-                var candidateFqdn = $"{ns}.{exprStr}.{nameStr}";
-                if (_query.Pattern.IsMatch(candidateFqdn) || _query.Pattern.IsMatch($"{ns}.{exprStr}"))
-                {
-                    var syntaxType = isInvocation ? "method_reference" : "field_reference";
-
-                    if (!MatchesLocationTypeForSyntactic(syntaxType))
-                        continue;
-
-                    var shortSymbol = $"{exprStr}.{nameStr}";
-                    AddResult(node, shortSymbol, syntaxType,
-                        fqdnNamespace: ns,
-                        fqdnClass: exprStr,
-                        fqdnField: isInvocation ? null : nameStr,
-                        fqdnMethod: isInvocation ? nameStr : null);
-                    return; // Take first match
-                }
-            }
-        }
-
         private bool MatchesLocationType(ISymbol symbol)
         {
             return _query.Location switch
@@ -282,18 +236,6 @@ public static class SymbolQuery
                 LocationType.Method => symbol is IMethodSymbol,
                 LocationType.Field => symbol is IFieldSymbol or IPropertySymbol,
                 LocationType.Class => symbol is INamedTypeSymbol,
-                _ => true,
-            };
-        }
-
-        private bool MatchesLocationTypeForSyntactic(string syntaxType)
-        {
-            return _query.Location switch
-            {
-                LocationType.All => true,
-                LocationType.Method => syntaxType == "method_reference",
-                LocationType.Field => syntaxType == "field_reference",
-                LocationType.Class => syntaxType == "class_def",
                 _ => true,
             };
         }
