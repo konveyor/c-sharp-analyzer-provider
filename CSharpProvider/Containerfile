@@ -11,13 +11,14 @@ FROM registry.access.redhat.com/ubi10/ubi-minimal
 
 RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc && \
     curl -sL https://packages.microsoft.com/config/rhel/10/prod.repo -o /etc/yum.repos.d/microsoft-prod.repo && \
-    microdnf install -y aspnetcore-runtime-9.0 && \
+    microdnf install -y dotnet-sdk-9.0 && \
     microdnf clean all && \
     rm -rf /var/cache/dnf
 
 RUN chgrp -R 0 /home && chmod -R g=u /home
 USER 1001
 ENV HOME=/home
+ENV DOTNET_ROOT=/usr/lib64/dotnet
 
 WORKDIR /analyzer-lsp
 RUN chgrp -R 0 /analyzer-lsp && chmod -R g=u /analyzer-lsp

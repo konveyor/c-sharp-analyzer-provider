@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "IlH0h76l4z8=",
+  "success": true,
+  "projectFilePath": "/home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/net8-with-deps/Net8WithDeps.csproj",
+  "expectedPackageFiles": [
+    "/home/jonah/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/home/jonah/.nuget/packages/microsoft.netcore.app.ref/8.0.20/microsoft.netcore.app.ref.8.0.20.nupkg.sha512",
+    "/home/jonah/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.20/microsoft.aspnetcore.app.ref.8.0.20.nupkg.sha512",
+    "/home/jonah/.nuget/packages/microsoft.netcore.app.host.linux-x64/8.0.20/microsoft.netcore.app.host.linux-x64.8.0.20.nupkg.sha512"
+  ],
+  "logs": []
+}

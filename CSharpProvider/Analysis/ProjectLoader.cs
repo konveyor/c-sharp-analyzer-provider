@@ -66,8 +66,46 @@ public class ProjectLoader
         return null;
     }
 
+    // TODO: use the NuGet SDK (NuGet.Commands.RestoreRunner) instead of shelling out.
+    // The programmatic MSBuild restore via BuildManager hits SDK version mismatches
+    // because MSBuildLocator picks up a different MSBuild than the dotnet CLI uses.
+    private void RunDotnetRestore(string path)
+    {
+        _logger.LogInformation("Running dotnet restore on {Path}", path);
+        var process = new System.Diagnostics.Process
+        {
+            StartInfo = new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "dotnet",
+                ArgumentList = { "restore", path },
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+            }
+        };
+        process.Start();
+        process.StandardOutput.ReadToEnd();
+        var stderr = process.StandardError.ReadToEnd();
+        process.WaitForExit();
+        if (process.ExitCode != 0)
+        {
+            _logger.LogWarning("dotnet restore failed (exit {Code}): {Stderr}",
+                process.ExitCode, stderr.Length > 500 ? stderr[..500] : stderr);
+            throw new InvalidOperationException($"dotnet restore failed with exit code {process.ExitCode}");
+        }
+        _logger.LogInformation("dotnet restore succeeded for {Path}", path);
+    }
+
     private async Task<CSharpCompilation> LoadViaMSBuildAsync(string path, bool isSolution, CancellationToken ct)
     {
+        try
+        {
+            RunDotnetRestore(path);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning("dotnet restore failed, continuing anyway: {Message}", ex.Message);
+        }
         EnsureMSBuildRegistered();
 
         using var workspace = MSBuildWorkspace.Create();
