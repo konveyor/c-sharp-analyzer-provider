@@ -169,7 +169,71 @@ public static class SymbolQuery
             if (symbol != null)
             {
                 MatchResolvedSymbol(node, symbol, isInvocation);
+                return;
             }
+
+            TryMatchDynamic(node);
+        }
+
+        private void TryMatchDynamic(MemberAccessExpressionSyntax node)
+        {
+            var expr = node.Expression;
+            while (expr is MemberAccessExpressionSyntax nested)
+            {
+                var nestedSymbol = _model.GetSymbolInfo(nested).Symbol;
+                if (nestedSymbol != null)
+                {
+                    var typeInfo = _model.GetTypeInfo(nested);
+                    if (typeInfo.Type?.TypeKind == TypeKind.Dynamic)
+                    {
+                        MatchDynamicAccess(node, nestedSymbol);
+                    }
+                    return;
+                }
+                expr = nested.Expression;
+            }
+
+            var exprSymbol = _model.GetSymbolInfo(expr).Symbol;
+            if (exprSymbol == null)
+                return;
+
+            var exprType = _model.GetTypeInfo(expr);
+            if (exprType.Type?.TypeKind == TypeKind.Dynamic)
+            {
+                MatchDynamicAccess(node, exprSymbol);
+            }
+        }
+
+        private void MatchDynamicAccess(MemberAccessExpressionSyntax node, ISymbol resolvedSymbol)
+        {
+            var baseFqdn = GetFqdn(resolvedSymbol);
+            var dynamicSuffix = GetDynamicSuffix(node, resolvedSymbol);
+            var fqdn = string.IsNullOrEmpty(dynamicSuffix)
+                ? baseFqdn
+                : $"{baseFqdn}.{dynamicSuffix}";
+
+            if (!_query.Pattern.IsMatch(fqdn))
+                return;
+
+            if (!MatchesLocationType(resolvedSymbol))
+                return;
+
+            string? fqdnNs = resolvedSymbol.ContainingNamespace?.ToDisplayString();
+            string? fqdnClass = resolvedSymbol.ContainingType?.Name;
+
+            AddResult(node, node.ToString(), "field_reference",
+                fqdnNs, fqdnClass, fqdnField: resolvedSymbol.Name);
+        }
+
+        private static string GetDynamicSuffix(MemberAccessExpressionSyntax node, ISymbol resolvedSymbol)
+        {
+            var fullText = node.ToString();
+            var resolvedName = resolvedSymbol.Name;
+            var idx = fullText.IndexOf(resolvedName, StringComparison.Ordinal);
+            if (idx < 0)
+                return "";
+            var after = fullText[(idx + resolvedName.Length)..];
+            return after.TrimStart('.');
         }
 
         private void MatchResolvedSymbol(
