@@ -76,10 +76,10 @@ public class Program
         app.MapGrpcService<ProviderService>();
         app.MapGrpcService<CodeLocationService>();
         // For runtime service discovery.
-        app.MapGrpcReflectionService(); 
+        app.MapGrpcReflectionService();
 
         Console.WriteLine($"C# Provider '{name}' listening on {(socket != null ? $"socket {socket}" : $"port {port}")}");
-        
+
         await app.RunAsync();
     }
 }

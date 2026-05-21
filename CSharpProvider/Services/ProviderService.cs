@@ -15,8 +15,10 @@ public class ProviderService : Provider.ProviderService.ProviderServiceBase
     private readonly ProjectStateHolder _stateHolder;
 
     public ProviderService(
-        ProviderConfig config, ILogger<ProviderService> logger,
-        PackageResolver packageResolver, ProjectStateHolder stateHolder)
+        ProviderConfig config,
+        ILogger<ProviderService> logger,
+        PackageResolver packageResolver,
+        ProjectStateHolder stateHolder)
     {
         _config = config;
         _logger = logger;
@@ -24,14 +26,16 @@ public class ProviderService : Provider.ProviderService.ProviderServiceBase
         _stateHolder = stateHolder;
     }
 
-    public override Task<CapabilitiesResponse> Capabilities(Empty request, ServerCallContext context)
+    public override Task<CapabilitiesResponse> Capabilities(
+        Empty request, ServerCallContext context)
     {
         var response = new CapabilitiesResponse();
         response.Capabilities.Add(new Capability { Name = "referenced" });
         return Task.FromResult(response);
     }
 
-    public override async Task<InitResponse> Init(Config request, ServerCallContext context)
+    public override async Task<InitResponse> Init(
+        Config request, ServerCallContext context)
     {
         _logger.LogInformation("Init called with location={Location}, analysisMode={Mode}",
             request.Location, request.AnalysisMode);

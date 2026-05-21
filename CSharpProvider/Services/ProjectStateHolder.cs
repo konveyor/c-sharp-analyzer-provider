@@ -4,7 +4,7 @@ namespace CSharpProvider.Services;
 
 public class ProjectStateHolder
 {
-    private readonly object _lock = new();
+    private readonly Lock _lock = new();
     private ProjectState? _state;
 
     public ProjectState? Get()
