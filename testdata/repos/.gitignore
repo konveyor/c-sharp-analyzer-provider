@@ -5,9 +5,11 @@ wcf-webforms-net35/
 wcf-winforms-net40/
 config-codegen-net40/
 
-# Rust provider artifacts (paket, build output)
+# Build and restore artifacts
 **/bin/
 **/obj/
+**/packages/
+**/.vs/
 **/.paket/
 **/paket-files/
 **/paket.dependencies

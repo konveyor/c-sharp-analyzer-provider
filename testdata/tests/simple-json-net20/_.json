@@ -1,0 +1,11 @@
+{
+  "repo": {
+    "url": "https://github.com/facebook-csharp-sdk/simple-json",
+    "commit": "f739f0b2924bcfa33204e86b8b73aa98be68abac",
+    "path": "src/SimpleJson"
+  },
+  "steps": [
+    "init.json",
+    "system.json"
+  ]
+}

@@ -1,0 +1,256 @@
+{
+  "matched": true,
+  "incidentCount": 12,
+  "incidents": [
+    {
+      "fileURI": "client/App_Code/Global.asax.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 12,
+          "character": 6
+        },
+        "endPosition": {
+          "line": 12,
+          "character": 25
+        }
+      },
+      "LineNumber": "12",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "System.ServiceModel",
+        "syntax_type": "import"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/Global.asax.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 31,
+          "character": 20
+        },
+        "endPosition": {
+          "line": 31,
+          "character": 55
+        }
+      },
+      "LineNumber": "31",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "fqdn_class": "ClientBase",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "new WeatherServiceClient()",
+        "syntax_type": "type_usage"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/Global.asax.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 33,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 33,
+          "character": 30
+        }
+      },
+      "LineNumber": "33",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "fqdn_class": "ClientBase",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "client",
+        "syntax_type": "type_usage"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/Global.asax.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 40,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 40,
+          "character": 30
+        }
+      },
+      "LineNumber": "40",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "fqdn_class": "ClientBase",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "value",
+        "syntax_type": "type_usage"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 87,
+          "character": 90
+        },
+        "endPosition": {
+          "line": 87,
+          "character": 124
+        }
+      },
+      "LineNumber": "87",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "IClientChannel",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "IClientChannel",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 116,
+          "character": 48
+        },
+        "endPosition": {
+          "line": 116,
+          "character": 122
+        }
+      },
+      "LineNumber": "116",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "ClientBase",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "ClientBase<IWeatherService>",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 139,
+          "character": 70
+        },
+        "endPosition": {
+          "line": 139,
+          "character": 119
+        }
+      },
+      "LineNumber": "139",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "EndpointAddress",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "EndpointAddress",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 144,
+          "character": 36
+        },
+        "endPosition": {
+          "line": 144,
+          "character": 80
+        }
+      },
+      "LineNumber": "144",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "Binding",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "Binding",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 144,
+          "character": 82
+        },
+        "endPosition": {
+          "line": 144,
+          "character": 131
+        }
+      },
+      "LineNumber": "144",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "EndpointAddress",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "EndpointAddress",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 187,
+          "character": 24
+        },
+        "endPosition": {
+          "line": 187,
+          "character": 28
+        }
+      },
+      "LineNumber": "187",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "ClientBase",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "this",
+        "syntax_type": "type_usage"
+      }
+    },
+    {
+      "fileURI": "client/Default.aspx.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 26,
+          "character": 8
+        },
+        "endPosition": {
+          "line": 26,
+          "character": 35
+        }
+      },
+      "LineNumber": "26",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/Default.aspx.cs",
+        "fqdn_class": "ClientBase",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "Global.Client",
+        "syntax_type": "type_usage"
+      }
+    },
+    {
+      "fileURI": "service/service.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 5,
+          "character": 6
+        },
+        "endPosition": {
+          "line": 5,
+          "character": 25
+        }
+      },
+      "LineNumber": "5",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/service/service.cs",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "System.ServiceModel",
+        "syntax_type": "import"
+      }
+    }
+  ]
+}

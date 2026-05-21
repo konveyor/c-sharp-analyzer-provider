@@ -1,0 +1,12 @@
+{
+  "repo": {
+    "url": "https://github.com/dotnet/samples",
+    "commit": "c6eb3268ba912447e820ba78e3d35ee2c5d7e0b0",
+    "path": "framework/wcf/Scenario/DataBinding/WebForms/CS"
+  },
+  "steps": [
+    "init.json",
+    "system-servicemodel.json",
+    "system-web.json"
+  ]
+}

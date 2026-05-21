@@ -1,0 +1,112 @@
+{
+  "matched": true,
+  "incidentCount": 5,
+  "incidents": [
+    {
+      "fileURI": "Services/CustomerService.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 2,
+          "character": 6
+        },
+        "endPosition": {
+          "line": 2,
+          "character": 25
+        }
+      },
+      "LineNumber": "2",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/legacy-framework35/Services/CustomerService.cs",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "System.ServiceModel",
+        "syntax_type": "import"
+      }
+    },
+    {
+      "fileURI": "Services/CustomerService.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 9,
+          "character": 21
+        },
+        "endPosition": {
+          "line": 9,
+          "character": 40
+        }
+      },
+      "LineNumber": "9",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/legacy-framework35/Services/CustomerService.cs",
+        "fqdn_class": "ServiceBehaviorAttribute",
+        "fqdn_field": "InstanceContextMode",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "InstanceContextMode",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "Services/CustomerService.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 9,
+          "character": 43
+        },
+        "endPosition": {
+          "line": 9,
+          "character": 70
+        }
+      },
+      "LineNumber": "9",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/legacy-framework35/Services/CustomerService.cs",
+        "fqdn_class": "InstanceContextMode",
+        "fqdn_field": "PerCall",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "InstanceContextMode.PerCall",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "Services/ICustomerService.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 1,
+          "character": 6
+        },
+        "endPosition": {
+          "line": 1,
+          "character": 25
+        }
+      },
+      "LineNumber": "1",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/legacy-framework35/Services/ICustomerService.cs",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "System.ServiceModel",
+        "syntax_type": "import"
+      }
+    },
+    {
+      "fileURI": "Services/ICustomerService.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 6,
+          "character": 21
+        },
+        "endPosition": {
+          "line": 6,
+          "character": 30
+        }
+      },
+      "LineNumber": "6",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/legacy-framework35/Services/ICustomerService.cs",
+        "fqdn_class": "ServiceContractAttribute",
+        "fqdn_field": "Namespace",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "Namespace",
+        "syntax_type": "field_reference"
+      }
+    }
+  ]
+}

@@ -1,0 +1,2312 @@
+{
+  "matched": true,
+  "incidentCount": 105,
+  "incidents": [
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 17,
+          "character": 37
+        },
+        "endPosition": {
+          "line": 17,
+          "character": 47
+        }
+      },
+      "LineNumber": "17",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "Controller",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 25,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 25,
+          "character": 19
+        }
+      },
+      "LineNumber": "25",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "ControllerBase",
+        "fqdn_field": "ViewBag",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ViewBag",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 26,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 26,
+          "character": 23
+        }
+      },
+      "LineNumber": "26",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 37,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 37,
+          "character": 26
+        }
+      },
+      "LineNumber": "37",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "ModelState",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ModelState",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 43,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 43,
+          "character": 22
+        }
+      },
+      "LineNumber": "43",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "ModelState",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ModelState",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 44,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 44,
+          "character": 23
+        }
+      },
+      "LineNumber": "44",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 56,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 56,
+          "character": 35
+        }
+      },
+      "LineNumber": "56",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "RedirectToAction",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "RedirectToAction",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 65,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 65,
+          "character": 23
+        }
+      },
+      "LineNumber": "65",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 76,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 76,
+          "character": 26
+        }
+      },
+      "LineNumber": "76",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "ModelState",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ModelState",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 83,
+          "character": 27
+        },
+        "endPosition": {
+          "line": 83,
+          "character": 43
+        }
+      },
+      "LineNumber": "83",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "RedirectToAction",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "RedirectToAction",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 87,
+          "character": 20
+        },
+        "endPosition": {
+          "line": 87,
+          "character": 30
+        }
+      },
+      "LineNumber": "87",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "ModelState",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ModelState",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 92,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 92,
+          "character": 23
+        }
+      },
+      "LineNumber": "92",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 106,
+          "character": 32
+        },
+        "endPosition": {
+          "line": 106,
+          "character": 36
+        }
+      },
+      "LineNumber": "106",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 111,
+          "character": 98
+        },
+        "endPosition": {
+          "line": 111,
+          "character": 102
+        }
+      },
+      "LineNumber": "111",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 112,
+          "character": 84
+        },
+        "endPosition": {
+          "line": 112,
+          "character": 88
+        }
+      },
+      "LineNumber": "112",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 121,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 121,
+          "character": 35
+        }
+      },
+      "LineNumber": "121",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "RedirectToAction",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "RedirectToAction",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 129,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 129,
+          "character": 19
+        }
+      },
+      "LineNumber": "129",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "ControllerBase",
+        "fqdn_field": "ViewBag",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ViewBag",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 134,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 134,
+          "character": 19
+        }
+      },
+      "LineNumber": "134",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "ControllerBase",
+        "fqdn_field": "ViewBag",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ViewBag",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 134,
+          "character": 94
+        },
+        "endPosition": {
+          "line": 134,
+          "character": 98
+        }
+      },
+      "LineNumber": "134",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 135,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 135,
+          "character": 19
+        }
+      },
+      "LineNumber": "135",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "ControllerBase",
+        "fqdn_field": "ViewBag",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ViewBag",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 135,
+          "character": 32
+        },
+        "endPosition": {
+          "line": 135,
+          "character": 35
+        }
+      },
+      "LineNumber": "135",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "Url",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "Url",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 136,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 136,
+          "character": 23
+        }
+      },
+      "LineNumber": "136",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 146,
+          "character": 90
+        },
+        "endPosition": {
+          "line": 146,
+          "character": 94
+        }
+      },
+      "LineNumber": "146",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 147,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 147,
+          "character": 19
+        }
+      },
+      "LineNumber": "147",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "ControllerBase",
+        "fqdn_field": "ViewBag",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ViewBag",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 148,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 148,
+          "character": 19
+        }
+      },
+      "LineNumber": "148",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "ControllerBase",
+        "fqdn_field": "ViewBag",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ViewBag",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 148,
+          "character": 32
+        },
+        "endPosition": {
+          "line": 148,
+          "character": 35
+        }
+      },
+      "LineNumber": "148",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "Url",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "Url",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 151,
+          "character": 20
+        },
+        "endPosition": {
+          "line": 151,
+          "character": 30
+        }
+      },
+      "LineNumber": "151",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "ModelState",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ModelState",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 157,
+          "character": 77
+        },
+        "endPosition": {
+          "line": 157,
+          "character": 81
+        }
+      },
+      "LineNumber": "157",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 166,
+          "character": 31
+        },
+        "endPosition": {
+          "line": 166,
+          "character": 47
+        }
+      },
+      "LineNumber": "166",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "RedirectToAction",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "RedirectToAction",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 170,
+          "character": 24
+        },
+        "endPosition": {
+          "line": 170,
+          "character": 34
+        }
+      },
+      "LineNumber": "170",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "ModelState",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ModelState",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 178,
+          "character": 35
+        },
+        "endPosition": {
+          "line": 178,
+          "character": 45
+        }
+      },
+      "LineNumber": "178",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "ModelState",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ModelState",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 184,
+          "character": 20
+        },
+        "endPosition": {
+          "line": 184,
+          "character": 30
+        }
+      },
+      "LineNumber": "184",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "ModelState",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ModelState",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 188,
+          "character": 50
+        },
+        "endPosition": {
+          "line": 188,
+          "character": 54
+        }
+      },
+      "LineNumber": "188",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 189,
+          "character": 31
+        },
+        "endPosition": {
+          "line": 189,
+          "character": 47
+        }
+      },
+      "LineNumber": "189",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "RedirectToAction",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "RedirectToAction",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 193,
+          "character": 24
+        },
+        "endPosition": {
+          "line": 193,
+          "character": 34
+        }
+      },
+      "LineNumber": "193",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "ModelState",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ModelState",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 193,
+          "character": 154
+        },
+        "endPosition": {
+          "line": 193,
+          "character": 158
+        }
+      },
+      "LineNumber": "193",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 199,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 199,
+          "character": 23
+        }
+      },
+      "LineNumber": "199",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 210,
+          "character": 53
+        },
+        "endPosition": {
+          "line": 210,
+          "character": 56
+        }
+      },
+      "LineNumber": "210",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "Url",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "Url",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 219,
+          "character": 80
+        },
+        "endPosition": {
+          "line": 219,
+          "character": 83
+        }
+      },
+      "LineNumber": "219",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "Url",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "Url",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 222,
+          "character": 23
+        },
+        "endPosition": {
+          "line": 222,
+          "character": 39
+        }
+      },
+      "LineNumber": "222",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "RedirectToAction",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "RedirectToAction",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 230,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 230,
+          "character": 20
+        }
+      },
+      "LineNumber": "230",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 233,
+          "character": 95
+        },
+        "endPosition": {
+          "line": 233,
+          "character": 99
+        }
+      },
+      "LineNumber": "233",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 240,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 240,
+          "character": 23
+        }
+      },
+      "LineNumber": "240",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "ControllerBase",
+        "fqdn_field": "ViewBag",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ViewBag",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 241,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 241,
+          "character": 23
+        }
+      },
+      "LineNumber": "241",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "ControllerBase",
+        "fqdn_field": "ViewBag",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ViewBag",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 242,
+          "character": 23
+        },
+        "endPosition": {
+          "line": 242,
+          "character": 27
+        }
+      },
+      "LineNumber": "242",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 257,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 257,
+          "character": 20
+        }
+      },
+      "LineNumber": "257",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 259,
+          "character": 23
+        },
+        "endPosition": {
+          "line": 259,
+          "character": 39
+        }
+      },
+      "LineNumber": "259",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "RedirectToAction",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "RedirectToAction",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 262,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 262,
+          "character": 26
+        }
+      },
+      "LineNumber": "262",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "ModelState",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ModelState",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 282,
+          "character": 24
+        },
+        "endPosition": {
+          "line": 282,
+          "character": 34
+        }
+      },
+      "LineNumber": "282",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "ModelState",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ModelState",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 287,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 287,
+          "character": 19
+        }
+      },
+      "LineNumber": "287",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "ControllerBase",
+        "fqdn_field": "ViewBag",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ViewBag",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 288,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 288,
+          "character": 19
+        }
+      },
+      "LineNumber": "288",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "ControllerBase",
+        "fqdn_field": "ViewBag",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ViewBag",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 289,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 289,
+          "character": 23
+        }
+      },
+      "LineNumber": "289",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 298,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 298,
+          "character": 23
+        }
+      },
+      "LineNumber": "298",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 305,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 305,
+          "character": 19
+        }
+      },
+      "LineNumber": "305",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "ControllerBase",
+        "fqdn_field": "ViewBag",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ViewBag",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 306,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 306,
+          "character": 30
+        }
+      },
+      "LineNumber": "306",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "PartialView",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "PartialView",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 312,
+          "character": 90
+        },
+        "endPosition": {
+          "line": 312,
+          "character": 94
+        }
+      },
+      "LineNumber": "312",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 326,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 326,
+          "character": 19
+        }
+      },
+      "LineNumber": "326",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "ControllerBase",
+        "fqdn_field": "ViewBag",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ViewBag",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 326,
+          "character": 122
+        },
+        "endPosition": {
+          "line": 326,
+          "character": 126
+        }
+      },
+      "LineNumber": "326",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 327,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 327,
+          "character": 30
+        }
+      },
+      "LineNumber": "327",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "PartialView",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "PartialView",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 333,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 333,
+          "character": 19
+        }
+      },
+      "LineNumber": "333",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "Url",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "Url",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 335,
+          "character": 23
+        },
+        "endPosition": {
+          "line": 335,
+          "character": 31
+        }
+      },
+      "LineNumber": "335",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "Redirect",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "Redirect",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 339,
+          "character": 23
+        },
+        "endPosition": {
+          "line": 339,
+          "character": 39
+        }
+      },
+      "LineNumber": "339",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "RedirectToAction",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "RedirectToAction",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 12,
+          "character": 37
+        },
+        "endPosition": {
+          "line": 12,
+          "character": 47
+        }
+      },
+      "LineNumber": "12",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "Controller",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 24,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 24,
+          "character": 23
+        }
+      },
+      "LineNumber": "24",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 35,
+          "character": 23
+        },
+        "endPosition": {
+          "line": 35,
+          "character": 35
+        }
+      },
+      "LineNumber": "35",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "HttpNotFound",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "HttpNotFound",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 37,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 37,
+          "character": 23
+        }
+      },
+      "LineNumber": "37",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 49,
+          "character": 27
+        },
+        "endPosition": {
+          "line": 49,
+          "character": 31
+        }
+      },
+      "LineNumber": "49",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 52,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 52,
+          "character": 23
+        }
+      },
+      "LineNumber": "52",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 61,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 61,
+          "character": 26
+        }
+      },
+      "LineNumber": "61",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "ModelState",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ModelState",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 63,
+          "character": 34
+        },
+        "endPosition": {
+          "line": 63,
+          "character": 38
+        }
+      },
+      "LineNumber": "63",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 66,
+          "character": 36
+        },
+        "endPosition": {
+          "line": 66,
+          "character": 40
+        }
+      },
+      "LineNumber": "66",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 73,
+          "character": 23
+        },
+        "endPosition": {
+          "line": 73,
+          "character": 39
+        }
+      },
+      "LineNumber": "73",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "RedirectToAction",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "RedirectToAction",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 76,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 76,
+          "character": 23
+        }
+      },
+      "LineNumber": "76",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 88,
+          "character": 23
+        },
+        "endPosition": {
+          "line": 88,
+          "character": 35
+        }
+      },
+      "LineNumber": "88",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "HttpNotFound",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "HttpNotFound",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 90,
+          "character": 35
+        },
+        "endPosition": {
+          "line": 90,
+          "character": 39
+        }
+      },
+      "LineNumber": "90",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 92,
+          "character": 23
+        },
+        "endPosition": {
+          "line": 92,
+          "character": 27
+        }
+      },
+      "LineNumber": "92",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 94,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 94,
+          "character": 23
+        }
+      },
+      "LineNumber": "94",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 103,
+          "character": 35
+        },
+        "endPosition": {
+          "line": 103,
+          "character": 39
+        }
+      },
+      "LineNumber": "103",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 105,
+          "character": 23
+        },
+        "endPosition": {
+          "line": 105,
+          "character": 27
+        }
+      },
+      "LineNumber": "105",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 108,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 108,
+          "character": 26
+        }
+      },
+      "LineNumber": "108",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "ModelState",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ModelState",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 112,
+          "character": 23
+        },
+        "endPosition": {
+          "line": 112,
+          "character": 39
+        }
+      },
+      "LineNumber": "112",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "RedirectToAction",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "RedirectToAction",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 114,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 114,
+          "character": 23
+        }
+      },
+      "LineNumber": "114",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 126,
+          "character": 23
+        },
+        "endPosition": {
+          "line": 126,
+          "character": 35
+        }
+      },
+      "LineNumber": "126",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "HttpNotFound",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "HttpNotFound",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 128,
+          "character": 35
+        },
+        "endPosition": {
+          "line": 128,
+          "character": 39
+        }
+      },
+      "LineNumber": "128",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 130,
+          "character": 23
+        },
+        "endPosition": {
+          "line": 130,
+          "character": 27
+        }
+      },
+      "LineNumber": "130",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 132,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 132,
+          "character": 23
+        }
+      },
+      "LineNumber": "132",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 143,
+          "character": 35
+        },
+        "endPosition": {
+          "line": 143,
+          "character": 39
+        }
+      },
+      "LineNumber": "143",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 145,
+          "character": 23
+        },
+        "endPosition": {
+          "line": 145,
+          "character": 27
+        }
+      },
+      "LineNumber": "145",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 150,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 150,
+          "character": 35
+        }
+      },
+      "LineNumber": "150",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "RedirectToAction",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "RedirectToAction",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 156,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 156,
+          "character": 24
+        }
+      },
+      "LineNumber": "156",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "Dispose",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "base.Dispose",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 161,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 161,
+          "character": 20
+        }
+      },
+      "LineNumber": "161",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "ControllerBase",
+        "fqdn_field": "ViewData",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ViewData",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 166,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 166,
+          "character": 23
+        }
+      },
+      "LineNumber": "166",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 171,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 171,
+          "character": 20
+        }
+      },
+      "LineNumber": "171",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "ControllerBase",
+        "fqdn_field": "ViewData",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ViewData",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 177,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 177,
+          "character": 23
+        }
+      },
+      "LineNumber": "177",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/HomeController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 8,
+          "character": 34
+        },
+        "endPosition": {
+          "line": 8,
+          "character": 44
+        }
+      },
+      "LineNumber": "8",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "Controller",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/HomeController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 12,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 12,
+          "character": 19
+        }
+      },
+      "LineNumber": "12",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+        "fqdn_class": "ControllerBase",
+        "fqdn_field": "ViewBag",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "ViewBag",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/HomeController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 14,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 14,
+          "character": 23
+        }
+      },
+      "LineNumber": "14",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/HomeController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 19,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 19,
+          "character": 23
+        }
+      },
+      "LineNumber": "19",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "View",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "View",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/RSVPController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 9,
+          "character": 34
+        },
+        "endPosition": {
+          "line": 9,
+          "character": 44
+        }
+      },
+      "LineNumber": "9",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "Controller",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/RSVPController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 19,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 19,
+          "character": 35
+        }
+      },
+      "LineNumber": "19",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "RedirectToAction",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "RedirectToAction",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/RSVPController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 28,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 28,
+          "character": 26
+        }
+      },
+      "LineNumber": "28",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "Content",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "Content",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/RSVPController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 35,
+          "character": 41
+        },
+        "endPosition": {
+          "line": 35,
+          "character": 45
+        }
+      },
+      "LineNumber": "35",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/RSVPController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 38,
+          "character": 36
+        },
+        "endPosition": {
+          "line": 38,
+          "character": 40
+        }
+      },
+      "LineNumber": "38",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/RSVPController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 53,
+          "character": 58
+        },
+        "endPosition": {
+          "line": 53,
+          "character": 67
+        }
+      },
+      "LineNumber": "53",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_field": "User",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "this.User",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/RSVPController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 60,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 60,
+          "character": 26
+        }
+      },
+      "LineNumber": "60",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "fqdn_class": "Controller",
+        "fqdn_method": "Content",
+        "fqdn_namespace": "System.Web.Mvc",
+        "symbol": "Content",
+        "syntax_type": "method_reference"
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "repo": {
+    "url": "https://github.com/sixeyed/nerd-dinner",
+    "commit": "d44f3bbd307de3fb0e5736453a2dd03ac073b9a1"
+  },
+  "location": "mvc4",
+  "steps": [
+    "init.json",
+    "system-web-mvc.json",
+    "system-web-http.json",
+    "system-data-entity.json",
+    "nerd-dinner-internal.json",
+    "system-web-mvc-controller.json"
+  ]
+}

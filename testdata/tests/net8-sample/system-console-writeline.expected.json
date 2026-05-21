@@ -1,0 +1,72 @@
+{
+  "matched": true,
+  "incidentCount": 3,
+  "incidents": [
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 10,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 10,
+          "character": 29
+        }
+      },
+      "LineNumber": "10",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/net8-sample/Program.cs",
+        "fqdn_class": "Console",
+        "fqdn_method": "WriteLine",
+        "fqdn_namespace": "System",
+        "symbol": "Console.WriteLine",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 17,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 17,
+          "character": 33
+        }
+      },
+      "LineNumber": "17",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/net8-sample/Program.cs",
+        "fqdn_class": "Console",
+        "fqdn_method": "WriteLine",
+        "fqdn_namespace": "System",
+        "symbol": "Console.WriteLine",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 38,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 38,
+          "character": 29
+        }
+      },
+      "LineNumber": "38",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/net8-sample/Program.cs",
+        "fqdn_class": "Console",
+        "fqdn_method": "WriteLine",
+        "fqdn_namespace": "System",
+        "symbol": "Console.WriteLine",
+        "syntax_type": "method_reference"
+      }
+    }
+  ]
+}
