@@ -201,25 +201,25 @@ public static class SymbolQuery
         public override void VisitVariableDeclaration(VariableDeclarationSyntax node)
         {
             if (node.Type is not PredefinedTypeSyntax)
-                TryMatchType(node.Type, node, "type_reference");
+                TryMatchType(node.Type, node.Type, "type_reference");
             base.VisitVariableDeclaration(node);
         }
 
         public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
         {
-            TryMatchType(node.Type, node, "type_reference");
+            TryMatchType(node.Type, node.Type, "type_reference");
             base.VisitPropertyDeclaration(node);
         }
 
         public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
         {
-            TryMatchType(node.Declaration.Type, node, "type_reference");
+            TryMatchType(node.Declaration.Type, node.Declaration.Type, "type_reference");
             base.VisitFieldDeclaration(node);
         }
 
         public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
         {
-            TryMatchType(node.ReturnType, node, "type_reference");
+            TryMatchType(node.ReturnType, node.ReturnType, "type_reference");
             base.VisitMethodDeclaration(node);
         }
 
@@ -286,8 +286,10 @@ public static class SymbolQuery
                 return;
             }
 
-            var fqdn = GetFqdn(symbol);
-            if (_query.Pattern.IsMatch(fqdn) && MatchesLocationType(symbol))
+            var enclosingSymbol = _model.GetEnclosingSymbol(node.SpanStart);
+            var enclosingType = (enclosingSymbol?.ContainingType ?? enclosingSymbol as INamedTypeSymbol) as ITypeSymbol;
+
+            if (MatchesFqdnInHierarchy(symbol, enclosingType) && MatchesLocationType(symbol))
             {
                 string syntaxType = symbol switch
                 {
@@ -399,8 +401,8 @@ public static class SymbolQuery
         private void MatchResolvedSymbol(
             MemberAccessExpressionSyntax node, ISymbol symbol, bool isInvocation)
         {
-            var fqdn = GetFqdn(symbol);
-            if (!_query.Pattern.IsMatch(fqdn))
+            var accessType = _model.GetTypeInfo(node.Expression).Type;
+            if (!MatchesFqdnInHierarchy(symbol, accessType))
                 return;
 
             if (!MatchesLocationType(symbol))
@@ -529,6 +531,46 @@ public static class SymbolQuery
             if (ns != null && !ns.IsGlobalNamespace)
                 return $"{ns.ToDisplayString()}.{type.Name}";
             return type.Name;
+        }
+
+        private bool MatchesFqdnInHierarchy(ISymbol symbol, ITypeSymbol? accessType)
+        {
+            var fqdn = GetFqdn(symbol);
+            if (_query.Pattern.IsMatch(fqdn))
+                return true;
+
+            if (accessType == null || symbol.ContainingType == null)
+                return false;
+
+            var declaringType = symbol.ContainingType;
+
+            var check = accessType;
+            bool inHierarchy = false;
+            while (check != null)
+            {
+                if (SymbolEqualityComparer.Default.Equals(check, declaringType))
+                {
+                    inHierarchy = true;
+                    break;
+                }
+                check = check.BaseType;
+            }
+            if (!inHierarchy)
+                return false;
+
+            var current = accessType;
+            while (current != null && !SymbolEqualityComparer.Default.Equals(current, declaringType))
+            {
+                var ns = current.ContainingNamespace;
+                var altFqdn = (ns != null && !ns.IsGlobalNamespace)
+                    ? $"{ns.ToDisplayString()}.{current.Name}.{symbol.Name}"
+                    : $"{current.Name}.{symbol.Name}";
+                if (_query.Pattern.IsMatch(altFqdn))
+                    return true;
+                current = current.BaseType;
+            }
+
+            return false;
         }
 
         private bool MatchesLocationType(ISymbol symbol)

@@ -45,7 +45,7 @@ CSHARP_PATTERNS = {
         r"^System\.Web\.Http(\..*)?$",
         r"^System\.Data\.Entity(\..*)?$",
         r"^NerdDinner\..*",
-        r"^System\.Web\.Mvc\.Controller$",
+        r"^System\.Web\.Mvc\.Controller(\..*)?$",
     ],
     "net8-sample": [
         r"^System(\..*)?$",
