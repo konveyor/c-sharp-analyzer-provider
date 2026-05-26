@@ -654,9 +654,14 @@ def run(
 # ── diff ────────────────────────────────────────────────────────────────
 
 
-def incident_key(incident: dict[str, Any]) -> tuple[str, int, int]:
+def incident_key(incident: dict[str, Any], *, rust_compat: bool = False) -> tuple[str, ...]:
     loc = incident.get("codeLocation", {})
     start = loc.get("startPosition", {})
+    if rust_compat:
+        return (
+            incident.get("fileURI", ""),
+            start.get("line", 0),
+        )
     return (
         incident.get("fileURI", ""),
         start.get("line", 0),
@@ -664,17 +669,25 @@ def incident_key(incident: dict[str, Any]) -> tuple[str, int, int]:
     )
 
 
-def diff_step(left_data: dict[str, Any], right_data: dict[str, Any]) -> dict[str, Any]:
+def diff_step(
+    left_data: dict[str, Any],
+    right_data: dict[str, Any],
+    *,
+    rust_compat: bool = False,
+) -> dict[str, Any]:
     left_incidents = left_data.get("incidents", [])
     right_incidents = right_data.get("incidents", [])
 
-    left_by_key: dict[tuple[str, int, int], dict[str, Any]] = {}
-    for inc in left_incidents:
-        left_by_key[incident_key(inc)] = inc
+    def _key(inc: dict[str, Any]) -> tuple[str, ...]:
+        return incident_key(inc, rust_compat=rust_compat)
 
-    right_by_key: dict[tuple[str, int, int], dict[str, Any]] = {}
+    left_by_key: dict[tuple[str, ...], dict[str, Any]] = {}
+    for inc in left_incidents:
+        left_by_key[_key(inc)] = inc
+
+    right_by_key: dict[tuple[str, ...], dict[str, Any]] = {}
     for inc in right_incidents:
-        right_by_key[incident_key(inc)] = inc
+        right_by_key[_key(inc)] = inc
 
     left_keys = set(left_by_key.keys())
     right_keys = set(right_by_key.keys())
@@ -685,11 +698,11 @@ def diff_step(left_data: dict[str, Any], right_data: dict[str, Any]) -> dict[str
 
     left_only = sorted(
         [left_by_key[k] for k in left_only_keys],
-        key=incident_key,
+        key=_key,
     )
     right_only = sorted(
         [right_by_key[k] for k in right_only_keys],
-        key=incident_key,
+        key=_key,
     )
 
     return {
@@ -709,6 +722,7 @@ def diff(
     right: Annotated[Path, typer.Argument(help="Path to right result directory")],
     output: Annotated[Optional[Path], typer.Option(help="Output directory for diff files")] = None,
     project: Annotated[Optional[list[str]], typer.Option(help="Diff only named project(s)")] = None,
+    rust_compat: Annotated[bool, typer.Option("--rust-compat", help="Relax matching for Rust provider quirks (e.g. missing character offsets)")] = False,
 ) -> None:
     """Compare two test result directories."""
     left_resolved = left.resolve()
@@ -779,7 +793,7 @@ def diff(
             with open(right_file) as f:
                 right_data: dict[str, Any] = json.load(f)
 
-            result = diff_step(left_data, right_data)
+            result = diff_step(left_data, right_data, rust_compat=rust_compat)
 
             diff_file = project_dir / f"{step}.diff.json"
             diff_file.write_text(json.dumps(result, indent=2))
