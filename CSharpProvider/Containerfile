@@ -15,13 +15,15 @@ RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc && \
     microdnf clean all && \
     rm -rf /var/cache/dnf
 
-RUN chgrp -R 0 /home && chmod -R g=u /home
+RUN mkdir -p /analyzer-lsp && \
+    chgrp -R 0 /home /analyzer-lsp && \
+    chmod -R g=u /home /analyzer-lsp
+
 USER 1001
 ENV HOME=/home
 ENV DOTNET_ROOT=/usr/lib64/dotnet
 
 WORKDIR /analyzer-lsp
-RUN chgrp -R 0 /analyzer-lsp && chmod -R g=u /analyzer-lsp
 
 COPY --from=builder /app /usr/local/lib/csharp-provider
 ENTRYPOINT ["dotnet", "/usr/local/lib/csharp-provider/CSharpProvider.dll"]

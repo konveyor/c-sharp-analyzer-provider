@@ -205,8 +205,12 @@ public class PackageResolver
             if (parenIdx < 0)
                 continue;
 
+            var closeParenIdx = trimmed.IndexOf(')', parenIdx + 1);
+            if (closeParenIdx < 0)
+                continue;
+
             var name = trimmed[..parenIdx].Trim();
-            var versionStr = trimmed[(parenIdx + 1)..trimmed.IndexOf(')')].Trim();
+            var versionStr = trimmed[(parenIdx + 1)..closeParenIdx].Trim();
 
             if (NuGetVersion.TryParse(versionStr, out var version))
             {

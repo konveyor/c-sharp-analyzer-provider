@@ -87,15 +87,36 @@ def resolve_repo_dir(project: str) -> Path:
 # ── setup ───────────────────────────────────────────────────────────────
 
 
+STAMP_FILE = ".clone-commit"
+
+
 def clone_repo(project: str, repo: RepoConfig) -> bool:
     dest = REPOS / project
-    if dest.exists():
-        print(f"  {project}: already exists, skipping")
-        return True
 
     if not repo.url:
-        print(f"  {project}: in-tree (no url), skipping")
+        if dest.exists():
+            print(f"  {project}: in-tree, OK")
+        else:
+            print(f"  {project}: in-tree (no url), but directory missing!")
+            return False
         return True
+
+    if dest.exists():
+        stamp = dest / STAMP_FILE
+        if repo.commit and stamp.exists():
+            actual = stamp.read_text().strip()
+            if actual == repo.commit:
+                print(f"  {project}: already exists @ {repo.commit[:12]}, skipping")
+                return True
+            else:
+                print(f"  {project}: commit mismatch (have {actual[:12]}, want {repo.commit[:12]}), re-cloning")
+                shutil.rmtree(dest)
+        elif repo.commit and not stamp.exists():
+            print(f"  {project}: no stamp file, re-cloning")
+            shutil.rmtree(dest)
+        else:
+            print(f"  {project}: already exists, skipping")
+            return True
 
     url = repo.url
     commit = repo.commit
@@ -136,6 +157,9 @@ def clone_repo(project: str, repo: RepoConfig) -> bool:
             shutil.copytree(src, dest)
         else:
             shutil.copytree(tmp, dest, ignore=shutil.ignore_patterns(".git"))
+
+    if commit:
+        (dest / STAMP_FILE).write_text(commit + "\n")
 
     cs_files = list(dest.rglob("*.cs"))
     if not cs_files:
@@ -182,7 +206,7 @@ def grpcurl(port: int, data: dict[str, Any], method: str, max_time: int = 300) -
         "-max-time", str(max_time),
         "-plaintext",
         "-d", json.dumps(data),
-        f"localhost:{port}",
+        f"127.0.0.1:{port}",
         f"provider.ProviderService/{method}",
     ]
 
@@ -349,8 +373,14 @@ def inject_provider_config(send_data: dict[str, Any], provider: Provider) -> Non
         print(f"    WARNING: ilspycmd={ilspy}, paket={paket} — Rust provider may fail")
 
 
-def resolve_init_location(project: str, manifest: Manifest, init_data: dict[str, Any]) -> str:
-    repo_dir = resolve_repo_dir(project)
+def resolve_init_location(
+    project: str, manifest: Manifest, init_data: dict[str, Any],
+    repo_root: Path | None = None,
+) -> str:
+    if repo_root:
+        repo_dir = repo_root / project
+    else:
+        repo_dir = resolve_repo_dir(project)
     location = init_data.get("location", "")
     if location:
         return str(repo_dir / location)
@@ -361,7 +391,7 @@ def wait_for_port(port: int, timeout: float = 60) -> bool:
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
         try:
-            with socket.create_connection(("localhost", port), timeout=1):
+            with socket.create_connection(("127.0.0.1", port), timeout=1):
                 return True
         except OSError:
             time.sleep(0.5)
@@ -404,6 +434,7 @@ def run_project(
     no_check: bool,
     verbose: bool,
     pause: bool,
+    repo_root: Path | None = None,
 ) -> list[dict[str, str]]:
     test_dir = SUITES / project
     steps = manifest.steps
@@ -427,7 +458,7 @@ def run_project(
         is_init = step_name == "init"
 
         if is_init:
-            location = resolve_init_location(project, manifest, request_data)
+            location = resolve_init_location(project, manifest, request_data, repo_root=repo_root)
             send_data = dict(request_data)
             send_data["location"] = location
             inject_provider_config(send_data, provider)
@@ -470,10 +501,11 @@ def run_project(
                 input("    [--pause] Press Enter to send Evaluate...")
             response = grpcurl(port, send_data, "Evaluate")
 
-            repo_dir_str = str(repo_dir)
+            effective_repo = (repo_root / project) if repo_root else repo_dir
+            repo_dir_str = str(effective_repo)
             location_field = manifest.location
             if location_field:
-                repo_dir_str = str(repo_dir / location_field)
+                repo_dir_str = str(effective_repo / location_field)
 
             normalized = normalize_response(response, repo_dir_str)
 
@@ -536,6 +568,7 @@ def run(
     fail_fast: Annotated[bool, typer.Option("--fail-fast", help="Stop on first test failure")] = False,
     pause: Annotated[bool, typer.Option("--pause", help="Pause before and after each request (for debugging)")] = False,
     cmd: Annotated[Optional[str], typer.Option("--cmd", help="Command to start the provider (fresh per project)")] = None,
+    repo_root: Annotated[Optional[str], typer.Option("--repo-root", help="Override repo path sent to the provider (for containers)")] = None,
 ) -> None:
     """Run gRPC tests against a provider."""
     if not shutil.which("grpcurl"):
@@ -582,6 +615,8 @@ def run(
 
         print(f"=== {proj} ===")
 
+        _repo_root = Path(repo_root) if repo_root else None
+
         def _run_project() -> list[dict[str, str]]:
             return run_project(
                 proj,
@@ -593,6 +628,7 @@ def run(
                 no_check=no_check,
                 verbose=verbose,
                 pause=pause,
+                repo_root=_repo_root,
             )
 
         if cmd:

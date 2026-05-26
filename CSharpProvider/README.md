@@ -30,13 +30,7 @@ dotnet run --project . -- --port 9876
 
 ## Testing
 
-```bash
-# Manual test against nerd-dinner
-./testdata/test-queries.sh
-
-# Compare Rust vs C# provider results
-python3 testdata/compare.py
-```
+See [`tests/README.md`](tests/README.md) for the full test infrastructure.
 
 ## Query format
 

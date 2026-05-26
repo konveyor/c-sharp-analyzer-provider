@@ -200,6 +200,22 @@ uv run CSharpProvider/tests/test_runner.py diff CSharpProvider/tests/results/csh
   --rust-compat
 ```
 
+## Container Testing
+
+Build the container and run the full test suite against it:
+
+```bash
+podman build -t csharp-provider -f CSharpProvider/Containerfile CSharpProvider/
+
+uv run CSharpProvider/tests/test_runner.py run --provider csharp \
+  --repo-root /repos \
+  --cmd "podman run --rm -p 9876:9876 -v $(realpath CSharpProvider/tests/repos):/repos:Z csharp-provider --port 9876"
+```
+
+`--repo-root /repos` tells the test runner to send `/repos/<project>` as the
+init location instead of the host-side absolute path, matching the volume mount
+inside the container.
+
 ## CI Usage
 
 Golden file comparison is on by default -- the runner exits non-zero on any
@@ -233,6 +249,7 @@ Use `--fail-fast` to stop on the first failure instead of running all tests.
 | `--verbose` | Print full result JSON on failure |
 | `--fail-fast` | Stop on first failure |
 | `--pause` | Pause before and after each request (for debugging) |
+| `--repo-root PATH` | Override repo path sent to the provider |
 
 ### `diff` flags
 
