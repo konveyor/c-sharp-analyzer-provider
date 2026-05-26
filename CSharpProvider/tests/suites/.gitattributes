@@ -1,0 +1,2 @@
+# Collapse golden files in GitHub PR diffs
+*.expected.json linguist-generated=true
