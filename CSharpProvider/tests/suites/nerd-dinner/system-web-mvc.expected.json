@@ -16,7 +16,7 @@
       },
       "LineNumber": "1",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "System.Web.Mvc",
         "syntax_type": "import"
@@ -36,7 +36,7 @@
       },
       "LineNumber": "7",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs",
         "fqdn_class": "GlobalFilterCollection",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "GlobalFilterCollection",
@@ -57,7 +57,7 @@
       },
       "LineNumber": "9",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs",
         "fqdn_class": "GlobalFilterCollection",
         "fqdn_method": "Add",
         "fqdn_namespace": "System.Web.Mvc",
@@ -79,7 +79,7 @@
       },
       "LineNumber": "9",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs",
         "fqdn_class": "HandleErrorAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "new HandleErrorAttribute()",
@@ -100,7 +100,7 @@
       },
       "LineNumber": "4",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "System.Web.Mvc",
         "syntax_type": "import"
@@ -120,7 +120,7 @@
       },
       "LineNumber": "13",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
         "fqdn_class": "RouteCollectionExtensions",
         "fqdn_method": "IgnoreRoute",
         "fqdn_namespace": "System.Web.Mvc",
@@ -142,7 +142,7 @@
       },
       "LineNumber": "15",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
         "fqdn_class": "RouteCollectionExtensions",
         "fqdn_method": "MapRoute",
         "fqdn_namespace": "System.Web.Mvc",
@@ -164,7 +164,7 @@
       },
       "LineNumber": "22",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
         "fqdn_class": "RouteCollectionExtensions",
         "fqdn_method": "MapRoute",
         "fqdn_namespace": "System.Web.Mvc",
@@ -186,7 +186,7 @@
       },
       "LineNumber": "25",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs",
         "fqdn_class": "UrlParameter",
         "fqdn_field": "Optional",
         "fqdn_namespace": "System.Web.Mvc",
@@ -208,7 +208,7 @@
       },
       "LineNumber": "5",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "System.Web.Mvc",
         "syntax_type": "import"
@@ -228,7 +228,7 @@
       },
       "LineNumber": "15",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "AuthorizeAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AuthorizeAttribute",
@@ -249,7 +249,7 @@
       },
       "LineNumber": "17",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "Controller",
@@ -270,7 +270,7 @@
       },
       "LineNumber": "22",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "AllowAnonymousAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AllowAnonymousAttribute",
@@ -291,7 +291,7 @@
       },
       "LineNumber": "23",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -312,7 +312,7 @@
       },
       "LineNumber": "25",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -334,7 +334,7 @@
       },
       "LineNumber": "25",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -356,7 +356,7 @@
       },
       "LineNumber": "26",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View()",
@@ -377,7 +377,7 @@
       },
       "LineNumber": "26",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -399,7 +399,7 @@
       },
       "LineNumber": "32",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "HttpPostAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HttpPostAttribute",
@@ -420,7 +420,7 @@
       },
       "LineNumber": "33",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "AllowAnonymousAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AllowAnonymousAttribute",
@@ -441,7 +441,7 @@
       },
       "LineNumber": "34",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ValidateAntiForgeryTokenAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ValidateAntiForgeryTokenAttribute",
@@ -462,7 +462,7 @@
       },
       "LineNumber": "35",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -483,7 +483,7 @@
       },
       "LineNumber": "37",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ModelStateDictionary",
         "fqdn_field": "IsValid",
         "fqdn_namespace": "System.Web.Mvc",
@@ -505,7 +505,7 @@
       },
       "LineNumber": "37",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "ModelState",
         "fqdn_namespace": "System.Web.Mvc",
@@ -527,7 +527,7 @@
       },
       "LineNumber": "39",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToLocal(returnUrl)",
@@ -548,7 +548,7 @@
       },
       "LineNumber": "43",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ModelStateDictionary",
         "fqdn_method": "AddModelError",
         "fqdn_namespace": "System.Web.Mvc",
@@ -570,7 +570,7 @@
       },
       "LineNumber": "43",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "ModelState",
         "fqdn_namespace": "System.Web.Mvc",
@@ -592,7 +592,7 @@
       },
       "LineNumber": "44",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(model)",
@@ -613,7 +613,7 @@
       },
       "LineNumber": "44",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -635,7 +635,7 @@
       },
       "LineNumber": "50",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "HttpPostAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HttpPostAttribute",
@@ -656,7 +656,7 @@
       },
       "LineNumber": "51",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ValidateAntiForgeryTokenAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ValidateAntiForgeryTokenAttribute",
@@ -677,7 +677,7 @@
       },
       "LineNumber": "52",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -698,7 +698,7 @@
       },
       "LineNumber": "56",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "RedirectToRouteResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToAction(\"Index\", \"Home\")",
@@ -719,7 +719,7 @@
       },
       "LineNumber": "56",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "RedirectToAction",
         "fqdn_namespace": "System.Web.Mvc",
@@ -741,7 +741,7 @@
       },
       "LineNumber": "62",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "AllowAnonymousAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AllowAnonymousAttribute",
@@ -762,7 +762,7 @@
       },
       "LineNumber": "63",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -783,7 +783,7 @@
       },
       "LineNumber": "65",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View()",
@@ -804,7 +804,7 @@
       },
       "LineNumber": "65",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -826,7 +826,7 @@
       },
       "LineNumber": "71",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "HttpPostAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HttpPostAttribute",
@@ -847,7 +847,7 @@
       },
       "LineNumber": "72",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "AllowAnonymousAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AllowAnonymousAttribute",
@@ -868,7 +868,7 @@
       },
       "LineNumber": "73",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ValidateAntiForgeryTokenAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ValidateAntiForgeryTokenAttribute",
@@ -889,7 +889,7 @@
       },
       "LineNumber": "74",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -910,7 +910,7 @@
       },
       "LineNumber": "76",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ModelStateDictionary",
         "fqdn_field": "IsValid",
         "fqdn_namespace": "System.Web.Mvc",
@@ -932,7 +932,7 @@
       },
       "LineNumber": "76",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "ModelState",
         "fqdn_namespace": "System.Web.Mvc",
@@ -954,7 +954,7 @@
       },
       "LineNumber": "83",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "RedirectToRouteResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToAction(\"Index\", \"Home\")",
@@ -975,7 +975,7 @@
       },
       "LineNumber": "83",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "RedirectToAction",
         "fqdn_namespace": "System.Web.Mvc",
@@ -997,7 +997,7 @@
       },
       "LineNumber": "87",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ModelStateDictionary",
         "fqdn_method": "AddModelError",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1019,7 +1019,7 @@
       },
       "LineNumber": "87",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "ModelState",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1041,7 +1041,7 @@
       },
       "LineNumber": "92",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(model)",
@@ -1062,7 +1062,7 @@
       },
       "LineNumber": "92",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1084,7 +1084,7 @@
       },
       "LineNumber": "98",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "HttpPostAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HttpPostAttribute",
@@ -1105,7 +1105,7 @@
       },
       "LineNumber": "99",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ValidateAntiForgeryTokenAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ValidateAntiForgeryTokenAttribute",
@@ -1126,7 +1126,7 @@
       },
       "LineNumber": "100",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -1147,7 +1147,7 @@
       },
       "LineNumber": "106",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1169,7 +1169,7 @@
       },
       "LineNumber": "111",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1191,7 +1191,7 @@
       },
       "LineNumber": "112",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1213,7 +1213,7 @@
       },
       "LineNumber": "121",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "RedirectToRouteResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToAction(\"Manage\", new { Message = message })",
@@ -1234,7 +1234,7 @@
       },
       "LineNumber": "121",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "RedirectToAction",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1256,7 +1256,7 @@
       },
       "LineNumber": "127",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -1277,7 +1277,7 @@
       },
       "LineNumber": "129",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1299,7 +1299,7 @@
       },
       "LineNumber": "129",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1321,7 +1321,7 @@
       },
       "LineNumber": "134",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1343,7 +1343,7 @@
       },
       "LineNumber": "134",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1365,7 +1365,7 @@
       },
       "LineNumber": "134",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1387,7 +1387,7 @@
       },
       "LineNumber": "135",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1409,7 +1409,7 @@
       },
       "LineNumber": "135",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1431,7 +1431,7 @@
       },
       "LineNumber": "135",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "UrlHelper",
         "fqdn_method": "Action",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1453,7 +1453,7 @@
       },
       "LineNumber": "135",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "Url",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1475,7 +1475,7 @@
       },
       "LineNumber": "136",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View()",
@@ -1496,7 +1496,7 @@
       },
       "LineNumber": "136",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1518,7 +1518,7 @@
       },
       "LineNumber": "142",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "HttpPostAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HttpPostAttribute",
@@ -1539,7 +1539,7 @@
       },
       "LineNumber": "143",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ValidateAntiForgeryTokenAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ValidateAntiForgeryTokenAttribute",
@@ -1560,7 +1560,7 @@
       },
       "LineNumber": "144",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -1581,7 +1581,7 @@
       },
       "LineNumber": "146",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1603,7 +1603,7 @@
       },
       "LineNumber": "147",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1625,7 +1625,7 @@
       },
       "LineNumber": "147",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1647,7 +1647,7 @@
       },
       "LineNumber": "148",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1669,7 +1669,7 @@
       },
       "LineNumber": "148",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1691,7 +1691,7 @@
       },
       "LineNumber": "148",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "UrlHelper",
         "fqdn_method": "Action",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1713,7 +1713,7 @@
       },
       "LineNumber": "148",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "Url",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1735,7 +1735,7 @@
       },
       "LineNumber": "151",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ModelStateDictionary",
         "fqdn_field": "IsValid",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1757,7 +1757,7 @@
       },
       "LineNumber": "151",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "ModelState",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1779,7 +1779,7 @@
       },
       "LineNumber": "157",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1801,7 +1801,7 @@
       },
       "LineNumber": "166",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "RedirectToRouteResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToAction(\"Manage\", new { Message = ManageMessageId.ChangePasswordSuccess })",
@@ -1822,7 +1822,7 @@
       },
       "LineNumber": "166",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "RedirectToAction",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1844,7 +1844,7 @@
       },
       "LineNumber": "170",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ModelStateDictionary",
         "fqdn_method": "AddModelError",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1866,7 +1866,7 @@
       },
       "LineNumber": "170",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "ModelState",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1888,7 +1888,7 @@
       },
       "LineNumber": "178",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ModelState",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ModelState",
@@ -1909,7 +1909,7 @@
       },
       "LineNumber": "178",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "ModelState",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1931,7 +1931,7 @@
       },
       "LineNumber": "181",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Collection",
         "fqdn_method": "Clear",
         "fqdn_namespace": "System.Collections.ObjectModel",
@@ -1953,7 +1953,7 @@
       },
       "LineNumber": "181",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ModelState",
         "fqdn_field": "Errors",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1975,7 +1975,7 @@
       },
       "LineNumber": "184",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ModelStateDictionary",
         "fqdn_field": "IsValid",
         "fqdn_namespace": "System.Web.Mvc",
@@ -1997,7 +1997,7 @@
       },
       "LineNumber": "184",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "ModelState",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2019,7 +2019,7 @@
       },
       "LineNumber": "188",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2041,7 +2041,7 @@
       },
       "LineNumber": "189",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "RedirectToRouteResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToAction(\"Manage\", new { Message = ManageMessageId.SetPasswordSuccess })",
@@ -2062,7 +2062,7 @@
       },
       "LineNumber": "189",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "RedirectToAction",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2084,7 +2084,7 @@
       },
       "LineNumber": "193",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ModelStateDictionary",
         "fqdn_method": "AddModelError",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2106,7 +2106,7 @@
       },
       "LineNumber": "193",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "ModelState",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2128,7 +2128,7 @@
       },
       "LineNumber": "193",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2150,7 +2150,7 @@
       },
       "LineNumber": "199",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(model)",
@@ -2171,7 +2171,7 @@
       },
       "LineNumber": "199",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2193,7 +2193,7 @@
       },
       "LineNumber": "205",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "HttpPostAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HttpPostAttribute",
@@ -2214,7 +2214,7 @@
       },
       "LineNumber": "206",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "AllowAnonymousAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AllowAnonymousAttribute",
@@ -2235,7 +2235,7 @@
       },
       "LineNumber": "207",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ValidateAntiForgeryTokenAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ValidateAntiForgeryTokenAttribute",
@@ -2256,7 +2256,7 @@
       },
       "LineNumber": "208",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -2277,7 +2277,7 @@
       },
       "LineNumber": "210",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "new ExternalLoginResult(provider, Url.Action(\"ExternalLoginCallback\", new { ReturnUrl = returnUrl }))",
@@ -2298,7 +2298,7 @@
       },
       "LineNumber": "210",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "UrlHelper",
         "fqdn_method": "Action",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2320,7 +2320,7 @@
       },
       "LineNumber": "210",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "Url",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2342,7 +2342,7 @@
       },
       "LineNumber": "216",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "AllowAnonymousAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AllowAnonymousAttribute",
@@ -2363,7 +2363,7 @@
       },
       "LineNumber": "217",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -2384,7 +2384,7 @@
       },
       "LineNumber": "219",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "UrlHelper",
         "fqdn_method": "Action",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2406,7 +2406,7 @@
       },
       "LineNumber": "219",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "Url",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2428,7 +2428,7 @@
       },
       "LineNumber": "222",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "RedirectToRouteResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToAction(\"ExternalLoginFailure\")",
@@ -2449,7 +2449,7 @@
       },
       "LineNumber": "222",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "RedirectToAction",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2471,7 +2471,7 @@
       },
       "LineNumber": "227",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToLocal(returnUrl)",
@@ -2492,7 +2492,7 @@
       },
       "LineNumber": "230",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2514,7 +2514,7 @@
       },
       "LineNumber": "233",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2536,7 +2536,7 @@
       },
       "LineNumber": "234",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToLocal(returnUrl)",
@@ -2557,7 +2557,7 @@
       },
       "LineNumber": "240",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2579,7 +2579,7 @@
       },
       "LineNumber": "240",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2601,7 +2601,7 @@
       },
       "LineNumber": "241",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2623,7 +2623,7 @@
       },
       "LineNumber": "241",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2645,7 +2645,7 @@
       },
       "LineNumber": "242",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(\"ExternalLoginConfirmation\", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData })",
@@ -2666,7 +2666,7 @@
       },
       "LineNumber": "242",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2688,7 +2688,7 @@
       },
       "LineNumber": "249",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "HttpPostAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HttpPostAttribute",
@@ -2709,7 +2709,7 @@
       },
       "LineNumber": "250",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "AllowAnonymousAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AllowAnonymousAttribute",
@@ -2730,7 +2730,7 @@
       },
       "LineNumber": "251",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ValidateAntiForgeryTokenAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ValidateAntiForgeryTokenAttribute",
@@ -2751,7 +2751,7 @@
       },
       "LineNumber": "252",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -2772,7 +2772,7 @@
       },
       "LineNumber": "257",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2794,7 +2794,7 @@
       },
       "LineNumber": "259",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "RedirectToRouteResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToAction(\"Manage\")",
@@ -2815,7 +2815,7 @@
       },
       "LineNumber": "259",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "RedirectToAction",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2837,7 +2837,7 @@
       },
       "LineNumber": "262",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ModelStateDictionary",
         "fqdn_field": "IsValid",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2859,7 +2859,7 @@
       },
       "LineNumber": "262",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "ModelState",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2881,7 +2881,7 @@
       },
       "LineNumber": "278",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToLocal(returnUrl)",
@@ -2902,7 +2902,7 @@
       },
       "LineNumber": "282",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ModelStateDictionary",
         "fqdn_method": "AddModelError",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2924,7 +2924,7 @@
       },
       "LineNumber": "282",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "ModelState",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2946,7 +2946,7 @@
       },
       "LineNumber": "287",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2968,7 +2968,7 @@
       },
       "LineNumber": "287",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -2990,7 +2990,7 @@
       },
       "LineNumber": "288",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3012,7 +3012,7 @@
       },
       "LineNumber": "288",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3034,7 +3034,7 @@
       },
       "LineNumber": "289",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(model)",
@@ -3055,7 +3055,7 @@
       },
       "LineNumber": "289",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3077,7 +3077,7 @@
       },
       "LineNumber": "295",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "AllowAnonymousAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AllowAnonymousAttribute",
@@ -3098,7 +3098,7 @@
       },
       "LineNumber": "296",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -3119,7 +3119,7 @@
       },
       "LineNumber": "298",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View()",
@@ -3140,7 +3140,7 @@
       },
       "LineNumber": "298",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3162,7 +3162,7 @@
       },
       "LineNumber": "301",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "AllowAnonymousAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AllowAnonymousAttribute",
@@ -3183,7 +3183,7 @@
       },
       "LineNumber": "302",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ChildActionOnlyAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ChildActionOnlyAttribute",
@@ -3204,7 +3204,7 @@
       },
       "LineNumber": "303",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -3225,7 +3225,7 @@
       },
       "LineNumber": "305",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3247,7 +3247,7 @@
       },
       "LineNumber": "305",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3269,7 +3269,7 @@
       },
       "LineNumber": "306",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "PartialViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "PartialView(\"_ExternalLoginsListPartial\", OAuthWebSecurity.RegisteredClientData)",
@@ -3290,7 +3290,7 @@
       },
       "LineNumber": "306",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "PartialView",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3312,7 +3312,7 @@
       },
       "LineNumber": "309",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ChildActionOnlyAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ChildActionOnlyAttribute",
@@ -3333,7 +3333,7 @@
       },
       "LineNumber": "310",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -3354,7 +3354,7 @@
       },
       "LineNumber": "312",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3376,7 +3376,7 @@
       },
       "LineNumber": "326",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3398,7 +3398,7 @@
       },
       "LineNumber": "326",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3420,7 +3420,7 @@
       },
       "LineNumber": "326",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3442,7 +3442,7 @@
       },
       "LineNumber": "327",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "PartialViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "PartialView(\"_RemoveExternalLoginsPartial\", externalLogins)",
@@ -3463,7 +3463,7 @@
       },
       "LineNumber": "327",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "PartialView",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3485,7 +3485,7 @@
       },
       "LineNumber": "331",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -3506,7 +3506,7 @@
       },
       "LineNumber": "333",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "UrlHelper",
         "fqdn_method": "IsLocalUrl",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3528,7 +3528,7 @@
       },
       "LineNumber": "333",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "Url",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3550,7 +3550,7 @@
       },
       "LineNumber": "335",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "RedirectResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "Redirect(returnUrl)",
@@ -3571,7 +3571,7 @@
       },
       "LineNumber": "335",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "Redirect",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3593,7 +3593,7 @@
       },
       "LineNumber": "339",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "RedirectToRouteResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToAction(\"Index\", \"Home\")",
@@ -3614,7 +3614,7 @@
       },
       "LineNumber": "339",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "RedirectToAction",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3636,7 +3636,7 @@
       },
       "LineNumber": "350",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -3657,7 +3657,7 @@
       },
       "LineNumber": "361",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
         "fqdn_class": "ControllerContext",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ControllerContext",
@@ -3678,7 +3678,7 @@
       },
       "LineNumber": "6",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "System.Web.Mvc",
         "syntax_type": "import"
@@ -3698,7 +3698,7 @@
       },
       "LineNumber": "12",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "Controller",
@@ -3719,7 +3719,7 @@
       },
       "LineNumber": "19",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -3740,7 +3740,7 @@
       },
       "LineNumber": "24",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(dinners.ToPagedList(pageIndex, PageSize))",
@@ -3761,7 +3761,7 @@
       },
       "LineNumber": "24",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3783,7 +3783,7 @@
       },
       "LineNumber": "30",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -3804,7 +3804,7 @@
       },
       "LineNumber": "35",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "HttpNotFoundResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HttpNotFound()",
@@ -3825,7 +3825,7 @@
       },
       "LineNumber": "35",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "HttpNotFound",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3847,7 +3847,7 @@
       },
       "LineNumber": "37",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(dinner)",
@@ -3868,7 +3868,7 @@
       },
       "LineNumber": "37",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3890,7 +3890,7 @@
       },
       "LineNumber": "43",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "AuthorizeAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AuthorizeAttribute",
@@ -3911,7 +3911,7 @@
       },
       "LineNumber": "44",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -3932,7 +3932,7 @@
       },
       "LineNumber": "49",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3954,7 +3954,7 @@
       },
       "LineNumber": "52",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(dinner)",
@@ -3975,7 +3975,7 @@
       },
       "LineNumber": "52",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -3997,7 +3997,7 @@
       },
       "LineNumber": "58",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "HttpPostAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HttpPostAttribute",
@@ -4018,7 +4018,7 @@
       },
       "LineNumber": "58",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "AuthorizeAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AuthorizeAttribute",
@@ -4039,7 +4039,7 @@
       },
       "LineNumber": "58",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ValidateAntiForgeryTokenAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ValidateAntiForgeryTokenAttribute",
@@ -4060,7 +4060,7 @@
       },
       "LineNumber": "59",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -4081,7 +4081,7 @@
       },
       "LineNumber": "61",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ModelStateDictionary",
         "fqdn_field": "IsValid",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4103,7 +4103,7 @@
       },
       "LineNumber": "61",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "ModelState",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4125,7 +4125,7 @@
       },
       "LineNumber": "63",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4147,7 +4147,7 @@
       },
       "LineNumber": "66",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4169,7 +4169,7 @@
       },
       "LineNumber": "73",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "RedirectToRouteResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToAction(\"Index\")",
@@ -4190,7 +4190,7 @@
       },
       "LineNumber": "73",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "RedirectToAction",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4212,7 +4212,7 @@
       },
       "LineNumber": "76",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(dinner)",
@@ -4233,7 +4233,7 @@
       },
       "LineNumber": "76",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4255,7 +4255,7 @@
       },
       "LineNumber": "82",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "AuthorizeAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AuthorizeAttribute",
@@ -4276,7 +4276,7 @@
       },
       "LineNumber": "83",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -4297,7 +4297,7 @@
       },
       "LineNumber": "88",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "HttpNotFoundResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HttpNotFound()",
@@ -4318,7 +4318,7 @@
       },
       "LineNumber": "88",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "HttpNotFound",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4340,7 +4340,7 @@
       },
       "LineNumber": "90",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4362,7 +4362,7 @@
       },
       "LineNumber": "92",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(\"InvalidOwner\")",
@@ -4383,7 +4383,7 @@
       },
       "LineNumber": "92",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4405,7 +4405,7 @@
       },
       "LineNumber": "94",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(dinner)",
@@ -4426,7 +4426,7 @@
       },
       "LineNumber": "94",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4448,7 +4448,7 @@
       },
       "LineNumber": "100",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "HttpPostAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HttpPostAttribute",
@@ -4469,7 +4469,7 @@
       },
       "LineNumber": "100",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "AuthorizeAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AuthorizeAttribute",
@@ -4490,7 +4490,7 @@
       },
       "LineNumber": "100",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ValidateAntiForgeryTokenAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ValidateAntiForgeryTokenAttribute",
@@ -4511,7 +4511,7 @@
       },
       "LineNumber": "101",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -4532,7 +4532,7 @@
       },
       "LineNumber": "103",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4554,7 +4554,7 @@
       },
       "LineNumber": "105",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(\"InvalidOwner\")",
@@ -4575,7 +4575,7 @@
       },
       "LineNumber": "105",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4597,7 +4597,7 @@
       },
       "LineNumber": "108",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ModelStateDictionary",
         "fqdn_field": "IsValid",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4619,7 +4619,7 @@
       },
       "LineNumber": "108",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "ModelState",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4641,7 +4641,7 @@
       },
       "LineNumber": "112",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "RedirectToRouteResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToAction(\"Index\")",
@@ -4662,7 +4662,7 @@
       },
       "LineNumber": "112",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "RedirectToAction",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4684,7 +4684,7 @@
       },
       "LineNumber": "114",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(dinner)",
@@ -4705,7 +4705,7 @@
       },
       "LineNumber": "114",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4727,7 +4727,7 @@
       },
       "LineNumber": "120",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "AuthorizeAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AuthorizeAttribute",
@@ -4748,7 +4748,7 @@
       },
       "LineNumber": "121",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -4769,7 +4769,7 @@
       },
       "LineNumber": "126",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "HttpNotFoundResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HttpNotFound()",
@@ -4790,7 +4790,7 @@
       },
       "LineNumber": "126",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "HttpNotFound",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4812,7 +4812,7 @@
       },
       "LineNumber": "128",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4834,7 +4834,7 @@
       },
       "LineNumber": "130",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(\"InvalidOwner\")",
@@ -4855,7 +4855,7 @@
       },
       "LineNumber": "130",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4877,7 +4877,7 @@
       },
       "LineNumber": "132",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(dinner)",
@@ -4898,7 +4898,7 @@
       },
       "LineNumber": "132",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4920,7 +4920,7 @@
       },
       "LineNumber": "138",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "HttpPostAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HttpPostAttribute",
@@ -4941,7 +4941,7 @@
       },
       "LineNumber": "138",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ActionNameAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionNameAttribute",
@@ -4962,7 +4962,7 @@
       },
       "LineNumber": "138",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ActionNameAttribute",
         "fqdn_method": ".ctor",
         "fqdn_namespace": "System.Web.Mvc",
@@ -4984,7 +4984,7 @@
       },
       "LineNumber": "138",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "AuthorizeAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AuthorizeAttribute",
@@ -5005,7 +5005,7 @@
       },
       "LineNumber": "138",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ValidateAntiForgeryTokenAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ValidateAntiForgeryTokenAttribute",
@@ -5026,7 +5026,7 @@
       },
       "LineNumber": "139",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -5047,7 +5047,7 @@
       },
       "LineNumber": "143",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5069,7 +5069,7 @@
       },
       "LineNumber": "145",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(\"InvalidOwner\")",
@@ -5090,7 +5090,7 @@
       },
       "LineNumber": "145",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5112,7 +5112,7 @@
       },
       "LineNumber": "150",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "RedirectToRouteResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToAction(\"Index\")",
@@ -5133,7 +5133,7 @@
       },
       "LineNumber": "150",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "RedirectToAction",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5155,7 +5155,7 @@
       },
       "LineNumber": "156",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "Dispose",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5177,7 +5177,7 @@
       },
       "LineNumber": "159",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -5198,7 +5198,7 @@
       },
       "LineNumber": "161",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewData",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5220,7 +5220,7 @@
       },
       "LineNumber": "166",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(\"WebSlice\", model.Take(5))",
@@ -5241,7 +5241,7 @@
       },
       "LineNumber": "166",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5263,7 +5263,7 @@
       },
       "LineNumber": "169",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -5284,7 +5284,7 @@
       },
       "LineNumber": "171",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewData",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5306,7 +5306,7 @@
       },
       "LineNumber": "177",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View(\"WebSlice\", model.Take(5))",
@@ -5327,7 +5327,7 @@
       },
       "LineNumber": "177",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5349,7 +5349,7 @@
       },
       "LineNumber": "4",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "System.Web.Mvc",
         "syntax_type": "import"
@@ -5369,7 +5369,7 @@
       },
       "LineNumber": "8",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
         "fqdn_class": "Controller",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "Controller",
@@ -5390,7 +5390,7 @@
       },
       "LineNumber": "10",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -5411,7 +5411,7 @@
       },
       "LineNumber": "12",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5433,7 +5433,7 @@
       },
       "LineNumber": "12",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
         "fqdn_class": "ControllerBase",
         "fqdn_field": "ViewBag",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5455,7 +5455,7 @@
       },
       "LineNumber": "14",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View()",
@@ -5476,7 +5476,7 @@
       },
       "LineNumber": "14",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5498,7 +5498,7 @@
       },
       "LineNumber": "17",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -5519,7 +5519,7 @@
       },
       "LineNumber": "19",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
         "fqdn_class": "ViewResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "View()",
@@ -5540,7 +5540,7 @@
       },
       "LineNumber": "19",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "View",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5562,7 +5562,7 @@
       },
       "LineNumber": "3",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "System.Web.Mvc",
         "syntax_type": "import"
@@ -5582,7 +5582,7 @@
       },
       "LineNumber": "9",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "Controller",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "Controller",
@@ -5603,7 +5603,7 @@
       },
       "LineNumber": "15",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "AuthorizeAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AuthorizeAttribute",
@@ -5624,7 +5624,7 @@
       },
       "LineNumber": "16",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -5645,7 +5645,7 @@
       },
       "LineNumber": "19",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "RedirectToRouteResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "RedirectToAction(\"Details\", \"Dinners\", new { id = id })",
@@ -5666,7 +5666,7 @@
       },
       "LineNumber": "19",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "RedirectToAction",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5688,7 +5688,7 @@
       },
       "LineNumber": "24",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "AuthorizeAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AuthorizeAttribute",
@@ -5709,7 +5709,7 @@
       },
       "LineNumber": "24",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "HttpPostAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HttpPostAttribute",
@@ -5730,7 +5730,7 @@
       },
       "LineNumber": "25",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -5751,7 +5751,7 @@
       },
       "LineNumber": "28",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "ContentResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "Content(\"Thanks - we'll see you there!\")",
@@ -5772,7 +5772,7 @@
       },
       "LineNumber": "28",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "Content",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5794,7 +5794,7 @@
       },
       "LineNumber": "35",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5816,7 +5816,7 @@
       },
       "LineNumber": "38",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5838,7 +5838,7 @@
       },
       "LineNumber": "48",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "AuthorizeAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "AuthorizeAttribute",
@@ -5859,7 +5859,7 @@
       },
       "LineNumber": "48",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "HttpPostAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HttpPostAttribute",
@@ -5880,7 +5880,7 @@
       },
       "LineNumber": "49",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "ActionResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionResult",
@@ -5901,7 +5901,7 @@
       },
       "LineNumber": "53",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "Controller",
         "fqdn_field": "User",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5923,7 +5923,7 @@
       },
       "LineNumber": "60",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "ContentResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "Content(\"Sorry you can't make it!\")",
@@ -5944,7 +5944,7 @@
       },
       "LineNumber": "60",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
         "fqdn_class": "Controller",
         "fqdn_method": "Content",
         "fqdn_namespace": "System.Web.Mvc",
@@ -5966,7 +5966,7 @@
       },
       "LineNumber": "4",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "System.Web.Mvc",
         "syntax_type": "import"
@@ -5986,7 +5986,7 @@
       },
       "LineNumber": "11",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
         "fqdn_class": "ActionFilterAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionFilterAttribute",
@@ -6007,7 +6007,7 @@
       },
       "LineNumber": "17",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
         "fqdn_class": "ActionExecutingContext",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ActionExecutingContext",
@@ -6028,7 +6028,7 @@
       },
       "LineNumber": "6",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "System.Web.Mvc",
         "syntax_type": "import"
@@ -6048,7 +6048,7 @@
       },
       "LineNumber": "19",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
         "fqdn_class": "AreaRegistration",
         "fqdn_method": "RegisterAllAreas",
         "fqdn_namespace": "System.Web.Mvc",
@@ -6070,7 +6070,7 @@
       },
       "LineNumber": "22",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
         "fqdn_class": "GlobalFilterCollection",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "GlobalFilters.Filters",
@@ -6091,7 +6091,7 @@
       },
       "LineNumber": "27",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
         "fqdn_class": "Collection",
         "fqdn_method": "Add",
         "fqdn_namespace": "System.Collections.ObjectModel",
@@ -6113,7 +6113,7 @@
       },
       "LineNumber": "27",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
         "fqdn_class": "ModelBinderProviders",
         "fqdn_field": "BinderProviders",
         "fqdn_namespace": "System.Web.Mvc",
@@ -6135,7 +6135,7 @@
       },
       "LineNumber": "27",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
         "fqdn_class": "IModelBinderProvider",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "new EFModelBinderProvider()",
@@ -6156,7 +6156,7 @@
       },
       "LineNumber": "5",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "System.Web.Mvc",
         "syntax_type": "import"
@@ -6176,7 +6176,7 @@
       },
       "LineNumber": "9",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
         "fqdn_class": "DefaultModelBinder",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "DefaultModelBinder",
@@ -6197,7 +6197,7 @@
       },
       "LineNumber": "11",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
         "fqdn_class": "ControllerContext",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ControllerContext",
@@ -6218,7 +6218,7 @@
       },
       "LineNumber": "11",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
         "fqdn_class": "ModelBindingContext",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ModelBindingContext",
@@ -6239,7 +6239,7 @@
       },
       "LineNumber": "13",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
         "fqdn_class": "ValueProviderResult",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "ValueProviderResult",
@@ -6260,7 +6260,7 @@
       },
       "LineNumber": "13",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
         "fqdn_class": "IValueProvider",
         "fqdn_method": "GetValue",
         "fqdn_namespace": "System.Web.Mvc",
@@ -6282,7 +6282,7 @@
       },
       "LineNumber": "13",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
         "fqdn_class": "ModelBindingContext",
         "fqdn_field": "ValueProvider",
         "fqdn_namespace": "System.Web.Mvc",
@@ -6304,7 +6304,7 @@
       },
       "LineNumber": "13",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
         "fqdn_class": "ModelBindingContext",
         "fqdn_field": "ModelName",
         "fqdn_namespace": "System.Web.Mvc",
@@ -6326,7 +6326,7 @@
       },
       "LineNumber": "16",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
         "fqdn_class": "ValueProviderResult",
         "fqdn_field": "AttemptedValue",
         "fqdn_namespace": "System.Web.Mvc",
@@ -6348,7 +6348,7 @@
       },
       "LineNumber": "26",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
         "fqdn_class": "IModelBinderProvider",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "IModelBinderProvider",
@@ -6369,7 +6369,7 @@
       },
       "LineNumber": "28",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
         "fqdn_class": "IModelBinder",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "IModelBinder",
@@ -6390,7 +6390,7 @@
       },
       "LineNumber": "32",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs",
         "fqdn_class": "DefaultModelBinder",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "new DbGeographyModelBinder()",
@@ -6411,7 +6411,7 @@
       },
       "LineNumber": "7",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "System.Web.Mvc",
         "syntax_type": "import"
@@ -6431,7 +6431,7 @@
       },
       "LineNumber": "13",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
         "fqdn_class": "HiddenInputAttribute",
         "fqdn_namespace": "System.Web.Mvc",
         "symbol": "HiddenInputAttribute",
@@ -6452,7 +6452,7 @@
       },
       "LineNumber": "13",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
         "fqdn_class": "HiddenInputAttribute",
         "fqdn_method": ".ctor",
         "fqdn_namespace": "System.Web.Mvc",
@@ -6474,7 +6474,7 @@
       },
       "LineNumber": "13",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs",
         "fqdn_class": "HiddenInputAttribute",
         "fqdn_field": "DisplayValue",
         "fqdn_namespace": "System.Web.Mvc",

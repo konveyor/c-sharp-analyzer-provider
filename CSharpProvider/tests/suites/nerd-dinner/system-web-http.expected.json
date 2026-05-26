@@ -16,7 +16,7 @@
       },
       "LineNumber": "3",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
         "fqdn_namespace": "System.Web.Http",
         "symbol": "System.Web.Http",
         "syntax_type": "import"
@@ -36,7 +36,7 @@
       },
       "LineNumber": "9",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
         "fqdn_class": "HttpConfiguration",
         "fqdn_namespace": "System.Web.Http",
         "symbol": "HttpConfiguration",
@@ -57,7 +57,7 @@
       },
       "LineNumber": "11",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
         "fqdn_class": "HttpRouteCollectionExtensions",
         "fqdn_method": "MapHttpRoute",
         "fqdn_namespace": "System.Web.Http",
@@ -79,7 +79,7 @@
       },
       "LineNumber": "11",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
         "fqdn_class": "HttpConfiguration",
         "fqdn_field": "Routes",
         "fqdn_namespace": "System.Web.Http",
@@ -101,7 +101,7 @@
       },
       "LineNumber": "14",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/App_Start/WebApiConfig.cs",
         "fqdn_class": "RouteParameter",
         "fqdn_field": "Optional",
         "fqdn_namespace": "System.Web.Http",
@@ -123,7 +123,7 @@
       },
       "LineNumber": "9",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
         "fqdn_namespace": "System.Web.Http",
         "symbol": "System.Web.Http",
         "syntax_type": "import"
@@ -143,7 +143,7 @@
       },
       "LineNumber": "25",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
         "fqdn_class": "ApiController",
         "fqdn_namespace": "System.Web.Http",
         "symbol": "ApiController",
@@ -164,7 +164,7 @@
       },
       "LineNumber": "30",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
         "fqdn_class": "HttpGetAttribute",
         "fqdn_namespace": "System.Web.Http",
         "symbol": "HttpGetAttribute",
@@ -185,7 +185,7 @@
       },
       "LineNumber": "38",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
         "fqdn_class": "HttpGetAttribute",
         "fqdn_namespace": "System.Web.Http",
         "symbol": "HttpGetAttribute",
@@ -206,7 +206,7 @@
       },
       "LineNumber": "52",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
         "fqdn_class": "HttpPostAttribute",
         "fqdn_namespace": "System.Web.Http",
         "symbol": "HttpPostAttribute",
@@ -227,7 +227,7 @@
       },
       "LineNumber": "108",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
         "fqdn_class": "ApiController",
         "fqdn_method": "Dispose",
         "fqdn_namespace": "System.Web.Http",
@@ -249,7 +249,7 @@
       },
       "LineNumber": "5",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
         "fqdn_namespace": "System.Web.Http",
         "symbol": "System.Web.Http",
         "syntax_type": "import"
@@ -269,7 +269,7 @@
       },
       "LineNumber": "21",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Global.asax.cs",
         "fqdn_class": "HttpConfiguration",
         "fqdn_namespace": "System.Web.Http",
         "symbol": "GlobalConfiguration.Configuration",

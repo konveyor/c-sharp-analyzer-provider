@@ -16,7 +16,7 @@
       },
       "LineNumber": "7",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/config-codegen-net40/UserTypeCodeEnhancer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/config-codegen-net40/UserTypeCodeEnhancer.cs",
         "fqdn_namespace": "System.Configuration",
         "symbol": "System.Configuration",
         "syntax_type": "import"
@@ -36,7 +36,7 @@
       },
       "LineNumber": "73",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/config-codegen-net40/UserTypeCodeEnhancer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/config-codegen-net40/UserTypeCodeEnhancer.cs",
         "fqdn_class": "ConfigurationErrorsException",
         "fqdn_namespace": "System.Configuration",
         "symbol": "ConfigurationErrorsException",

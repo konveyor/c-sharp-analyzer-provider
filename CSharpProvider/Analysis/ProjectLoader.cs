@@ -195,7 +195,7 @@ public class ProjectLoader
         var packages = new List<PackageIdentity>();
 
         // Add framework reference assemblies for .NET Framework projects
-        if (tfm != null && tfm.StartsWith("net4"))
+        if (IsNetFramework(tfm))
         {
             packages.Add(new PackageIdentity(
                 $"Microsoft.NETFramework.ReferenceAssemblies.{tfm}",
@@ -215,7 +215,7 @@ public class ProjectLoader
         }
 
         // For modern .NET, use on-disk SDK reference assemblies
-        if (tfm == null || !tfm.StartsWith("net4"))
+        if (!IsNetFramework(tfm))
         {
             var frameworkPath = GetFrameworkReferencePath();
             if (frameworkPath != null)
@@ -351,9 +351,18 @@ public class ProjectLoader
         return null;
     }
 
+    internal static bool IsNetFramework(string? tfm)
+    {
+        // .NET Framework TFMs: net20, net35, net40, net45, net451, net472, etc.
+        // Modern .NET TFMs: net5.0, net6.0, net8.0, net9.0 (contain a dot)
+        return tfm != null
+            && tfm.StartsWith("net")
+            && !tfm.Contains('.');
+    }
+
     internal static string NormalizeFrameworkVersion(string version)
     {
-        // v4.5 → net45, v4.5.1 → net451, v4.7.2 → net472, v4.8.1 → net481
+        // v3.5 -> net35, v4.5 -> net45, v4.5.1 -> net451, v4.7.2 -> net472
         var v = version.TrimStart('v', 'V');
         var cleaned = v.Replace(".", "");
         return $"net{cleaned}";

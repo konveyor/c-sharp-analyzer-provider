@@ -16,7 +16,7 @@
       },
       "LineNumber": "3",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.cs",
         "fqdn_namespace": "System.ServiceModel.Channels",
         "symbol": "System.ServiceModel.Channels",
         "syntax_type": "import"
@@ -36,7 +36,7 @@
       },
       "LineNumber": "28",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.cs",
         "fqdn_class": "ClientBase",
         "fqdn_method": "Close",
         "fqdn_namespace": "System.ServiceModel",
@@ -58,7 +58,7 @@
       },
       "LineNumber": "74",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "ServiceContractAttribute",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "ServiceContractAttribute",
@@ -79,7 +79,7 @@
       },
       "LineNumber": "74",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "ServiceContractAttribute",
         "fqdn_method": ".ctor",
         "fqdn_namespace": "System.ServiceModel",
@@ -101,7 +101,7 @@
       },
       "LineNumber": "74",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "ServiceContractAttribute",
         "fqdn_field": "Namespace",
         "fqdn_namespace": "System.ServiceModel",
@@ -123,7 +123,7 @@
       },
       "LineNumber": "74",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "ServiceContractAttribute",
         "fqdn_field": "ConfigurationName",
         "fqdn_namespace": "System.ServiceModel",
@@ -145,7 +145,7 @@
       },
       "LineNumber": "78",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "OperationContractAttribute",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "OperationContractAttribute",
@@ -166,7 +166,7 @@
       },
       "LineNumber": "78",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "OperationContractAttribute",
         "fqdn_method": ".ctor",
         "fqdn_namespace": "System.ServiceModel",
@@ -188,7 +188,7 @@
       },
       "LineNumber": "78",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "OperationContractAttribute",
         "fqdn_field": "Action",
         "fqdn_namespace": "System.ServiceModel",
@@ -210,7 +210,7 @@
       },
       "LineNumber": "78",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "OperationContractAttribute",
         "fqdn_field": "ReplyAction",
         "fqdn_namespace": "System.ServiceModel",
@@ -232,7 +232,7 @@
       },
       "LineNumber": "81",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "OperationContractAttribute",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "OperationContractAttribute",
@@ -253,7 +253,7 @@
       },
       "LineNumber": "81",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "OperationContractAttribute",
         "fqdn_method": ".ctor",
         "fqdn_namespace": "System.ServiceModel",
@@ -275,7 +275,7 @@
       },
       "LineNumber": "81",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "OperationContractAttribute",
         "fqdn_field": "AsyncPattern",
         "fqdn_namespace": "System.ServiceModel",
@@ -297,7 +297,7 @@
       },
       "LineNumber": "81",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "OperationContractAttribute",
         "fqdn_field": "Action",
         "fqdn_namespace": "System.ServiceModel",
@@ -319,7 +319,7 @@
       },
       "LineNumber": "81",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "OperationContractAttribute",
         "fqdn_field": "ReplyAction",
         "fqdn_namespace": "System.ServiceModel",
@@ -341,7 +341,7 @@
       },
       "LineNumber": "88",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "IClientChannel",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "IClientChannel",
@@ -362,7 +362,7 @@
       },
       "LineNumber": "117",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "ClientBase",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "ClientBase<IWeatherService>",
@@ -383,7 +383,7 @@
       },
       "LineNumber": "120",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "BeginOperationDelegate",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "BeginOperationDelegate",
@@ -404,7 +404,7 @@
       },
       "LineNumber": "122",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "EndOperationDelegate",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "EndOperationDelegate",
@@ -425,7 +425,7 @@
       },
       "LineNumber": "140",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "EndpointAddress",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "EndpointAddress",
@@ -446,7 +446,7 @@
       },
       "LineNumber": "141",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "EndpointAddress",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "remoteAddress",
@@ -467,7 +467,7 @@
       },
       "LineNumber": "145",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "Binding",
         "fqdn_namespace": "System.ServiceModel.Channels",
         "symbol": "Binding",
@@ -488,7 +488,7 @@
       },
       "LineNumber": "145",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "EndpointAddress",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "EndpointAddress",
@@ -509,7 +509,7 @@
       },
       "LineNumber": "146",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "Binding",
         "fqdn_namespace": "System.ServiceModel.Channels",
         "symbol": "binding",
@@ -530,7 +530,7 @@
       },
       "LineNumber": "146",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "EndpointAddress",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "remoteAddress",
@@ -551,7 +551,7 @@
       },
       "LineNumber": "154",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "ClientBase",
         "fqdn_field": "Channel",
         "fqdn_namespace": "System.ServiceModel",
@@ -573,7 +573,7 @@
       },
       "LineNumber": "160",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "ClientBase",
         "fqdn_field": "Channel",
         "fqdn_namespace": "System.ServiceModel",
@@ -595,7 +595,7 @@
       },
       "LineNumber": "166",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "ClientBase",
         "fqdn_field": "Channel",
         "fqdn_namespace": "System.ServiceModel",
@@ -617,7 +617,7 @@
       },
       "LineNumber": "187",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "InvokeAsyncCompletedEventArgs",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "InvokeAsyncCompletedEventArgs",
@@ -638,7 +638,7 @@
       },
       "LineNumber": "187",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "InvokeAsyncCompletedEventArgs",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "InvokeAsyncCompletedEventArgs",
@@ -659,7 +659,7 @@
       },
       "LineNumber": "188",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "ClientBase",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "this",
@@ -680,7 +680,7 @@
       },
       "LineNumber": "188",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "InvokeAsyncCompletedEventArgs",
         "fqdn_field": "Results",
         "fqdn_namespace": "System.ServiceModel",
@@ -702,7 +702,7 @@
       },
       "LineNumber": "188",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "AsyncCompletedEventArgs",
         "fqdn_field": "Error",
         "fqdn_namespace": "System.ComponentModel",
@@ -724,7 +724,7 @@
       },
       "LineNumber": "188",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "AsyncCompletedEventArgs",
         "fqdn_field": "Cancelled",
         "fqdn_namespace": "System.ComponentModel",
@@ -746,7 +746,7 @@
       },
       "LineNumber": "188",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "AsyncCompletedEventArgs",
         "fqdn_field": "UserState",
         "fqdn_namespace": "System.ComponentModel",
@@ -768,7 +768,7 @@
       },
       "LineNumber": "201",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "BeginOperationDelegate",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "new BeginOperationDelegate(this.OnBeginGetWeatherData)",
@@ -789,7 +789,7 @@
       },
       "LineNumber": "205",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "EndOperationDelegate",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "new EndOperationDelegate(this.OnEndGetWeatherData)",
@@ -810,7 +810,7 @@
       },
       "LineNumber": "211",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "ClientBase",
         "fqdn_method": "InvokeAsync",
         "fqdn_namespace": "System.ServiceModel",
@@ -832,7 +832,7 @@
       },
       "LineNumber": "211",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "BeginOperationDelegate",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "this.onBeginGetWeatherDataDelegate",
@@ -853,7 +853,7 @@
       },
       "LineNumber": "212",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/WeatherService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/WeatherService.cs",
         "fqdn_class": "EndOperationDelegate",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "this.onEndGetWeatherDataDelegate",
@@ -874,7 +874,7 @@
       },
       "LineNumber": "5",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/service/service.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/service/service.cs",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "System.ServiceModel",
         "syntax_type": "import"
@@ -894,7 +894,7 @@
       },
       "LineNumber": "10",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/service/service.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/service/service.cs",
         "fqdn_class": "ServiceContractAttribute",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "ServiceContractAttribute",
@@ -915,7 +915,7 @@
       },
       "LineNumber": "10",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/service/service.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/service/service.cs",
         "fqdn_class": "ServiceContractAttribute",
         "fqdn_method": ".ctor",
         "fqdn_namespace": "System.ServiceModel",
@@ -937,7 +937,7 @@
       },
       "LineNumber": "10",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/service/service.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/service/service.cs",
         "fqdn_class": "ServiceContractAttribute",
         "fqdn_field": "Namespace",
         "fqdn_namespace": "System.ServiceModel",
@@ -959,7 +959,7 @@
       },
       "LineNumber": "13",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/service/service.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/service/service.cs",
         "fqdn_class": "OperationContractAttribute",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "OperationContractAttribute",

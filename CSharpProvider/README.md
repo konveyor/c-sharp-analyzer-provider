@@ -11,6 +11,8 @@ dotnet run --project . -- --port 9876
 
 ## How it works
 
+See [ARCHITECTURE.md](ARCHITECTURE.md) for a more thorough explanation.
+
 1. **Project loading** (`Analysis/ProjectLoader.cs`): Tries MSBuild workspace first (`.sln` / SDK-style `.csproj`), falls back to ad-hoc compilation with NuGet package resolution.
 
 2. **Package resolution** (`Analysis/PackageResolver.cs`): Downloads NuGet packages for the detected target framework. Supports `paket.lock`, `packages.config`, and `PackageReference` formats.
@@ -27,6 +29,8 @@ dotnet run --project . -- --port 9876
 - **Value flow**: arguments, return values, and assignments where the expression type matches
 - **Dynamic access**: `ViewBag.X` and similar dynamic member chains
 - **Inheritance-aware matching**: querying `Controller` also finds members accessed through `Controller`, even if declared on `ControllerBase`
+
+And more!
 
 ## Testing
 

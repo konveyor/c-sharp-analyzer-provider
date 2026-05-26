@@ -1,6 +1,6 @@
 {
   "matched": true,
-  "incidentCount": 12,
+  "incidentCount": 52,
   "incidents": [
     {
       "fileURI": "client/App_Code/Global.asax.cs",
@@ -16,7 +16,7 @@
       },
       "LineNumber": "12",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "System.ServiceModel",
         "syntax_type": "import"
@@ -36,7 +36,7 @@
       },
       "LineNumber": "31",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
         "fqdn_class": "ClientBase",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "new WeatherServiceClient()",
@@ -57,7 +57,7 @@
       },
       "LineNumber": "33",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
         "fqdn_class": "ClientBase",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "client",
@@ -78,11 +78,381 @@
       },
       "LineNumber": "40",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
         "fqdn_class": "ClientBase",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "value",
         "syntax_type": "type_usage"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/Global.asax.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 51,
+          "character": 35
+        },
+        "endPosition": {
+          "line": 51,
+          "character": 52
+        }
+      },
+      "LineNumber": "51",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "fqdn_class": "ClientBase",
+        "fqdn_field": "State",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "localClient.State",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/Global.asax.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 51,
+          "character": 56
+        },
+        "endPosition": {
+          "line": 51,
+          "character": 101
+        }
+      },
+      "LineNumber": "51",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "fqdn_class": "CommunicationState",
+        "fqdn_field": "Opened",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "CommunicationState.Opened",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/Global.asax.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 51,
+          "character": 56
+        },
+        "endPosition": {
+          "line": 51,
+          "character": 94
+        }
+      },
+      "LineNumber": "51",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "fqdn_class": "CommunicationState",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "ServiceModel.CommunicationState",
+        "syntax_type": "class_def"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/Global.asax.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 53,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 53,
+          "character": 29
+        }
+      },
+      "LineNumber": "53",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "fqdn_class": "ClientBase",
+        "fqdn_method": "Close",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "localClient.Close",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 73,
+          "character": 5
+        },
+        "endPosition": {
+          "line": 73,
+          "character": 160
+        }
+      },
+      "LineNumber": "73",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "ServiceContractAttribute",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "ServiceContractAttribute",
+        "syntax_type": "annotation"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 73,
+          "character": 25
+        },
+        "endPosition": {
+          "line": 73,
+          "character": 49
+        }
+      },
+      "LineNumber": "73",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "ServiceContractAttribute",
+        "fqdn_method": ".ctor",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": ".ctor",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 73,
+          "character": 50
+        },
+        "endPosition": {
+          "line": 73,
+          "character": 59
+        }
+      },
+      "LineNumber": "73",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "ServiceContractAttribute",
+        "fqdn_field": "Namespace",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "Namespace",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 73,
+          "character": 97
+        },
+        "endPosition": {
+          "line": 73,
+          "character": 114
+        }
+      },
+      "LineNumber": "73",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "ServiceContractAttribute",
+        "fqdn_field": "ConfigurationName",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "ConfigurationName",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 77,
+          "character": 9
+        },
+        "endPosition": {
+          "line": 77,
+          "character": 218
+        }
+      },
+      "LineNumber": "77",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "OperationContractAttribute",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "OperationContractAttribute",
+        "syntax_type": "annotation"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 77,
+          "character": 29
+        },
+        "endPosition": {
+          "line": 77,
+          "character": 55
+        }
+      },
+      "LineNumber": "77",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "OperationContractAttribute",
+        "fqdn_method": ".ctor",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": ".ctor",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 77,
+          "character": 56
+        },
+        "endPosition": {
+          "line": 77,
+          "character": 62
+        }
+      },
+      "LineNumber": "77",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "OperationContractAttribute",
+        "fqdn_field": "Action",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "Action",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 77,
+          "character": 131
+        },
+        "endPosition": {
+          "line": 77,
+          "character": 142
+        }
+      },
+      "LineNumber": "77",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "OperationContractAttribute",
+        "fqdn_field": "ReplyAction",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "ReplyAction",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 80,
+          "character": 9
+        },
+        "endPosition": {
+          "line": 80,
+          "character": 237
+        }
+      },
+      "LineNumber": "80",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "OperationContractAttribute",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "OperationContractAttribute",
+        "syntax_type": "annotation"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 80,
+          "character": 29
+        },
+        "endPosition": {
+          "line": 80,
+          "character": 55
+        }
+      },
+      "LineNumber": "80",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "OperationContractAttribute",
+        "fqdn_method": ".ctor",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": ".ctor",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 80,
+          "character": 56
+        },
+        "endPosition": {
+          "line": 80,
+          "character": 68
+        }
+      },
+      "LineNumber": "80",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "OperationContractAttribute",
+        "fqdn_field": "AsyncPattern",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "AsyncPattern",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 80,
+          "character": 75
+        },
+        "endPosition": {
+          "line": 80,
+          "character": 81
+        }
+      },
+      "LineNumber": "80",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "OperationContractAttribute",
+        "fqdn_field": "Action",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "Action",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 80,
+          "character": 150
+        },
+        "endPosition": {
+          "line": 80,
+          "character": 161
+        }
+      },
+      "LineNumber": "80",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "OperationContractAttribute",
+        "fqdn_field": "ReplyAction",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "ReplyAction",
+        "syntax_type": "field_reference"
       }
     },
     {
@@ -99,7 +469,7 @@
       },
       "LineNumber": "87",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
         "fqdn_class": "IClientChannel",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "IClientChannel",
@@ -120,10 +490,52 @@
       },
       "LineNumber": "116",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
         "fqdn_class": "ClientBase",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "ClientBase<IWeatherService>",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 119,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 119,
+          "character": 38
+        }
+      },
+      "LineNumber": "119",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "BeginOperationDelegate",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "BeginOperationDelegate",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 121,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 121,
+          "character": 36
+        }
+      },
+      "LineNumber": "121",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "EndOperationDelegate",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "EndOperationDelegate",
         "syntax_type": "type_reference"
       }
     },
@@ -141,11 +553,32 @@
       },
       "LineNumber": "139",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
         "fqdn_class": "EndpointAddress",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "EndpointAddress",
         "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 140,
+          "character": 48
+        },
+        "endPosition": {
+          "line": 140,
+          "character": 61
+        }
+      },
+      "LineNumber": "140",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "EndpointAddress",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "remoteAddress",
+        "syntax_type": "type_usage"
       }
     },
     {
@@ -162,9 +595,9 @@
       },
       "LineNumber": "144",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
         "fqdn_class": "Binding",
-        "fqdn_namespace": "System.ServiceModel",
+        "fqdn_namespace": "System.ServiceModel.Channels",
         "symbol": "Binding",
         "syntax_type": "type_reference"
       }
@@ -183,10 +616,160 @@
       },
       "LineNumber": "144",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
         "fqdn_class": "EndpointAddress",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "EndpointAddress",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 145,
+          "character": 21
+        },
+        "endPosition": {
+          "line": 145,
+          "character": 28
+        }
+      },
+      "LineNumber": "145",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "Binding",
+        "fqdn_namespace": "System.ServiceModel.Channels",
+        "symbol": "binding",
+        "syntax_type": "type_usage"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 145,
+          "character": 30
+        },
+        "endPosition": {
+          "line": 145,
+          "character": 43
+        }
+      },
+      "LineNumber": "145",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "EndpointAddress",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "remoteAddress",
+        "syntax_type": "type_usage"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 153,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 153,
+          "character": 31
+        }
+      },
+      "LineNumber": "153",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "ClientBase",
+        "fqdn_field": "Channel",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "base.Channel",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 159,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 159,
+          "character": 31
+        }
+      },
+      "LineNumber": "159",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "ClientBase",
+        "fqdn_field": "Channel",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "base.Channel",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 165,
+          "character": 19
+        },
+        "endPosition": {
+          "line": 165,
+          "character": 31
+        }
+      },
+      "LineNumber": "165",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "ClientBase",
+        "fqdn_field": "Channel",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "base.Channel",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 186,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 186,
+          "character": 45
+        }
+      },
+      "LineNumber": "186",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "InvokeAsyncCompletedEventArgs",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "InvokeAsyncCompletedEventArgs",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 186,
+          "character": 51
+        },
+        "endPosition": {
+          "line": 186,
+          "character": 89
+        }
+      },
+      "LineNumber": "186",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "InvokeAsyncCompletedEventArgs",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "InvokeAsyncCompletedEventArgs",
         "syntax_type": "type_reference"
       }
     },
@@ -204,10 +787,204 @@
       },
       "LineNumber": "187",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
         "fqdn_class": "ClientBase",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "this",
+        "syntax_type": "type_usage"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 187,
+          "character": 67
+        },
+        "endPosition": {
+          "line": 187,
+          "character": 76
+        }
+      },
+      "LineNumber": "187",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "InvokeAsyncCompletedEventArgs",
+        "fqdn_field": "Results",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "e.Results",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 187,
+          "character": 78
+        },
+        "endPosition": {
+          "line": 187,
+          "character": 85
+        }
+      },
+      "LineNumber": "187",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "AsyncCompletedEventArgs",
+        "fqdn_field": "Error",
+        "fqdn_namespace": "System.ComponentModel",
+        "symbol": "e.Error",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 187,
+          "character": 87
+        },
+        "endPosition": {
+          "line": 187,
+          "character": 98
+        }
+      },
+      "LineNumber": "187",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "AsyncCompletedEventArgs",
+        "fqdn_field": "Cancelled",
+        "fqdn_namespace": "System.ComponentModel",
+        "symbol": "e.Cancelled",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 187,
+          "character": 100
+        },
+        "endPosition": {
+          "line": 187,
+          "character": 111
+        }
+      },
+      "LineNumber": "187",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "AsyncCompletedEventArgs",
+        "fqdn_field": "UserState",
+        "fqdn_namespace": "System.ComponentModel",
+        "symbol": "e.UserState",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 200,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 200,
+          "character": 107
+        }
+      },
+      "LineNumber": "200",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "BeginOperationDelegate",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "new BeginOperationDelegate(this.OnBeginGetWeatherData)",
+        "syntax_type": "type_usage"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 204,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 204,
+          "character": 101
+        }
+      },
+      "LineNumber": "204",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "EndOperationDelegate",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "new EndOperationDelegate(this.OnEndGetWeatherData)",
+        "syntax_type": "type_usage"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 210,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 210,
+          "character": 28
+        }
+      },
+      "LineNumber": "210",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "ClientBase",
+        "fqdn_method": "InvokeAsync",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "base.InvokeAsync",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 210,
+          "character": 29
+        },
+        "endPosition": {
+          "line": 210,
+          "character": 63
+        }
+      },
+      "LineNumber": "210",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "BeginOperationDelegate",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "this.onBeginGetWeatherDataDelegate",
+        "syntax_type": "type_usage"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/generatedClient.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 211,
+          "character": 37
+        },
+        "endPosition": {
+          "line": 211,
+          "character": 69
+        }
+      },
+      "LineNumber": "211",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/generatedClient.cs",
+        "fqdn_class": "EndOperationDelegate",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "this.onEndGetWeatherDataDelegate",
         "syntax_type": "type_usage"
       }
     },
@@ -225,7 +1002,7 @@
       },
       "LineNumber": "26",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/Default.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/Default.aspx.cs",
         "fqdn_class": "ClientBase",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "Global.Client",
@@ -246,10 +1023,96 @@
       },
       "LineNumber": "5",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/service/service.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/service/service.cs",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "System.ServiceModel",
         "syntax_type": "import"
+      }
+    },
+    {
+      "fileURI": "service/service.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 10,
+          "character": 5
+        },
+        "endPosition": {
+          "line": 10,
+          "character": 67
+        }
+      },
+      "LineNumber": "10",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/service/service.cs",
+        "fqdn_class": "ServiceContractAttribute",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "ServiceContractAttribute",
+        "syntax_type": "annotation"
+      }
+    },
+    {
+      "fileURI": "service/service.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 10,
+          "character": 5
+        },
+        "endPosition": {
+          "line": 10,
+          "character": 20
+        }
+      },
+      "LineNumber": "10",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/service/service.cs",
+        "fqdn_class": "ServiceContractAttribute",
+        "fqdn_method": ".ctor",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": ".ctor",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "service/service.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 10,
+          "character": 21
+        },
+        "endPosition": {
+          "line": 10,
+          "character": 30
+        }
+      },
+      "LineNumber": "10",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/service/service.cs",
+        "fqdn_class": "ServiceContractAttribute",
+        "fqdn_field": "Namespace",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "Namespace",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "service/service.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 13,
+          "character": 3
+        },
+        "endPosition": {
+          "line": 13,
+          "character": 20
+        }
+      },
+      "LineNumber": "13",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/service/service.cs",
+        "fqdn_class": "OperationContractAttribute",
+        "fqdn_namespace": "System.ServiceModel",
+        "symbol": "OperationContractAttribute",
+        "syntax_type": "annotation"
       }
     }
   ]

@@ -1,6 +1,6 @@
 {
   "matched": true,
-  "incidentCount": 13,
+  "incidentCount": 14,
   "incidents": [
     {
       "fileURI": "client/App_Code/Global.asax.cs",
@@ -16,7 +16,7 @@
       },
       "LineNumber": "5",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
         "fqdn_namespace": "System.Web",
         "symbol": "System.Web",
         "syntax_type": "import"
@@ -36,7 +36,7 @@
       },
       "LineNumber": "6",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
         "fqdn_namespace": "System.Web.Security",
         "symbol": "System.Web.Security",
         "syntax_type": "import"
@@ -56,7 +56,7 @@
       },
       "LineNumber": "7",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
         "fqdn_namespace": "System.Web.UI",
         "symbol": "System.Web.UI",
         "syntax_type": "import"
@@ -76,7 +76,7 @@
       },
       "LineNumber": "8",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
         "fqdn_namespace": "System.Web.UI.WebControls",
         "symbol": "System.Web.UI.WebControls",
         "syntax_type": "import"
@@ -96,7 +96,7 @@
       },
       "LineNumber": "9",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
         "fqdn_namespace": "System.Web.UI.WebControls.WebParts",
         "symbol": "System.Web.UI.WebControls.WebParts",
         "syntax_type": "import"
@@ -116,10 +116,31 @@
       },
       "LineNumber": "10",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
         "fqdn_namespace": "System.Web.UI.HtmlControls",
         "symbol": "System.Web.UI.HtmlControls",
         "syntax_type": "import"
+      }
+    },
+    {
+      "fileURI": "client/App_Code/Global.asax.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 15,
+          "character": 22
+        },
+        "endPosition": {
+          "line": 15,
+          "character": 37
+        }
+      },
+      "LineNumber": "15",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/App_Code/Global.asax.cs",
+        "fqdn_class": "HttpApplication",
+        "fqdn_namespace": "System.Web",
+        "symbol": "HttpApplication",
+        "syntax_type": "type_reference"
       }
     },
     {
@@ -136,7 +157,7 @@
       },
       "LineNumber": "6",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/Default.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/Default.aspx.cs",
         "fqdn_namespace": "System.Web",
         "symbol": "System.Web",
         "syntax_type": "import"
@@ -156,7 +177,7 @@
       },
       "LineNumber": "7",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/Default.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/Default.aspx.cs",
         "fqdn_namespace": "System.Web.Security",
         "symbol": "System.Web.Security",
         "syntax_type": "import"
@@ -176,7 +197,7 @@
       },
       "LineNumber": "8",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/Default.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/Default.aspx.cs",
         "fqdn_namespace": "System.Web.UI",
         "symbol": "System.Web.UI",
         "syntax_type": "import"
@@ -196,7 +217,7 @@
       },
       "LineNumber": "9",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/Default.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/Default.aspx.cs",
         "fqdn_namespace": "System.Web.UI.WebControls",
         "symbol": "System.Web.UI.WebControls",
         "syntax_type": "import"
@@ -216,7 +237,7 @@
       },
       "LineNumber": "10",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/Default.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/Default.aspx.cs",
         "fqdn_namespace": "System.Web.UI.WebControls.WebParts",
         "symbol": "System.Web.UI.WebControls.WebParts",
         "syntax_type": "import"
@@ -236,7 +257,7 @@
       },
       "LineNumber": "11",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/Default.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/Default.aspx.cs",
         "fqdn_namespace": "System.Web.UI.HtmlControls",
         "symbol": "System.Web.UI.HtmlControls",
         "syntax_type": "import"
@@ -256,9 +277,9 @@
       },
       "LineNumber": "14",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-webforms-net35/client/Default.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-webforms-net35/client/Default.aspx.cs",
         "fqdn_class": "Page",
-        "fqdn_namespace": "System.Web",
+        "fqdn_namespace": "System.Web.UI",
         "symbol": "Page",
         "syntax_type": "type_reference"
       }

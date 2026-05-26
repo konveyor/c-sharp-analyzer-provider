@@ -16,7 +16,7 @@
       },
       "LineNumber": "21",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Form",
         "fqdn_method": "Dispose",
         "fqdn_namespace": "System.Windows.Forms",
@@ -38,7 +38,7 @@
       },
       "LineNumber": "32",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Button",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "new System.Windows.Forms.Button()",
@@ -59,7 +59,7 @@
       },
       "LineNumber": "33",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "DataGridView",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "new System.Windows.Forms.DataGridView()",
@@ -80,7 +80,7 @@
       },
       "LineNumber": "35",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Control",
         "fqdn_method": "SuspendLayout",
         "fqdn_namespace": "System.Windows.Forms",
@@ -102,7 +102,7 @@
       },
       "LineNumber": "39",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Control",
         "fqdn_field": "Location",
         "fqdn_namespace": "System.Windows.Forms",
@@ -124,7 +124,7 @@
       },
       "LineNumber": "40",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Control",
         "fqdn_field": "Name",
         "fqdn_namespace": "System.Windows.Forms",
@@ -146,7 +146,7 @@
       },
       "LineNumber": "41",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Control",
         "fqdn_field": "Size",
         "fqdn_namespace": "System.Windows.Forms",
@@ -168,7 +168,7 @@
       },
       "LineNumber": "42",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Control",
         "fqdn_field": "TabIndex",
         "fqdn_namespace": "System.Windows.Forms",
@@ -190,7 +190,7 @@
       },
       "LineNumber": "43",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "ButtonBase",
         "fqdn_field": "Text",
         "fqdn_namespace": "System.Windows.Forms",
@@ -212,7 +212,7 @@
       },
       "LineNumber": "44",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Control",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "button1.Click",
@@ -233,7 +233,7 @@
       },
       "LineNumber": "48",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Control",
         "fqdn_field": "Location",
         "fqdn_namespace": "System.Windows.Forms",
@@ -255,7 +255,7 @@
       },
       "LineNumber": "49",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Control",
         "fqdn_field": "Name",
         "fqdn_namespace": "System.Windows.Forms",
@@ -277,7 +277,7 @@
       },
       "LineNumber": "50",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "DataGridViewHeaderBorderStyle",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "System.Windows.Forms.DataGridViewHeaderBorderStyle.None",
@@ -298,7 +298,7 @@
       },
       "LineNumber": "50",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "DataGridView",
         "fqdn_field": "RowHeadersBorderStyle",
         "fqdn_namespace": "System.Windows.Forms",
@@ -320,7 +320,7 @@
       },
       "LineNumber": "50",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "DataGridViewHeaderBorderStyle",
         "fqdn_field": "None",
         "fqdn_namespace": "System.Windows.Forms",
@@ -342,7 +342,7 @@
       },
       "LineNumber": "50",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "DataGridViewHeaderBorderStyle",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "Forms.DataGridViewHeaderBorderStyle",
@@ -363,7 +363,7 @@
       },
       "LineNumber": "51",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Control",
         "fqdn_field": "Size",
         "fqdn_namespace": "System.Windows.Forms",
@@ -385,7 +385,7 @@
       },
       "LineNumber": "52",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Control",
         "fqdn_field": "TabIndex",
         "fqdn_namespace": "System.Windows.Forms",
@@ -407,7 +407,7 @@
       },
       "LineNumber": "53",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "DataGridView",
         "fqdn_field": "Text",
         "fqdn_namespace": "System.Windows.Forms",
@@ -429,7 +429,7 @@
       },
       "LineNumber": "57",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "ContainerControl",
         "fqdn_field": "AutoScaleDimensions",
         "fqdn_namespace": "System.Windows.Forms",
@@ -451,7 +451,7 @@
       },
       "LineNumber": "58",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "AutoScaleMode",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "System.Windows.Forms.AutoScaleMode.Font",
@@ -472,7 +472,7 @@
       },
       "LineNumber": "58",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "ContainerControl",
         "fqdn_field": "AutoScaleMode",
         "fqdn_namespace": "System.Windows.Forms",
@@ -494,7 +494,7 @@
       },
       "LineNumber": "58",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "AutoScaleMode",
         "fqdn_field": "Font",
         "fqdn_namespace": "System.Windows.Forms",
@@ -516,7 +516,7 @@
       },
       "LineNumber": "58",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "AutoScaleMode",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "Forms.AutoScaleMode",
@@ -537,7 +537,7 @@
       },
       "LineNumber": "59",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Form",
         "fqdn_field": "ClientSize",
         "fqdn_namespace": "System.Windows.Forms",
@@ -559,7 +559,7 @@
       },
       "LineNumber": "60",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "ControlCollection",
         "fqdn_method": "Add",
         "fqdn_namespace": "System.Windows.Forms",
@@ -581,7 +581,7 @@
       },
       "LineNumber": "60",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Control",
         "fqdn_field": "Controls",
         "fqdn_namespace": "System.Windows.Forms",
@@ -603,7 +603,7 @@
       },
       "LineNumber": "60",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "DataGridView",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "this.dataGridView1",
@@ -624,7 +624,7 @@
       },
       "LineNumber": "61",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "ControlCollection",
         "fqdn_method": "Add",
         "fqdn_namespace": "System.Windows.Forms",
@@ -646,7 +646,7 @@
       },
       "LineNumber": "61",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Control",
         "fqdn_field": "Controls",
         "fqdn_namespace": "System.Windows.Forms",
@@ -668,7 +668,7 @@
       },
       "LineNumber": "61",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Button",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "this.button1",
@@ -689,7 +689,7 @@
       },
       "LineNumber": "62",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Control",
         "fqdn_field": "Name",
         "fqdn_namespace": "System.Windows.Forms",
@@ -711,7 +711,7 @@
       },
       "LineNumber": "63",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Form",
         "fqdn_field": "Text",
         "fqdn_namespace": "System.Windows.Forms",
@@ -733,7 +733,7 @@
       },
       "LineNumber": "65",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Control",
         "fqdn_method": "ResumeLayout",
         "fqdn_namespace": "System.Windows.Forms",
@@ -755,7 +755,7 @@
       },
       "LineNumber": "71",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "Button",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "Button",
@@ -776,7 +776,7 @@
       },
       "LineNumber": "72",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.Designer.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.Designer.cs",
         "fqdn_class": "DataGridView",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "DataGridView",
@@ -797,7 +797,7 @@
       },
       "LineNumber": "9",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.cs",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "System.Windows.Forms",
         "syntax_type": "import"
@@ -817,7 +817,7 @@
       },
       "LineNumber": "14",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.cs",
         "fqdn_class": "Form",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "Form",
@@ -838,7 +838,7 @@
       },
       "LineNumber": "26",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.cs",
         "fqdn_class": "Form",
         "fqdn_method": "OnClosed",
         "fqdn_namespace": "System.Windows.Forms",
@@ -860,7 +860,7 @@
       },
       "LineNumber": "40",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.cs",
         "fqdn_class": "BindingSource",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "BindingSource",
@@ -881,7 +881,7 @@
       },
       "LineNumber": "41",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.cs",
         "fqdn_class": "BindingSource",
         "fqdn_field": "DataSource",
         "fqdn_namespace": "System.Windows.Forms",
@@ -903,7 +903,7 @@
       },
       "LineNumber": "42",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.cs",
         "fqdn_class": "BindingSource",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "bSource",
@@ -924,7 +924,7 @@
       },
       "LineNumber": "42",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/Form1.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/Form1.cs",
         "fqdn_class": "DataGridView",
         "fqdn_field": "DataSource",
         "fqdn_namespace": "System.Windows.Forms",
@@ -946,7 +946,7 @@
       },
       "LineNumber": "3",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/client.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/client.cs",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "System.Windows.Forms",
         "syntax_type": "import"
@@ -966,7 +966,7 @@
       },
       "LineNumber": "15",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/client.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/client.cs",
         "fqdn_class": "Application",
         "fqdn_method": "EnableVisualStyles",
         "fqdn_namespace": "System.Windows.Forms",
@@ -988,7 +988,7 @@
       },
       "LineNumber": "16",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/client.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/client.cs",
         "fqdn_class": "Application",
         "fqdn_method": "Run",
         "fqdn_namespace": "System.Windows.Forms",
@@ -1010,7 +1010,7 @@
       },
       "LineNumber": "16",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/testdata/repos/wcf-winforms-net40/client/client.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/wcf-winforms-net40/client/client.cs",
         "fqdn_class": "Form",
         "fqdn_namespace": "System.Windows.Forms",
         "symbol": "new Form1()",
