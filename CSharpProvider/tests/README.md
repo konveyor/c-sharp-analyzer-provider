@@ -47,6 +47,37 @@ This is needed because the C# provider uses full regex patterns
 (`^System\.Web\.Mvc(\..*)?$`) while the Rust provider uses glob-style
 patterns (`System.Web.Mvc.*`).
 
+## Raw grpcurl
+
+For ad-hoc testing outside the test runner, you can call the provider directly
+with `grpcurl`.
+
+```bash
+# Start the provider
+dotnet run --project CSharpProvider -- --port 9876 &
+
+# List available services
+grpcurl -plaintext localhost:9876 list
+
+# Init with a project
+grpcurl -plaintext -d '{
+  "location": "/absolute/path/to/project"
+}' localhost:9876 provider.ProviderService/Init
+
+# Evaluate a query
+grpcurl -max-msg-sz 10485760 -plaintext -d '{
+  "cap": "referenced",
+  "conditionInfo": "{\"referenced\": {\"pattern\": \"^System\\\\.Web\\\\.Mvc(\\\\..*)?$\"}}",
+  "id": 1
+}' localhost:9876 provider.ProviderService/Evaluate
+
+# Stop the provider
+grpcurl -plaintext -d '{}' localhost:9876 provider.ProviderService/Stop
+```
+
+Note: `conditionInfo` is a JSON string containing a JSON object, so the inner
+quotes and backslashes need double-escaping on the command line.
+
 ## Debugging a Provider
 
 Use `--pause` to pause before and after every gRPC request, giving you time
