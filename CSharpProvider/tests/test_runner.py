@@ -10,10 +10,10 @@ Subcommands:
     diff   — Compare two result directories
 
 Usage:
-    uv run testdata/test_runner.py setup
-    uv run testdata/test_runner.py run --provider csharp
-    uv run testdata/test_runner.py run --provider rust --port 9000
-    uv run testdata/test_runner.py diff results/csharp/latest results/rust/latest
+    uv run CSharpProvider/tests/test_runner.py setup
+    uv run CSharpProvider/tests/test_runner.py run --provider csharp
+    uv run CSharpProvider/tests/test_runner.py run --provider rust --port 9000
+    uv run CSharpProvider/tests/test_runner.py diff results/csharp/latest results/rust/latest
 """
 
 import json
@@ -36,7 +36,7 @@ from pydantic import BaseModel
 
 TESTDATA = Path(__file__).resolve().parent
 REPOS = TESTDATA / "repos"
-TESTS = TESTDATA / "tests"
+SUITES = TESTDATA / "suites"
 RESULTS = TESTDATA / "results"
 
 app = typer.Typer(help="Test runner for the C# analyzer provider.")
@@ -69,7 +69,7 @@ def load_manifests(
     projects: list[str] | None = None,
 ) -> dict[str, Manifest]:
     manifests: dict[str, Manifest] = {}
-    for manifest_path in sorted(TESTS.glob("*/_.json")):
+    for manifest_path in sorted(SUITES.glob("*/_.json")):
         project = manifest_path.parent.name
         if projects and project not in projects:
             continue
@@ -148,8 +148,8 @@ def clone_repo(project: str, repo: RepoConfig) -> bool:
 @app.command()
 def setup() -> None:
     """Clone external test repos defined by test manifests."""
-    if not TESTS.is_dir():
-        print(f"ERROR: {TESTS} does not exist")
+    if not SUITES.is_dir():
+        print(f"ERROR: {SUITES} does not exist")
         raise typer.Exit(1)
 
     manifests = load_manifests()
@@ -281,7 +281,7 @@ def validate_manifests(
     warnings: list[str] = []
 
     for project, manifest in manifests.items():
-        test_dir = TESTS / project
+        test_dir = SUITES / project
         steps = manifest.steps
 
         for step_file in steps:
@@ -405,7 +405,7 @@ def run_project(
     verbose: bool,
     pause: bool,
 ) -> list[dict[str, str]]:
-    test_dir = TESTS / project
+    test_dir = SUITES / project
     steps = manifest.steps
     repo_dir = resolve_repo_dir(project)
     results: list[dict[str, str]] = []
