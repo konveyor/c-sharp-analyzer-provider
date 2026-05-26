@@ -6,7 +6,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>CSharpProvider</AssemblyName>
     <RootNamespace>CSharpProvider</RootNamespace>
+    <!-- Enable all Roslyn code analysis rules (CA*, IDE*) at build time -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-all</AnalysisLevel>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="tests/**" />
+    <Content Remove="tests/**" />
+    <EmbeddedResource Remove="tests/**" />
+    <None Remove="tests/**" />
+  </ItemGroup>
 
   <ItemGroup>
     <!-- Only generate server-side stubs from the protobuf -->
