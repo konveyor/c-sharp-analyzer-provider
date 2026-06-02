@@ -54,6 +54,11 @@ public class ProviderService : Provider.ProviderService.ProviderServiceBase
             {
                 Successful = true,
                 Id = 1,
+                BuiltinConfig = new Config
+                {
+                    Location = Environment.CurrentDirectory,
+                    AnalysisMode = "source-only"
+                }
             };
         }
         catch (Exception ex)

@@ -36,6 +36,50 @@ And more!
 
 See [`tests/README.md`](tests/README.md) for the full test infrastructure.
 
+## Container Deployment
+
+### Building the Container Image
+
+```bash
+# Using the build script
+cd CSharpProvider
+../scripts/build-container.sh
+
+# Or manually with podman
+podman build -f Containerfile -t quay.io/konveyor/c-sharp-roslyn-provider:latest .
+```
+
+### Testing the Container
+
+```bash
+# Using the test script (interactive)
+../scripts/test-container.sh
+
+# Or manually
+podman run --rm -p 14651:14651 quay.io/konveyor/c-sharp-roslyn-provider:latest
+
+# Test with a project volume
+podman run --rm -p 14651:14651 \
+  -v /path/to/your/project:/projects:Z \
+  quay.io/konveyor/c-sharp-roslyn-provider:latest
+```
+
+### Container Runtime Permissions
+
+The container:
+- Runs as user 1001 (non-root)
+- Has group 0 (root group) permissions for OpenShift compatibility
+- Requires `:Z` flag on volume mounts for SELinux systems
+- Includes the .NET SDK for runtime `dotnet restore` on analyzed projects
+
+## Integration with analyzer-lsp
+
+See [INTEGRATION.md](../INTEGRATION.md) for complete integration guide including:
+- Provider configuration examples
+- Testing with analyzer-lsp/kantra
+- Troubleshooting tips
+- Advanced configuration options
+
 ## Query format
 
 Patterns are regex, matched against the fully-qualified symbol name:

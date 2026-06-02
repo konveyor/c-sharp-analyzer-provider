@@ -1,4 +1,3 @@
-using System.Text.Json;
 using System.Text.RegularExpressions;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.CodeAnalysis;
@@ -33,34 +32,47 @@ public record QueryResult(
     string? FqdnMethod,
     string? FqdnField);
 
+// YAML structure that analyzer-lsp sends
+internal class ConditionWrapper
+{
+    public ReferencedCondition? Referenced { get; set; }
+}
+
+internal class ReferencedCondition
+{
+    public string Pattern { get; set; } = string.Empty;
+    public string? Location { get; set; }
+    [YamlMember(Alias = "file_paths")]
+    public List<string>? FilePaths { get; set; }
+}
+
 public static class SymbolQuery
 {
+    private static readonly IDeserializer YamlDeserializer = new DeserializerBuilder()
+        .WithNamingConvention(UnderscoredNamingConvention.Instance)
+        .IgnoreUnmatchedProperties()
+        .Build();
+
     public static QueryCondition ParseCondition(string conditionInfo)
     {
-        try
-        {
-            return ParseConditionFromJson(conditionInfo);
-        }
-        catch (JsonException)
-        {
-            return ParseConditionFromYaml(conditionInfo);
-        }
-    }
+        var wrapper = YamlDeserializer.Deserialize<ConditionWrapper>(conditionInfo);
 
-    private static QueryCondition ParseConditionFromJson(string json)
-    {
-        using var doc = JsonDocument.Parse(json);
-        var root = doc.RootElement;
-        var referenced = root.GetProperty("referenced");
+        if (wrapper.Referenced == null)
+        {
+            throw new ArgumentException("Missing 'referenced' section in condition info");
+        }
 
-        var pattern = referenced.GetProperty("pattern").GetString()
-            ?? throw new ArgumentException("Missing pattern");
+        var referenced = wrapper.Referenced;
+
+        if (string.IsNullOrEmpty(referenced.Pattern))
+        {
+            throw new ArgumentException("Missing pattern in referenced condition");
+        }
 
         var location = LocationType.All;
-        if (referenced.TryGetProperty("location", out var locProp))
+        if (!string.IsNullOrEmpty(referenced.Location))
         {
-            var locStr = locProp.GetString()?.ToUpperInvariant();
-            location = locStr switch
+            location = referenced.Location.ToUpperInvariant() switch
             {
                 "METHOD" => LocationType.Method,
                 "FIELD" => LocationType.Field,
@@ -70,56 +82,16 @@ public static class SymbolQuery
         }
 
         List<string>? filePaths = null;
-        if (referenced.TryGetProperty("file_paths", out var fpProp) && fpProp.ValueKind == JsonValueKind.Array)
+        if (referenced.FilePaths != null && referenced.FilePaths.Count > 0)
         {
-            filePaths = fpProp.EnumerateArray()
-                .Select(e => e.GetString()!)
+            filePaths = referenced.FilePaths
                 .Where(s => !string.IsNullOrEmpty(s))
                 .ToList();
             if (filePaths.Count == 0)
                 filePaths = null;
         }
 
-        return new QueryCondition(new Regex(pattern), location, filePaths);
-    }
-
-    private static QueryCondition ParseConditionFromYaml(string yaml)
-    {
-        var deserializer = new DeserializerBuilder()
-            .WithNamingConvention(UnderscoredNamingConvention.Instance)
-            .Build();
-        var doc = deserializer.Deserialize<Dictionary<string, object?>>(yaml);
-
-        if (!doc.TryGetValue("referenced", out var refObj) || refObj is not Dictionary<object, object> referenced)
-            throw new ArgumentException("Missing 'referenced' in conditionInfo");
-
-        if (!referenced.TryGetValue("pattern", out var patternObj) || patternObj is not string pattern)
-            throw new ArgumentException("Missing pattern");
-
-        var location = LocationType.All;
-        if (referenced.TryGetValue("location", out var locObj) && locObj is string locStr)
-        {
-            location = locStr.ToUpperInvariant() switch
-            {
-                "METHOD" => LocationType.Method,
-                "FIELD" => LocationType.Field,
-                "CLASS" => LocationType.Class,
-                _ => LocationType.All,
-            };
-        }
-
-        List<string>? filePaths = null;
-        if (referenced.TryGetValue("file_paths", out var fpObj) && fpObj is List<object> fpList)
-        {
-            filePaths = fpList
-                .Select(e => e?.ToString()!)
-                .Where(s => !string.IsNullOrEmpty(s))
-                .ToList();
-            if (filePaths.Count == 0)
-                filePaths = null;
-        }
-
-        return new QueryCondition(new Regex(pattern), location, filePaths);
+        return new QueryCondition(new Regex(referenced.Pattern), location, filePaths);
     }
 
     public static List<QueryResult> Execute(
