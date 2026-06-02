@@ -36,8 +36,19 @@ public class CodeLocationService : ProviderCodeLocationService.ProviderCodeLocat
             var contextStart = Math.Max(0, startLine - _config.ContextLines);
             var contextEnd = Math.Min(lines.Length - 1, endLine + _config.ContextLines);
 
-            var snippet = string.Join("\n",
-                lines.Skip(contextStart).Take(contextEnd - contextStart + 1));
+            // Format snippet with line numbers like analyzer-lsp expects:
+            // Each line is: "{lineNum,3}  {content}\n"
+            // Example: " 42  some code here\n"
+            var snippetLines = new List<string>();
+            for (var i = contextStart; i <= contextEnd; i++)
+            {
+                // Line numbers are 1-based for display, right-aligned to 3 digits
+                var lineNum = i + 1;
+                var lineContent = i < lines.Length ? lines[i] : "";
+                snippetLines.Add($"{lineNum,3}  {lineContent}");
+            }
+
+            var snippet = string.Join("\n", snippetLines);
 
             return Task.FromResult(new GetCodeSnipResponse { Snip = snippet });
         }
