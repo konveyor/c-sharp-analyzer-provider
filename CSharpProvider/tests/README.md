@@ -29,10 +29,10 @@ uv run CSharpProvider/tests/test_runner.py run --provider csharp
 ```bash
 # 2. Run tests (auto-starts the provider per project)
 uv run CSharpProvider/tests/test_runner.py run --provider rust --port 9000 \
-  --cmd "cargo run --manifest-path Cargo.toml -- --port 9000"
+  --cmd "cargo run -- --port 9000"
 
 # Or start the provider yourself and omit --cmd
-cargo run --manifest-path Cargo.toml -- --port 9000
+cargo run -- --port 9000
 uv run CSharpProvider/tests/test_runner.py run --provider rust --port 9000
 ```
 
@@ -76,7 +76,8 @@ grpcurl -plaintext -d '{}' localhost:9876 provider.ProviderService/Stop
 ```
 
 Note: `conditionInfo` is a JSON string containing a JSON object, so the inner
-quotes and backslashes need double-escaping on the command line.
+quotes and backslashes need double-escaping on the command line. The C# provider
+also accepts YAML-formatted `conditionInfo` (as sent by analyzer-lsp).
 
 ## Debugging a Provider
 
@@ -100,7 +101,7 @@ result, so you can inspect state at every step.
 
 ### Rust provider
 
-1. Start the Rust provider: `cargo run --manifest-path src/Cargo.toml -- --port 9000`
+1. Start the Rust provider: `cargo run -- --port 9000`
 2. In another terminal: `uv run CSharpProvider/tests/test_runner.py run --provider rust --port 9000 --project nerd-dinner --pause`
 3. Attach your debugger to the running process
 4. Press Enter to continue
@@ -193,7 +194,7 @@ uv run CSharpProvider/tests/test_runner.py run --provider csharp --no-check \
   --cmd "dotnet run --project CSharpProvider -- --port 9876"
 
 uv run CSharpProvider/tests/test_runner.py run --provider rust --port 9000 --no-check \
-  --cmd "cargo run --manifest-path src/Cargo.toml -- --port 9000"
+  --cmd "cargo run -- --port 9000"
 
 # Compare results (--rust-compat relaxes matching for Rust provider quirks)
 uv run CSharpProvider/tests/test_runner.py diff CSharpProvider/tests/results/csharp/latest CSharpProvider/tests/results/rust/latest \

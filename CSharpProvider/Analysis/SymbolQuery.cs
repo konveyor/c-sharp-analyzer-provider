@@ -5,6 +5,8 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Provider;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 namespace CSharpProvider.Analysis;
 
@@ -35,7 +37,19 @@ public static class SymbolQuery
 {
     public static QueryCondition ParseCondition(string conditionInfo)
     {
-        using var doc = JsonDocument.Parse(conditionInfo);
+        try
+        {
+            return ParseConditionFromJson(conditionInfo);
+        }
+        catch (JsonException)
+        {
+            return ParseConditionFromYaml(conditionInfo);
+        }
+    }
+
+    private static QueryCondition ParseConditionFromJson(string json)
+    {
+        using var doc = JsonDocument.Parse(json);
         var root = doc.RootElement;
         var referenced = root.GetProperty("referenced");
 
@@ -60,6 +74,45 @@ public static class SymbolQuery
         {
             filePaths = fpProp.EnumerateArray()
                 .Select(e => e.GetString()!)
+                .Where(s => !string.IsNullOrEmpty(s))
+                .ToList();
+            if (filePaths.Count == 0)
+                filePaths = null;
+        }
+
+        return new QueryCondition(new Regex(pattern), location, filePaths);
+    }
+
+    private static QueryCondition ParseConditionFromYaml(string yaml)
+    {
+        var deserializer = new DeserializerBuilder()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .Build();
+        var doc = deserializer.Deserialize<Dictionary<string, object?>>(yaml);
+
+        if (!doc.TryGetValue("referenced", out var refObj) || refObj is not Dictionary<object, object> referenced)
+            throw new ArgumentException("Missing 'referenced' in conditionInfo");
+
+        if (!referenced.TryGetValue("pattern", out var patternObj) || patternObj is not string pattern)
+            throw new ArgumentException("Missing pattern");
+
+        var location = LocationType.All;
+        if (referenced.TryGetValue("location", out var locObj) && locObj is string locStr)
+        {
+            location = locStr.ToUpperInvariant() switch
+            {
+                "METHOD" => LocationType.Method,
+                "FIELD" => LocationType.Field,
+                "CLASS" => LocationType.Class,
+                _ => LocationType.All,
+            };
+        }
+
+        List<string>? filePaths = null;
+        if (referenced.TryGetValue("file_paths", out var fpObj) && fpObj is List<object> fpList)
+        {
+            filePaths = fpList
+                .Select(e => e?.ToString()!)
                 .Where(s => !string.IsNullOrEmpty(s))
                 .ToList();
             if (filePaths.Count == 0)
