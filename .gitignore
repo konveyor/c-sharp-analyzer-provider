@@ -1,4 +1,8 @@
-/target
+target/
+testdata/repos/
+testdata/results/
+**/obj/
+
 #output.yaml
 #e2e-tests/analysis-output.yaml
 #e2e-tests/konveyor-analyzer

@@ -1,0 +1,9 @@
+{
+  "repo": {},
+  "steps": [
+    "init.json",
+    "system.json",
+    "net8-sample-internal.json",
+    "system-console-writeline.json"
+  ]
+}

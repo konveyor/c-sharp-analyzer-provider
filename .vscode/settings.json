@@ -9,4 +9,8 @@
     "[rust]": {
         "editor.rulers": [100]
     },
+    "[csharp]": {
+        "editor.rulers": [100]
+    },
+    "makefile.configureOnOpen": false,
 }

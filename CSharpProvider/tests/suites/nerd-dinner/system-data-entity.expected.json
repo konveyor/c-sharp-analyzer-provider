@@ -1,0 +1,780 @@
+{
+  "matched": true,
+  "incidentCount": 36,
+  "incidents": [
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 272,
+          "character": 24
+        },
+        "endPosition": {
+          "line": 272,
+          "character": 43
+        }
+      },
+      "LineNumber": "272",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "DbSet",
+        "fqdn_method": "Add",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "UserProfiles.Add",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/AccountController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 273,
+          "character": 24
+        },
+        "endPosition": {
+          "line": 273,
+          "character": 38
+        }
+      },
+      "LineNumber": "273",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs",
+        "fqdn_class": "DbContext",
+        "fqdn_method": "SaveChanges",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "db.SaveChanges",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 3,
+          "character": 6
+        },
+        "endPosition": {
+          "line": 3,
+          "character": 24
+        }
+      },
+      "LineNumber": "3",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "System.Data.Entity",
+        "syntax_type": "import"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 32,
+          "character": 28
+        },
+        "endPosition": {
+          "line": 32,
+          "character": 43
+        }
+      },
+      "LineNumber": "32",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "DbSet",
+        "fqdn_method": "Find",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "Dinners.Find",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 71,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 71,
+          "character": 30
+        }
+      },
+      "LineNumber": "71",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "DbSet",
+        "fqdn_method": "Add",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "Dinners.Add",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 72,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 72,
+          "character": 30
+        }
+      },
+      "LineNumber": "72",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "DbContext",
+        "fqdn_method": "SaveChanges",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "db.SaveChanges",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 85,
+          "character": 28
+        },
+        "endPosition": {
+          "line": 85,
+          "character": 43
+        }
+      },
+      "LineNumber": "85",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "DbSet",
+        "fqdn_method": "Find",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "Dinners.Find",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 110,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 110,
+          "character": 38
+        }
+      },
+      "LineNumber": "110",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "DbEntityEntry",
+        "fqdn_field": "State",
+        "fqdn_namespace": "System.Data.Entity.Infrastructure",
+        "symbol": "Entry(dinner).State",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 110,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 110,
+          "character": 24
+        }
+      },
+      "LineNumber": "110",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "DbContext",
+        "fqdn_method": "Entry",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "db.Entry",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 111,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 111,
+          "character": 30
+        }
+      },
+      "LineNumber": "111",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "DbContext",
+        "fqdn_method": "SaveChanges",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "db.SaveChanges",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 123,
+          "character": 28
+        },
+        "endPosition": {
+          "line": 123,
+          "character": 43
+        }
+      },
+      "LineNumber": "123",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "DbSet",
+        "fqdn_method": "Find",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "Dinners.Find",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 141,
+          "character": 28
+        },
+        "endPosition": {
+          "line": 141,
+          "character": 43
+        }
+      },
+      "LineNumber": "141",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "DbSet",
+        "fqdn_method": "Find",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "Dinners.Find",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 148,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 148,
+          "character": 29
+        }
+      },
+      "LineNumber": "148",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "DbSet",
+        "fqdn_method": "Remove",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "Dinners.Remove",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 149,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 149,
+          "character": 26
+        }
+      },
+      "LineNumber": "149",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "DbContext",
+        "fqdn_method": "SaveChanges",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "db.SaveChanges",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/DinnersController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 155,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 155,
+          "character": 22
+        }
+      },
+      "LineNumber": "155",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs",
+        "fqdn_class": "DbContext",
+        "fqdn_method": "Dispose",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "db.Dispose",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/RSVPController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 33,
+          "character": 28
+        },
+        "endPosition": {
+          "line": 33,
+          "character": 43
+        }
+      },
+      "LineNumber": "33",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "fqdn_class": "DbSet",
+        "fqdn_method": "Find",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "Dinners.Find",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/RSVPController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 41,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 41,
+          "character": 30
+        }
+      },
+      "LineNumber": "41",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "fqdn_class": "DbContext",
+        "fqdn_method": "SaveChanges",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "db.SaveChanges",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/RSVPController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 51,
+          "character": 28
+        },
+        "endPosition": {
+          "line": 51,
+          "character": 43
+        }
+      },
+      "LineNumber": "51",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "fqdn_class": "DbSet",
+        "fqdn_method": "Find",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "Dinners.Find",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/RSVPController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 56,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 56,
+          "character": 31
+        }
+      },
+      "LineNumber": "56",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "fqdn_class": "DbSet",
+        "fqdn_method": "Remove",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "RSVPs.Remove",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/RSVPController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 57,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 57,
+          "character": 30
+        }
+      },
+      "LineNumber": "57",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs",
+        "fqdn_class": "DbContext",
+        "fqdn_method": "SaveChanges",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "db.SaveChanges",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/SearchController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 55,
+          "character": 52
+        },
+        "endPosition": {
+          "line": 55,
+          "character": 70
+        }
+      },
+      "LineNumber": "55",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
+        "fqdn_class": "DbQuery",
+        "fqdn_method": "Include",
+        "fqdn_namespace": "System.Data.Entity.Infrastructure",
+        "symbol": "Dinners.Include",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Controllers/SearchController.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 107,
+          "character": 12
+        },
+        "endPosition": {
+          "line": 107,
+          "character": 22
+        }
+      },
+      "LineNumber": "107",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Controllers/SearchController.cs",
+        "fqdn_class": "DbContext",
+        "fqdn_method": "Dispose",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "db.Dispose",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 1,
+          "character": 6
+        },
+        "endPosition": {
+          "line": 1,
+          "character": 24
+        }
+      },
+      "LineNumber": "1",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "System.Data.Entity",
+        "syntax_type": "import"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 2,
+          "character": 6
+        },
+        "endPosition": {
+          "line": 2,
+          "character": 39
+        }
+      },
+      "LineNumber": "2",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+        "fqdn_namespace": "System.Data.Entity.Infrastructure",
+        "symbol": "System.Data.Entity.Infrastructure",
+        "syntax_type": "import"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 27,
+          "character": 16
+        },
+        "endPosition": {
+          "line": 27,
+          "character": 53
+        }
+      },
+      "LineNumber": "27",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+        "fqdn_class": "Database",
+        "fqdn_method": "SetInitializer",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "Database.SetInitializer<UsersContext>",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 33,
+          "character": 29
+        },
+        "endPosition": {
+          "line": 33,
+          "character": 52
+        }
+      },
+      "LineNumber": "33",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+        "fqdn_class": "Database",
+        "fqdn_method": "Exists",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "Database.Exists",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 33,
+          "character": 29
+        },
+        "endPosition": {
+          "line": 33,
+          "character": 45
+        }
+      },
+      "LineNumber": "33",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+        "fqdn_class": "DbContext",
+        "fqdn_field": "Database",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "context.Database",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 36,
+          "character": 28
+        },
+        "endPosition": {
+          "line": 36,
+          "character": 74
+        }
+      },
+      "LineNumber": "36",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+        "fqdn_class": "IObjectContextAdapter",
+        "fqdn_field": "ObjectContext",
+        "fqdn_namespace": "System.Data.Entity.Infrastructure",
+        "symbol": "((IObjectContextAdapter)context).ObjectContext",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 36,
+          "character": 29
+        },
+        "endPosition": {
+          "line": 36,
+          "character": 59
+        }
+      },
+      "LineNumber": "36",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs",
+        "fqdn_class": "IObjectContextAdapter",
+        "fqdn_namespace": "System.Data.Entity.Infrastructure",
+        "symbol": "IObjectContextAdapter",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Models/AccountModels.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 4,
+          "character": 6
+        },
+        "endPosition": {
+          "line": 4,
+          "character": 24
+        }
+      },
+      "LineNumber": "4",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "System.Data.Entity",
+        "syntax_type": "import"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Models/AccountModels.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 10,
+          "character": 32
+        },
+        "endPosition": {
+          "line": 10,
+          "character": 41
+        }
+      },
+      "LineNumber": "10",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
+        "fqdn_class": "DbContext",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "DbContext",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Models/AccountModels.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 17,
+          "character": 15
+        },
+        "endPosition": {
+          "line": 17,
+          "character": 33
+        }
+      },
+      "LineNumber": "17",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs",
+        "fqdn_class": "DbSet",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "DbSet<UserProfile>",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Models/NerdDinnerContext.cs",
+      "codeLocation": {
+        "startPosition": {
+          "character": 6
+        },
+        "endPosition": {
+          "character": 24
+        }
+      },
+      "LineNumber": "0",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Models/NerdDinnerContext.cs",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "System.Data.Entity",
+        "syntax_type": "import"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Models/NerdDinnerContext.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 4,
+          "character": 37
+        },
+        "endPosition": {
+          "line": 4,
+          "character": 46
+        }
+      },
+      "LineNumber": "4",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Models/NerdDinnerContext.cs",
+        "fqdn_class": "DbContext",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "DbContext",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Models/NerdDinnerContext.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 19,
+          "character": 15
+        },
+        "endPosition": {
+          "line": 19,
+          "character": 28
+        }
+      },
+      "LineNumber": "19",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Models/NerdDinnerContext.cs",
+        "fqdn_class": "DbSet",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "DbSet<Dinner>",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "NerdDinner/Models/NerdDinnerContext.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 20,
+          "character": 15
+        },
+        "endPosition": {
+          "line": 20,
+          "character": 26
+        }
+      },
+      "LineNumber": "20",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/nerd-dinner/mvc4/NerdDinner/Models/NerdDinnerContext.cs",
+        "fqdn_class": "DbSet",
+        "fqdn_namespace": "System.Data.Entity",
+        "symbol": "DbSet<RSVP>",
+        "syntax_type": "type_reference"
+      }
+    }
+  ]
+}

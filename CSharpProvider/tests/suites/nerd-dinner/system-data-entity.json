@@ -1,0 +1,8 @@
+{
+  "cap": "referenced",
+  "conditionInfo": {
+    "referenced": {
+      "pattern": "^System\\.Data\\.Entity(\\..*)?$"
+    }
+  }
+}

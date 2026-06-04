@@ -1,0 +1,17 @@
+# Cloned by setup_repos.py — not committed
+nerd-dinner/
+simple-json-net20/
+wcf-webforms-net35/
+wcf-winforms-net40/
+config-codegen-net40/
+
+# Build and restore artifacts
+**/bin/
+**/obj/
+**/packages/
+**/.vs/
+**/.paket/
+**/paket-files/
+**/paket.dependencies
+**/paket.lock
+**/paket.references

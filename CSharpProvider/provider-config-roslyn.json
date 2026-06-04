@@ -1,0 +1,15 @@
+[
+  {
+    "name": "c-sharp-roslyn",
+    "binaryPath": "dotnet",
+    "address": "localhost:14651",
+    "useSocket": false,
+    "initConfig": [
+      {
+        "location": "/path/to/analyzed/project",
+        "analysisMode": "source-only",
+        "providerSpecificConfig": {}
+      }
+    ]
+  }
+]

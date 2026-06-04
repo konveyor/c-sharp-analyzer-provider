@@ -1,0 +1,8 @@
+# Example conditionInfo sent by analyzer-lsp
+tags:
+  BSD License: true
+template: {}
+ruleID: dotnet-core-winforms-01
+referenced:
+  location: ALL
+  pattern: System.Windows.Forms
