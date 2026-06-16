@@ -5,7 +5,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
-CSHARP_PROVIDER_DIR="$PROJECT_ROOT/CSharpProvider"
+CSHARP_PROVIDER_DIR="$PROJECT_ROOT"
 
 # Default values
 IMAGE_NAME="${IMAGE_NAME:-quay.io/konveyor/c-sharp-roslyn-provider}"
@@ -23,7 +23,7 @@ echo ""
 # Build the container image
 cd "$CSHARP_PROVIDER_DIR"
 $CONTAINER_RUNTIME build \
-    -f Containerfile \
+    -f Dockerfile \
     -t "$IMAGE_NAME:$IMAGE_TAG" \
     .
 

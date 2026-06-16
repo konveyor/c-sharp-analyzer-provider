@@ -1,12 +1,12 @@
 # Provider configuration for the Roslyn-based C# analyzer provider
-# This file shows how to configure analyzer-lsp/kantra to use the CSharpProvider
+# This file shows how to configure analyzer-lsp/kantra to use the C# provider
 
 # Example 1: Local binary (for development/testing)
 - name: c-sharp-roslyn
   # Path to the compiled provider binary or 'dotnet run' command
   binaryPath: dotnet
   # Command-line arguments passed to the binary
-  # For development: run --project /path/to/CSharpProvider -- --port 14651
+  # For development: run --project /path/to/src -- --port 14651
   address: localhost:14651
   useSocket: false
   initConfig:
@@ -17,7 +17,7 @@
 
 # Example 2: Container image (for production with kantra/podman)
 - name: c-sharp-roslyn-container
-  # Container image (build with: podman build -f CSharpProvider/Containerfile -t c-sharp-roslyn .)
+  # Container image (build with: podman build -f Dockerfile -t c-sharp-roslyn .)
   # Leave binaryPath empty when using container images - kantra will detect and run the container
   binaryPath: ""
   # The address is managed by kantra when using containers

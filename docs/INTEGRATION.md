@@ -1,17 +1,17 @@
-# Integrating CSharpProvider with analyzer-lsp
+# Integrating the C# Provider with analyzer-lsp
 
 This guide explains how to configure and use the Roslyn-based C# provider with Konveyor's analyzer-lsp engine.
 
 ## Overview
 
-The CSharpProvider implements the same gRPC protocol as other analyzer-lsp providers, making it a drop-in replacement for the tree-sitter-based C# provider. It uses Microsoft's Roslyn compiler platform for superior symbol resolution.
+The C# provider implements the same gRPC protocol as other analyzer-lsp providers, making it a drop-in replacement for the tree-sitter-based C# provider. It uses Microsoft's Roslyn compiler platform for superior symbol resolution.
 
 ## Architecture
 
 ```
 kantra (CLI) 
   └─> analyzer-lsp (Go, gRPC client)
-       └─> CSharpProvider (C#, gRPC server)
+       └─> C# Provider (Roslyn, gRPC server)
             └─> Roslyn (Microsoft.CodeAnalysis)
 ```
 
@@ -32,7 +32,7 @@ Best for development and testing.
 
 1. **Build the provider:**
    ```bash
-   cd CSharpProvider
+   cd src
    dotnet build -c Release
    ```
 
@@ -49,7 +49,7 @@ Best for development and testing.
 
 3. **Run manually for testing:**
    ```bash
-   cd CSharpProvider
+   cd src
    dotnet run -- --port 14651 --name c-sharp-roslyn
    ```
 
@@ -65,7 +65,7 @@ Best for production deployments with kantra.
 
 1. **Build the container image:**
    ```bash
-   podman build -f CSharpProvider/Containerfile -t quay.io/konveyor/c-sharp-roslyn-provider:latest .
+   podman build -f Dockerfile -t quay.io/konveyor/c-sharp-roslyn-provider:latest .
    ```
 
 2. **Test the container:**
@@ -85,7 +85,7 @@ Best for local IPC without network exposure.
 
 1. **Run with socket:**
    ```bash
-   cd CSharpProvider
+   cd src
    dotnet run -- --socket /tmp/c-sharp-provider.sock --name c-sharp-roslyn
    ```
 
@@ -142,7 +142,7 @@ When running the provider directly:
 
 ```bash
 # Start the provider
-cd CSharpProvider
+cd src
 dotnet run -- --port 14651
 
 # List available services (requires grpcurl)
@@ -213,14 +213,14 @@ kantra analyze \
 
 kantra will:
 1. Detect C# projects in the input
-2. Start the CSharpProvider (or spawn the container)
+2. Start the C# provider (or spawn the container)
 3. Initialize the provider with the project location
 4. Execute rules that use the "referenced" capability
 5. Collect incidents and generate the analysis report
 
 ## Capabilities
 
-The CSharpProvider currently supports:
+The C# provider currently supports:
 
 - **`referenced`**: Find references to types, methods, fields, etc. using regex patterns
 
@@ -312,6 +312,6 @@ dotnet run -- --port 14651 --context-lines 20
 
 ## Next Steps
 
-- See [ARCHITECTURE.md](CSharpProvider/ARCHITECTURE.md) for implementation details
+- See [ARCHITECTURE.md](docs/ARCHITECTURE.md) for implementation details
 - See [README.md](README.md) for general provider information
 - Report issues at the Konveyor GitHub repository

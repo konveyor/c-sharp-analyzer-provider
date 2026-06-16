@@ -1,11 +1,11 @@
-# CSharpProvider (Roslyn)
+# C# Analyzer Provider
 
-Roslyn-based replacement for the tree-sitter/stack-graphs C# analyzer. Uses `CSharpCompilation` and `SemanticModel` for full symbol resolution.
+Roslyn-based C# analyzer for analyzer-lsp and kantra. Uses `CSharpCompilation` and `SemanticModel` for full symbol resolution.
 
 ## Running
 
 ```bash
-dotnet build CSharpProvider.csproj
+dotnet build src/CSharpProvider.csproj
 dotnet run --project . -- --port 9876
 ```
 
@@ -42,11 +42,11 @@ See [`tests/README.md`](tests/README.md) for the full test infrastructure.
 
 ```bash
 # Using the build script
-cd CSharpProvider
+cd src
 ../scripts/build-container.sh
 
 # Or manually with podman
-podman build -f Containerfile -t quay.io/konveyor/c-sharp-roslyn-provider:latest .
+podman build -f Dockerfile -t quay.io/konveyor/c-sharp-roslyn-provider:latest .
 ```
 
 ### Testing the Container

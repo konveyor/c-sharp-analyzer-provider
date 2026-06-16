@@ -2,12 +2,11 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-CSHARP_DIR="$REPO_ROOT/CSharpProvider"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 HACK_DIR="$SCRIPT_DIR"
 
 PORT="${PORT:-9876}"
-PROJECT="${PROJECT:-$CSHARP_DIR/tests/repos/nerd-dinner/mvc4}"
+PROJECT="${PROJECT:-$REPO_ROOT/tests/repos/nerd-dinner/mvc4}"
 RULES_SRC="${RULES:-$REPO_ROOT/rulesets/dotnet-core-migration}"
 RULES_DIR="${RULES_DIR:-$HACK_DIR/rules}"
 OUTPUT="${OUTPUT:-$HACK_DIR/output.yaml}"
@@ -50,7 +49,7 @@ fi
 # --- Validate project exists ---
 if [[ ! -d "$PROJECT" ]]; then
     echo "ERROR: Project directory not found: $PROJECT"
-    echo "Run: uv run CSharpProvider/tests/test_runner.py setup"
+    echo "Run: uv run tests/test_runner.py setup"
     exit 1
 fi
 
@@ -75,7 +74,7 @@ echo "Generated provider settings: $PROVIDER_SETTINGS"
 
 # --- Start C# provider ---
 echo "Starting C# provider on port $PORT..."
-dotnet run --project "$CSHARP_DIR" -- --port "$PORT" &
+dotnet run --project "$REPO_ROOT/src" -- --port "$PORT" &
 PROVIDER_PID=$!
 
 echo "Waiting for provider (PID $PROVIDER_PID) to listen on port $PORT..."

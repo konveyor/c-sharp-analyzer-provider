@@ -12,7 +12,7 @@ Get the Roslyn-based C# provider running with analyzer-lsp in 5 minutes.
 ### Option A: Local Development
 
 ```bash
-cd CSharpProvider
+cd src
 dotnet build -c Release
 ```
 
@@ -20,7 +20,7 @@ dotnet build -c Release
 
 ```bash
 ./scripts/build-container.sh
-# Or: cd CSharpProvider && podman build -f Containerfile -t c-sharp-roslyn .
+# Or: podman build -f Dockerfile -t c-sharp-roslyn .
 ```
 
 ## 2. Test Standalone
@@ -29,7 +29,7 @@ dotnet build -c Release
 
 ```bash
 # Terminal 1: Start the provider
-cd CSharpProvider
+cd src
 dotnet run -- --port 14651 --name c-sharp-roslyn
 
 # Terminal 2: Test with grpcurl (install from https://github.com/fullstorydev/grpcurl)
@@ -118,7 +118,7 @@ Rules query the provider using the `referenced` capability:
 
 ```bash
 # Build
-cd CSharpProvider && dotnet build
+cd src && dotnet build
 
 # Run locally
 dotnet run -- --port 14651
@@ -130,7 +130,7 @@ dotnet run -- --port 14651
 ./scripts/test-container.sh
 
 # Run tests
-cd CSharpProvider && dotnet test
+cd src && dotnet test
 
 # Clean
 dotnet clean
@@ -149,14 +149,14 @@ dotnet clean
 ## Next Steps
 
 - **[INTEGRATION.md](INTEGRATION.md)**: Complete integration guide
-- **[CSharpProvider/ARCHITECTURE.md](CSharpProvider/ARCHITECTURE.md)**: How it works
-- **[CSharpProvider/tests/README.md](CSharpProvider/tests/README.md)**: Testing guide
+- **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**: How it works
+- **[tests/README.md](tests/README.md)**: Testing guide
 
 ## Example Analysis Session
 
 ```bash
 # 1. Start provider
-cd CSharpProvider
+cd src
 dotnet run -- --port 14651 &
 
 # 2. Init with a project

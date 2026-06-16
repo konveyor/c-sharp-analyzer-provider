@@ -1,4 +1,4 @@
-# CSharpProvider Architecture
+# C# Provider Architecture
 
 Roslyn-based C# analyzer provider for
 [konveyor/analyzer-lsp](https://github.com/konveyor/analyzer-lsp). Uses
@@ -144,9 +144,9 @@ output.
 ## Project Structure
 
 ```
-CSharpProvider/
+src/
   Program.cs                          # CLI parsing, ASP.NET Core/gRPC setup
-  Containerfile                       # Multi-stage build (SDK builder, UBI 10 + SDK runtime)
+  Dockerfile                       # Multi-stage build (SDK builder, UBI 10 + SDK runtime)
   Services/
     ProviderService.cs                # Init, Evaluate, Stop, Capabilities RPCs
     CodeLocationService.cs            # GetCodeSnip RPC
