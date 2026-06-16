@@ -10,7 +10,8 @@ on:
     - "v*"
 
 jobs:
-  build:
+  # Named integration-tests to match the required status check in branch protection
+  integration-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
