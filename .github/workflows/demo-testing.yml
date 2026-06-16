@@ -55,7 +55,7 @@ jobs:
             --port 14651
           echo "Waiting for provider to start..."
           for i in $(seq 1 30); do
-            if podman logs c-sharp 2>&1 | grep -q "Listening"; then
+            if podman logs c-sharp 2>&1 | grep -qi "listening"; then
               echo "Provider is ready."
               break
             fi
