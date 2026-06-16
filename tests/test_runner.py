@@ -386,26 +386,29 @@ def wait_for_port(port: int, timeout: float = 60) -> bool:
 
 @contextmanager
 def managed_provider(cmd: str, port: int) -> Generator[subprocess.Popen[str], None, None]:
+    import os
     proc = subprocess.Popen(
         shlex.split(cmd),
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
+        start_new_session=True,
     )
     try:
         if not wait_for_port(port):
-            proc.kill()
+            os.killpg(proc.pid, signal.SIGKILL)
+            proc.wait()
             stderr = proc.stderr.read() if proc.stderr else ""
             raise RuntimeError(
                 f"Provider did not start on port {port} within 60s\n{stderr[:500]}"
             )
         yield proc
     finally:
-        proc.send_signal(signal.SIGTERM)
+        os.killpg(proc.pid, signal.SIGTERM)
         try:
             proc.wait(timeout=10)
         except subprocess.TimeoutExpired:
-            proc.kill()
+            os.killpg(proc.pid, signal.SIGKILL)
             proc.wait()
 
 
