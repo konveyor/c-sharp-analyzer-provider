@@ -16,7 +16,7 @@
       },
       "LineNumber": "6",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-sample/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-sample/Program.cs",
         "fqdn_class": "Program",
         "fqdn_namespace": "Net8Sample",
         "symbol": "Program",
@@ -37,7 +37,7 @@
       },
       "LineNumber": "20",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-sample/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-sample/Program.cs",
         "fqdn_class": "Person",
         "fqdn_namespace": "Net8Sample",
         "symbol": "Person?",
@@ -58,7 +58,7 @@
       },
       "LineNumber": "21",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-sample/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-sample/Program.cs",
         "fqdn_class": "Person",
         "fqdn_method": "Greet",
         "fqdn_namespace": "Net8Sample",
@@ -80,7 +80,7 @@
       },
       "LineNumber": "25",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-sample/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-sample/Program.cs",
         "fqdn_class": "Person",
         "fqdn_namespace": "Net8Sample",
         "symbol": "Person",
@@ -101,7 +101,7 @@
       },
       "LineNumber": "32",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-sample/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-sample/Program.cs",
         "fqdn_class": "Person",
         "fqdn_field": "Name",
         "fqdn_namespace": "Net8Sample",
@@ -123,7 +123,7 @@
       },
       "LineNumber": "33",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-sample/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-sample/Program.cs",
         "fqdn_class": "Person",
         "fqdn_field": "Age",
         "fqdn_namespace": "Net8Sample",
@@ -145,7 +145,7 @@
       },
       "LineNumber": "38",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-sample/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-sample/Program.cs",
         "fqdn_class": "Person",
         "fqdn_field": "Name",
         "fqdn_namespace": "Net8Sample",
@@ -167,7 +167,7 @@
       },
       "LineNumber": "38",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-sample/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-sample/Program.cs",
         "fqdn_class": "Person",
         "fqdn_field": "Age",
         "fqdn_namespace": "Net8Sample",

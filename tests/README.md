@@ -9,31 +9,31 @@ All commands use the unified `test_runner.py` script via `uv run`.
 
 ```bash
 # 1. Clone external test repos (only needed once)
-uv run CSharpProvider/tests/test_runner.py setup
+uv run tests/test_runner.py setup
 ```
 
 ### C# provider (Roslyn)
 
 ```bash
 # 2. Run tests (auto-starts the provider per project)
-uv run CSharpProvider/tests/test_runner.py run --provider csharp \
-  --cmd "dotnet run --project CSharpProvider -- --port 9876"
+uv run tests/test_runner.py run --provider csharp \
+  --cmd "dotnet run --project src -- --port 9876"
 
 # Or start the provider yourself and omit --cmd
-dotnet run --project CSharpProvider -- --port 9876
-uv run CSharpProvider/tests/test_runner.py run --provider csharp
+dotnet run --project src -- --port 9876
+uv run tests/test_runner.py run --provider csharp
 ```
 
 ### Rust provider (stack-graphs)
 
 ```bash
 # 2. Run tests (auto-starts the provider per project)
-uv run CSharpProvider/tests/test_runner.py run --provider rust --port 9000 \
+uv run tests/test_runner.py run --provider rust --port 9000 \
   --cmd "cargo run -- --port 9000"
 
 # Or start the provider yourself and omit --cmd
 cargo run -- --port 9000
-uv run CSharpProvider/tests/test_runner.py run --provider rust --port 9000
+uv run tests/test_runner.py run --provider rust --port 9000
 ```
 
 ## Provider-Specific Query Overrides
@@ -54,7 +54,7 @@ with `grpcurl`.
 
 ```bash
 # Start the provider
-dotnet run --project CSharpProvider -- --port 9876 &
+dotnet run --project src -- --port 9876 &
 
 # List available services
 grpcurl -plaintext localhost:9876 list
@@ -85,7 +85,7 @@ Use `--pause` to pause before and after every gRPC request, giving you time
 to attach a debugger and set breakpoints:
 
 ```bash
-uv run CSharpProvider/tests/test_runner.py run --provider csharp --project nerd-dinner --pause
+uv run tests/test_runner.py run --provider csharp --project nerd-dinner --pause
 ```
 
 The test runner will prompt before each Init/Evaluate call and after each
@@ -93,16 +93,16 @@ result, so you can inspect state at every step.
 
 ### VS Code (C# provider)
 
-1. Open the CSharpProvider project in VS Code
+1. Open the src/ project in VS Code
 2. Start the provider with F5 (launch.json should have `--port 9876`)
-3. In another terminal: `uv run CSharpProvider/tests/test_runner.py run --provider csharp --project nerd-dinner --pause`
+3. In another terminal: `uv run tests/test_runner.py run --provider csharp --project nerd-dinner --pause`
 4. When prompted, set breakpoints in the Evaluate handler
 5. Press Enter to continue
 
 ### Rust provider
 
 1. Start the Rust provider: `cargo run -- --port 9000`
-2. In another terminal: `uv run CSharpProvider/tests/test_runner.py run --provider rust --port 9000 --project nerd-dinner --pause`
+2. In another terminal: `uv run tests/test_runner.py run --provider rust --port 9000 --project nerd-dinner --pause`
 3. Attach your debugger to the running process
 4. Press Enter to continue
 
@@ -169,8 +169,8 @@ result, so you can inspect state at every step.
 
 6. Generate golden files:
    ```bash
-   uv run CSharpProvider/tests/test_runner.py run --provider csharp --project my-project --update \
-     --cmd "dotnet run --project CSharpProvider -- --port 9876"
+   uv run tests/test_runner.py run --provider csharp --project my-project --update \
+     --cmd "dotnet run --project src -- --port 9876"
    ```
 
 ## Updating Golden Files
@@ -178,8 +178,8 @@ result, so you can inspect state at every step.
 When provider behavior changes intentionally:
 
 ```bash
-uv run CSharpProvider/tests/test_runner.py run --provider csharp --update \
-  --cmd "dotnet run --project CSharpProvider -- --port 9876"
+uv run tests/test_runner.py run --provider csharp --update \
+  --cmd "dotnet run --project src -- --port 9876"
 ```
 
 This overwrites all `*.expected.json` files with actual results.
@@ -190,14 +190,14 @@ Run tests against each provider separately, then diff:
 
 ```bash
 # Run against both providers
-uv run CSharpProvider/tests/test_runner.py run --provider csharp --no-check \
-  --cmd "dotnet run --project CSharpProvider -- --port 9876"
+uv run tests/test_runner.py run --provider csharp --no-check \
+  --cmd "dotnet run --project src -- --port 9876"
 
-uv run CSharpProvider/tests/test_runner.py run --provider rust --port 9000 --no-check \
+uv run tests/test_runner.py run --provider rust --port 9000 --no-check \
   --cmd "cargo run -- --port 9000"
 
 # Compare results (--rust-compat relaxes matching for Rust provider quirks)
-uv run CSharpProvider/tests/test_runner.py diff CSharpProvider/tests/results/csharp/latest CSharpProvider/tests/results/rust/latest \
+uv run tests/test_runner.py diff tests/results/csharp/latest tests/results/rust/latest \
   --rust-compat
 ```
 
@@ -206,11 +206,11 @@ uv run CSharpProvider/tests/test_runner.py diff CSharpProvider/tests/results/csh
 Build the container and run the full test suite against it:
 
 ```bash
-podman build -t csharp-provider -f CSharpProvider/Containerfile CSharpProvider/
+podman build -t csharp-provider -f Dockerfile .
 
-uv run CSharpProvider/tests/test_runner.py run --provider csharp \
+uv run tests/test_runner.py run --provider csharp \
   --repo-root /repos \
-  --cmd "podman run --rm -p 9876:9876 -v $(realpath CSharpProvider/tests/repos):/repos:Z csharp-provider --port 9876"
+  --cmd "podman run --rm -p 9876:9876 -v $(realpath tests/repos):/repos:Z csharp-provider --port 9876"
 ```
 
 `--repo-root /repos` tells the test runner to send `/repos/<project>` as the
@@ -223,8 +223,8 @@ Golden file comparison is on by default -- the runner exits non-zero on any
 mismatch:
 
 ```bash
-uv run CSharpProvider/tests/test_runner.py run --provider csharp \
-  --cmd "dotnet run --project CSharpProvider -- --port 9876"
+uv run tests/test_runner.py run --provider csharp \
+  --cmd "dotnet run --project src -- --port 9876"
 ```
 
 Use `--fail-fast` to stop on the first failure instead of running all tests.

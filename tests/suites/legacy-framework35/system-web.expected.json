@@ -16,7 +16,7 @@
       },
       "LineNumber": "2",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_namespace": "System.Web",
         "symbol": "System.Web",
         "syntax_type": "import"
@@ -36,7 +36,7 @@
       },
       "LineNumber": "3",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_namespace": "System.Web.UI",
         "symbol": "System.Web.UI",
         "syntax_type": "import"
@@ -56,7 +56,7 @@
       },
       "LineNumber": "4",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_namespace": "System.Web.UI.WebControls",
         "symbol": "System.Web.UI.WebControls",
         "syntax_type": "import"
@@ -76,7 +76,7 @@
       },
       "LineNumber": "11",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_class": "Page",
         "fqdn_namespace": "System.Web.UI",
         "symbol": "Page",
@@ -97,7 +97,7 @@
       },
       "LineNumber": "17",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_class": "Page",
         "fqdn_field": "IsPostBack",
         "fqdn_namespace": "System.Web.UI",
@@ -119,7 +119,7 @@
       },
       "LineNumber": "67",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_class": "HttpResponse",
         "fqdn_namespace": "System.Web",
         "symbol": "HttpResponse",
@@ -140,7 +140,7 @@
       },
       "LineNumber": "67",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_class": "HttpContext",
         "fqdn_field": "Response",
         "fqdn_namespace": "System.Web",
@@ -162,7 +162,7 @@
       },
       "LineNumber": "67",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_class": "HttpContext",
         "fqdn_field": "Current",
         "fqdn_namespace": "System.Web",
@@ -184,7 +184,7 @@
       },
       "LineNumber": "68",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_class": "HttpResponse",
         "fqdn_method": "Clear",
         "fqdn_namespace": "System.Web",
@@ -206,7 +206,7 @@
       },
       "LineNumber": "69",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_class": "HttpResponse",
         "fqdn_field": "ContentType",
         "fqdn_namespace": "System.Web",
@@ -228,7 +228,7 @@
       },
       "LineNumber": "70",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_class": "HttpResponse",
         "fqdn_method": "AddHeader",
         "fqdn_namespace": "System.Web",
@@ -250,7 +250,7 @@
       },
       "LineNumber": "73",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_class": "HttpResponse",
         "fqdn_method": "Write",
         "fqdn_namespace": "System.Web",
@@ -272,7 +272,7 @@
       },
       "LineNumber": "74",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_class": "HttpResponse",
         "fqdn_method": "Write",
         "fqdn_namespace": "System.Web",
@@ -294,7 +294,7 @@
       },
       "LineNumber": "83",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_class": "HttpResponse",
         "fqdn_method": "Write",
         "fqdn_namespace": "System.Web",
@@ -316,7 +316,7 @@
       },
       "LineNumber": "85",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_class": "HttpUtility",
         "fqdn_method": "HtmlEncode",
         "fqdn_namespace": "System.Web",
@@ -338,7 +338,7 @@
       },
       "LineNumber": "86",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_class": "HttpUtility",
         "fqdn_method": "HtmlEncode",
         "fqdn_namespace": "System.Web",
@@ -360,7 +360,7 @@
       },
       "LineNumber": "90",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_class": "HttpResponse",
         "fqdn_method": "Write",
         "fqdn_namespace": "System.Web",
@@ -382,7 +382,7 @@
       },
       "LineNumber": "91",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Web/CustomerPage.aspx.cs",
         "fqdn_class": "HttpResponse",
         "fqdn_method": "End",
         "fqdn_namespace": "System.Web",

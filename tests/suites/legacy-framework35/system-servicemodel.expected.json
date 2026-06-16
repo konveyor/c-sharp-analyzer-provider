@@ -16,7 +16,7 @@
       },
       "LineNumber": "2",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Services/CustomerService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Services/CustomerService.cs",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "System.ServiceModel",
         "syntax_type": "import"
@@ -36,7 +36,7 @@
       },
       "LineNumber": "9",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Services/CustomerService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Services/CustomerService.cs",
         "fqdn_class": "ServiceBehaviorAttribute",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "ServiceBehaviorAttribute",
@@ -57,7 +57,7 @@
       },
       "LineNumber": "9",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Services/CustomerService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Services/CustomerService.cs",
         "fqdn_class": "ServiceBehaviorAttribute",
         "fqdn_method": ".ctor",
         "fqdn_namespace": "System.ServiceModel",
@@ -79,7 +79,7 @@
       },
       "LineNumber": "9",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Services/CustomerService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Services/CustomerService.cs",
         "fqdn_class": "ServiceBehaviorAttribute",
         "fqdn_field": "InstanceContextMode",
         "fqdn_namespace": "System.ServiceModel",
@@ -101,7 +101,7 @@
       },
       "LineNumber": "9",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Services/CustomerService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Services/CustomerService.cs",
         "fqdn_class": "InstanceContextMode",
         "fqdn_field": "PerCall",
         "fqdn_namespace": "System.ServiceModel",
@@ -123,7 +123,7 @@
       },
       "LineNumber": "1",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "System.ServiceModel",
         "syntax_type": "import"
@@ -143,7 +143,7 @@
       },
       "LineNumber": "6",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
         "fqdn_class": "ServiceContractAttribute",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "ServiceContractAttribute",
@@ -164,7 +164,7 @@
       },
       "LineNumber": "6",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
         "fqdn_class": "ServiceContractAttribute",
         "fqdn_method": ".ctor",
         "fqdn_namespace": "System.ServiceModel",
@@ -186,7 +186,7 @@
       },
       "LineNumber": "6",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
         "fqdn_class": "ServiceContractAttribute",
         "fqdn_field": "Namespace",
         "fqdn_namespace": "System.ServiceModel",
@@ -208,7 +208,7 @@
       },
       "LineNumber": "9",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
         "fqdn_class": "OperationContractAttribute",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "OperationContractAttribute",
@@ -229,7 +229,7 @@
       },
       "LineNumber": "12",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
         "fqdn_class": "OperationContractAttribute",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "OperationContractAttribute",
@@ -250,7 +250,7 @@
       },
       "LineNumber": "15",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
         "fqdn_class": "OperationContractAttribute",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "OperationContractAttribute",
@@ -271,7 +271,7 @@
       },
       "LineNumber": "18",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
         "fqdn_class": "OperationContractAttribute",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "OperationContractAttribute",
@@ -292,7 +292,7 @@
       },
       "LineNumber": "21",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/legacy-framework35/Services/ICustomerService.cs",
         "fqdn_class": "OperationContractAttribute",
         "fqdn_namespace": "System.ServiceModel",
         "symbol": "OperationContractAttribute",

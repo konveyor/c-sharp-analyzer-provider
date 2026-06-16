@@ -10,10 +10,10 @@ Subcommands:
     diff   — Compare two result directories
 
 Usage:
-    uv run CSharpProvider/tests/test_runner.py setup
-    uv run CSharpProvider/tests/test_runner.py run --provider csharp
-    uv run CSharpProvider/tests/test_runner.py run --provider rust --port 9000
-    uv run CSharpProvider/tests/test_runner.py diff results/csharp/latest results/rust/latest
+    uv run tests/test_runner.py setup
+    uv run tests/test_runner.py run --provider csharp
+    uv run tests/test_runner.py run --provider rust --port 9000
+    uv run tests/test_runner.py diff results/csharp/latest results/rust/latest
 """
 
 import json

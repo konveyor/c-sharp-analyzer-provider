@@ -14,7 +14,7 @@
       },
       "LineNumber": "0",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-with-deps/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
         "fqdn_namespace": "Newtonsoft.Json",
         "symbol": "Newtonsoft.Json",
         "syntax_type": "import"
@@ -34,7 +34,7 @@
       },
       "LineNumber": "1",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-with-deps/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
         "fqdn_namespace": "Newtonsoft.Json.Linq",
         "symbol": "Newtonsoft.Json.Linq",
         "syntax_type": "import"
@@ -54,7 +54,7 @@
       },
       "LineNumber": "4",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-with-deps/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
         "fqdn_class": "JsonConvert",
         "fqdn_method": "SerializeObject",
         "fqdn_namespace": "Newtonsoft.Json",
@@ -76,7 +76,7 @@
       },
       "LineNumber": "4",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-with-deps/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
         "fqdn_class": "Formatting",
         "fqdn_namespace": "Newtonsoft.Json",
         "symbol": "Formatting.Indented",
@@ -96,7 +96,7 @@
       },
       "LineNumber": "7",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-with-deps/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
         "fqdn_class": "JObject",
         "fqdn_namespace": "Newtonsoft.Json.Linq",
         "symbol": "JObject?",
@@ -117,7 +117,7 @@
       },
       "LineNumber": "7",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-with-deps/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
         "fqdn_class": "JObject",
         "fqdn_method": "Parse",
         "fqdn_namespace": "Newtonsoft.Json.Linq",
@@ -138,7 +138,7 @@
       },
       "LineNumber": "11",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-with-deps/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
         "fqdn_class": "JsonSerializerSettings",
         "fqdn_namespace": "Newtonsoft.Json",
         "symbol": "JsonSerializerSettings?",
@@ -159,7 +159,7 @@
       },
       "LineNumber": "13",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-with-deps/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
         "fqdn_class": "NullValueHandling",
         "fqdn_namespace": "Newtonsoft.Json",
         "symbol": "NullValueHandling.Ignore",
@@ -180,7 +180,7 @@
       },
       "LineNumber": "13",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-with-deps/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
         "fqdn_class": "JsonSerializerSettings",
         "fqdn_field": "NullValueHandling",
         "fqdn_namespace": "Newtonsoft.Json",
@@ -202,7 +202,7 @@
       },
       "LineNumber": "13",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-with-deps/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
         "fqdn_class": "NullValueHandling",
         "fqdn_field": "Ignore",
         "fqdn_namespace": "Newtonsoft.Json",
@@ -224,7 +224,7 @@
       },
       "LineNumber": "14",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-with-deps/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
         "fqdn_class": "Formatting",
         "fqdn_namespace": "Newtonsoft.Json",
         "symbol": "Formatting.Indented",
@@ -245,7 +245,7 @@
       },
       "LineNumber": "14",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-with-deps/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
         "fqdn_class": "JsonSerializerSettings",
         "fqdn_field": "Formatting",
         "fqdn_namespace": "Newtonsoft.Json",
@@ -267,7 +267,7 @@
       },
       "LineNumber": "14",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-with-deps/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
         "fqdn_class": "Formatting",
         "fqdn_field": "Indented",
         "fqdn_namespace": "Newtonsoft.Json",
@@ -289,7 +289,7 @@
       },
       "LineNumber": "16",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-with-deps/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
         "fqdn_class": "JsonConvert",
         "fqdn_method": "SerializeObject",
         "fqdn_namespace": "Newtonsoft.Json",
@@ -311,7 +311,7 @@
       },
       "LineNumber": "16",
       "variables": {
-        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/CSharpProvider/tests/repos/net8-with-deps/Program.cs",
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
         "fqdn_class": "JsonSerializerSettings",
         "fqdn_namespace": "Newtonsoft.Json",
         "symbol": "settings",
