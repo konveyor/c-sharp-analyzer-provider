@@ -10,34 +10,16 @@ on:
     - "v*"
 
 jobs:
-  integration-tests:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      - name: Install Protoc
-        uses: arduino/setup-protoc@v3
-      - name: "Clippy format"
-        run: cargo clippy --features generate-proto
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '9.0.x'
-      - name: install ilspycmd
-        run: |
-          dotnet tool install --global ilspycmd
-      - name: install paket
-        run: |
-          dotnet tool install --global paket
-          ls -la $HOME/.dotnet/tools/
-      - name: run all tests
-        run: cargo test --features generate-proto -- --nocapture
+      - name: Build
+        run: dotnet build src/CSharpProvider.csproj
+
   local-analyzer-integration-test:
     runs-on: ubuntu-latest
     outputs:
@@ -59,41 +41,44 @@ jobs:
           image_tag: ${{ steps.set-tag.outputs.image_tag }}
           dockerfile_path: Dockerfile
           build_context: .
-          cache-key-file: Cargo.lock
 
-      ## TODO: Once I have the artifact download working, this should run the analyzer-lsp from last working nightly based on branch.
-      - name: Run Provider test
+      - name: Smoke test provider
         shell: bash
         run: |
           CONTAINER_USER=$(id -u)
           podman volume create test-data
           podman run --rm --user ${CONTAINER_USER}:0 -v test-data:/target:U,z -v $(pwd)/testdata:/src/:U,z --entrypoint=cp alpine -a /src/. /target/
-          podman pod create --name=analyzer-c-sharp
-          podman run --pod analyzer-c-sharp --name c-sharp -d --user ${CONTAINER_USER}:0 -v test-data:/analyzer-lsp/examples:U,z quay.io/konveyor/c-sharp-provider:${{ steps.set-tag.outputs.image_tag }} --port 14651
-          podman run --entrypoint /usr/local/bin/konveyor-analyzer --pod=analyzer-c-sharp --user ${CONTAINER_USER}:0 \
+          podman run --name c-sharp -d --user ${CONTAINER_USER}:0 \
+            -p 14651:14651 \
             -v test-data:/analyzer-lsp/examples:U,z \
-            -v $(pwd)/e2e-tests/demo-output.yaml:/analyzer-lsp/output.yaml:U,z \
-            -v $(pwd)/e2e-tests/provider_settings.json:/analyzer-lsp/provider_settings.json:U,z \
-            -v $(pwd)/rulesets/:/analyzer-lsp/rules:U,z \
-            quay.io/konveyor/analyzer-lsp \
-            --output-file=/analyzer-lsp/output.yaml \
-            --rules=/analyzer-lsp/rules \
-            --provider-settings=/analyzer-lsp/provider_settings.json
-      - name: Verify output
-        shell: bash
-        run: |
-          git diff --exit-code HEAD -- $(pwd)/e2e-tests/demo-output.yaml
-  
+            quay.io/konveyor/c-sharp-provider:${{ steps.set-tag.outputs.image_tag }} \
+            --port 14651
+          echo "Waiting for provider to start..."
+          for i in $(seq 1 30); do
+            if podman logs c-sharp 2>&1 | grep -q "Listening"; then
+              echo "Provider is ready."
+              break
+            fi
+            if [ "$i" -eq 30 ]; then
+              echo "ERROR: Provider did not start in time."
+              podman logs c-sharp
+              exit 1
+            fi
+            sleep 1
+          done
+          podman stop c-sharp
+          podman rm c-sharp
+
   run-analyzer-tests:
     runs-on: ubuntu-latest
-    needs: local-analyzer-integration-test 
+    needs: local-analyzer-integration-test
     steps:
       - name: download built image
         uses: actions/download-artifact@v5
         with:
           pattern: "**-${{ needs.local-analyzer-integration-test.outputs.image-tag }}"
           path: "/tmp/images"
-      
+
       - name: Load images into podman
         run: |
           for image in $(find /tmp/images -type f -name "*.tar"); do
@@ -103,14 +88,11 @@ jobs:
           echo "Loaded images:"
           podman images
           rm -rf /tmp/images
-        
-        
-      
+
       - uses: actions/checkout@v6
         with:
           repository: konveyor/analyzer-lsp
           ref: ${{ github.base_ref }}
-          
 
       - name: run analyzer demo image
         env:
@@ -124,6 +106,6 @@ jobs:
         run : |
           make run-external-providers-pod USER_ID="0:0" MOUNT_OPT=":z"
           make run-demo-image USER_ID="0:0" MOUNT_OPT=":z"
-      
+
       - name: install yq for testing
         run: go install github.com/mikefarah/yq/v4@latest
