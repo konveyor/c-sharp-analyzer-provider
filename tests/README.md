@@ -1,7 +1,6 @@
 # Test Infrastructure
 
-Structured gRPC test suite for the C# analyzer provider. Supports both the
-C# (Roslyn) and Rust (stack-graphs) providers.
+Structured gRPC test suite for the C# analyzer provider (Roslyn).
 
 All commands use the unified `test_runner.py` script via `uv run`.
 
@@ -10,11 +9,7 @@ All commands use the unified `test_runner.py` script via `uv run`.
 ```bash
 # 1. Clone external test repos (only needed once)
 uv run tests/test_runner.py setup
-```
 
-### C# provider (Roslyn)
-
-```bash
 # 2. Run tests (auto-starts the provider per project)
 uv run tests/test_runner.py run --provider csharp \
   --cmd "dotnet run --project src -- --port 9876"
@@ -23,29 +18,6 @@ uv run tests/test_runner.py run --provider csharp \
 dotnet run --project src -- --port 9876
 uv run tests/test_runner.py run --provider csharp
 ```
-
-### Rust provider (stack-graphs)
-
-```bash
-# 2. Run tests (auto-starts the provider per project)
-uv run tests/test_runner.py run --provider rust --port 9000 \
-  --cmd "cargo run -- --port 9000"
-
-# Or start the provider yourself and omit --cmd
-cargo run -- --port 9000
-uv run tests/test_runner.py run --provider rust --port 9000
-```
-
-## Provider-Specific Query Overrides
-
-Query files can have provider-specific overrides. For a step named
-`system-web-mvc.json`, if `system-web-mvc.rust.json` exists, the Rust
-provider will use that file instead. The expected output file is always
-`system-web-mvc.expected.json` (shared across providers).
-
-This is needed because the C# provider uses full regex patterns
-(`^System\.Web\.Mvc(\..*)?$`) while the Rust provider uses glob-style
-patterns (`System.Web.Mvc.*`).
 
 ## Raw grpcurl
 
@@ -91,20 +63,13 @@ uv run tests/test_runner.py run --provider csharp --project nerd-dinner --pause
 The test runner will prompt before each Init/Evaluate call and after each
 result, so you can inspect state at every step.
 
-### VS Code (C# provider)
+### VS Code
 
 1. Open the src/ project in VS Code
 2. Start the provider with F5 (launch.json should have `--port 9876`)
 3. In another terminal: `uv run tests/test_runner.py run --provider csharp --project nerd-dinner --pause`
 4. When prompted, set breakpoints in the Evaluate handler
 5. Press Enter to continue
-
-### Rust provider
-
-1. Start the Rust provider: `cargo run -- --port 9000`
-2. In another terminal: `uv run tests/test_runner.py run --provider rust --port 9000 --project nerd-dinner --pause`
-3. Attach your debugger to the running process
-4. Press Enter to continue
 
 ## Adding a New Test Project
 
@@ -153,21 +118,9 @@ result, so you can inspect state at every step.
    ```
    The `conditionInfo` object is serialized to a JSON string by the runner.
 
-4. Optionally create `my-query.rust.json` with the Rust provider's pattern:
-   ```json
-   {
-     "cap": "referenced",
-     "conditionInfo": {
-       "referenced": {
-         "pattern": "System.Web.Mvc.*"
-       }
-     }
-   }
-   ```
+4. Run `test_runner.py setup` if the project has a `repo.url`
 
-5. Run `test_runner.py setup` if the project has a `repo.url`
-
-6. Generate golden files:
+5. Generate golden files:
    ```bash
    uv run tests/test_runner.py run --provider csharp --project my-project --update \
      --cmd "dotnet run --project src -- --port 9876"
@@ -183,23 +136,6 @@ uv run tests/test_runner.py run --provider csharp --update \
 ```
 
 This overwrites all `*.expected.json` files with actual results.
-
-## Comparing Providers
-
-Run tests against each provider separately, then diff:
-
-```bash
-# Run against both providers
-uv run tests/test_runner.py run --provider csharp --no-check \
-  --cmd "dotnet run --project src -- --port 9876"
-
-uv run tests/test_runner.py run --provider rust --port 9000 --no-check \
-  --cmd "cargo run -- --port 9000"
-
-# Compare results (--rust-compat relaxes matching for Rust provider quirks)
-uv run tests/test_runner.py diff tests/results/csharp/latest tests/results/rust/latest \
-  --rust-compat
-```
 
 ## Container Testing
 
@@ -241,7 +177,7 @@ Use `--fail-fast` to stop on the first failure instead of running all tests.
 
 | Flag | Description |
 |------|-------------|
-| `--provider {csharp,rust}` | Provider label for result directory (default: csharp) |
+| `--provider csharp` | Provider label for result directory (default: csharp) |
 | `--port PORT` | Provider gRPC port (default: 9876) |
 | `--cmd CMD` | Command to start the provider (fresh instance per project) |
 | `--project NAME [...]` | Run only named project(s) |
@@ -260,4 +196,3 @@ Use `--fail-fast` to stop on the first failure instead of running all tests.
 | `RIGHT` | Path to right result directory (positional) |
 | `--output DIR` | Output directory for diff files |
 | `--project NAME [...]` | Diff only named project(s) |
-| `--rust-compat` | Relax matching for Rust provider quirks (e.g. missing character offsets) |

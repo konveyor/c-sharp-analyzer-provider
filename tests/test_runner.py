@@ -12,8 +12,7 @@ Subcommands:
 Usage:
     uv run tests/test_runner.py setup
     uv run tests/test_runner.py run --provider csharp
-    uv run tests/test_runner.py run --provider rust --port 9000
-    uv run tests/test_runner.py diff results/csharp/latest results/rust/latest
+    uv run tests/test_runner.py diff results/csharp/latest results/csharp/previous
 """
 
 import json
@@ -59,7 +58,6 @@ class Manifest(BaseModel):
 
 class Provider(str, Enum):
     csharp = "csharp"
-    rust = "rust"
 
 
 # ── Shared helpers ──────────────────────────────────────────────────────
@@ -358,19 +356,7 @@ def resolve_step_path(test_dir: Path, step_file: str, provider: Provider) -> Pat
 
 def inject_provider_config(send_data: dict[str, Any], provider: Provider) -> None:
     """Auto-discover tool paths for providers that need them."""
-    if provider != Provider.rust:
-        return
-    if "providerSpecificConfig" in send_data:
-        return
-    ilspy = shutil.which("ilspycmd")
-    paket = shutil.which("paket")
-    if ilspy and paket:
-        send_data["providerSpecificConfig"] = {
-            "ilspy_cmd": ilspy,
-            "paket_cmd": paket,
-        }
-    else:
-        print(f"    WARNING: ilspycmd={ilspy}, paket={paket} — Rust provider may fail")
+    pass
 
 
 def resolve_init_location(
@@ -690,14 +676,9 @@ def run(
 # ── diff ────────────────────────────────────────────────────────────────
 
 
-def incident_key(incident: dict[str, Any], *, rust_compat: bool = False) -> tuple[str, ...]:
+def incident_key(incident: dict[str, Any]) -> tuple[str, ...]:
     loc = incident.get("codeLocation", {})
     start = loc.get("startPosition", {})
-    if rust_compat:
-        return (
-            incident.get("fileURI", ""),
-            start.get("line", 0),
-        )
     return (
         incident.get("fileURI", ""),
         start.get("line", 0),
@@ -708,14 +689,12 @@ def incident_key(incident: dict[str, Any], *, rust_compat: bool = False) -> tupl
 def diff_step(
     left_data: dict[str, Any],
     right_data: dict[str, Any],
-    *,
-    rust_compat: bool = False,
 ) -> dict[str, Any]:
     left_incidents = left_data.get("incidents", [])
     right_incidents = right_data.get("incidents", [])
 
     def _key(inc: dict[str, Any]) -> tuple[str, ...]:
-        return incident_key(inc, rust_compat=rust_compat)
+        return incident_key(inc)
 
     left_by_key: dict[tuple[str, ...], dict[str, Any]] = {}
     for inc in left_incidents:
@@ -758,7 +737,6 @@ def diff(
     right: Annotated[Path, typer.Argument(help="Path to right result directory")],
     output: Annotated[Optional[Path], typer.Option(help="Output directory for diff files")] = None,
     project: Annotated[Optional[list[str]], typer.Option(help="Diff only named project(s)")] = None,
-    rust_compat: Annotated[bool, typer.Option("--rust-compat", help="Relax matching for Rust provider quirks (e.g. missing character offsets)")] = False,
 ) -> None:
     """Compare two test result directories."""
     left_resolved = left.resolve()
@@ -829,7 +807,7 @@ def diff(
             with open(right_file) as f:
                 right_data: dict[str, Any] = json.load(f)
 
-            result = diff_step(left_data, right_data, rust_compat=rust_compat)
+            result = diff_step(left_data, right_data)
 
             diff_file = project_dir / f"{step}.diff.json"
             diff_file.write_text(json.dumps(result, indent=2))
