@@ -1,5 +1,6 @@
 .ignore/
 bin/
 obj/
+target/
 testdata/repos/
 testdata/results/
