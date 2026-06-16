@@ -54,12 +54,18 @@ jobs:
             quay.io/konveyor/c-sharp-provider:${{ steps.set-tag.outputs.image_tag }} \
             --port 14651
           echo "Waiting for provider to start..."
-          for i in $(seq 1 30); do
-            if podman logs c-sharp 2>&1 | grep -qi "listening"; then
+          for i in $(seq 1 60); do
+            if curl -s -o /dev/null http://127.0.0.1:14651 2>/dev/null || \
+               bash -c "echo > /dev/tcp/127.0.0.1/14651" 2>/dev/null; then
               echo "Provider is ready."
               break
             fi
-            if [ "$i" -eq 30 ]; then
+            if ! podman ps --filter name=c-sharp --format "{{.ID}}" | grep -q .; then
+              echo "ERROR: Container exited unexpectedly."
+              podman logs c-sharp
+              exit 1
+            fi
+            if [ "$i" -eq 60 ]; then
               echo "ERROR: Provider did not start in time."
               podman logs c-sharp
               exit 1
