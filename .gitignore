@@ -1,21 +1,5 @@
-target/
+.ignore/
+bin/
+obj/
 testdata/repos/
 testdata/results/
-**/obj/
-
-#output.yaml
-#e2e-tests/analysis-output.yaml
-#e2e-tests/konveyor-analyzer
-#e2e-tests/konveyor-analyzer.exe
-#test-*.db
-#jquery-1.7.1-vsdoc.js
-#*paket*
-#obj/*
-
-
-
-# Added by cargo
-#
-# already existing elements were commented out
-
-#/target
