@@ -554,128 +554,131 @@ impl ProviderService for CSharpProvider {
             );
         }
 
-        // Get the changed C# file paths, converting file:// URIs to filesystem paths
+        // Get the changed C# file paths, converting the URI field to a filesystem path.
+        // Note: Url::parse("C:\\...\\Foo.cs") succeeds — it treats the drive letter 'C'
+        // as a URL scheme — but to_file_path() then fails because the scheme is not "file".
+        // Only call to_file_path() for genuine file:// URIs; treat everything else as a
+        // plain path. Also normalise the drive letter to lowercase on Windows so the path
+        // matches the SQLite keys produced by WalkDir during ProviderInit.
         let csharp_file_paths: Vec<PathBuf> = changes
             .iter()
             .filter(|change| change.uri.ends_with(".cs") || change.uri.ends_with(".csproj"))
             .filter_map(|change| {
-                // Parse the URI and convert to filesystem path
-                match Url::parse(&change.uri) {
-                    Ok(url) => url.to_file_path().ok(),
-                    Err(_) => {
-                        // Fallback: treat as a plain path if not a valid URL
-                        Some(PathBuf::from(&change.uri))
+                let path = match Url::parse(&change.uri) {
+                    Ok(url) if url.scheme() == "file" => {
+                        url.to_file_path().unwrap_or_else(|_| PathBuf::from(&change.uri))
                     }
-                }
+                    _ => PathBuf::from(&change.uri),
+                };
+                Some(normalize_drive_letter_to_lowercase(path))
             })
             .collect();
 
         if csharp_file_paths.is_empty() {
-            info!("No C# file changes detected, skipping graph invalidation");
+            debug!("notify_file_changes: no C# files in change set, skipping");
             return Ok(Response::new(NotifyFileChangesResponse {
                 error: String::new(),
             }));
         }
 
-        debug!(
-            "C# files changed ({}), updating graph cache",
-            csharp_file_paths.len(),
-        );
+        debug!("notify_file_changes: updating graph for {:?}", csharp_file_paths);
 
-        // Incrementally update the graph for changed files
         let project_guard = self.project.read().await;
         let project = match project_guard.as_ref() {
             Some(p) => p,
             None => {
-                warn!("No project initialized, cannot update graph");
+                warn!("notify_file_changes: no project initialized");
                 return Ok(Response::new(NotifyFileChangesResponse {
                     error: "No project initialized".to_string(),
                 }));
             }
         };
 
-        let source_type = match project.get_source_type().await {
-            Some(s) => s,
-            None => {
-                debug!("No source type available, cannot reload files");
-                return Ok(Response::new(NotifyFileChangesResponse {
-                    error: "No source type available".to_string(),
-                }));
-            }
-        };
-
-        // Get language config and source type for reloading files
+        let source_type_opt = project.get_source_type().await;
         let lc_guard = project.source_language_config.read().await;
-        let language_config = match lc_guard.as_ref() {
-            Some(lc) => lc,
-            None => {
-                warn!("No language configuration available, cannot reload files");
-                return Ok(Response::new(NotifyFileChangesResponse {
-                    error: "No language configuration available".to_string(),
-                }));
-            }
-        };
+        let language_config_opt = lc_guard.as_ref();
+
+        if source_type_opt.is_none() {
+            warn!("notify_file_changes: source type unavailable, will clean SQLite but skip file re-index");
+        }
+
         let db_path = project.db_path.clone();
 
-        // clean changed files from the SQLite database
-        debug!("cleaning files from database at {:?}", db_path);
         let mut db = match SQLiteWriter::open(&db_path) {
             Ok(db) => db,
             Err(e) => {
-                error!("FAILED to open database for storing: {}", e);
+                error!("notify_file_changes: failed to open database: {}", e);
                 return Ok(Response::new(NotifyFileChangesResponse {
                     error: format!("Failed to open database: {}", e),
                 }));
             }
         };
-        let mut stack_graph = StackGraph::new();
-        let _ = stack_graph.add_from_graph(&language_config.language_config.builtins);
+
+        let mut stack_graph = if let Some(lc) = language_config_opt {
+            let mut sg = StackGraph::new();
+            let _ = sg.add_from_graph(&lc.language_config.builtins);
+            sg
+        } else {
+            StackGraph::new()
+        };
+
         for file_path in &csharp_file_paths {
-            debug!("  Attempting to clean file: {:?}", file_path);
             if let Err(e) = db.clean_file(file_path) {
-                error!("  FAILED to clean file {:?}: {}", file_path, e);
+                error!("notify_file_changes: failed to clean {:?}: {}", file_path, e);
                 return Ok(Response::new(NotifyFileChangesResponse {
                     error: "unable to update file changes".to_string(),
                 }));
-            } else {
-                debug!("  SUCCESS cleaned file {:?}", file_path);
             }
-            match load_and_store_file(
-                file_path.clone(),
-                &mut stack_graph,
-                &language_config.language_config,
-                &source_type,
-                &mut db,
-            ) {
-                Ok(Some(_file_handle)) => {
-                    debug!("    SUCCESS reloaded and stored file: {:?}", file_path);
-                }
-                Ok(None) => {
-                    error!("SKIPPED file (not C# or already exists): {:?}", file_path);
-                }
-                Err(e) => {
-                    error!("FAILED to reload file {:?}: {}", file_path, e);
+
+            if let (Some(source_type), Some(language_config)) = (&source_type_opt, language_config_opt) {
+                match load_and_store_file(
+                    file_path.clone(),
+                    &mut stack_graph,
+                    &language_config.language_config,
+                    source_type,
+                    &mut db,
+                ) {
+                    Ok(Some(_)) => debug!("notify_file_changes: re-indexed {:?}", file_path),
+                    Ok(None) => debug!("notify_file_changes: no graph nodes for {:?}", file_path),
+                    Err(e) => error!("notify_file_changes: failed to re-index {:?}: {}", file_path, e),
                 }
             }
         }
 
-        // Reload the graph from the database (now without the cleaned files)
-        info!("reloading graph from database");
+        // Drop the writer before opening a reader: on Windows, SQLite uses exclusive
+        // file locking, so keeping the writer open would make SQLiteReader::open fail.
+        drop(db);
+
         match project.get_project_graph().await {
-            Ok(file_count) => {
-                debug!("SUCCESS reloaded graph with {} files", file_count);
-                Ok(Response::new(NotifyFileChangesResponse {
-                    error: String::new(),
-                }))
-            }
+            Ok(_) => Ok(Response::new(NotifyFileChangesResponse {
+                error: String::new(),
+            })),
             Err(e) => {
-                error!("  FAILED to reload graph: {}", e);
+                error!("notify_file_changes: failed to reload graph: {}", e);
                 Ok(Response::new(NotifyFileChangesResponse {
                     error: format!("Failed to reload graph: {}", e),
                 }))
             }
         }
     }
+}
+
+/// Lowercase the drive letter on Windows paths so they match the SQLite keys produced
+/// by WalkDir, which inherits the workspace location casing (always lowercase from VS Code).
+fn normalize_drive_letter_to_lowercase(path: PathBuf) -> PathBuf {
+    #[cfg(windows)]
+    {
+        let path_str = path.to_string_lossy();
+        let mut chars = path_str.chars();
+        if let (Some(drive), Some(':')) = (chars.next(), chars.next()) {
+            if drive.is_ascii_uppercase() {
+                let mut normalized = drive.to_lowercase().to_string();
+                normalized.push_str(&path_str[1..]);
+                return PathBuf::from(normalized);
+            }
+        }
+    }
+    path
 }
 
 /// Deduplicate results by grouping by (file_uri, line_number) and keeping the result
