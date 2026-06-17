@@ -44,7 +44,7 @@ jobs:
         shell: bash
         run: |
           uv run tests/test_runner.py setup
-          uv run tests/test_runner.py run --provider csharp \
+          uv run tests/test_runner.py run --provider csharp --verbose \
             --cmd "dotnet run --project src -- --port 9876 --log-file provider.log" \
             --project net8-sample
       - name: Named pipe test
@@ -58,14 +58,15 @@ jobs:
           $exitCode = $LASTEXITCODE
           Stop-Process $provider -Force -ErrorAction SilentlyContinue
           exit $exitCode
-      - name: Upload provider logs
-        if: failure()
+      - name: Upload test results and logs
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: provider-logs-${{ matrix.os }}
+          name: test-results-${{ matrix.os }}
           path: |
             provider.log
             provider-pipe.log
+            tests/results/
 
   local-analyzer-integration-test:
     runs-on: ubuntu-latest
