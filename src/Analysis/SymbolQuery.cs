@@ -99,9 +99,14 @@ public static class SymbolQuery
     {
         var results = new List<QueryResult>();
 
+        var buildOutputDirs = DetectBuildOutputDirs(projectPath);
+
         foreach (var tree in compilation.SyntaxTrees)
         {
             if (string.IsNullOrEmpty(tree.FilePath))
+                continue;
+
+            if (IsUnderBuildOutputDir(tree.FilePath, projectPath, buildOutputDirs))
                 continue;
 
             if (query.FilePaths != null && !query.FilePaths.Any(fp =>
@@ -694,5 +699,45 @@ public static class SymbolQuery
                 Variables = variables,
             };
         }).ToList();
+    }
+
+    private static HashSet<string> DetectBuildOutputDirs(string projectPath)
+    {
+        var dirs = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        try
+        {
+            foreach (var csproj in Directory.GetFiles(projectPath, "*.csproj", SearchOption.AllDirectories))
+            {
+                var doc = System.Xml.Linq.XDocument.Load(csproj);
+                var ns = doc.Root!.Name.Namespace;
+                var csprojDir = Path.GetDirectoryName(csproj)!;
+
+                var intermediateEl = doc.Descendants(ns + "BaseIntermediateOutputPath").FirstOrDefault();
+                var intermediate = intermediateEl?.Value.Trim().TrimEnd('/', '\\') ?? "obj";
+                dirs.Add(Path.GetFullPath(Path.Combine(csprojDir, intermediate)));
+
+                var outputEl = doc.Descendants(ns + "BaseOutputPath").FirstOrDefault();
+                var output = outputEl?.Value.Trim().TrimEnd('/', '\\') ?? "bin";
+                dirs.Add(Path.GetFullPath(Path.Combine(csprojDir, output)));
+            }
+        }
+        catch
+        {
+            // Fall back to defaults if .csproj parsing fails
+        }
+
+        if (dirs.Count == 0)
+        {
+            dirs.Add(Path.GetFullPath(Path.Combine(projectPath, "obj")));
+            dirs.Add(Path.GetFullPath(Path.Combine(projectPath, "bin")));
+        }
+
+        return dirs;
+    }
+
+    private static bool IsUnderBuildOutputDir(string filePath, string projectPath, HashSet<string> buildOutputDirs)
+    {
+        var fullPath = Path.GetFullPath(filePath);
+        return buildOutputDirs.Any(dir => fullPath.StartsWith(dir + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase));
     }
 }

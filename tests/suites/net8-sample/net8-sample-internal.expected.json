@@ -40,7 +40,7 @@
         "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-sample/Program.cs",
         "fqdn_class": "Person",
         "fqdn_namespace": "Net8Sample",
-        "symbol": "Person?",
+        "symbol": "Person",
         "syntax_type": "type_reference"
       }
     },
