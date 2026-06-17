@@ -1,0 +1,322 @@
+{
+  "matched": true,
+  "incidentCount": 15,
+  "incidents": [
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "character": 6
+        },
+        "endPosition": {
+          "character": 21
+        }
+      },
+      "LineNumber": "0",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
+        "fqdn_namespace": "Newtonsoft.Json",
+        "symbol": "Newtonsoft.Json",
+        "syntax_type": "import"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 1,
+          "character": 6
+        },
+        "endPosition": {
+          "line": 1,
+          "character": 26
+        }
+      },
+      "LineNumber": "1",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
+        "fqdn_namespace": "Newtonsoft.Json.Linq",
+        "symbol": "Newtonsoft.Json.Linq",
+        "syntax_type": "import"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 4,
+          "character": 14
+        },
+        "endPosition": {
+          "line": 4,
+          "character": 41
+        }
+      },
+      "LineNumber": "4",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
+        "fqdn_class": "JsonConvert",
+        "fqdn_method": "SerializeObject",
+        "fqdn_namespace": "Newtonsoft.Json",
+        "symbol": "JsonConvert.SerializeObject",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 4,
+          "character": 47
+        },
+        "endPosition": {
+          "line": 4,
+          "character": 66
+        }
+      },
+      "LineNumber": "4",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
+        "fqdn_class": "Formatting",
+        "fqdn_namespace": "Newtonsoft.Json",
+        "symbol": "Formatting.Indented",
+        "syntax_type": "type_usage"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 7
+        },
+        "endPosition": {
+          "line": 7,
+          "character": 3
+        }
+      },
+      "LineNumber": "7",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
+        "fqdn_class": "JObject",
+        "fqdn_namespace": "Newtonsoft.Json.Linq",
+        "symbol": "JObject?",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 7,
+          "character": 13
+        },
+        "endPosition": {
+          "line": 7,
+          "character": 26
+        }
+      },
+      "LineNumber": "7",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
+        "fqdn_class": "JObject",
+        "fqdn_method": "Parse",
+        "fqdn_namespace": "Newtonsoft.Json.Linq",
+        "symbol": "JObject.Parse",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 11
+        },
+        "endPosition": {
+          "line": 11,
+          "character": 3
+        }
+      },
+      "LineNumber": "11",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
+        "fqdn_class": "JsonSerializerSettings",
+        "fqdn_namespace": "Newtonsoft.Json",
+        "symbol": "JsonSerializerSettings?",
+        "syntax_type": "type_reference"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 13,
+          "character": 4
+        },
+        "endPosition": {
+          "line": 13,
+          "character": 48
+        }
+      },
+      "LineNumber": "13",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
+        "fqdn_class": "NullValueHandling",
+        "fqdn_namespace": "Newtonsoft.Json",
+        "symbol": "NullValueHandling.Ignore",
+        "syntax_type": "type_usage"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 13,
+          "character": 4
+        },
+        "endPosition": {
+          "line": 13,
+          "character": 21
+        }
+      },
+      "LineNumber": "13",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
+        "fqdn_class": "JsonSerializerSettings",
+        "fqdn_field": "NullValueHandling",
+        "fqdn_namespace": "Newtonsoft.Json",
+        "symbol": "NullValueHandling",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 13,
+          "character": 24
+        },
+        "endPosition": {
+          "line": 13,
+          "character": 48
+        }
+      },
+      "LineNumber": "13",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
+        "fqdn_class": "NullValueHandling",
+        "fqdn_field": "Ignore",
+        "fqdn_namespace": "Newtonsoft.Json",
+        "symbol": "NullValueHandling.Ignore",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 14,
+          "character": 4
+        },
+        "endPosition": {
+          "line": 14,
+          "character": 36
+        }
+      },
+      "LineNumber": "14",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
+        "fqdn_class": "Formatting",
+        "fqdn_namespace": "Newtonsoft.Json",
+        "symbol": "Formatting.Indented",
+        "syntax_type": "type_usage"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 14,
+          "character": 4
+        },
+        "endPosition": {
+          "line": 14,
+          "character": 14
+        }
+      },
+      "LineNumber": "14",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
+        "fqdn_class": "JsonSerializerSettings",
+        "fqdn_field": "Formatting",
+        "fqdn_namespace": "Newtonsoft.Json",
+        "symbol": "Formatting",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 14,
+          "character": 17
+        },
+        "endPosition": {
+          "line": 14,
+          "character": 36
+        }
+      },
+      "LineNumber": "14",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
+        "fqdn_class": "Formatting",
+        "fqdn_field": "Indented",
+        "fqdn_namespace": "Newtonsoft.Json",
+        "symbol": "Formatting.Indented",
+        "syntax_type": "field_reference"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 16,
+          "character": 15
+        },
+        "endPosition": {
+          "line": 16,
+          "character": 42
+        }
+      },
+      "LineNumber": "16",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
+        "fqdn_class": "JsonConvert",
+        "fqdn_method": "SerializeObject",
+        "fqdn_namespace": "Newtonsoft.Json",
+        "symbol": "JsonConvert.SerializeObject",
+        "syntax_type": "method_reference"
+      }
+    },
+    {
+      "fileURI": "Program.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 16,
+          "character": 48
+        },
+        "endPosition": {
+          "line": 16,
+          "character": 56
+        }
+      },
+      "LineNumber": "16",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/net8-with-deps/Program.cs",
+        "fqdn_class": "JsonSerializerSettings",
+        "fqdn_namespace": "Newtonsoft.Json",
+        "symbol": "settings",
+        "syntax_type": "type_usage"
+      }
+    }
+  ]
+}

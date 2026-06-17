@@ -1,0 +1,47 @@
+{
+  "matched": true,
+  "incidentCount": 2,
+  "incidents": [
+    {
+      "fileURI": "UserTypeCodeEnhancer.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 7,
+          "character": 6
+        },
+        "endPosition": {
+          "line": 7,
+          "character": 26
+        }
+      },
+      "LineNumber": "7",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/config-codegen-net40/UserTypeCodeEnhancer.cs",
+        "fqdn_namespace": "System.Configuration",
+        "symbol": "System.Configuration",
+        "syntax_type": "import"
+      }
+    },
+    {
+      "fileURI": "UserTypeCodeEnhancer.cs",
+      "codeLocation": {
+        "startPosition": {
+          "line": 73,
+          "character": 50
+        },
+        "endPosition": {
+          "line": 73,
+          "character": 86
+        }
+      },
+      "LineNumber": "73",
+      "variables": {
+        "file": "file:///home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/tests/repos/config-codegen-net40/UserTypeCodeEnhancer.cs",
+        "fqdn_class": "ConfigurationErrorsException",
+        "fqdn_namespace": "System.Configuration",
+        "symbol": "ConfigurationErrorsException",
+        "syntax_type": "type_reference"
+      }
+    }
+  ]
+}

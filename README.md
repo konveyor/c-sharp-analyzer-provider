@@ -1,296 +1,95 @@
-# C# Analyzer Provider CLI
+# C# Analyzer Provider
 
-A gRPC-based code analysis service for C# codebases using tree-sitter and stack-graphs. Part of the [Konveyor analyzer-lsp](https://github.com/konveyor/analyzer-lsp) ecosystem.
+Roslyn-based C# analyzer for analyzer-lsp and kantra. Uses `CSharpCompilation` and `SemanticModel` for full symbol resolution.
 
-## Overview
-
-This tool provides semantic code analysis for C# projects, enabling queries to find:
-- Type references (classes, interfaces, structs)
-- Method calls and definitions
-- Field usages and declarations
-- Namespace imports and usages
-
-It builds a stack graph from C# source code and optionally decompiled dependencies, then provides a gRPC service for querying that graph.
-
-## Quick Start
-
-### Prerequisites
-
-- Rust 1.70+ with cargo
-- Protocol Buffers compiler (protoc)
-- .NET SDK 9.x or higher
-- Optional: ilspycmd and paket for dependency analysis
-
-### Installation
+## Running
 
 ```bash
-# Clone the repository
-git clone <repository-url>
-cd c-sharp-analyzer-provider
-
-# Build
-cargo build
-
-# Install .NET tools (optional, for full dependency analysis)
-dotnet tool install --global ilspycmd
-dotnet tool install --global paket
+dotnet build src/CSharpProvider.csproj
+dotnet run --project . -- --port 9876
 ```
 
-### Running
+## How it works
 
-```bash
-# Start the server
-cargo run -- --port 9000 --name c-sharp
+See [ARCHITECTURE.md](ARCHITECTURE.md) for a more thorough explanation.
 
-# In another terminal, initialize a project
-grpcurl -plaintext -d '{
-  "analysisMode": "source-only",
-  "location": "/path/to/csharp/project"
-}' localhost:9000 provider.ProviderService.Init
+1. **Project loading** (`Analysis/ProjectLoader.cs`): Tries MSBuild workspace first (`.sln` / SDK-style `.csproj`), falls back to ad-hoc compilation with NuGet package resolution.
 
-# Query for references
-grpcurl -plaintext -d '{
-  "cap": "referenced",
-  "conditionInfo": "{\"referenced\": {\"pattern\": \"System\\\\.Web\\\\.Mvc.*\"}}"
-}' localhost:9000 provider.ProviderService.Evaluate
-```
+2. **Package resolution** (`Analysis/PackageResolver.cs`): Downloads NuGet packages for the detected target framework. Supports `paket.lock`, `packages.config`, and `PackageReference` formats.
 
-## Features
+3. **Symbol querying** (`Analysis/SymbolQuery.cs`): Walks the syntax tree with a `CSharpSyntaxWalker`, resolving symbols via `SemanticModel`. Matches FQDNs against regex patterns.
 
-- **Semantic Analysis**: Uses tree-sitter for parsing and stack-graphs for semantic understanding
-- **Dependency Analysis**: Optionally resolves and analyzes .NET dependencies
-- **Pattern Matching**: Regex-based queries for flexible symbol search
-- **Location Filtering**: Query by location type (method, field, class, or all)
-- **gRPC Service**: Standard gRPC interface for integration
-- **Multiple Transports**: HTTP/2, Unix domain sockets, or Windows named pipes
-- **Persistent Caching**: SQLite-based stack graph storage for fast startup
-- **Distributed Tracing**: Optional OpenTelemetry OTLP trace export for Jaeger, Tempo, etc.
-- **Prometheus Metrics**: Optional `/metrics` endpoint for monitoring request latency, query performance, and resource usage
+### What it finds
 
-## Documentation
+- **Imports**: `using` directives
+- **Type references**: variable types, return types, parameters, casts, `typeof`, generics, base classes
+- **Member access**: method calls, property/field access (explicit and implicit `this`)
+- **Object creation**: `new T()`
+- **Attributes**: `[Authorize]`, etc.
+- **Value flow**: arguments, return values, and assignments where the expression type matches
+- **Dynamic access**: `ViewBag.X` and similar dynamic member chains
+- **Inheritance-aware matching**: querying `Controller` also finds members accessed through `Controller`, even if declared on `ControllerBase`
 
-### For Users
-
-- [Quick Start Guide](#quick-start) - Get up and running quickly
-- [CLAUDE.md](CLAUDE.md) - Guidance for AI assistants working with this codebase
-
-### For Developers
-
-- **[Architecture Overview](docs/architecture.md)** - System design, components, and data flow
-- **[Development Guide](docs/development.md)** - Setup, workflows, and adding features
-- **[Testing Guide](docs/testing.md)** - Running tests, debugging, and writing new tests
-
-## Analysis Modes
-
-### Source-Only Mode
-Analyzes only your project's source code. Fast and lightweight.
-
-```bash
-cargo run -- --port 9000 --name c-sharp
-# Then init with: "analysisMode": "source-only"
-```
-
-### Full Mode
-Analyzes source code plus all resolved dependencies. Requires ilspycmd and paket.
-
-```bash
-# Install tools first
-dotnet tool install --global ilspycmd paket
-
-# Run server
-cargo run -- --port 9000 --name c-sharp
-
-# Init with: "analysisMode": "full"
-```
-
-## Query Examples
-
-### Find All References to a Namespace
-
-```bash
-grpcurl -plaintext -d '{
-  "cap": "referenced",
-  "conditionInfo": "{\"referenced\": {\"pattern\": \"System\\\\.Collections.*\"}}"
-}' localhost:9000 provider.ProviderService.Evaluate
-```
-
-### Find Method References Only
-
-```bash
-grpcurl -plaintext -d '{
-  "cap": "referenced",
-  "conditionInfo": "{\"referenced\": {\"pattern\": \"MyApp\\\\.Services\\\\..*\", \"location\": \"method\"}}"
-}' localhost:9000 provider.ProviderService.Evaluate
-```
-
-### Find Class Definitions
-
-```bash
-grpcurl -plaintext -d '{
-  "cap": "referenced",
-  "conditionInfo": "{\"referenced\": {\"pattern\": \".*Controller\", \"location\": \"class\"}}"
-}' localhost:9000 provider.ProviderService.Evaluate
-```
-
-## Development
-
-### Building and Testing
-
-```bash
-# Build
-cargo build
-
-# Run linter
-cargo clippy
-
-# Run tests
-make run-tests
-
-# Run specific test
-cargo test -- --nocapture
-```
-
-### Project Structure
-
-```
-src/
-├── main.rs                  # Server entry point, telemetry wiring
-├── analyzer_service/        # gRPC service definitions
-├── provider/                # Provider implementation
-│   ├── csharp.rs           # gRPC handler (init, evaluate, etc.)
-│   ├── project.rs          # Project state management
-│   ├── dependency_resolution.rs  # .NET dependency handling
-│   ├── telemetry.rs        # OpenTelemetry + Prometheus (opt-in)
-│   ├── sdk_detection.rs    # .NET SDK path resolution
-│   ├── target_framework.rs # TFM parsing, SDK management
-│   └── code_snip.rs        # Code snippet service
-├── c_sharp_graph/          # Stack graph query engine
-└── pipe_stream/            # Named pipe support (Windows)
-
-tests/
-├── integration_test.rs     # Integration tests
-└── demos/                  # Test cases
-
-docs/                       # Developer documentation
-```
-
-See [Development Guide](docs/development.md) for detailed information.
-
-## Contributing
-
-Contributions are welcome! Please:
-
-1. Read the [Development Guide](docs/development.md)
-2. Check existing issues or create a new one
-3. Fork the repository and create a feature branch
-4. Make your changes with tests
-5. Run `cargo clippy` and `cargo fmt`
-6. Submit a pull request
+And more!
 
 ## Testing
 
-The project uses integration tests that run against a live server instance:
+See [`tests/README.md`](tests/README.md) for the full test infrastructure.
+
+## Container Deployment
+
+### Building the Container Image
 
 ```bash
-# Full test suite with server management
-make run-tests
+# Using the build script
+cd src
+../scripts/build-container.sh
 
-# Manual testing
-cargo run -- --port 9000 --name c-sharp  # Terminal 1
-cargo test -- --nocapture                 # Terminal 2
+# Or manually with podman
+podman build -f Dockerfile -t quay.io/konveyor/c-sharp-roslyn-provider:latest .
 ```
 
-See [Testing Guide](docs/testing.md) for comprehensive testing documentation.
+### Testing the Container
 
-## Architecture
+```bash
+# Using the test script (interactive)
+../scripts/test-container.sh
 
-The system consists of several layers:
+# Or manually
+podman run --rm -p 14651:14651 quay.io/konveyor/c-sharp-roslyn-provider:latest
 
-1. **gRPC Service Layer**: Handles client requests and responses
-2. **Provider Layer**: Manages project state and coordinates analysis
-3. **Stack Graph Engine**: Builds and queries semantic graphs
-4. **Dependency Resolution**: Handles .NET dependencies via Paket and ILSpy
-
-See [Architecture Overview](docs/architecture.md) for detailed design documentation.
-
-## Requirements
-
-### Runtime Dependencies
-
-- Rust standard library
-- SQLite (for graph caching)
-
-### Optional Dependencies (Full Mode)
-
-- **ilspycmd**: Decompiles .NET assemblies to C# source
-  ```bash
-  dotnet tool install --global ilspycmd
-  ```
-
-- **paket**: Resolves .NET dependencies
-  ```bash
-  dotnet tool install --global paket
-  ```
-
-## Configuration
-
-### Command-line Options
-
-```
-Options:
-  --port <PORT>           TCP port for gRPC over HTTP/2
-  --socket <SOCKET>       Unix socket or named pipe path
-  --name <NAME>           Service name
-  --db-path <DB_PATH>     SQLite database path (default: temp dir)
-  --log-file <LOG_FILE>   Log file path
-  -v, --verbosity         Log verbosity level
+# Test with a project volume
+podman run --rm -p 14651:14651 \
+  -v /path/to/your/project:/projects:Z \
+  quay.io/konveyor/c-sharp-roslyn-provider:latest
 ```
 
-### Environment Variables
+### Container Runtime Permissions
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `RUST_LOG` | Log level filter (e.g., `debug`, `info`, `c_sharp_analyzer_provider_cli=debug`) | `info` (via `-v` flag) |
-| `OTEL_EXPORTER_OTLP_ENDPOINT` | Enable OTLP trace export (e.g., `http://localhost:4317`) | unset (disabled) |
-| `OTEL_SERVICE_NAME` | Service name in traces | `c-sharp-provider` |
-| `METRICS_PORT` | Enable Prometheus metrics HTTP server on this port | unset (disabled) |
+The container:
+- Runs as user 1001 (non-root)
+- Has group 0 (root group) permissions for OpenShift compatibility
+- Requires `:Z` flag on volume mounts for SELinux systems
+- Includes the .NET SDK for runtime `dotnet restore` on analyzed projects
 
-## Performance
+## Integration with analyzer-lsp
 
-- **Caching**: Stack graphs are persisted to SQLite for fast restarts
-- **Streaming**: Results are streamed to avoid buffering large result sets
-- **Concurrency**: Multi-threaded async runtime handles concurrent requests
-- **Incremental**: Reuses cached graphs when project hasn't changed
+See [INTEGRATION.md](../INTEGRATION.md) for complete integration guide including:
+- Provider configuration examples
+- Testing with analyzer-lsp/kantra
+- Troubleshooting tips
+- Advanced configuration options
 
-## Limitations
+## Query format
 
-- No authentication or authorization (intended for local/trusted use)
-- C# only (no other .NET languages yet)
-- Regex patterns only (no AST-based queries)
-- Limited incremental update support
+Patterns are regex, matched against the fully-qualified symbol name:
 
-## License
+```bash
+# Exact type
+grpcurl -plaintext -d '{"cap":"referenced","id":"1","conditionInfo":"{\"referenced\":{\"pattern\":\"^System\\\\.Web\\\\.Mvc\\\\.Controller$\"}}"}' \
+  localhost:9876 provider.ProviderService/Evaluate
 
-Apache-2.0
-
-## Related Projects
-
-- [analyzer-lsp](https://github.com/konveyor/analyzer-lsp) - Language Server Protocol implementation
-- [tree-sitter](https://tree-sitter.github.io/) - Parser generator and incremental parsing library
-- [stack-graphs](https://github.com/github/stack-graphs) - Code navigation using stack graphs
-- [tree-sitter-c-sharp](https://github.com/tree-sitter/tree-sitter-c-sharp) - C# grammar for tree-sitter
-- [OpenTelemetry](https://opentelemetry.io/) - Observability framework for traces and metrics
-
-## Support
-
-- **Issues**: Report bugs or request features via GitHub issues
-- **Documentation**: See [docs/](docs/) directory
-- **CI/CD**: GitHub Actions workflow in `.github/workflows/`
-
-## Acknowledgments
-
-This project uses:
-- [Tonic](https://github.com/hyperium/tonic) for gRPC
-- [Tokio](https://tokio.rs/) for async runtime
-- [Tree-sitter](https://tree-sitter.github.io/) for parsing
-- [Stack Graphs](https://github.com/github/stack-graphs) for semantic analysis
+# Wildcard (type + all members)
+grpcurl -plaintext -d '{"cap":"referenced","id":"1","conditionInfo":"{\"referenced\":{\"pattern\":\"^System\\\\.Web\\\\.Mvc\\\\.Controller(\\\\..*)$\"}}"}' \
+  localhost:9876 provider.ProviderService/Evaluate
+```

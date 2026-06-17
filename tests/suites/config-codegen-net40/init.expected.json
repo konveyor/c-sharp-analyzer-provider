@@ -1,0 +1,8 @@
+{
+  "successful": true,
+  "id": "1",
+  "builtinConfig": {
+    "location": "/home/jonah/Projects/github.com/konveyor/c-sharp-analyzer-provider/src",
+    "analysisMode": "source-only"
+  }
+}

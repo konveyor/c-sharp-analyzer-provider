@@ -1,8 +1,0 @@
-{
-  "cap": "referenced",
-  "conditionInfo": {
-    "referenced": {
-      "pattern": "Newtonsoft.Json.*"
-    }
-  }
-}

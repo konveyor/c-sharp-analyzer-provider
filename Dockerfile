@@ -1,35 +1,46 @@
-FROM registry.access.redhat.com/ubi9/ubi as builder
+# Build stage
+FROM registry.access.redhat.com/ubi10/ubi-minimal AS builder
 
-RUN dnf install -y rust-toolset unzip
-
-
-WORKDIR /csharp-provider
-COPY Cargo.lock  /csharp-provider/
-COPY Cargo.toml /csharp-provider/
-COPY build.rs  /csharp-provider/
-COPY src  /csharp-provider/src
-
-RUN --mount=type=cache,id=cagohome,uid=1001,gid=0,mode=0777,target=/root/.cargo cargo build --release
-
-FROM registry.access.redhat.com/ubi9/ubi-minimal
-
-RUN microdnf install -y dotnet-sdk-9.0 dotnet-runtime-8.0 tar gzip findutils && \
+RUN microdnf install -y dotnet-sdk-9.0 && \
     microdnf clean all && \
     rm -rf /var/cache/dnf
-RUN dotnet tool install --tool-path=/usr/local/bin Paket
-RUN dotnet tool install --tool-path=/usr/local/bin ilspycmd --version 9.1.0.7988
-RUN chgrp -R 0 /home && chmod -R g=u /home
+
+WORKDIR /build
+COPY src/CSharpProvider.csproj .
+RUN dotnet restore
+
+COPY src/ .
+RUN dotnet publish -c Release -o /app
+
+# Runtime stage
+FROM registry.access.redhat.com/ubi10/ubi-minimal
+
+# Install .NET SDK (required at runtime for dotnet restore on analyzed projects)
+RUN microdnf install -y dotnet-sdk-9.0 && \
+    microdnf clean all && \
+    rm -rf /var/cache/dnf
+
+# Create directories with proper permissions for OpenShift compatibility
+# Group 0 (root group) needs rwx for OpenShift arbitrary UIDs
+RUN mkdir -p /analyzer-lsp /projects && \
+    chgrp -R 0 /home /analyzer-lsp /projects && \
+    chmod -R g=u /home /analyzer-lsp /projects
+
+# Run as non-root user (kantra/podman convention)
 USER 1001
 
+# Environment variables
 ENV HOME=/home
-ENV RUST_LOG=INFO,c_sharp_analyzer_provider_cli=DEBUG,
-COPY --chmod=0755 scripts/dotnet-install.sh /usr/local/bin/scripts/dotnet-install.sh
-COPY --chmod=0755 scripts/dotnet-install.ps1 /usr/local/bin/scripts/dotnet-install.ps1
+ENV DOTNET_ROOT=/usr/lib64/dotnet
+# Disable .NET telemetry in container
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+# Enable optimizations for container environments
+ENV DOTNET_RUNNING_IN_CONTAINER=true
 
 WORKDIR /analyzer-lsp
-RUN chgrp -R 0 /analyzer-lsp && chmod -R g=u /analyzer-lsp
 
+# Copy published application
+COPY --from=builder /app /usr/local/lib/csharp-provider
 
-COPY --from=builder /csharp-provider/target/release/c-sharp-analyzer-provider-cli /usr/local/bin/c-sharp-provider
-ENTRYPOINT ["/usr/local/bin/c-sharp-provider"]
+ENTRYPOINT ["dotnet", "/usr/local/lib/csharp-provider/CSharpProvider.dll"]
 CMD ["--name", "c-sharp", "--port", "14651"]
