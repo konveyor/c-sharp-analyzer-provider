@@ -12,7 +12,13 @@ on:
 jobs:
   # Named integration-tests to match the required status check in branch protection
   integration-tests:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+          - os: windows-latest
+          - os: macos-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-dotnet@v5
@@ -20,6 +26,39 @@ jobs:
           dotnet-version: '9.0.x'
       - name: Build
         run: dotnet build src/CSharpProvider.csproj
+      - name: Smoke test (TCP)
+        shell: bash
+        run: |
+          dotnet run --project src -- --port 9876 &
+          for i in $(seq 1 30); do
+            if curl -s -o /dev/null http://127.0.0.1:9876 2>/dev/null || \
+               bash -c "echo > /dev/tcp/127.0.0.1/9876" 2>/dev/null; then
+              echo "Provider is listening on TCP port 9876"
+              break
+            fi
+            if [ "$i" -eq 30 ]; then
+              echo "ERROR: Provider did not start in time."
+              exit 1
+            fi
+            sleep 1
+          done
+      - name: Smoke test (named pipe)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $proc = Start-Process -NoNewWindow -PassThru dotnet -ArgumentList "run","--project","src","--","--socket","\\.\pipe\csharp-ci-test"
+          Start-Sleep -Seconds 10
+          $pipe = New-Object System.IO.Pipes.NamedPipeClientStream(".", "csharp-ci-test", [System.IO.Pipes.PipeDirection]::InOut)
+          try {
+            $pipe.Connect(5000)
+            Write-Host "Named pipe connection successful"
+            $pipe.Close()
+          } catch {
+            Write-Host "ERROR: Could not connect to named pipe: $_"
+            Stop-Process $proc -Force
+            exit 1
+          }
+          Stop-Process $proc -Force
 
   local-analyzer-integration-test:
     runs-on: ubuntu-latest

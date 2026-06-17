@@ -1,5 +1,6 @@
 using System.CommandLine;
 using System.Net;
+using System.Runtime.InteropServices;
 using CSharpProvider.Analysis;
 using CSharpProvider.Services;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -43,13 +44,26 @@ public class Program
             builder.Logging.AddFile(logFile);
         }
 
+        if (socket != null && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            builder.WebHost.UseNamedPipes();
+        }
+
         builder.WebHost.ConfigureKestrel(options =>
         {
             static void configure(ListenOptions listenOptions) => listenOptions.Protocols = HttpProtocols.Http2;
 
             if (socket != null)
             {
-                options.ListenUnixSocket(socket, configure);
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    var pipeName = Path.GetFileName(socket);
+                    options.ListenNamedPipe(pipeName, configure);
+                }
+                else
+                {
+                    options.ListenUnixSocket(socket, configure);
+                }
             }
             else
             {
