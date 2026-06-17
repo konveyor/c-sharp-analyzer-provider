@@ -241,14 +241,25 @@ def normalize_response(response: dict[str, Any] | None, repo_dir: str) -> dict[s
     resp = response.get("response", {})
     incidents = resp.get("incidentContexts", [])
 
-    repo_uri = Path(repo_dir).as_uri()
-    if not repo_uri.endswith("/"):
-        repo_uri += "/"
+    repo_path = str(Path(repo_dir).resolve())
 
     for inc in incidents:
         uri = inc.get("fileURI", "")
-        if uri.startswith(repo_uri):
-            inc["fileURI"] = uri[len(repo_uri):]
+        if uri.startswith("file:///"):
+            file_path = uri[7:]  # keep leading / on unix
+            if sys.platform == "win32":
+                file_path = file_path.replace("/", "\\")
+        elif uri.startswith("file://"):
+            file_path = uri[7:]
+            if sys.platform == "win32":
+                file_path = file_path.replace("/", "\\")
+        else:
+            continue
+        try:
+            rel = Path(file_path).relative_to(repo_path)
+            inc["fileURI"] = str(rel).replace("\\", "/")
+        except ValueError:
+            pass
 
     incidents.sort(
         key=lambda i: (
@@ -384,19 +395,44 @@ def wait_for_port(port: int, timeout: float = 60) -> bool:
     return False
 
 
+def _kill_tree(pid: int) -> None:
+    if sys.platform == "win32":
+        subprocess.run(
+            ["taskkill", "/F", "/T", "/PID", str(pid)],
+            capture_output=True,
+        )
+    else:
+        import os as _os
+        _os.killpg(pid, signal.SIGKILL)
+
+
+def _terminate_tree(pid: int) -> None:
+    if sys.platform == "win32":
+        subprocess.run(
+            ["taskkill", "/F", "/T", "/PID", str(pid)],
+            capture_output=True,
+        )
+    else:
+        import os as _os
+        _os.killpg(pid, signal.SIGTERM)
+
+
 @contextmanager
 def managed_provider(cmd: str, port: int) -> Generator[subprocess.Popen[str], None, None]:
-    import os
-    proc = subprocess.Popen(
-        shlex.split(cmd),
+    kwargs: dict[str, Any] = dict(
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
-        start_new_session=True,
     )
+    if sys.platform == "win32":
+        kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
+    else:
+        kwargs["start_new_session"] = True
+
+    proc = subprocess.Popen(shlex.split(cmd), **kwargs)
     try:
         if not wait_for_port(port):
-            os.killpg(proc.pid, signal.SIGKILL)
+            _kill_tree(proc.pid)
             proc.wait()
             stderr = proc.stderr.read() if proc.stderr else ""
             raise RuntimeError(
@@ -404,11 +440,11 @@ def managed_provider(cmd: str, port: int) -> Generator[subprocess.Popen[str], No
             )
         yield proc
     finally:
-        os.killpg(proc.pid, signal.SIGTERM)
+        _terminate_tree(proc.pid)
         try:
             proc.wait(timeout=10)
         except subprocess.TimeoutExpired:
-            os.killpg(proc.pid, signal.SIGKILL)
+            _kill_tree(proc.pid)
             proc.wait()
 
 
