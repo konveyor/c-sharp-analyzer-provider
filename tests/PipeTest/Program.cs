@@ -55,7 +55,8 @@ rootCommand.SetHandler(async (string pipeName, string repo, string pattern) =>
 
     // Evaluate
     Console.Write($"Evaluate ({pattern})... ");
-    var conditionInfo = $"{{\"referenced\":{{\"pattern\":\"{pattern}\"}}}}";
+    var conditionObj = new { referenced = new { pattern } };
+    var conditionInfo = System.Text.Json.JsonSerializer.Serialize(conditionObj);
     var evalResponse = await client.EvaluateAsync(new EvaluateRequest
     {
         Cap = "referenced",
