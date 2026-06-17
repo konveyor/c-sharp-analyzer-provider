@@ -10,8 +10,7 @@ on:
     - "v*"
 
 jobs:
-  # Named integration-tests to match the required status check in branch protection
-  integration-tests:
+  build-and-test:
     strategy:
       matrix:
         include:
@@ -67,6 +66,18 @@ jobs:
             provider.log
             provider-pipe.log
             tests/results/
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: always()
+    steps:
+      - name: Check results
+        run: |
+          if [ "${{ needs.build-and-test.result }}" != "success" ]; then
+            echo "build-and-test failed"
+            exit 1
+          fi
 
   local-analyzer-integration-test:
     runs-on: ubuntu-latest
