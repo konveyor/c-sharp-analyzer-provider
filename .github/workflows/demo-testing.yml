@@ -26,39 +26,46 @@ jobs:
           dotnet-version: '9.0.x'
       - name: Build
         run: dotnet build src/CSharpProvider.csproj
-      - name: Smoke test (TCP)
+      - uses: astral-sh/setup-uv@v6
+      - name: Install grpcurl
         shell: bash
         run: |
-          dotnet run --project src -- --port 9876 &
-          for i in $(seq 1 30); do
-            if curl -s -o /dev/null http://127.0.0.1:9876 2>/dev/null || \
-               bash -c "echo > /dev/tcp/127.0.0.1/9876" 2>/dev/null; then
-              echo "Provider is listening on TCP port 9876"
-              break
-            fi
-            if [ "$i" -eq 30 ]; then
-              echo "ERROR: Provider did not start in time."
-              exit 1
-            fi
-            sleep 1
-          done
-      - name: Smoke test (named pipe)
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            curl -sL https://github.com/fullstorydev/grpcurl/releases/download/v1.9.3/grpcurl_1.9.3_windows_x86_64.zip -o grpcurl.zip
+            unzip -o grpcurl.zip grpcurl.exe
+            echo "$PWD" >> $GITHUB_PATH
+          elif [ "$RUNNER_OS" = "macOS" ]; then
+            brew install grpcurl
+          else
+            curl -sL https://github.com/fullstorydev/grpcurl/releases/download/v1.9.3/grpcurl_1.9.3_linux_x86_64.tar.gz | tar xz grpcurl
+            sudo mv grpcurl /usr/local/bin/
+          fi
+      - name: Run gRPC tests
+        shell: bash
+        run: |
+          uv run tests/test_runner.py setup
+          uv run tests/test_runner.py run --provider csharp \
+            --cmd "dotnet run --project src -- --port 9876 --log-file provider.log" \
+            --project net8-sample
+      - name: Named pipe test
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          $proc = Start-Process -NoNewWindow -PassThru dotnet -ArgumentList "run","--project","src","--","--socket","\\.\pipe\csharp-ci-test"
-          Start-Sleep -Seconds 10
-          $pipe = New-Object System.IO.Pipes.NamedPipeClientStream(".", "csharp-ci-test", [System.IO.Pipes.PipeDirection]::InOut)
-          try {
-            $pipe.Connect(5000)
-            Write-Host "Named pipe connection successful"
-            $pipe.Close()
-          } catch {
-            Write-Host "ERROR: Could not connect to named pipe: $_"
-            Stop-Process $proc -Force
-            exit 1
-          }
-          Stop-Process $proc -Force
+          $provider = Start-Process -NoNewWindow -PassThru dotnet `
+            -ArgumentList "run","--project","src","--","--socket","\\.\pipe\csharp-ci-test","--log-file","provider-pipe.log"
+          Start-Sleep -Seconds 15
+          dotnet run --project tests/PipeTest -- --pipe csharp-ci-test --repo tests/repos/net8-sample --pattern "^System(\..*)?$"
+          $exitCode = $LASTEXITCODE
+          Stop-Process $provider -Force -ErrorAction SilentlyContinue
+          exit $exitCode
+      - name: Upload provider logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: provider-logs-${{ matrix.os }}
+          path: |
+            provider.log
+            provider-pipe.log
 
   local-analyzer-integration-test:
     runs-on: ubuntu-latest
