@@ -1,5 +1,9 @@
 # Build stage
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS builder
+FROM registry.access.redhat.com/ubi10/ubi-minimal AS builder
+
+RUN microdnf install -y dotnet-sdk-9.0 && \
+    microdnf clean all && \
+    rm -rf /var/cache/dnf
 
 WORKDIR /build
 COPY src/CSharpProvider.csproj .
@@ -12,9 +16,7 @@ RUN dotnet publish -c Release -o /app
 FROM registry.access.redhat.com/ubi10/ubi-minimal
 
 # Install .NET SDK (required at runtime for dotnet restore on analyzed projects)
-RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc && \
-    curl -sL https://packages.microsoft.com/config/rhel/10/prod.repo -o /etc/yum.repos.d/microsoft-prod.repo && \
-    microdnf install -y dotnet-sdk-9.0 && \
+RUN microdnf install -y dotnet-sdk-9.0 && \
     microdnf clean all && \
     rm -rf /var/cache/dnf
 
