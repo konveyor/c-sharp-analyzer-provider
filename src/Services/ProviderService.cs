@@ -56,7 +56,7 @@ public class ProviderService : Provider.ProviderService.ProviderServiceBase
                 Id = 1,
                 BuiltinConfig = new Config
                 {
-                    Location = Environment.CurrentDirectory,
+                    Location = request.Location,
                     AnalysisMode = "source-only"
                 }
             };
