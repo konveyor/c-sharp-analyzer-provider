@@ -497,12 +497,151 @@ impl ProviderService for CSharpProvider {
 
     async fn notify_file_changes(
         &self,
-        _: Request<NotifyFileChangesRequest>,
+        request: Request<NotifyFileChangesRequest>,
     ) -> Result<Response<NotifyFileChangesResponse>, Status> {
-        return Ok(Response::new(NotifyFileChangesResponse {
-            error: String::new(),
-        }));
+        use crate::c_sharp_graph::loader::load_and_store_file;
+        use stack_graphs::{graph::StackGraph, storage::SQLiteWriter};
+        use url::Url;
+
+        let changes = &request.get_ref().changes;
+
+        // Build the list of changed C# file paths, fixing two Windows path issues:
+        //
+        // 1. URL scheme bug: Url::parse("C:\\Users\\...\\Foo.cs") succeeds because it
+        //    treats the drive letter 'C' as a URL scheme. to_file_path() then fails
+        //    (scheme is not "file"), and the '?' operator would silently drop the entry.
+        //    Fix: only call to_file_path() when the scheme is actually "file".
+        //
+        // 2. Drive letter case: the workspace location from VS Code uses a lowercase
+        //    drive letter (c:\) while normalizeFilePath in the extension sends uppercase
+        //    (C:\). The SQLite keys stored during ProviderInit use the workspace casing,
+        //    so we normalise to lowercase to match them.
+        let csharp_file_paths: Vec<std::path::PathBuf> = changes
+            .iter()
+            .filter(|c| c.uri.ends_with(".cs") || c.uri.ends_with(".csproj"))
+            .filter_map(|change| {
+                let path = match Url::parse(&change.uri) {
+                    Ok(url) if url.scheme() == "file" => {
+                        url.to_file_path()
+                            .unwrap_or_else(|_| std::path::PathBuf::from(&change.uri))
+                    }
+                    _ => std::path::PathBuf::from(&change.uri),
+                };
+                Some(normalize_drive_letter_to_lowercase(path))
+            })
+            .collect();
+
+        if csharp_file_paths.is_empty() {
+            debug!("notify_file_changes: no C# files in change set, skipping");
+            return Ok(Response::new(NotifyFileChangesResponse {
+                error: String::new(),
+            }));
+        }
+
+        debug!("notify_file_changes: updating graph for {:?}", csharp_file_paths);
+
+        let project_guard = self.project.lock().await;
+        let project = match project_guard.as_ref() {
+            Some(p) => p,
+            None => {
+                warn!("notify_file_changes: no project initialized");
+                return Ok(Response::new(NotifyFileChangesResponse {
+                    error: "No project initialized".to_string(),
+                }));
+            }
+        };
+
+        let source_type = match project.get_source_type().await {
+            Some(s) => s,
+            None => {
+                warn!("notify_file_changes: source type unavailable, cannot reload files");
+                return Ok(Response::new(NotifyFileChangesResponse {
+                    error: "No source type available".to_string(),
+                }));
+            }
+        };
+
+        let lc_guard = project.source_language_config.read().await;
+        let language_config = match lc_guard.as_ref() {
+            Some(lc) => lc,
+            None => {
+                warn!("notify_file_changes: language config unavailable");
+                return Ok(Response::new(NotifyFileChangesResponse {
+                    error: "No language configuration available".to_string(),
+                }));
+            }
+        };
+
+        let db_path = project.db_path.clone();
+        let mut db = match SQLiteWriter::open(&db_path) {
+            Ok(db) => db,
+            Err(e) => {
+                error!("notify_file_changes: failed to open database: {}", e);
+                return Ok(Response::new(NotifyFileChangesResponse {
+                    error: format!("Failed to open database: {}", e),
+                }));
+            }
+        };
+
+        let mut stack_graph = StackGraph::new();
+        let _ = stack_graph.add_from_graph(&language_config.language_config.builtins);
+
+        for file_path in &csharp_file_paths {
+            if let Err(e) = db.clean_file(file_path) {
+                error!("notify_file_changes: failed to clean {:?}: {}", file_path, e);
+                return Ok(Response::new(NotifyFileChangesResponse {
+                    error: "unable to update file changes".to_string(),
+                }));
+            }
+            match load_and_store_file(
+                file_path.clone(),
+                &mut stack_graph,
+                &language_config.language_config,
+                &source_type,
+                &mut db,
+            ) {
+                Ok(Some(_)) => debug!("notify_file_changes: updated {:?}", file_path),
+                Ok(None) => debug!("notify_file_changes: no graph nodes for {:?}", file_path),
+                Err(e) => error!("notify_file_changes: failed to update {:?}: {}", file_path, e),
+            }
+        }
+
+        // Drop the SQLiteWriter before opening a SQLiteReader below.
+        // On Windows, SQLite uses exclusive file locking by default: keeping the
+        // writer open would cause get_project_graph() to fail with SQLITE_BUSY.
+        drop(db);
+
+        match project.get_project_graph().await {
+            Ok(_) => Ok(Response::new(NotifyFileChangesResponse {
+                error: String::new(),
+            })),
+            Err(e) => {
+                error!("notify_file_changes: failed to reload graph: {}", e);
+                Ok(Response::new(NotifyFileChangesResponse {
+                    error: format!("Failed to reload graph: {}", e),
+                }))
+            }
+        }
     }
+}
+
+/// Lowercase the drive letter on Windows paths so they match the SQLite keys
+/// produced by WalkDir, which inherits the workspace location casing (always
+/// lowercase from VS Code).
+fn normalize_drive_letter_to_lowercase(path: std::path::PathBuf) -> std::path::PathBuf {
+    #[cfg(windows)]
+    {
+        let path_str = path.to_string_lossy();
+        let mut chars = path_str.chars();
+        if let (Some(drive), Some(':')) = (chars.next(), chars.next()) {
+            if drive.is_ascii_uppercase() {
+                let mut normalized = drive.to_lowercase().to_string();
+                normalized.push_str(&path_str[1..]);
+                return std::path::PathBuf::from(normalized);
+            }
+        }
+    }
+    path
 }
 
 /// Deduplicate results by grouping by (file_uri, line_number) and keeping the result
