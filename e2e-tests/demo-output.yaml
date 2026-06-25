@@ -40,6 +40,7 @@
           fqdn_namespace: System.Data.Entity
           symbol: Database.SetInitializer<UsersContext>
           syntax_type: field_reference
+        isDependencyIncident: false
       links:
       - url: https://learn.microsoft.com/en-us/ef/efcore-and-ef6/
         title: Compare EF6 and EF Core
@@ -69,6 +70,7 @@
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
           symbol: System.Data.Entity
           syntax_type: import
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
         message: |
           Lazy loading works differently in EF Core and requires explicit configuration.
@@ -85,6 +87,7 @@
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
           symbol: System.Data.Entity
           syntax_type: import
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
         message: |
           Lazy loading works differently in EF Core and requires explicit configuration.
@@ -101,6 +104,7 @@
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/AccountModels.cs
           symbol: System.Data.Entity
           syntax_type: import
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/NerdDinnerContext.cs
         message: |
           Lazy loading works differently in EF Core and requires explicit configuration.
@@ -117,6 +121,7 @@
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/NerdDinnerContext.cs
           symbol: System.Data.Entity
           syntax_type: import
+        isDependencyIncident: false
       links:
       - url: https://learn.microsoft.com/en-us/ef/core/querying/related-data/lazy
         title: Lazy loading in EF Core
@@ -150,6 +155,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.RegisterMicrosoftClient
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -172,6 +178,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.RegisterTwitterClient
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -194,6 +201,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.RegisterFacebookClient
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/AuthConfig.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -216,6 +224,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.RegisterGoogleClient
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -238,6 +247,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.GetUserName
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -260,6 +270,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.HasLocalAccount
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -282,6 +293,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.GetAccountsFromUserName
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -304,6 +316,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.DeleteAccount
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -326,6 +339,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.HasLocalAccount
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -348,6 +362,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.HasLocalAccount
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -370,6 +385,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.VerifyAuthentication
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -392,6 +408,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.Login
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -414,6 +431,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.CreateOrUpdateAccount
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -436,6 +454,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.SerializeProviderUserId
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -458,6 +477,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.GetOAuthClientData
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -480,6 +500,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.TryDeserializeProviderUserId
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -502,6 +523,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.CreateOrUpdateAccount
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -524,6 +546,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.Login
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -546,6 +569,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.GetOAuthClientData
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -568,6 +592,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.RegisteredClientData
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -590,6 +615,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.GetAccountsFromUserName
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -612,6 +638,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.GetOAuthClientData
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -634,6 +661,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.HasLocalAccount
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           Microsoft.Web.WebPages.OAuth.OAuthWebSecurity is not available in .NET Core.
@@ -656,6 +684,7 @@
           fqdn_namespace: Microsoft.Web.WebPages.OAuth
           symbol: OAuthWebSecurity.RequestAuthentication
           syntax_type: method_reference
+        isDependencyIncident: false
       links:
       - url: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/social/
         title: External OAuth authentication providers
@@ -693,6 +722,7 @@
           fqdn_namespace: WebMatrix.WebData
           symbol: WebSecurity.Login
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
@@ -715,6 +745,7 @@
           fqdn_namespace: WebMatrix.WebData
           symbol: WebSecurity.Logout
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
@@ -737,6 +768,7 @@
           fqdn_namespace: WebMatrix.WebData
           symbol: WebSecurity.CreateUserAndAccount
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
@@ -759,6 +791,7 @@
           fqdn_namespace: WebMatrix.WebData
           symbol: WebSecurity.Login
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
@@ -781,6 +814,7 @@
           fqdn_namespace: WebMatrix.WebData
           symbol: WebSecurity.GetUserId
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
@@ -803,6 +837,7 @@
           fqdn_namespace: WebMatrix.WebData
           symbol: WebSecurity.GetUserId
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
@@ -825,6 +860,7 @@
           fqdn_namespace: WebMatrix.WebData
           symbol: WebSecurity.GetUserId
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
@@ -847,6 +883,7 @@
           fqdn_namespace: WebMatrix.WebData
           symbol: WebSecurity.ChangePassword
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
@@ -869,6 +906,7 @@
           fqdn_namespace: WebMatrix.WebData
           symbol: WebSecurity.CreateAccount
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
@@ -891,6 +929,7 @@
           fqdn_namespace: WebMatrix.WebData
           symbol: WebSecurity.GetUserId
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
         message: |
           WebMatrix.WebData.WebSecurity is not available in .NET Core and must be replaced with ASP.NET Core Identity.
@@ -913,6 +952,7 @@
           fqdn_namespace: WebMatrix.WebData
           symbol: WebSecurity.InitializeDatabaseConnection
           syntax_type: method_reference
+        isDependencyIncident: false
       links:
       - url: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity
         title: Introduction to Identity on ASP.NET Core
@@ -943,6 +983,7 @@
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/FilterConfig.cs
           symbol: System.Web.Mvc
           syntax_type: import
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -959,6 +1000,7 @@
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
           symbol: System.Web.Mvc
           syntax_type: import
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/App_Start/RouteConfig.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -978,6 +1020,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: UrlParameter.Optional
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -993,6 +1036,7 @@
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
           symbol: System.Web.Mvc
           syntax_type: import
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1011,6 +1055,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ReturnUrl
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1029,6 +1074,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.IsValid
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1047,6 +1093,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.AddModelError
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1065,6 +1112,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.IsValid
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1083,6 +1131,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.AddModelError
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1102,6 +1151,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1121,6 +1171,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1140,6 +1191,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1159,6 +1211,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.StatusMessage
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1178,6 +1231,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.HasLocalPassword
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1197,6 +1251,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ReturnUrl
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1216,6 +1271,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1235,6 +1291,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.HasLocalPassword
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1254,6 +1311,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ReturnUrl
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1273,6 +1331,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.IsValid
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1292,6 +1351,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1311,6 +1371,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.AddModelError
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1330,6 +1391,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: state.Errors
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1349,6 +1411,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.IsValid
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1368,6 +1431,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1387,6 +1451,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.AddModelError
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1406,6 +1471,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: Url.Action
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1425,6 +1491,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: Url.Action
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1444,6 +1511,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1463,6 +1531,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1481,6 +1550,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ProviderDisplayName
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1499,6 +1569,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ReturnUrl
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1517,6 +1588,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1535,6 +1607,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.IsValid
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1553,6 +1626,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.AddModelError
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1571,6 +1645,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ProviderDisplayName
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1589,6 +1664,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ReturnUrl
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1607,6 +1683,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ReturnUrl
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1625,6 +1702,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1643,6 +1721,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.ShowRemoveButton
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/AccountController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1661,6 +1740,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: Url.IsLocalUrl
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1677,6 +1757,7 @@
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
           symbol: System.Web.Mvc
           syntax_type: import
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1696,6 +1777,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1715,6 +1797,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.IsValid
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1734,6 +1817,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1753,6 +1837,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1772,6 +1857,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1791,6 +1877,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1810,6 +1897,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ModelState.IsValid
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1829,6 +1917,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/DinnersController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1848,6 +1937,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1864,6 +1954,7 @@
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
           symbol: System.Web.Mvc
           syntax_type: import
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/HomeController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1883,6 +1974,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ViewBag.Message
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1899,6 +1991,7 @@
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
           symbol: System.Web.Mvc
           syntax_type: import
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1918,6 +2011,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Controllers/RSVPController.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1937,6 +2031,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: User.Identity
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1953,6 +2048,7 @@
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Filters/InitializeSimpleMembershipAttribute.cs
           symbol: System.Web.Mvc
           syntax_type: import
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1969,6 +2065,7 @@
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
           symbol: System.Web.Mvc
           syntax_type: import
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -1988,6 +2085,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: AreaRegistration.RegisterAllAreas
           syntax_type: method_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -2007,6 +2105,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: GlobalFilters.Filters
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Global.asax.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -2026,6 +2125,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: ModelBinderProviders.BinderProviders
           syntax_type: field_reference
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -2042,6 +2142,7 @@
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/ModelBinders/DbGeographyModelBinder.cs
           symbol: System.Web.Mvc
           syntax_type: import
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -2058,6 +2159,7 @@
           file: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
           symbol: System.Web.Mvc
           syntax_type: import
+        isDependencyIncident: false
       - uri: file:///analyzer-lsp/examples/nerd-dinner/mvc4/NerdDinner/Models/Dinner.cs
         message: |
           The System.Web namespace is not available in .NET Core.
@@ -2077,6 +2179,7 @@
           fqdn_namespace: System.Web.Mvc
           symbol: DataType.MultilineText
           syntax_type: field_reference
+        isDependencyIncident: false
       links:
       - url: https://learn.microsoft.com/en-us/aspnet/core/migration/proper-to-2x
         title: Migrate from ASP.NET to ASP.NET Core
