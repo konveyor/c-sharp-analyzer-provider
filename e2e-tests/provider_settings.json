@@ -1,0 +1,16 @@
+[
+  {
+    "name": "csharp",
+    "address": "localhost:14651",
+    "initConfig": [
+      {
+        "analysisMode": "source-only",
+        "location": "/analyzer-lsp/examples/nerd-dinner",
+        "providerSpecificConfig": {
+          "ilspy_cmd": "/usr/local/bin/ilspycmd",
+          "paket_cmd": "/usr/local/bin/paket"
+        }
+      }
+    ]
+  }
+]
