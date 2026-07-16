@@ -330,6 +330,30 @@ pub fn init_stack_graph(
     })
 }
 
+/// Parse a single file into `stack_graph`, store the result in `db`, and
+/// return the file handle. Returns `Ok(None)` if the file is not a
+/// recognised C# source file. Exposed so that `notify_file_changes` can
+/// incrementally update individual files without re-walking the whole tree.
+pub fn load_and_store_file(
+    file_path: PathBuf,
+    stack_graph: &mut StackGraph,
+    language_config: &LanguageConfiguration,
+    source_type: &SourceType,
+    db: &mut SQLiteWriter,
+) -> Result<Option<Handle<File>>, Error> {
+    match load_graph_for_file(file_path.clone(), stack_graph, language_config, source_type) {
+        Ok(Some((file_handle, tag))) => {
+            let mut partials = PartialPaths::new();
+            let paths: Vec<PartialPath> = Vec::new();
+            db.store_result_for_file(stack_graph, file_handle, &tag, &mut partials, &paths)
+                .map_err(|e| anyhow!(e))?;
+            Ok(Some(file_handle))
+        }
+        Ok(None) => Ok(None),
+        Err(e) => Err(e),
+    }
+}
+
 fn sha1(source: &str) -> String {
     let mut hasher = Sha1::new();
     hasher.update(source);
